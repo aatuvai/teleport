@@ -1,0 +1,75 @@
+import Integrations, { IntegrationsProps } from "@site/src/components/Pages/Homepage/Integrations";
+import awsSvg from "@site/src/components/Icon/teleport-svg/aws.svg";
+import gcpSvg from "@site/src/components/Icon/teleport-svg/gcp.svg";
+import azureSvg from "@site/src/components/Icon/teleport-svg/azure.svg";
+import oktaSvg from "@site/src/components/Icon/teleport-svg/okta.svg";
+import slackSvg from "@site/src/components/Icon/teleport-svg/slack.svg";
+import pagerDutySvg from "@site/src/components/Icon/teleport-svg/pagerduty.svg";
+import jamfProSvg from "@site/src/components/Icon/teleport-svg/jamf-pro.svg";
+import jenkinsSvg from "@site/src/components/Icon/teleport-svg/jenkins.svg";
+import snowflakeSvg from "@site/src/components/Icon/teleport-svg/snowflake.svg";
+import arrowRightSvg from "@site/src/components/Icon/teleport-svg/arrow-right.svg";
+
+<Integrations 
+  integrations={[
+    {
+      title: 'AWS',
+      href: '/integrations/#aws/',
+      iconColor: '#FF99001A',
+      iconComponent: awsSvg,
+    },
+    {
+      title: 'GCP',
+      href: '/integrations/#google-cloud-platform-(gcp)/',
+      iconColor: '#EA43351A',
+      iconComponent: gcpSvg,
+    },
+    {
+      title: 'Azure',
+      href: '/integrations/#microsoft-azure/',
+      iconColor: '#0078D41A',
+      iconComponent: azureSvg,
+    },
+    {
+      title: 'Okta',
+      href: '/integrations/okta/',
+      iconColor: '#0000001A',
+      iconComponent: oktaSvg,
+    },
+    {
+      title: 'Slack',
+      href: '/integrations/slack/',
+      iconColor: '#ECB22E1A',
+      iconComponent: slackSvg,
+    },
+    {
+      title: 'PagerDuty',
+      href: '/integrations/pagerduty/',
+      iconColor: '#06AC381A',
+      iconComponent: pagerDutySvg,
+    },
+    {
+      title: 'Jamf Pro',
+      href: '/integrations/jamf-pro/',
+      iconColor: '#788EB11A',
+      iconComponent: jamfProSvg,
+    },
+    {
+      title: 'Jenkins',
+      href: '/integrations/jenkins/',
+      iconColor: '#D338331A',
+      iconComponent: jenkinsSvg,
+    },
+    {
+      title: 'Snowflake',
+      href: '/integrations/snowflake/',
+      iconColor: '#29B5E81A',
+      iconComponent: snowflakeSvg,
+    }, 
+    {
+      title: 'View all Integrations',
+      href: '/integrations/',
+      iconComponent: arrowRightSvg,
+    },
+  ]}
+/>
