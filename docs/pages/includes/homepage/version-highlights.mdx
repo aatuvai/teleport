@@ -1,17 +1,20 @@
 import VersionHighlights, { VersionHighlightsProps } from "@site/src/components/Pages/Homepage/VersionHighlights";
+import placeholderImg from "../../../img/homepage/purple-placeholder.jpg";
 
 <VersionHighlights
   title="What's New in Version 18"
   highlights={[
     {
-      title: "Identity Activity Center",
-      description: "Expose and eliminate hidden identity risk in your infrastructure by correlating user activity from multiple sources.",
+      title: "MCP server access",
+      description: "Teleport now provides the ability to connect to stdio-based MCP servers with connection proxying and audit logging support.",
       tag: "Identity Security",
+      image: placeholderImg,
       href: "./changelog/",
     },
     {
-      title: "Automatic access request reviews",
-      description: "Enable automatic access request review by setting access monitoring Rules by defining conditions to automatically approved or denied requests.",
+      title: "MCP for database access",
+      description: "Teleport now allows MCP clients such as Claude Desktop to execute queries in Teleport-protected databases.",
+      image: placeholderImg,
       tag: "Identity Governance",
       href: "./changelog/",
     },
