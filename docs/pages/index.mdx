@@ -11,6 +11,28 @@ labels:
 
 <head>
   <html class="fullWidthPage" />
+    <style>
+      html.fullWidthPage main {
+      width: 100%;
+      max-width: 100%;
+      }
+      html.fullWidthPage main > .container {
+      max-width: 100%;
+      width: 100%;
+      padding-top: 0px !important;
+      }
+      html.fullWidthPage main > .container > .theme-doc-markdown > :not(section) {
+      max-width: 1400px;
+      margin-left: auto;
+      margin-right: auto;
+      }
+      html.fullWidthPage aside {
+      display: none !important;
+      }
+      html.fullWidthPage #docs-navigation {
+      display: block;
+      }
+    </style>
 </head>
 
 (!docs/pages/includes/homepage/docs-header.mdx!)
