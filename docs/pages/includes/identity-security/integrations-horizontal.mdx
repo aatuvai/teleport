@@ -1,0 +1,47 @@
+import Integrations, { IntegrationsProps } from "@site/src/components/Pages/Homepage/Integrations";
+import githubSvg from "@site/src/components/Icon/svg/github.svg";
+import awsSvg from "@site/src/components/Icon/teleport-svg/aws.svg";
+import oktaSvg from "@site/src/components/Icon/teleport-svg/okta.svg";
+import teleportSvg from "@site/src/components/Icon/teleport-svg/teleport.svg";
+
+<Integrations
+  secondaryTitle="Step 2: Configure tbot to generate short-lived credentials for resource access"
+  layout="horizontal"
+  integrations={[
+    {
+      title: 'GitHub',
+      description: 'Connect GitHub and stream audit logs',
+      href: 'https://goteleport.com/integrations/#github/',
+      iconColor: '#0000001A',
+      iconComponent: githubSvg,
+    },
+    {
+      title: 'Okta',
+      description: 'Integrate your Okta account',
+      href: 'https://goteleport.com/integrations/#idp/',
+      iconColor: '#0000001A',
+      iconComponent: oktaSvg,
+    },
+    {
+      title: 'AWS',
+      description: 'Leverage the power of Access Graph',
+      href: 'https://goteleport.com/integrations/#aws/',
+      iconColor: '#E87B0C1A',
+      iconComponent: awsSvg,
+    },
+  ]}
+  additionalLinks={{
+    title: "Getting started",
+    links: [
+    {
+      title: "Issuing certs for NHI remote server access",
+      href: "https://goteleport.com/docs/integrations"
+    },
+    {
+      title: "Frequently Asked Questions (F.A.Q.)",
+      href: "https://goteleport.com/docs/integrations"
+    },
+  ]
+  }}
+  desktopColumnsCount={3}
+/>
