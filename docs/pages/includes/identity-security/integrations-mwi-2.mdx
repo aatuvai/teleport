@@ -1,0 +1,96 @@
+import Integrations, { IntegrationsProps } from "@site/src/components/Pages/Homepage/Integrations";
+import terraformSvg from "@site/src/components/Icon/svg/terraform.svg";
+import ansibleSvg from "@site/src/components/Icon/svg/ansible.svg";
+import kubernetesSvg from "@site/src/components/Icon/svg/kubernetes.svg";
+import terminalSvg from "@site/src/components/Icon/teleport-svg/terminal.svg";
+import databaseSvg from "@site/src/components/Icon/teleport-svg/database.svg";
+import appWindowSvg from "@site/src/components/Icon/teleport-svg/app-window.svg";
+import certificateSvg from "@site/src/components/Icon/teleport-svg/certificate.svg";
+import cloudSvg from "@site/src/components/Icon/teleport-svg/cloud.svg";
+import teleportSvg from "@site/src/components/Icon/teleport-svg/teleport.svg";
+
+<Integrations
+  title={null}
+  secondaryTitle="Step 2: Configure tbot to generate short-lived credentials for resource access"
+  layout="row"
+  integrations={[
+    {
+      title: 'Ansible',
+      description: 'Access enrolled Linux hosts via SSH.',
+      href: 'https://goteleport.com/integrations/#github/',
+      iconColor: '#0000001A',
+      iconComponent: ansibleSvg,
+    },
+    {
+      title: 'Terraform',
+      description: 'Access persistent Linux, macOS servers.',
+      href: 'https://goteleport.com/integrations/#idp/',
+      iconColor: '#512FC91A',
+      iconComponent: terraformSvg,
+    },
+    {
+      title: 'Kubernetes',
+      description: 'Access an enrolled Kubernetes cluster.',
+      href: 'https://goteleport.com/integrations/#aws/',
+      iconColor: '#0078D41A',
+      iconComponent: kubernetesSvg,
+    },
+    {
+      title: 'SSH servers',
+      description: 'Access Linux servers using OpenSSH.',
+      href: 'https://goteleport.com/integrations/#aws/',
+      iconColor: '#F1F2F4',
+      iconComponent: terminalSvg,
+    },    
+    {
+      title: 'Databases',
+      description: 'Access databases configured in Teleport.',
+      href: 'https://goteleport.com/integrations/#aws/',
+      iconColor: '#F1F2F4',
+      iconComponent: databaseSvg,
+    },    
+    {
+      title: 'HTTP & TCP applications',
+      description: 'Access enrolled applications.',
+      href: 'https://goteleport.com/integrations/#aws/',
+      iconColor: '#F1F2F4',
+      iconComponent: appWindowSvg,
+    },    
+    {
+      title: 'tctl',
+      description: 'Use Teleport CLI tool for custom flows.',
+      href: 'https://goteleport.com/integrations/#aws/',
+      iconColor: '#F1F2F4',
+      iconComponent: teleportSvg,
+    },    
+    {
+      title: 'SpaceLift',
+      description: 'Present a Spacelift-signed ID token',
+      href: 'https://goteleport.com/integrations/#aws/',
+      iconColor: '#F1F2F4',
+      iconComponent: certificateSvg,
+    },    
+    {
+      title: 'Terraform Cloud',
+      description: 'HCP Terraform or Terraform Enterprise',
+      href: 'https://goteleport.com/integrations/#aws/',
+      iconColor: '#F1F2F4',
+      iconComponent: cloudSvg,
+    },
+  ]}
+  additionalLinks={{
+    title: "Getting started",
+    links: [
+    {
+      title: "Issuing certs for NHI remote server access",
+      href: "https://goteleport.com/docs/integrations"
+    },
+    {
+      title: "Frequently Asked Questions (F.A.Q.)",
+      href: "https://goteleport.com/docs/integrations"
+    },
+  ]
+  }}
+  desktopColumnsCount={3}
+  noBackgroundColor={true}
+/>

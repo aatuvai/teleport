@@ -1,0 +1,109 @@
+import Integrations, { IntegrationsProps } from "@site/src/components/Pages/Homepage/Integrations";
+import awsSvg from "@site/src/components/Icon/teleport-svg/aws.svg";
+import azureSvg from "@site/src/components/Icon/svg/azure.svg";
+import azureDevOpsSvg from "@site/src/components/Icon/teleport-svg/azure.svg";
+import bitbucketSvg from "@site/src/components/Icon/svg/bitbucket.svg";
+import circleCISvg from "@site/src/components/Icon/svg/circleci2.svg";
+import gcpSvg from "@site/src/components/Icon/teleport-svg/gcp.svg";
+import gitlabSvg from "@site/src/components/Icon/svg/gitlab.svg";
+import jenkinsSvg from "@site/src/components/Icon/teleport-svg/jenkins.svg";
+import kubernetesSvg from "@site/src/components/Icon/svg/kubernetes.svg";
+import linuxSvg from "@site/src/components/Icon/svg/linux.svg";
+import arrowRightSvg from "@site/src/components/Icon/teleport-svg/arrow-right.svg";
+
+<Integrations
+  title="Getting started with Machine & Workload Identity"
+  secondaryTitle="Step 1: Deploy tbot across your infrastructure track"
+  integrations={[
+    {
+      title: 'AWS',
+      href: 'https://goteleport.com/integrations/#aws/',
+      iconColor: '#FF99001A',
+      iconComponent: awsSvg,
+    },
+    {
+      title: 'Azure',
+      href: 'https://goteleport.com/integrations/#google-cloud-platform-(gcp)/',
+      iconColor: '#0078D41A',
+      iconComponent: azureSvg,
+    },
+    {
+      title: 'Azure DevOps',
+      href: 'https://goteleport.com/integrations/#microsoft-azure/',
+      iconColor: '#0078D41A',
+      iconComponent: azureDevOpsSvg,
+    },
+    {
+      title: 'Bitbucket Pipelines',
+      href: 'https://goteleport.com/integrations/#idp/',
+      iconColor: '#0078D41A',
+      iconComponent: bitbucketSvg,
+    },
+    {
+      title: 'CircleCI',
+      href: 'https://goteleport.com/integrations/#plugin/',
+      iconColor: '#0000001A',
+      iconComponent: circleCISvg,
+    },
+    {
+      title: 'GCP',
+      href: 'https://goteleport.com/integrations/#plugin/',
+      iconColor: '#06AC381A',
+      iconComponent: gcpSvg,
+    },
+    {
+      title: 'Gitlab CI',
+      href: 'https://goteleport.com/integrations/#devtool/',
+      iconColor: '#FF99001A',
+      iconComponent: gitlabSvg,
+    },
+    {
+      title: 'Jenkins',
+      href: 'https://goteleport.com/integrations/#ci/cd/',
+      iconColor: '#EA43351A',
+      iconComponent: jenkinsSvg,
+    },
+    {
+      title: 'Kubernetes',
+      href: 'https://goteleport.com/integrations/#database/',
+      iconColor: '#0078D41A',
+      iconComponent: kubernetesSvg,
+    }, 
+     {
+      title: 'Linux',
+      href: 'https://goteleport.com/integrations/#database/',
+      iconColor: '#FF99001A',
+      iconComponent: linuxSvg,
+    }, 
+     {
+      title: 'Linux (TPM)',
+      href: 'https://goteleport.com/integrations/#database/',
+      iconColor: '#FF99001A',
+      iconComponent: linuxSvg,
+    }, 
+    {
+      title: 'View all Integrations',
+      href: 'https://goteleport.com/integrations/',
+      iconComponent: arrowRightSvg,
+    },
+  ]}
+    additionalLinks={{
+    title: "References:",
+    links: [
+    {
+      title: "The architecture behind the bots",
+      href: "https://goteleport.com/docs/integrations"
+    },
+    {
+      title: "Quick links",
+      href: "https://goteleport.com/docs/integrations"
+    },
+    {
+      title: "View all tbot Guides?",
+      href: "https://goteleport.com/docs/integrations"
+    }
+  ]
+  }}
+  desktopColumnsCount={6}
+  noBackgroundColor={true}
+/>
