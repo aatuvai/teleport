@@ -95,6 +95,8 @@ import (
 	"github.com/gravitational/teleport/lib/auth/keystore"
 	"github.com/gravitational/teleport/lib/auth/machineid/machineidv1"
 	"github.com/gravitational/teleport/lib/auth/recordingencryption"
+	"github.com/gravitational/teleport/lib/auth/recordingmetadata"
+	"github.com/gravitational/teleport/lib/auth/recordingmetadata/recordingmetadatav1"
 	"github.com/gravitational/teleport/lib/auth/state"
 	"github.com/gravitational/teleport/lib/auth/storage"
 	"github.com/gravitational/teleport/lib/auth/summarizer"
@@ -106,11 +108,11 @@ import (
 	"github.com/gravitational/teleport/lib/backend/dynamo"
 	_ "github.com/gravitational/teleport/lib/backend/etcdbk"
 	"github.com/gravitational/teleport/lib/backend/firestore"
-	"github.com/gravitational/teleport/lib/backend/kubernetes"
 	_ "github.com/gravitational/teleport/lib/backend/lite"
 	_ "github.com/gravitational/teleport/lib/backend/pgbk"
 	"github.com/gravitational/teleport/lib/bpf"
 	"github.com/gravitational/teleport/lib/cache"
+	myrepl "github.com/gravitational/teleport/lib/client/db/mysql/repl"
 	pgrepl "github.com/gravitational/teleport/lib/client/db/postgres/repl"
 	dbrepl "github.com/gravitational/teleport/lib/client/db/repl"
 	"github.com/gravitational/teleport/lib/cloud"
@@ -176,7 +178,6 @@ import (
 	usagereporter "github.com/gravitational/teleport/lib/usagereporter/teleport"
 	"github.com/gravitational/teleport/lib/utils"
 	"github.com/gravitational/teleport/lib/utils/cert"
-	"github.com/gravitational/teleport/lib/utils/hostid"
 	logutils "github.com/gravitational/teleport/lib/utils/log"
 	"github.com/gravitational/teleport/lib/versioncontrol/endpoint"
 	uw "github.com/gravitational/teleport/lib/versioncontrol/upgradewindow"
@@ -437,8 +438,14 @@ func (c *Connector) ClusterName() string {
 	return c.clusterName
 }
 
+// HostID returns the host ID in <uuid>.<clusterName> format.
 func (c *Connector) HostID() string {
 	return c.hostID
+}
+
+// HostUUID returns the plain host UUID.
+func (c *Connector) HostUUID() string {
+	return strings.TrimSuffix(c.hostID, "."+c.clusterName)
 }
 
 func (c *Connector) Role() types.SystemRole {
@@ -1111,18 +1118,9 @@ func NewTeleport(cfg *servicecfg.Config) (_ *TeleportProcess, err error) {
 	}
 
 	supervisor := NewSupervisor(processID, cfg.Logger)
-	storage, err := storage.NewProcessStorage(supervisor.ExitContext(), filepath.Join(cfg.DataDir, teleport.ComponentProcess))
+	store, err := storage.NewProcessStorage(supervisor.ExitContext(), filepath.Join(cfg.DataDir, teleport.ComponentProcess))
 	if err != nil {
 		return nil, trace.Wrap(err)
-	}
-
-	var kubeBackend kubernetesBackend
-	// If running in a Kubernetes Pod we must init the backend storage for `host_uuid` storage/retrieval.
-	if kubernetes.InKubeCluster() {
-		kubeBackend, err = kubernetes.New()
-		if err != nil {
-			return nil, trace.Wrap(err)
-		}
 	}
 
 	// Load `host_uuid` from different storages. If this process is running in a Kubernetes Cluster,
@@ -1130,14 +1128,17 @@ func NewTeleport(cfg *servicecfg.Config) (_ *TeleportProcess, err error) {
 	// key is empty or if not running in a Kubernetes Cluster, it will read the
 	// `host_uuid` from local data directory.
 	// If no host id is available, it will generate a new host id and persist it to available storages.
-	if err := readOrGenerateHostID(supervisor.ExitContext(), cfg, kubeBackend); err != nil {
+	// If we fail with an already exists failure, retry.
+	hostID, err := store.ReadOrGenerateHostID(supervisor.ExitContext(), cfg)
+	if err != nil {
 		return nil, trace.Wrap(err)
 	}
-
-	_, err = uuid.Parse(cfg.HostUUID)
-	if err != nil && !aws.IsEC2NodeID(cfg.HostUUID) {
-		cfg.Logger.WarnContext(supervisor.ExitContext(), "Host UUID is not a true UUID (not eligible for UUID-based proxying)", "host_uuid", cfg.HostUUID)
+	if _, err := uuid.Parse(hostID); err != nil && !aws.IsEC2NodeID(hostID) {
+		cfg.Logger.WarnContext(supervisor.ExitContext(), "Host UUID is not a true UUID (not eligible for UUID-based proxying)", "host_uuid", hostID)
 	}
+
+	// TODO(nklaassen): remove Process.Config.HostUUID
+	cfg.HostUUID = hostID
 
 	if cfg.Clock == nil {
 		cfg.Clock = clockwork.NewRealClock()
@@ -1162,7 +1163,9 @@ func NewTeleport(cfg *servicecfg.Config) (_ *TeleportProcess, err error) {
 
 	if cfg.DatabaseREPLRegistry == nil {
 		cfg.DatabaseREPLRegistry = dbrepl.NewREPLGetter(map[string]dbrepl.REPLNewFunc{
-			defaults.ProtocolPostgres: pgrepl.New,
+			defaults.ProtocolPostgres:    pgrepl.New,
+			defaults.ProtocolCockroachDB: pgrepl.New,
+			defaults.ProtocolMySQL:       myrepl.New,
 		})
 	}
 
@@ -1256,7 +1259,7 @@ func NewTeleport(cfg *servicecfg.Config) (_ *TeleportProcess, err error) {
 		hostedPluginRoles:      make(map[types.SystemRole]string),
 		connectors:             make(map[types.SystemRole]*Connector),
 		importedDescriptors:    cfg.FileDescriptors,
-		storage:                storage,
+		storage:                store,
 		rotationCache:          rotationCache,
 		id:                     processID,
 		logger:                 cfg.Logger,
@@ -1305,13 +1308,17 @@ func NewTeleport(cfg *servicecfg.Config) (_ *TeleportProcess, err error) {
 	upgraderKind, externalUpgrader, upgraderVersion := process.detectUpgrader()
 
 	getHello := func(ctx context.Context) (*proto.UpstreamInventoryHello, error) {
+		hostID, err := process.WaitForHostID(ctx)
+		if err != nil {
+			return nil, trace.Wrap(err, "waiting for host ID")
+		}
 		instanceRoles := process.getInstanceRoles()
 		services := make([]string, 0, len(instanceRoles))
 		for _, r := range instanceRoles {
 			services = append(services, string(r))
 		}
 		hello := &proto.UpstreamInventoryHello{
-			ServerID:         cfg.HostUUID,
+			ServerID:         hostID,
 			Version:          teleport.Version,
 			Services:         services,
 			Hostname:         cfg.Hostname,
@@ -1324,7 +1331,7 @@ func NewTeleport(cfg *servicecfg.Config) (_ *TeleportProcess, err error) {
 		}
 
 		if upgraderKind == types.UpgraderKindTeleportUpdate {
-			info, err := autoupdate.ReadHelloUpdaterInfo(supervisor.ExitContext(), cfg.Logger, cfg.HostUUID)
+			info, err := autoupdate.ReadHelloUpdaterInfo(supervisor.ExitContext(), cfg.Logger, hostID)
 			if err != nil {
 				// Failing to detect teleport-update info is not fatal, we continue.
 				cfg.Logger.WarnContext(supervisor.ExitContext(), "Error recovering teleport-update status, this might affect automatic update tracking and progress.", "error", err)
@@ -1662,7 +1669,7 @@ func (process *TeleportProcess) detectUpgrader() (kind, externalName string, ver
 
 // configureUpgraderExporter configures the window exporter for upgraders that export windows.
 func (process *TeleportProcess) configureUpgraderExporter(kind string) error {
-	driver, err := uw.NewDriver(kind)
+	driver, err := uw.NewDriver(process.ExitContext(), kind)
 	if err != nil {
 		return trace.Wrap(err)
 	}
@@ -1770,17 +1777,31 @@ func (process *TeleportProcess) getInstanceClient() *authclient.Client {
 	return conn.Client
 }
 
-// waitForInstanceConnector waits for the instance connector to become available. returns nil if
-// process shutdown is triggered or if this is an auth-only instance. Auth-only instances cannot
-// use the instance client because auth servers need to be able to fully initialize without a
-// valid CA in order to support HSMs.
-func (process *TeleportProcess) waitForInstanceConnector() *Connector {
+// waitForInstanceConnector waits for the instance connector to become
+// available. Returns nil if if this is an auth-only instance or ctx is
+// canceled. Auth-only instances cannot use the instance client because auth
+// servers need to be able to fully initialize without a valid CA in order to
+// support HSMs.
+func (process *TeleportProcess) waitForInstanceConnector(ctx context.Context) *Connector {
 	select {
 	case <-process.instanceConnectorReady:
 		return process.getInstanceConnector()
-	case <-process.ExitContext().Done():
+	case <-ctx.Done():
 		return nil
 	}
+}
+
+// WaitForHostID returns the local host UUID. If there is a local auth service,
+// it returns immediately, otherwise it waits for the instance connector to
+// become available.
+func (process *TeleportProcess) WaitForHostID(ctx context.Context) (string, error) {
+	if auth := process.getLocalAuth(); auth != nil {
+		return auth.ServerID, nil
+	}
+	if connector := process.waitForInstanceConnector(ctx); connector != nil {
+		return connector.HostUUID(), nil
+	}
+	return "", trace.Errorf("instance connector never became ready")
 }
 
 // makeInventoryControlStreamWhenReady is the same as makeInventoryControlStream except that it blocks until
@@ -1823,6 +1844,18 @@ func (process *TeleportProcess) exportUpgradeWindows(ctx context.Context, req pr
 	return clt.ExportUpgradeWindows(ctx, req)
 }
 
+// isGroupMember returns whether currently logged user is a member of a group
+func isGroupMember(gid int) (bool, error) {
+	groups, err := os.Getgroups()
+	if err != nil {
+		return false, trace.ConvertSystemError(err)
+	}
+	if slices.Contains(groups, gid) {
+		return true, nil
+	}
+	return false, nil
+}
+
 // adminCreds returns admin UID and GID settings based on the OS
 func adminCreds() (*int, *int, error) {
 	if runtime.GOOS != constants.LinuxOS {
@@ -1830,7 +1863,7 @@ func adminCreds() (*int, *int, error) {
 	}
 	// if the user member of adm linux group,
 	// make audit log folder readable by admins
-	isAdmin, err := utils.IsGroupMember(teleport.LinuxAdminGID)
+	isAdmin, err := isGroupMember(teleport.LinuxAdminGID)
 	if err != nil {
 		return nil, nil, trace.Wrap(err)
 	}
@@ -2157,7 +2190,7 @@ func (process *TeleportProcess) initAuthService() error {
 		return trace.Wrap(err)
 	}
 
-	recordingEncryptionManager, err := recordingencryption.NewManager(recordingencryption.ManagerConfig{
+	recordingEncryptionManager, err := recordingencryption.NewManager(process.GracefulExitContext(), recordingencryption.ManagerConfig{
 		Backend:       localRecordingEncryption,
 		Cache:         localRecordingEncryption,
 		KeyStore:      keyStore,
@@ -2170,9 +2203,10 @@ func (process *TeleportProcess) initAuthService() error {
 				LockNameComponents: []string{"recording_encryption"},
 			},
 		},
+		InitialSessionRecordingConfig: cfg.Auth.SessionRecordingConfig,
 	})
 	if err != nil {
-		return trace.Wrap(err)
+		return trace.Wrap(err, "initializing session recording encryption")
 	}
 
 	clusterConfig = recordingEncryptionManager
@@ -2186,6 +2220,7 @@ func (process *TeleportProcess) initAuthService() error {
 	}
 
 	sessionSummarizerProvider := summarizer.NewSessionSummarizerProvider()
+	recordingMetadataProvider := recordingmetadata.NewProvider()
 
 	// create the audit log, which will be consuming (and recording) all events
 	// and recording all sessions.
@@ -2227,6 +2262,7 @@ func (process *TeleportProcess) initAuthService() error {
 			Uploader:                  uploadHandler,
 			Encrypter:                 encryptedIO,
 			SessionSummarizerProvider: sessionSummarizerProvider,
+			RecordingMetadataProvider: recordingMetadataProvider,
 		})
 		if err != nil {
 			return trace.Wrap(err)
@@ -2437,6 +2473,15 @@ func (process *TeleportProcess) initAuthService() error {
 	}
 	authServer.SetHeadlessAuthenticationWatcher(headlessAuthenticationWatcher)
 
+	recordingMetadataService, err := recordingmetadatav1.NewRecordingMetadataService(recordingmetadatav1.RecordingMetadataServiceConfig{
+		Streamer:      authServer,
+		UploadHandler: authServer,
+	})
+	if err != nil {
+		return trace.Wrap(err)
+	}
+	recordingMetadataProvider.SetService(recordingMetadataService)
+
 	process.setLocalAuth(authServer)
 
 	// The auth server runs its own upload completer, which is necessary in sync recording modes where
@@ -2642,7 +2687,7 @@ func (process *TeleportProcess) initAuthService() error {
 				Version: types.V2,
 				Metadata: types.Metadata{
 					Namespace: apidefaults.Namespace,
-					Name:      process.Config.HostUUID,
+					Name:      connector.HostUUID(),
 				},
 				Spec: types.ServerSpecV2{
 					Addr:     authAddr,
@@ -2711,7 +2756,7 @@ func (process *TeleportProcess) initAuthService() error {
 		Emitter:     authServer,
 		AccessPoint: authServer.Services,
 		Clock:       process.Clock,
-		HostID:      cfg.HostUUID,
+		HostID:      connector.HostUUID(),
 	})
 	if err != nil {
 		return trace.Wrap(err)
@@ -2727,57 +2772,17 @@ func (process *TeleportProcess) initAuthService() error {
 		return trace.Wrap(recordingEncryptionManager.Watch(process.GracefulExitContext(), authServer.Services))
 	})
 
-	awsRolesAnywhereProfileSyncProcessName := "aws-roles-anywhere.profile-sync"
-	process.RegisterFunc("auth."+awsRolesAnywhereProfileSyncProcessName+".service", func() error {
-		ctx := process.GracefulExitContext()
-		logger := process.logger.With("process", awsRolesAnywhereProfileSyncProcessName)
-
-		if _, err := process.WaitForEvent(ctx, TeleportReadyEvent); err != nil {
-			logger.DebugContext(ctx, "process exiting: failed to start AWS Roles Anywhere profile sync service")
-			return nil
-		}
-
-		params := awsra.AWSRolesAnywherProfileSyncerParams{
+	process.RegisterFunc("auth.aws-roles-anywhere.profile-sync.service", func() error {
+		return trace.Wrap(awsra.RunAWSRolesAnywhereProfileSyncerWhileLocked(process.GracefulExitContext(), awsra.AWSRolesAnywhereProfileSyncerParams{
 			Clock:             process.Clock,
 			Logger:            logger,
 			KeyStoreManager:   authServer.GetKeyStore(),
 			Cache:             authServer.Cache,
 			StatusReporter:    authServer.Services,
+			Backend:           process.backend,
 			AppServerUpserter: authServer.Services,
 			HostUUID:          process.Config.HostUUID,
-		}
-
-		runWhileLockedConfig := backend.RunWhileLockedConfig{
-			LockConfiguration: backend.LockConfiguration{
-				Backend:            process.backend,
-				LockNameComponents: []string{awsRolesAnywhereProfileSyncProcessName},
-				TTL:                1 * time.Minute,
-			},
-			RefreshLockInterval: 20 * time.Second,
-		}
-
-		runFunction := func(ctx context.Context) error {
-			return trace.Wrap(awsra.RunAWSRolesAnywherProfileSyncer(ctx, params))
-		}
-
-		waitWithJitter := retryutils.SeventhJitter(time.Second * 10)
-		for {
-			err := backend.RunWhileLocked(ctx, runWhileLockedConfig, runFunction)
-			if err != nil && ctx.Err() == nil {
-				logger.ErrorContext(
-					ctx,
-					"AWS Roles Anywhere profile syncer encountered a fatal error, it will restart after backoff",
-					"error", err,
-					"restart_after", waitWithJitter,
-				)
-			}
-
-			select {
-			case <-ctx.Done():
-				return nil
-			case <-time.After(waitWithJitter):
-			}
-		}
+		}))
 	})
 
 	// execute this when process is asked to exit:
@@ -3037,6 +3042,20 @@ func (process *TeleportProcess) newLocalCacheForProxy(clt authclient.ClientI, ca
 	return authclient.NewProxyWrapper(clt, cache), nil
 }
 
+func (process *TeleportProcess) newLocalCacheForRelay(clt authclient.ClientI, cacheName []string) (authclient.ReadRelayAccessPoint, error) {
+	// if caching is disabled, return access point
+	if !process.Config.CachePolicy.Enabled {
+		return clt, nil
+	}
+
+	cache, err := process.NewLocalCache(clt, cache.ForRelay, cacheName)
+	if err != nil {
+		return nil, trace.Wrap(err)
+	}
+
+	return cache, nil
+}
+
 // newLocalCacheForRemoteProxy returns new instance of access point configured for a remote proxy.
 func (process *TeleportProcess) newLocalCacheForRemoteProxy(clt authclient.ClientI, cacheName []string) (authclient.RemoteProxyAccessPoint, error) {
 	// if caching is disabled, return access point
@@ -3293,12 +3312,6 @@ func (process *TeleportProcess) initSSH() error {
 
 		storagePresence := local.NewPresenceService(process.storage.BackendStorage)
 
-		// read the host UUID:
-		serverID, err := hostid.ReadOrCreateFile(cfg.DataDir)
-		if err != nil {
-			return trace.Wrap(err)
-		}
-
 		sessionController, err := srv.NewSessionController(srv.SessionControllerConfig{
 			Semaphores:     authClient,
 			AccessPoint:    authClient,
@@ -3307,7 +3320,7 @@ func (process *TeleportProcess) initSSH() error {
 			Component:      teleport.ComponentNode,
 			Logger:         process.logger.With(teleport.ComponentKey, teleport.Component(teleport.ComponentNode, process.id, "sessionctrl")),
 			TracerProvider: process.TracingProvider,
-			ServerID:       serverID,
+			ServerID:       conn.HostUUID(),
 		})
 		if err != nil {
 			return trace.Wrap(err)
@@ -3323,6 +3336,7 @@ func (process *TeleportProcess) initSSH() error {
 			cfg.AdvertiseIP,
 			process.proxyPublicAddr(),
 			conn.Client,
+			regular.SetUUID(conn.HostUUID()),
 			regular.SetLimiter(limiter),
 			regular.SetEmitter(&events.StreamerAndEmitter{Emitter: asyncEmitter, Streamer: conn.Client}),
 			regular.SetLabels(cfg.SSH.Labels, cfg.SSH.CmdLabels, process.cloudLabels),
@@ -3376,7 +3390,7 @@ func (process *TeleportProcess) initSSH() error {
 		if os.Getenv("TELEPORT_UNSTABLE_DISABLE_SSH_RESUMPTION") == "" {
 			resumableServer = resumption.NewSSHServerWrapper(resumption.SSHServerWrapperConfig{
 				SSHServer: s.HandleConnection,
-				HostID:    serverID,
+				HostID:    conn.HostUUID(),
 				DataDir:   cfg.DataDir,
 			})
 
@@ -4003,23 +4017,39 @@ func (process *TeleportProcess) initTracingService() error {
 	logger := process.logger.With(teleport.ComponentKey, teleport.Component(teleport.ComponentTracing, process.id))
 	logger.InfoContext(process.ExitContext(), "Initializing tracing provider and exporter.")
 
-	attrs := []attribute.KeyValue{
+	staticAttrs := []attribute.KeyValue{
 		attribute.String(tracing.ProcessIDKey, process.id),
 		attribute.String(tracing.HostnameKey, process.Config.Hostname),
-		attribute.String(tracing.HostIDKey, process.Config.HostUUID),
 	}
 
-	traceConf, err := process.Config.Tracing.Config(attrs...)
+	traceConf, err := process.Config.Tracing.Config(staticAttrs...)
 	if err != nil {
 		return trace.Wrap(err)
 	}
 	traceConf.Logger = process.logger.With(teleport.ComponentKey, teleport.Component(teleport.ComponentTracing, process.id))
+	// Host UUID is not ready at this point, it will be reported to the tracing
+	// provider in the goroutine below.
+	traceConf.WaitForDelayedResourceAttrs = true
 
 	provider, err := tracing.NewTraceProvider(process.ExitContext(), *traceConf)
 	if err != nil {
 		return trace.Wrap(err)
 	}
 	process.TracingProvider = provider
+
+	go func() {
+		var delayedResourceAttrs []attribute.KeyValue
+		hostUUID, err := process.WaitForHostID(process.GracefulExitContext())
+		if err != nil {
+			logger.WarnContext(process.ExitContext(), "Failed to get host UUID, traces may be exported without host UUID attribute", "error", err)
+		} else {
+			delayedResourceAttrs = append(delayedResourceAttrs,
+				attribute.String(tracing.HostIDKey, hostUUID))
+		}
+		if err := process.TracingProvider.SetDelayedResourceAttrs(process.GracefulExitContext(), delayedResourceAttrs); err != nil {
+			logger.WarnContext(process.ExitContext(), "Failed to report delayed resource attributes to tracing provider", "error", err)
+		}
+	}()
 
 	process.OnExit("tracing.shutdown", func(payload any) {
 		if payload == nil {
@@ -4837,7 +4867,7 @@ func (process *TeleportProcess) initProxyEndpoint(conn *Connector) error {
 				// reverse tunnel agents during rollouts, as otherwise they'll keep
 				// trying to reach proxies until the heartbeats expire.
 				if services.ShouldDeleteServerHeartbeatsOnShutdown(ctx) {
-					if err := conn.Client.DeleteProxy(ctx, process.Config.HostUUID); err != nil {
+					if err := conn.Client.DeleteProxy(ctx, conn.HostUUID()); err != nil {
 						if !trace.IsNotFound(err) {
 							logger.WarnContext(ctx, "Failed to delete heartbeat", "error", err)
 						} else {
@@ -4887,7 +4917,7 @@ func (process *TeleportProcess) initProxyEndpoint(conn *Connector) error {
 
 			peerClient, err = peer.NewClient(peer.ClientConfig{
 				Context:           process.ExitContext(),
-				ID:                process.Config.HostUUID,
+				ID:                conn.HostUUID(),
 				AuthClient:        conn.Client,
 				AccessPoint:       accessPoint,
 				TLSCipherSuites:   cfg.CipherSuites,
@@ -4914,7 +4944,7 @@ func (process *TeleportProcess) initProxyEndpoint(conn *Connector) error {
 				GetClientTLSCertificate: conn.ClientGetCertificate,
 				Context:                 process.ExitContext(),
 				Component:               teleport.Component(teleport.ComponentProxy, process.id),
-				ID:                      process.Config.HostUUID,
+				ID:                      conn.HostUUID(),
 				ClusterName:             clusterName,
 				Listener:                rtListener,
 				GetHostSigners:          conn.ServerGetHostSigners,
@@ -4972,7 +5002,7 @@ func (process *TeleportProcess) initProxyEndpoint(conn *Connector) error {
 		router, err := proxy.NewRouter(proxy.RouterConfig{
 			ClusterName:      clusterName,
 			LocalAccessPoint: accessPoint,
-			SiteGetter:       tsrv,
+			ClusterGetter:    tsrv,
 			TracerProvider:   process.TracingProvider,
 			Logger:           process.logger.With(teleport.ComponentKey, "router"),
 		})
@@ -4983,12 +5013,6 @@ func (process *TeleportProcess) initProxyEndpoint(conn *Connector) error {
 		proxyRouter = router
 	}
 
-	// read the host UUID:
-	serverID, err := hostid.ReadOrCreateFile(cfg.DataDir)
-	if err != nil {
-		return trace.Wrap(err)
-	}
-
 	sessionController, err := srv.NewSessionController(srv.SessionControllerConfig{
 		Semaphores:     accessPoint,
 		AccessPoint:    accessPoint,
@@ -4997,7 +5021,7 @@ func (process *TeleportProcess) initProxyEndpoint(conn *Connector) error {
 		Component:      teleport.ComponentProxy,
 		Logger:         process.logger.With(teleport.ComponentKey, "sessionctrl"),
 		TracerProvider: process.TracingProvider,
-		ServerID:       serverID,
+		ServerID:       conn.HostUUID(),
 	})
 	if err != nil {
 		return trace.Wrap(err)
@@ -5083,7 +5107,7 @@ func (process *TeleportProcess) initProxyEndpoint(conn *Connector) error {
 			AccessPoint:    accessPoint,
 			LockWatcher:    lockWatcher,
 			Clock:          process.Clock,
-			ServerID:       cfg.HostUUID,
+			ServerID:       conn.HostUUID(),
 			Emitter:        asyncEmitter,
 			EmitterContext: process.GracefulExitContext(),
 			Logger:         process.logger,
@@ -5097,7 +5121,7 @@ func (process *TeleportProcess) initProxyEndpoint(conn *Connector) error {
 			DataDir:           cfg.DataDir,
 			Emitter:           asyncEmitter,
 			Authorizer:        authorizer,
-			HostID:            cfg.HostUUID,
+			HostID:            conn.HostUUID(),
 			AuthClient:        conn.Client,
 			AccessPoint:       accessPoint,
 			TLSConfig:         serverTLSConfig,
@@ -5138,7 +5162,7 @@ func (process *TeleportProcess) initProxyEndpoint(conn *Connector) error {
 			AccessPoint:               accessPoint,
 			Emitter:                   asyncEmitter,
 			PluginRegistry:            process.PluginRegistry,
-			HostUUID:                  process.Config.HostUUID,
+			HostUUID:                  conn.HostUUID(),
 			Context:                   process.GracefulExitContext(),
 			StaticFS:                  fs,
 			ClusterFeatures:           process.GetClusterFeatures(),
@@ -5350,6 +5374,7 @@ func (process *TeleportProcess) initProxyEndpoint(conn *Connector) error {
 		"",
 		process.proxyPublicAddr(),
 		conn.Client,
+		regular.SetUUID(conn.HostUUID()),
 		regular.SetLimiter(proxyLimiter),
 		regular.SetProxyMode(peerAddrString, tsrv, accessPoint, proxyRouter),
 		regular.SetCiphers(cfg.Ciphers),
@@ -5445,7 +5470,7 @@ func (process *TeleportProcess) initProxyEndpoint(conn *Connector) error {
 		AccessPoint:    accessPoint,
 		LockWatcher:    lockWatcher,
 		Clock:          process.Clock,
-		ServerID:       serverID,
+		ServerID:       conn.HostUUID(),
 		Emitter:        asyncEmitter,
 		EmitterContext: process.ExitContext(),
 		Logger:         process.logger,
@@ -5582,7 +5607,7 @@ func (process *TeleportProcess) initProxyEndpoint(conn *Connector) error {
 				Emitter:                       asyncEmitter,
 				DataDir:                       cfg.DataDir,
 				CachingAuthClient:             accessPoint,
-				HostID:                        cfg.HostUUID,
+				HostID:                        conn.HostUUID(),
 				ClusterOverride:               cfg.Proxy.Kube.ClusterOverride,
 				KubeconfigPath:                cfg.Proxy.Kube.KubeconfigPath,
 				Component:                     component,
@@ -5661,7 +5686,7 @@ func (process *TeleportProcess) initProxyEndpoint(conn *Connector) error {
 			AccessPoint:    accessPoint,
 			LockWatcher:    lockWatcher,
 			Clock:          process.Config.Clock,
-			ServerID:       process.Config.HostUUID,
+			ServerID:       conn.HostUUID(),
 			Emitter:        asyncEmitter,
 			EmitterContext: process.ExitContext(),
 			Logger:         process.logger,
@@ -5955,10 +5980,10 @@ func (process *TeleportProcess) setupProxyTLSConfig(conn *Connector, tsrv revers
 			return nil, trace.ConvertSystemError(err)
 		}
 		hostChecker, err := newHostPolicyChecker(hostPolicyCheckerConfig{
-			publicAddrs: process.Config.Proxy.PublicAddrs,
-			clt:         conn.Client,
-			tun:         tsrv,
-			clusterName: conn.ClusterName(),
+			publicAddrs:   process.Config.Proxy.PublicAddrs,
+			clt:           conn.Client,
+			clusterGetter: tsrv,
+			clusterName:   conn.ClusterName(),
 		})
 		if err != nil {
 			return nil, trace.Wrap(err)
@@ -6434,7 +6459,7 @@ func (process *TeleportProcess) initApps() {
 			AccessPoint:         accessPoint,
 			LockWatcher:         lockWatcher,
 			Clock:               process.Config.Clock,
-			ServerID:            process.Config.HostUUID,
+			ServerID:            conn.HostUUID(),
 			Emitter:             asyncEmitter,
 			EmitterContext:      process.ExitContext(),
 			Logger:              process.logger,
@@ -6452,7 +6477,7 @@ func (process *TeleportProcess) initApps() {
 			Authorizer:        authorizer,
 			TLSConfig:         tlsConfig,
 			CipherSuites:      process.Config.CipherSuites,
-			HostID:            process.Config.HostUUID,
+			HostID:            conn.HostUUID(),
 			Emitter:           asyncEmitter,
 			ConnectionMonitor: connMonitor,
 			ServiceComponent:  teleport.ComponentApp,
@@ -6467,7 +6492,7 @@ func (process *TeleportProcess) initApps() {
 			Clock:                process.Config.Clock,
 			AuthClient:           conn.Client,
 			AccessPoint:          accessPoint,
-			HostID:               process.Config.HostUUID,
+			HostID:               conn.HostUUID(),
 			Hostname:             process.Config.Hostname,
 			GetRotation:          process.GetRotation,
 			Apps:                 applications,
@@ -6869,7 +6894,6 @@ func getPublicAddr(authClient authclient.ReadAppsAccessPoint, a servicecfg.App) 
 		select {
 		case <-ticker.C:
 			publicAddr, err := app.FindPublicAddr(authClient, a.PublicAddr, a.Name)
-
 			if err == nil {
 				return publicAddr, nil
 			}
@@ -6887,146 +6911,6 @@ func newHTTPFileSystem() (http.FileSystem, error) {
 		return nil, trace.Wrap(err)
 	}
 	return fs, nil
-}
-
-// readOrGenerateHostID tries to read the `host_uuid` from Kubernetes storage (if available) or local storage.
-// If the read operation returns no `host_uuid`, this function tries to pick it from the first static identity provided.
-// If no static identities were defined for the process, a new id is generated depending on the joining process:
-// - types.JoinMethodEC2: we will use the EC2 NodeID: {accountID}-{nodeID}
-// - Any other valid Joining method: a new UUID is generated.
-// Finally, if a new id is generated, this function writes it into local storage and Kubernetes storage (if available).
-// If kubeBackend is nil, the agent is not running in a Kubernetes Cluster.
-func readOrGenerateHostID(ctx context.Context, cfg *servicecfg.Config, kubeBackend kubernetesBackend) (err error) {
-	// Load `host_uuid` from different storages. If this process is running in a Kubernetes Cluster,
-	// readHostUUIDFromStorages will try to read the `host_uuid` from the Kubernetes Secret. If the
-	// key is empty or if not running in a Kubernetes Cluster, it will read the
-	// `host_uuid` from local data directory.
-	cfg.HostUUID, err = readHostIDFromStorages(ctx, cfg.DataDir, kubeBackend)
-	if err != nil {
-		if !trace.IsNotFound(err) {
-			if errors.Is(err, fs.ErrPermission) {
-				cfg.Logger.ErrorContext(ctx, "Teleport does not have permission to write to the data directory. Ensure that you are running as a user with appropriate permissions.", "data_dir", cfg.DataDir)
-			}
-			return trace.Wrap(err)
-		}
-		// if there's no host uuid initialized yet, try to read one from the
-		// one of the identities
-		if len(cfg.Identities) != 0 {
-			cfg.HostUUID = cfg.Identities[0].ID.HostUUID
-			cfg.Logger.InfoContext(ctx, "Taking host UUID from first identity.", "host_uuid", cfg.HostUUID)
-		} else {
-			switch cfg.JoinMethod {
-			case types.JoinMethodToken,
-				types.JoinMethodUnspecified,
-				types.JoinMethodAzureDevops,
-				types.JoinMethodIAM,
-				types.JoinMethodCircleCI,
-				types.JoinMethodKubernetes,
-				types.JoinMethodGitHub,
-				types.JoinMethodGitLab,
-				types.JoinMethodAzure,
-				types.JoinMethodGCP,
-				types.JoinMethodTPM,
-				types.JoinMethodTerraformCloud,
-				types.JoinMethodOracle:
-				// Checking error instead of the usual uuid.New() in case uuid generation
-				// fails due to not enough randomness. It's been known to happen happen when
-				// Teleport starts very early in the node initialization cycle and /dev/urandom
-				// isn't ready yet.
-				rawID, err := uuid.NewRandom()
-				if err != nil {
-					return trace.BadParameter("" +
-						"Teleport failed to generate host UUID. " +
-						"This may happen if randomness source is not fully initialized when the node is starting up. " +
-						"Please try restarting Teleport again.")
-				}
-				cfg.HostUUID = rawID.String()
-			case types.JoinMethodEC2:
-				cfg.HostUUID, err = utils.GetEC2NodeID(ctx)
-				if err != nil {
-					return trace.Wrap(err)
-				}
-			default:
-				return trace.BadParameter("unknown join method %q", cfg.JoinMethod)
-			}
-			cfg.Logger.InfoContext(ctx, "Generating new host UUID", "host_uuid", cfg.HostUUID)
-		}
-		// persistHostUUIDToStorages will persist the host_uuid to the local storage
-		// and to Kubernetes Secret if this process is running on a Kubernetes Cluster.
-		if err := persistHostIDToStorages(ctx, cfg, kubeBackend); err != nil {
-			return trace.Wrap(err)
-		}
-	}
-	return nil
-}
-
-// kubernetesBackend interface for kube storage backend.
-type kubernetesBackend interface {
-	// Put puts value into backend (creates if it does not
-	// exists, updates it otherwise)
-	Put(ctx context.Context, i backend.Item) (*backend.Lease, error)
-	// Get returns a single item or not found error
-	Get(ctx context.Context, key backend.Key) (*backend.Item, error)
-}
-
-// readHostIDFromStorages tries to read the `host_uuid` value from different storages,
-// depending on where the process is running.
-// If the process is running in a Kubernetes Cluster, this function will attempt
-// to read the `host_uuid` from the Kubernetes Secret. If it does not exist or
-// if it is not running on a Kubernetes cluster the read is done from the local
-// storage: `dataDir/host_uuid`.
-func readHostIDFromStorages(ctx context.Context, dataDir string, kubeBackend kubernetesBackend) (string, error) {
-	if kubeBackend != nil {
-		if hostID, err := loadHostIDFromKubeSecret(ctx, kubeBackend); err == nil && len(hostID) > 0 {
-			return hostID, nil
-		}
-	}
-	// Even if running in Kubernetes fallback to local storage if `host_uuid` was
-	// not found in secret.
-	hostID, err := hostid.ReadFile(dataDir)
-	return hostID, trace.Wrap(err)
-}
-
-// persistHostIDToStorages writes the cfg.HostUUID to local data and to
-// Kubernetes Secret if this process is running on a Kubernetes Cluster.
-func persistHostIDToStorages(ctx context.Context, cfg *servicecfg.Config, kubeBackend kubernetesBackend) error {
-	if err := hostid.WriteFile(cfg.DataDir, cfg.HostUUID); err != nil {
-		if errors.Is(err, fs.ErrPermission) {
-			cfg.Logger.ErrorContext(ctx, "Teleport does not have permission to write to the data directory. Ensure that you are running as a user with appropriate permissions.", "data_dir", cfg.DataDir)
-		}
-		return trace.Wrap(err)
-	}
-
-	// Persists the `host_uuid` into Kubernetes Secret for later reusage.
-	// This is required because `host_uuid` is part of the client secret
-	// and Auth connection will fail if we present a different `host_uuid`.
-	if kubeBackend != nil {
-		return trace.Wrap(writeHostIDToKubeSecret(ctx, kubeBackend, cfg.HostUUID))
-	}
-	return nil
-}
-
-// loadHostIDFromKubeSecret reads the host_uuid from the Kubernetes secret with
-// the expected key: `/host_uuid`.
-func loadHostIDFromKubeSecret(ctx context.Context, kubeBackend kubernetesBackend) (string, error) {
-	item, err := kubeBackend.Get(ctx, backend.NewKey(hostid.FileName))
-	if err != nil {
-		return "", trace.Wrap(err)
-	}
-	return string(item.Value), nil
-}
-
-// writeHostIDToKubeSecret writes the `host_uuid` into the Kubernetes secret under
-// the key `/host_uuid`.
-func writeHostIDToKubeSecret(ctx context.Context, kubeBackend kubernetesBackend, id string) error {
-	_, err := kubeBackend.Put(
-		ctx,
-		backend.Item{
-			Key:   backend.NewKey(hostid.FileName),
-			Value: []byte(id),
-		},
-	)
-	return trace.Wrap(err)
 }
 
 // initPublicGRPCServer creates and registers a gRPC server that does not use client

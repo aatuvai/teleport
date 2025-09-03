@@ -30,7 +30,7 @@ service, a Discovery Service, and integration with your AWS account.
 Access Graph discovers AWS access patterns, synchronizes various AWS resources,
 including IAM Policies, Groups, Users, User Groups, EC2 instances, EKS clusters, and RDS databases.
 These resources are then visualized using the graph representation detailed in the
-[Identity Security usage page](../policy-how-to-use.mdx).
+[Identity Security usage page](../how-to-use.mdx).
 
 The importing process involves three primary steps:
 
@@ -82,7 +82,7 @@ services, including login attempts, API calls, and changes to infrastructure.
 - For self-hosted clusters:
   - Ensure that an up-to-date `license.pem` is used in the Auth Service configuration.
   - A running Access Graph node v1.28.0 or later.
-Check the [Identity Security page](../teleport-policy.mdx) for details on
+Check the [Identity Security page](../identity-security.mdx) for details on
 how to set up Access Graph.
   - The node running the Access Graph service must be reachable from the Teleport Auth Service.
   - AWS CloudTrail setup with notifications being sent to a SNS topic.

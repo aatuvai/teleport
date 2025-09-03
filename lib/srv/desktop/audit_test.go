@@ -129,6 +129,7 @@ func TestSessionStartEvent(t *testing.T) {
 			RemoteAddr: testDesktop.GetAddr(),
 			Protocol:   libevents.EventProtocolTDP,
 		},
+		CertMetadata: new(events.WindowsCertificateMetadata),
 		Status: events.Status{
 			Success: true,
 		},
@@ -190,6 +191,11 @@ func TestSessionEndEvent(t *testing.T) {
 		SessionMetadata: events.SessionMetadata{
 			SessionID: "sessionID",
 			WithMFA:   id.MFAVerified,
+		},
+		ConnectionMetadata: events.ConnectionMetadata{
+			LocalAddr:  id.LoginIP,
+			RemoteAddr: testDesktop.GetAddr(),
+			Protocol:   libevents.EventProtocolTDP,
 		},
 		WindowsDesktopService: audit.desktopServiceUUID,
 		DesktopAddr:           testDesktop.GetAddr(),

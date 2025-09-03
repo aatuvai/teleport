@@ -23,6 +23,7 @@ import (
 	"context"
 	"crypto/tls"
 	"crypto/x509"
+	"encoding/asn1"
 	"errors"
 	"fmt"
 	"log/slog"
@@ -40,11 +41,14 @@ import (
 	apidefaults "github.com/gravitational/teleport/api/defaults"
 	"github.com/gravitational/teleport/api/types"
 	"github.com/gravitational/teleport/api/types/events"
+	"github.com/gravitational/teleport/api/utils/clientutils"
+	"github.com/gravitational/teleport/api/utils/retryutils"
 	"github.com/gravitational/teleport/lib/auth/authclient"
 	"github.com/gravitational/teleport/lib/authz"
 	"github.com/gravitational/teleport/lib/defaults"
 	libevents "github.com/gravitational/teleport/lib/events"
 	"github.com/gravitational/teleport/lib/events/recorder"
+	"github.com/gravitational/teleport/lib/itertools/stream"
 	"github.com/gravitational/teleport/lib/limiter"
 	"github.com/gravitational/teleport/lib/reversetunnelclient"
 	"github.com/gravitational/teleport/lib/service/servicecfg"
@@ -56,6 +60,7 @@ import (
 	"github.com/gravitational/teleport/lib/tlsca"
 	"github.com/gravitational/teleport/lib/utils"
 	logutils "github.com/gravitational/teleport/lib/utils/log"
+	"github.com/gravitational/teleport/lib/utils/slices"
 	"github.com/gravitational/teleport/lib/winpki"
 )
 
@@ -83,6 +88,7 @@ const (
 // see: https://docs.microsoft.com/en-us/windows/win32/adschema/c-computer#windows-server-2012-attributes
 var computerAttributes = []string{
 	attrName,
+	attrDescription,
 	attrCommonName,
 	attrDistinguishedName,
 	attrDNSHostName,
@@ -179,6 +185,8 @@ type WindowsServiceConfig struct {
 	Discovery []servicecfg.LDAPDiscoveryConfig
 	// DiscoveryInterval configures how frequently the discovery process runs.
 	DiscoveryInterval time.Duration
+	// PublishCRLInterval configures how frequently to publish CRLs.
+	PublishCRLInterval time.Duration
 	// Hostname of the Windows desktop service
 	Hostname string
 	// ConnectedProxyGetter gets the proxies teleport is connected to.
@@ -223,6 +231,7 @@ func (cfg *WindowsServiceConfig) checkAndSetDiscoveryDefaults() error {
 	}
 
 	cfg.DiscoveryInterval = cmp.Or(cfg.DiscoveryInterval, 5*time.Minute)
+	cfg.PublishCRLInterval = cmp.Or(cfg.PublishCRLInterval, 5*time.Minute)
 
 	return nil
 }
@@ -374,9 +383,7 @@ func NewWindowsService(cfg WindowsServiceConfig) (*WindowsService, error) {
 		if err != nil {
 			return nil, trace.Wrap(err)
 		}
-		if err := s.ca.Update(s.closeCtx, tc); err != nil {
-			return nil, trace.Wrap(err)
-		}
+		go s.runCRLUpdateLoop(tc)
 	}
 
 	ok := false
@@ -394,7 +401,7 @@ func NewWindowsService(cfg WindowsServiceConfig) (*WindowsService, error) {
 		return nil, trace.Wrap(err)
 	}
 
-	if _, err := s.startDynamicReconciler(ctx); err != nil {
+	if err := s.startDynamicReconciler(ctx); err != nil {
 		return nil, trace.Wrap(err)
 	}
 
@@ -630,8 +637,19 @@ func (s *WindowsService) handleConnection(proxyConn *tls.Conn) {
 	desktopName := strings.TrimSuffix(proxyConn.ConnectionState().ServerName, SNISuffix)
 	log = log.With("desktop_name", desktopName)
 
-	desktops, err := s.cfg.AccessPoint.GetWindowsDesktops(ctx,
-		types.WindowsDesktopFilter{HostID: s.cfg.Heartbeat.HostUUID, Name: desktopName})
+	desktops, err := stream.Collect(clientutils.Resources(ctx,
+		func(ctx context.Context, pageSize int, pageToken string) ([]types.WindowsDesktop, string, error) {
+			resp, err := s.cfg.AccessPoint.ListWindowsDesktops(ctx, types.ListWindowsDesktopsRequest{
+				WindowsDesktopFilter: types.WindowsDesktopFilter{HostID: s.cfg.Heartbeat.HostUUID, Name: desktopName},
+				Limit:                pageSize,
+				StartKey:             pageToken,
+			})
+			if err != nil {
+				return nil, "", trace.Wrap(err)
+			}
+
+			return resp.Desktops, resp.NextKey, nil
+		}))
 	if err != nil {
 		log.WarnContext(ctx, "Failed to fetch desktop by name", "error", err)
 		sendTDPError("Teleport failed to find the requested desktop in its database.")
@@ -784,13 +802,9 @@ func (s *WindowsService) connectRDP(ctx context.Context, log *slog.Logger, tdpCo
 
 	//nolint:staticcheck // SA4023. False positive, depends on build tags.
 	rdpc, err := rdpclient.New(rdpclient.Config{
-		LicenseStore: s.cfg.LicenseStore,
-		HostID:       s.cfg.Heartbeat.HostUUID,
-		Logger:       log,
-		GenerateUserCert: func(ctx context.Context, username string, ttl time.Duration) (certDER, keyDER []byte, err error) {
-			return s.generateUserCert(ctx, username, ttl, desktop, createUsers, groups)
-		},
-		CertTTL:               windowsUserCertTTL,
+		LicenseStore:          s.cfg.LicenseStore,
+		HostID:                s.cfg.Heartbeat.HostUUID,
+		Logger:                log,
 		Addr:                  addr.String(),
 		ComputerName:          computerName,
 		KDCAddr:               kdcAddr,
@@ -811,12 +825,19 @@ func (s *WindowsService) connectRDP(ctx context.Context, log *slog.Logger, tdpCo
 		windowsUser = rdpc.GetClientUsername()
 		audit.windowsUser = windowsUser
 	}
+
 	//nolint:staticcheck // SA4023. False positive, depends on build tags.
 	if err != nil {
 		startEvent := audit.makeSessionStart(err)
 		s.record(ctx, recorder, startEvent)
 		s.emit(ctx, startEvent)
 		return trace.Wrap(err)
+	}
+
+	// Generate client certificates to be used for the RDP connection.
+	certDER, keyDER, err := s.generateUserCert(ctx, windowsUser, windowsUserCertTTL, desktop, createUsers, groups)
+	if err != nil {
+		return trace.Wrap(err, "could not generate client certificates for RDP")
 	}
 
 	if err := s.trackSession(ctx, &identity, windowsUser, string(sessionID), desktop); err != nil {
@@ -860,17 +881,56 @@ func (s *WindowsService) connectRDP(ctx context.Context, log *slog.Logger, tdpCo
 	startEvent := audit.makeSessionStart(nil)
 	startEvent.AllowUserCreation = createUsers
 
+	// Parse some information about the cert, which we'll use in order to enhance
+	// the session start event.
+	userCert, err := x509.ParseCertificate(certDER)
+	if err != nil {
+		return trace.Wrap(err, "the user certificate for RDP is invalid")
+	}
+	populateCertMetadata(startEvent.CertMetadata, userCert)
+
 	s.record(ctx, recorder, startEvent)
 	s.emit(ctx, startEvent)
 
-	err = rdpc.Run(ctx)
+	err = rdpc.Run(ctx, certDER, keyDER)
 
 	// ctx may have been canceled, so emit with a separate context
+	audit.teardown(context.Background())
 	endEvent := audit.makeSessionEnd(recordSession)
 	s.record(context.Background(), recorder, endEvent)
 	s.emit(context.Background(), endEvent)
 
 	return trace.Wrap(err)
+}
+
+func populateCertMetadata(metadata *events.WindowsCertificateMetadata, cert *x509.Certificate) {
+	var enhancedKeyUsages []string
+	var upn string
+
+	for _, extension := range cert.Extensions {
+		if extension.Id.Equal(winpki.EnhancedKeyUsageExtensionOID) {
+			var oids []asn1.ObjectIdentifier
+			if _, err := asn1.Unmarshal(extension.Value, &oids); err == nil {
+				enhancedKeyUsages = make([]string, 0, len(oids))
+				for _, oid := range oids {
+					enhancedKeyUsages = append(enhancedKeyUsages, oid.String())
+				}
+			}
+		} else if extension.Id.Equal(winpki.SubjectAltNameExtensionOID) {
+			var san winpki.SubjectAltName[winpki.UPN]
+			if _, err := asn1.Unmarshal(extension.Value, &san); err == nil {
+				upn = san.OtherName.Value.Value
+			}
+		}
+	}
+
+	metadata.Subject = cert.Subject.String()
+	metadata.SerialNumber = cert.SerialNumber.String()
+	metadata.UPN = upn
+	metadata.CRLDistributionPoints = cert.CRLDistributionPoints
+	metadata.KeyUsage = int32(cert.KeyUsage)
+	metadata.ExtendedKeyUsage = slices.Map(cert.ExtKeyUsage, func(eku x509.ExtKeyUsage) int32 { return int32(eku) })
+	metadata.EnhancedKeyUsage = enhancedKeyUsages
 }
 
 func (s *WindowsService) makeTDPSendHandler(
@@ -993,9 +1053,11 @@ func (s *WindowsService) makeTDPReceiveHandler(
 				s.emit(ctx, errorEvent)
 			}
 		case tdp.SharedDirectoryReadResponse:
-			s.emit(ctx, audit.makeSharedDirectoryReadResponse(msg))
+			// shared directory audit events can be noisy, so we use a compactor
+			// to retain and delay them in an attempt to coalesce contiguous events
+			audit.compactor.handleRead(ctx, audit.makeSharedDirectoryReadResponse(msg))
 		case tdp.SharedDirectoryWriteResponse:
-			s.emit(ctx, audit.makeSharedDirectoryWriteResponse(msg))
+			audit.compactor.handleWrite(ctx, audit.makeSharedDirectoryWriteResponse(msg))
 		}
 	}
 }
@@ -1064,8 +1126,19 @@ func (s *WindowsService) staticHostHeartbeatInfo(host servicecfg.WindowsHost,
 // a very large number of desktops in the cluster, this may use up a lot of CPU
 // time.
 func (s *WindowsService) nameForStaticHost(addr string) (string, error) {
-	desktops, err := s.cfg.AccessPoint.GetWindowsDesktops(s.closeCtx,
-		types.WindowsDesktopFilter{})
+	desktops, err := stream.Collect(clientutils.Resources(s.closeCtx,
+		func(ctx context.Context, pageSize int, pageToken string) ([]types.WindowsDesktop, string, error) {
+			resp, err := s.cfg.AccessPoint.ListWindowsDesktops(ctx, types.ListWindowsDesktopsRequest{
+				Limit:          pageSize,
+				StartKey:       pageToken,
+				SearchKeywords: []string{addr},
+			})
+			if err != nil {
+				return nil, "", trace.Wrap(err)
+			}
+
+			return resp.Desktops, resp.NextKey, nil
+		}))
 	if err != nil {
 		return "", trace.Wrap(err)
 	}
@@ -1233,4 +1306,25 @@ func (m *monitorErrorSender) WriteString(s string) (n int, err error) {
 	}
 
 	return len(s), nil
+}
+
+// runCRLUpdateLoop publishes the Certificate Revocation List to the given
+// LDAP server. It continues to do so every 5 minutes (by default) to make sure it is present
+// and in the correct location.
+func (s *WindowsService) runCRLUpdateLoop(tlsConfig *tls.Config) {
+	t := s.cfg.Clock.NewTicker(retryutils.SeventhJitter(s.cfg.PublishCRLInterval))
+	defer t.Stop()
+
+	for {
+		if err := s.ca.Update(s.closeCtx, tlsConfig); err != nil && !errors.Is(err, context.Canceled) {
+			s.cfg.Logger.ErrorContext(s.closeCtx, "failed to publish CRL", "error", err)
+		}
+
+		select {
+		case <-s.closeCtx.Done():
+			return
+		case <-t.Chan():
+			continue
+		}
+	}
 }

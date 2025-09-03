@@ -7,6 +7,8 @@ labels:
  - zero-trust
 ---
 
+{/* lint disable page-structure remark-lint */}
+
 (!docs/pages/includes/database-access/auto-user-provisioning/intro.mdx!)
 
 ## Prerequisites
@@ -54,6 +56,8 @@ Users created within the database will:
 
 (!docs/pages/includes/database-access/auto-user-provisioning/connect.mdx gui="pgAdmin"!)
 
+(!docs/pages/includes/database-access/db-access-webui-ad.mdx dbType="PostgreSQL"!)
+
 ## Troubleshooting
 
 ### Use your mapped remote username error
@@ -67,5 +71,5 @@ Users created within the database will:
 ## Next steps
 
 - Connect using your [GUI database client](../../../connect-your-client/gui-clients.mdx).
-- Learn about [role templating](../../../admin-guides/access-controls/guides/role-templates.mdx).
+- Learn about [role templating](../../../zero-trust-access/rbac-get-started/role-templates.mdx).
 - Read automatic user provisioning [RFD](https://github.com/gravitational/teleport/blob/master/rfd/0113-automatic-database-users.md).

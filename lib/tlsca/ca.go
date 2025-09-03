@@ -33,6 +33,7 @@ import (
 	"math/big"
 	"net"
 	"os"
+	"slices"
 	"strconv"
 	"time"
 
@@ -1288,6 +1289,8 @@ func (id Identity) GetUserMetadata() events.UserMetadata {
 		TrustedDevice:     device,
 		BotName:           id.BotName,
 		BotInstanceID:     id.BotInstanceID,
+		UserRoles:         slices.Clone(id.Groups),
+		UserTraits:        id.Traits.Clone(),
 	}
 }
 
@@ -1343,7 +1346,7 @@ func (c *CertificateRequest) CheckAndSetDefaults() error {
 		return trace.BadParameter("missing parameter PublicKey")
 	}
 	if c.Subject.CommonName == "" {
-		return trace.BadParameter("missing parameter Subject.Common name")
+		return trace.BadParameter("missing parameter Subject.CommonName")
 	}
 	if c.NotAfter.IsZero() {
 		return trace.BadParameter("missing parameter NotAfter")
