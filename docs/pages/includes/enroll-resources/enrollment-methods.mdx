@@ -1,0 +1,176 @@
+import EnrollmentMethods, { Method } from "@site/src/components/Pages/Homepage/EnrollmentMethods";
+import applicationSvg from "@site/src/components/Icon/teleport-svg/application.svg";
+import linuxServersSvg from "@site/src/components/Icon/teleport-svg/linux-servers.svg";
+import databaseSvg from "@site/src/components/Icon/teleport-svg/database-access.svg";
+import kubernetesClustersSvg from "@site/src/components/Icon/teleport-svg/kubernetes-clusters.svg";
+import windowsDesktopsSvg from "@site/src/components/Icon/teleport-svg/windows-desktops.svg";
+import mcpAndAiSvg from "@site/src/components/Icon/teleport-svg/mcp-and-ai.svg";
+
+<EnrollmentMethods
+>
+<Method
+title="Applications"
+icon={applicationSvg}
+href="./enroll-resources/application-access/"
+tagLists={
+  [
+    {
+      title: "Cloud Provider APIs", 
+      tags: 
+        [
+          {
+            name: "AWS Console & CLI",
+            href: "./enroll-resources/application-access/",
+            icon: "aws",
+          },
+          {
+            name: "Google Cloud Console",
+            href: "./enroll-resources/application-access/",
+            icon: "googleCloud",
+          },
+          {
+            name: "Azure CLI",
+            href: "./enroll-resources/application-access/",
+            icon: "azure",
+          }
+        ] 
+    },
+    {
+      title: "Internal Applications", 
+      tags: 
+        [
+          {
+            name: "Web Apps",
+            href: "./enroll-resources/application-access/",
+          },
+          {
+            name: "TCP Apps",
+            href: "./enroll-resources/application-access/",
+          },
+          {
+            name: "API Access",
+            href: "./enroll-resources/application-access/",
+          },
+          {
+            name: "Dynamic Registration",
+            href: "./enroll-resources/application-access/",
+          }
+        ] 
+    },
+  ]
+}
+>
+Provide secure access to web apps, TCP apps, and cloud provider APIs for CLI and console access.
+</Method>
+<Method
+title="Databases"
+icon={databaseSvg}
+href="./enroll-resources/application-access/"
+tagLists={
+  [
+    {
+      tags: 
+        [
+          {
+            name: "AWS",
+            href: "./enroll-resources/application-access/",
+            icon: "aws",
+          },
+          {
+            name: "Azure",
+            href: "./enroll-resources/application-access/",
+            icon: "azure",
+          },
+         {
+            name: "Google Cloud",
+            href: "./enroll-resources/application-access/",
+            icon: "googleCloud",
+          },
+        ] 
+    },
+  ]
+}
+>
+**Things you can do with database access:**
+  - Enable users to retrieve short-lived database certificates using a Single Sign-On flow, thus maintaining their organization-wide identity.
+  - Configure role-based access controls for databases and implement custom Access Request workflows.
+  - Capture database activity in the Teleport audit log.
+</Method>
+<Method
+title="Kubernetes Clusters"
+icon={kubernetesClustersSvg}
+href="./enroll-resources/application-access/"
+>
+**Teleport provides secure access to Kubernetes clusters:**
+- Users can access Kubernetes clusters with Single Sign-On (SSO) providers like Okta and switch between clusters without logging in twice.
+- Operators can implement granular role-based access controls, including limiting access to specific Kubernetes clusters or even specific resources within a cluster.
+- Organizations can achieve compliance by recording kubectl sessions.
+</Method>
+<Method
+title="Windows Desktop"
+icon={windowsDesktopsSvg}
+href="./enroll-resources/application-access/"
+>
+**Configure access for local Windows users**
+Understand how to configure Teleport to provide secure, passwordless access to Microsoft Windows desktops for local Windows users.
+**Configure access for Active Directory manually**
+Understand how to connect an Active Directory domain and how to log into a Windows desktop from the connected domain.
+</Method>
+<Method
+title="Linux Servers"
+icon={linuxServersSvg}
+href="./enroll-resources/application-access/"
+tagLists={
+  [
+    {
+      title: "Server Access Guides",
+      tags: 
+        [
+          {
+            name: "Agentless OpenSSH Integration",
+            href: "./enroll-resources/application-access/",
+          },
+          {
+            name: "Visual Studio Code",
+            href: "./enroll-resources/application-access/",
+          },
+         {
+            name: "JetBrains SFTP",
+            href: "./enroll-resources/application-access/",
+            icon: "jetbrains",
+          },
+        ] 
+    },
+  ]
+}
+>
+Teleport consolidates SSH access across all environments, decreases configuration complexity, supports industry best practices and compliance while giving complete visibility over all sessions and events.
+</Method>
+<Method
+title="MCP Servers"
+icon={mcpAndAiSvg}
+href="./enroll-resources/application-access/"
+tagLists={
+  [
+    {
+      title: "MCP Server Guides",
+      tags: 
+        [
+          {
+            name: "MCP Access with Stdio MCP Server",
+            href: "./enroll-resources/application-access/",
+          },
+          {
+            name: "Configure MCP clients",
+            href: "./enroll-resources/application-access/",
+          },
+        ] 
+    },
+  ]
+}
+>
+**Teleport provides secure access to Kubernetes clusters:**
+- Enroll the Teleport demo MCP server in your Teleport cluster.
+- Connect to the MCP server via Teleport.
+</Method>
+</EnrollmentMethods>
