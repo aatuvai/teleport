@@ -1,0 +1,30 @@
+import applicationSvg from "@site/src/components/Icon/teleport-svg/application.svg";
+import databaseSvg from "@site/src/components/Icon/teleport-svg/database-access.svg";
+import kubernetesClustersSvg from "@site/src/components/Icon/teleport-svg/kubernetes-clusters.svg";
+import mcpAndAiSvg from "@site/src/components/Icon/teleport-svg/mcp-and-ai.svg";
+import ResourceGrid, { ResourceGridProps } from "@site/src/components/Pages/Homepage/Resources";
+
+<ResourceGrid
+  resources={[
+    {
+      title: 'Databases',
+      iconComponent: databaseSvg,
+      href: '../../enroll-resources/database-access/'
+    },
+    {
+      title: 'Applications',
+      iconComponent: applicationSvg,
+      href: '../../enroll-resources/application-access/'
+    },
+    {
+      title: 'Kubernetes Clusters',
+      iconComponent: kubernetesClustersSvg,
+      href: '../../enroll-resources/kubernetes-access/'
+    },
+    {
+      title: 'Servers',
+      iconComponent: mcpAndAiSvg,
+      href: '../../enroll-resources/server-access/'
+    },
+  ]}
+/>
