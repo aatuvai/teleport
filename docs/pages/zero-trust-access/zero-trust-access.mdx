@@ -1,6 +1,286 @@
 ---
 title: Teleport Zero Trust Access
 description: Provides guides for the Teleport Zero Trust Access product.
+template: "landing-page"
 ---
 
-<DocCardList />
+import LandingHero, { LandingHeroProps } from '@site/src/components/Pages/Landing/LandingHero';
+import Resources, { ResourcesProps } from "@site/src/components/Pages/Homepage/Resources";
+import UseCasesList, { UseCasesListProps } from "@site/src/components/Pages/Landing/UseCasesList";
+
+import IdentitySecurityImg from '@site/static/identity-security-hero.png';
+import applicationSvg from "@site/src/components/Icon/teleport-svg/application.svg";
+import linuxServersSvg from "@site/src/components/Icon/teleport-svg/linux-servers.svg";
+import databaseSvg from "@site/src/components/Icon/teleport-svg/database-access.svg";
+import kubernetesClustersSvg from "@site/src/components/Icon/teleport-svg/kubernetes-clusters.svg";
+import windowsDesktopsSvg from "@site/src/components/Icon/teleport-svg/windows-desktops.svg";
+import autoDiscoverySvg from "@site/src/components/Icon/teleport-svg/auto-discovery.svg";
+import cloudProvidersSvg from "@site/src/components/Icon/teleport-svg/cloud-providers.svg";
+import mcpAndAiSvg from "@site/src/components/Icon/teleport-svg/mcp-and-ai.svg";
+
+<LandingHero
+  title="Zero Trust Access"
+  image={IdentitySecurityImg}
+>
+  Zero Trust Access provides engineers with just-in-time, least‐privileged
+  access to applications, servers, databases, Kubernetes clusters, and other
+  resources across distributed infrastructures, improving engineering time to
+  market and infrastructure resiliency.
+</LandingHero>
+
+<UseCasesList
+  title="Popular Actions"
+  desktopColumnsCount={3}
+  useCases={[
+    {
+      title: "Sign In with Your Identity Provider",
+      description: "Log in to servers, Kubernetes clusters, databases, web applications, and Windows desktops through their organization's Single Sign-On (SSO) provider.",
+      href: "./machine-workload-identity/getting-started/",
+      tags: [
+        {
+          name: "Okta",
+          href: "./enroll-resources/application-access/",
+          icon: "github",
+        },
+        {
+          name: "GitHub",
+          href: "./enroll-resources/application-access/",
+          icon: "github",
+        },
+        {
+          name: "Entra ID",
+          href: "./enroll-resources/application-access/",
+          icon: "googleCloud",
+        },
+        {
+          name: "G Suite",
+          href: "./enroll-resources/application-access/",
+          icon: "googleCloud",
+        },
+       {
+          name: "more",
+          href: "./enroll-resources/application-access/",
+          arrow: true,
+        },
+      ]
+    },  
+    {
+      title: "Manage and Track Teleport Audit Events",
+      description: "View audit log generated when users and services interact with your cluster. And export events to store them in a log management platform.",
+      href: "./machine-workload-identity/getting-started/",
+      tags: [
+        {
+          name: "Elastic Stack",
+          href: "./enroll-resources/application-access/",
+          icon: "elasticStack",
+        },
+        {
+          name: "Panther",
+          href: "./enroll-resources/application-access/",
+          icon: "panther",
+        },
+        {
+          name: "Datadog",
+          href: "./enroll-resources/application-access/",
+          icon: "datadog",
+        },
+        {
+          name: "Splunk",
+          href: "./enroll-resources/application-access/",
+        },
+      ]
+    },
+    {
+      title: "Self-Hosting Teleport",
+      description: "Run Teleport Enterprise in your own infrastructure from setting up high availability and multi-region clusters to secure CA keys with KMS or HSM.",
+      href: "./machine-workload-identity/getting-started/",
+      tags: [
+        {
+          name: "AWS KMS",
+          href: "./enroll-resources/application-access/",
+          icon: "aws",
+        },
+        {
+          name: "Google Cloud KMS",
+          href: "./enroll-resources/application-access/",
+          icon: "gSuite",
+        },
+        {
+          name: "Helm Chart",
+          href: "./enroll-resources/application-access/",
+        },
+      ]
+    },  
+    {
+      title: "Infrastructure as Code",
+      description: "Manage Teleport's Dynamic Resources using infrastructure as code tools, including Terraform, Helm and the Teleport tctl client tool.",
+      href: "./machine-workload-identity/getting-started/",
+      tags: [
+        {
+          name: "Terraform",
+          href: "./enroll-resources/application-access/",
+          icon: "terraform",
+        },
+        {
+          name: "Kubernetes Operator",
+          href: "./enroll-resources/application-access/",
+          icon: "kubernetes2",
+        },
+        {
+          name: "Helm Chart",
+          href: "./enroll-resources/application-access/",
+        },
+      ]
+    },
+    {
+      title: "Security Best Practices",
+      description: "To reduce system vulnerabilities and to avoid security follow recommended security practices to secure your cluster.",
+      href: "./machine-workload-identity/getting-started/",
+      tags: [
+        {
+          name: "Reducing the Blast Radius of Attacks",
+          href: "./enroll-resources/application-access/",
+        },
+        {
+          name: "Restrict Access",
+          href: "./enroll-resources/application-access/",
+        },
+        {
+          name: "Revoking Access",
+          href: "./enroll-resources/application-access/",
+        },
+      ]
+    },
+    {
+      title: "VNet",
+      description: "Configure access controls that align with compliance framework’s requirements to enforce policies, control user permissions.",
+      href: "./machine-workload-identity/getting-started/",
+      tags: [
+        {
+          name: "Teleport VNet Demo - The Better VPN for Secure Access",
+          href: "./enroll-resources/application-access/",
+          icon: "youtube",
+        },
+      ]
+    },
+  ]}
+/>
+
+<UseCasesList
+  title="Use Cases"
+  useCases={[
+    {
+      title: "Enroll and Protect Your Infrastructure",
+      description: "Apps, servers, databases, Kubernetes, desktops, & more",
+      href: "./machine-workload-identity/getting-started/",
+    },  
+    {
+      title: "VNet: Build without VPNs",
+      description: "Secure app & SSH access with no VPNs or proxies",
+      href: "./machine-workload-identity/getting-started/",
+    },
+    {
+      title: "Secure MCP (Protect the Vibes)",
+      description: "Secure MCP integration with granular audit trail",
+      href: "./machine-workload-identity/getting-started/",
+    },  
+    {
+      title: "Role-Based Access Control (RBAC)",
+      description: "Govern infrastructure access with granular permissions",
+      href: "./machine-workload-identity/getting-started/",
+    },
+    {
+      title: "Passwordless Authentication",
+      description: "Log in securely using biometrics",
+      href: "./machine-workload-identity/getting-started/",
+    },
+    {
+      title: "Integrate with SSO Providers",
+      description: "Connect Okta, Entra ID, Google, and more",
+      href: "./machine-workload-identity/getting-started/",
+    },  
+    {
+      title: "Structured Audit Export",
+      description: "Forward audit logs to SIEMs like Splunk and Datadog",
+      href: "./machine-workload-identity/getting-started/",
+    },
+    {
+      title: "Identity-Based Audit Events",
+      description: "Detailed audit logs for every user action",
+      href: "./machine-workload-identity/getting-started/",
+    },  
+    {
+      title: "Session Recording and Playback",
+      description: "Record a detailed review of what took place",
+      href: "./machine-workload-identity/getting-started/",
+    },
+    {
+      title: "Session Sharing and Moderation",
+      description: "Require a moderator for privileged sessions",
+      href: "./machine-workload-identity/getting-started/",
+    },
+    {
+      title: "Dual Authorization Capabilities",
+      description: "Require approvals to perform critical actions",
+      href: "./machine-workload-identity/getting-started/",
+    },
+    {
+      title: "Manage Clusters with IaC",
+      description: "Create, update, and manage Teleport in declarative code.",
+      href: "./machine-workload-identity/getting-started/",
+    },
+  ]}
+/>
+
+<Resources
+  resources={[
+    {
+      title: 'Applications',
+      description: 'Protect web apps, TCP apps, and Cloud APIs',
+      iconComponent: applicationSvg,
+      href: './enroll-resources/application-access/'
+    },
+    {
+      title: 'Linux Servers',
+      description: 'Secure Linux servers and OpenSSH servers',
+      iconComponent: linuxServersSvg,
+      href: './enroll-resources/server-access/'
+    },
+    {
+      title: 'Database Access',
+      description: 'AWS, Azure, Google Cloud, cloud DB platforms, & more',
+      iconComponent: databaseSvg,
+      href: './enroll-resources/database-access/'
+    },
+    {
+      title: 'Kubernetes Clusters',
+      description: 'Kubernetes clusters and the apps running in them',
+      iconComponent: kubernetesClustersSvg,
+      href: './enroll-resources/kubernetes-access/'
+    },
+    {
+      title: 'Windows Desktops',
+      description: 'With or without Active Directory',
+      iconComponent: windowsDesktopsSvg,
+      href: './enroll-resources/desktop-access/'
+    },
+    {
+      title: 'Auto-Discovery of Resources',
+      description: 'SSH servers, databases, Kubernetes clusters and apps',
+      iconComponent: autoDiscoverySvg,
+      href: './enroll-resources/auto-discovery/'
+    },
+    {
+      title: 'Cloud Providers',
+      description: 'AWS, Azure, and Google Cloud consoles and CLI',
+      iconComponent: cloudProvidersSvg,
+      href: './enroll-resources/application-access/cloud-apis/'
+    },
+    {
+      title: 'MCP and AI Agents',
+      description: 'Secure agentic AI connections to databases & MCP servers',
+      iconComponent: mcpAndAiSvg,
+      href: './enroll-resources/mcp-access/'
+    }
+  ]}
+/>
