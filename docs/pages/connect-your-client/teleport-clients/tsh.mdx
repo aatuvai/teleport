@@ -29,59 +29,6 @@ You can also use `tsh` to manage Access Requests. For instructions, see
 For the impatient, here's an example of how a user would typically use
 [`tsh`](../reference/cli/tsh.mdx):
 
-<GuidedSteps>
-  <GuidedStepItem
-    id="login-to-teleport"
-    title="Log into Teleport"
-    description="Log into a Teleport cluster. This command retrieves the user's certificates and saves them into ~/.tsh/teleport.example.com"
-  >
-    ```bash
-    $ tsh login --proxy=teleport.example.com
-    ```
-  </GuidedStepItem>
-  <GuidedStepItem id="ssh-into-node" title="SSH into a Node as usual">
-    ```bash
-    $ tsh ssh user@node
-    ```
-  </GuidedStepItem>
-  <GuidedStepItem
-    id="tsh-ssh-arguments"
-    title="`tsh ssh` takes the same arguments as the OpenSSH client"
-  >
-    ```bash
-    $ tsh ssh -o ForwardAgent=yes user@node
-    $ tsh ssh -o AddKeysToAgent=yes user@node
-    ```
-  </GuidedStepItem>
-  <GuidedStepItem
-    id="symlink-teleport"
-    title="You can even create a convenient symlink"
-  >
-    ```bash
-    $ ln -s /path/to/tsh /path/to/ssh
-    ```
-  </GuidedStepItem>
-  <GuidedStepItem
-    id="done-ssh"
-    title="Done!"
-    description="Now your 'ssh' command is calling Teleport's `tsh ssh`"
-  >
-    ```bash
-    $ ssh user@host
-    ```
-  </GuidedStepItem>
-  <GuidedStepItem
-    id="logout-teleport"
-    title="Log out of Teleport"
-    description="This command removes SSH certificates from a user's machine"
-  >
-    ```bash
-    $ tsh logout
-    ```
-  </GuidedStepItem>
-</GuidedSteps>
-
-
 <Tabs>
 <TabItem scope={["oss","enterprise"]} label="Self-Hosted">
 
