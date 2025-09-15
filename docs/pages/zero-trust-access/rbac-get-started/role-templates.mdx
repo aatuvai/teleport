@@ -28,7 +28,193 @@ other policies.
 
 - (!docs/pages/includes/tctl.mdx!)
 
-## Local users
+<GuidedSteps>
+  ## Local users
+  Imagine you have two users, Alice and Bob, who have different access needs.
+  <StepSection>Define roles for Alice and Bob</StepSection>
+  <Step id="create-admin-role">
+    Create your first role that defines access for Alice. For this exercise, we'll call it `alice`.
+  </Step>
+  <Step id="admin-specs">
+    Alice needs access to the ssh login, and the kubernetes group `edit`
+  </Step>
+  <Step id="create-ubuntu-role">
+    Add a role below for Bob's new role, which for this exercise we'll call `bob`
+  </Step>
+  <Step id ="ubuntu-specs">
+    Bob needs access to the `ubuntu` SSH login and the Kubernetes group `view`.
+  </Step>
+  <StepSection>Create your new roles and invite Alice and Bob to the cluster</StepSection>
+  <Step id="cli-create-roles">
+    Create the roles in your cluster using the `roles.yaml`you created.
+    </Step>
+  <Step id="cli-invite-roles">
+    Invite `alice` and `bob`, assign them the new roles you created for them.
+
+    (!docs/pages/includes/create-role-using-web.mdx!)
+
+  </Step>
+  Having one role per user is not going to scale well. Because the roles
+  are so similar, we can assign variables to each user, and use just one role template
+  for both Alice and Bob.
+  <StepSection>Create a role template</StepSection>
+  <Step id="create-role-template">
+    Create your first role template called. For this exercise we'll call it `devs`.
+  </Step>
+  <Step id="template-specs">
+    Any role becomes a template once it starts using template variables.
+
+    Just like roles, role templates are valid YAML and validate both the structure
+    and types.
+  </Step>
+  <Step id="cli-create-template">
+    Use `tctl` to create the role template.
+  </Step>
+  <StepSection>Update Alice's and Bob's users with traits</StepSection>
+  <Step id="create-traits-alice">
+    Create traits `login` and `kubernetes_group` for Alice.
+  </Step>
+  <Step id="create-traits-bob">
+    Create traits `login` and `kubernetes_group` for Bob.
+  </Step>
+  <Step id="cli-create-traits">
+    Update both users' entries with the `tctl create -f` command.
+  </Step>
+  <File name="roles.yaml" icon="file">
+    <CodeBlock stepId="create-admin-role">
+      ```yaml
+      kind: role
+      version: v7
+      metadata:
+        name: alice
+      ```
+    </CodeBlock>
+    <CodeBlock stepId="admin-specs">
+      ```yaml
+      spec:
+        allow:
+          logins: ['admin']
+          kubernetes_groups: ['edit']
+          node_labels:
+            '*': '*'
+          kubernetes_labels:
+            '*': '*'
+          kubernetes_resources:
+            - kind: '*'
+              namespace: '*'
+              name: '*'
+              verbs: ['*']
+      ---
+      ```
+    </CodeBlock>
+    <CodeBlock stepId="create-ubuntu-role">
+      ```yaml
+      kind: role
+      version: v7
+      metadata:
+        name: bob
+      ```
+    </CodeBlock>
+    <CodeBlock stepId="ubuntu-specs">
+      ```yaml
+      spec:
+        allow:
+          logins: ['ubuntu']
+          kubernetes_groups: ['view']
+          node_labels:
+            '*': '*'
+          kubernetes_labels:
+            '*': '*'
+          kubernetes_resources:
+            - kind: '*'
+              namespace: '*'
+              name: '*'
+              verbs: ['*']
+      ```
+    </CodeBlock>
+  </File>
+  <File name="devs.yaml" icon="file">
+    <CodeBlock stepId="create-role-template">
+      ```yaml
+      kind: role
+      version: v7
+      metadata:
+        name: devs
+      ```
+    </CodeBlock>
+    <CodeBlock stepId="template-specs">
+      ```yaml
+      spec:
+        allow:
+          logins: ['{{internal.logins}}']
+          kubernetes_groups: ['{{internal.kubernetes_groups}}']
+          node_labels:
+            '*': '*'
+          kubernetes_labels:
+            '*': '*'
+          kubernetes_resources:
+            - kind: '*'
+              namespace: '*'
+              name: '*'
+              verbs: ['*']
+      ```
+    </CodeBlock>
+  </File>
+  <File name="traits.yaml" icon="file">
+    <CodeBlock stepId="create-traits-alice">
+      ```yaml
+      kind: user
+      version: v2
+      metadata:
+        name: alice
+      spec:
+        roles: ['devs']
+        traits:
+          logins: ['admin']
+          kubernetes_groups: ['edit']
+      ```
+    </CodeBlock>
+    <CodeBlock stepId="create-traits-bob">
+      ```yaml
+      ---
+      kind: user
+      version: v2
+      metadata:
+        name: bob
+      spec:
+        roles: ['devs']
+        traits:
+          logins: ['ubuntu']
+          kubernetes_groups: ['view']
+      ```
+    </CodeBlock>
+  </File>
+  <File name="CLI" icon="terminal">
+    <CodeBlock stepId="cli-create-roles">
+      ```bash
+      $ tctl create -f roles.yaml
+      ```
+    </CodeBlock>
+    <CodeBlock stepId="cli-invite-roles">
+      ```bash
+      $ tctl users add alice --roles=alice
+      $ tctl users add bob --roles=bob
+      ```
+    </CodeBlock>
+    <CodeBlock stepId="cli-create-template">
+      ```bash
+      $ tctl create -f devs.yaml
+      ```
+    </CodeBlock>
+    <CodeBlock stepId="cli-create-traits">
+      ```bash
+      $ tctl create -f traits.yaml
+      # user "alice" has been updated
+      ```
+    </CodeBlock>
+  </File>
+</GuidedSteps>
+
 
 Imagine you have two users, Alice and Bob. We would like to set the following
 access policies:
