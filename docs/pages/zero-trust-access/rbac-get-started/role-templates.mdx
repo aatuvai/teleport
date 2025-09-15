@@ -31,7 +31,9 @@ other policies.
 <GuidedSteps>
   ## Local users
   Imagine you have two users, Alice and Bob, who have different access needs.
+
   <StepSection>Define roles for Alice and Bob</StepSection>
+
   <Step id="create-admin-role">
     Create your first role that defines access for Alice. For this exercise, we'll call it `alice`.
   </Step>
@@ -44,7 +46,9 @@ other policies.
   <Step id ="ubuntu-specs">
     Bob needs access to the `ubuntu` SSH login and the Kubernetes group `view`.
   </Step>
+
   <StepSection>Create your new roles and invite Alice and Bob to the cluster</StepSection>
+
   <Step id="cli-create-roles">
     Create the roles in your cluster using the `roles.yaml`you created.
     </Step>
@@ -57,7 +61,9 @@ other policies.
   Having one role per user is not going to scale well. Because the roles
   are so similar, we can assign variables to each user, and use just one role template
   for both Alice and Bob.
+
   <StepSection>Create a role template</StepSection>
+
   <Step id="create-role-template">
     Create your first role template called. For this exercise we'll call it `devs`.
   </Step>
@@ -70,7 +76,9 @@ other policies.
   <Step id="cli-create-template">
     Use `tctl` to create the role template.
   </Step>
+
   <StepSection>Update Alice's and Bob's users with traits</StepSection>
+  
   <Step id="create-traits-alice">
     Create traits `login` and `kubernetes_group` for Alice.
   </Step>
