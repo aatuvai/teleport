@@ -132,7 +132,7 @@ crd-docs: crdgen/build/protoc-gen-crd-docs ## Generate CRD reference docs.
 			-I=../../api/proto \
 			-I=$(PROTOBUF_MOD_PATH) \
 			--plugin=./crdgen/build/protoc-gen-crd-docs \
-			--crd-docs_out=../../docs/pages/reference/operator-resources/ \
+			--crd-docs_out=../../docs/pages/reference/infrastructure-as-code/operator-resources/ \
 			"$${proto}"; \
 	done
 
@@ -176,7 +176,7 @@ debug-dump-request:
 test: generate $(ENVTEST) ## Run tests.
 test: export KUBEBUILDER_ASSETS=$(shell $(ENVTEST) use $(ENVTEST_K8S_VERSION) -p path)
 test:
-	go test ./... -coverprofile cover.out
+	go test ./...
 
 .PHONY: echo-kubebuilder-assets
 echo-kubebuilder-assets:
