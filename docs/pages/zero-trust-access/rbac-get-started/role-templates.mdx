@@ -88,7 +88,7 @@ other policies.
   </Step>
   <File name="roles.yaml" icon="file">
     <CodeBlock stepId="create-admin-role">
-      ```yaml
+      ```yaml showLineNumbers
       kind: role
       version: v7
       metadata:
@@ -96,7 +96,7 @@ other policies.
       ```
     </CodeBlock>
     <CodeBlock stepId="admin-specs">
-      ```yaml
+      ```yaml showLineNumbers=5
       spec:
         allow:
           logins: ['admin']
@@ -114,7 +114,7 @@ other policies.
       ```
     </CodeBlock>
     <CodeBlock stepId="create-ubuntu-role">
-      ```yaml
+      ```yaml showLineNumbers=19
       kind: role
       version: v7
       metadata:
@@ -122,7 +122,7 @@ other policies.
       ```
     </CodeBlock>
     <CodeBlock stepId="ubuntu-specs">
-      ```yaml
+      ```yaml showLineNumbers=24
       spec:
         allow:
           logins: ['ubuntu']
@@ -141,7 +141,7 @@ other policies.
   </File>
   <File name="devs.yaml" icon="file">
     <CodeBlock stepId="create-role-template">
-      ```yaml
+      ```yaml showLineNumbers
       kind: role
       version: v7
       metadata:
@@ -149,7 +149,7 @@ other policies.
       ```
     </CodeBlock>
     <CodeBlock stepId="template-specs">
-      ```yaml
+      ```yaml showLineNumbers=5
       spec:
         allow:
           logins: ['{{internal.logins}}']
@@ -168,7 +168,7 @@ other policies.
   </File>
   <File name="traits.yaml" icon="file">
     <CodeBlock stepId="create-traits-alice">
-      ```yaml
+      ```yaml showLineNumbers
       kind: user
       version: v2
       metadata:
@@ -181,7 +181,7 @@ other policies.
       ```
     </CodeBlock>
     <CodeBlock stepId="create-traits-bob">
-      ```yaml
+      ```yaml showLineNumbers=11
       ---
       kind: user
       version: v2
@@ -197,25 +197,24 @@ other policies.
   </File>
   <File name="CLI" icon="terminal">
     <CodeBlock stepId="cli-create-roles">
-      ```bash
+      ```bash showLineNumbers
       $ tctl create -f roles.yaml
       ```
     </CodeBlock>
     <CodeBlock stepId="cli-invite-roles">
-      ```bash
+      ```bash showLineNumbers=2
       $ tctl users add alice --roles=alice
       $ tctl users add bob --roles=bob
       ```
     </CodeBlock>
     <CodeBlock stepId="cli-create-template">
-      ```bash
+      ```bash showLineNumbers=4
       $ tctl create -f devs.yaml
       ```
     </CodeBlock>
     <CodeBlock stepId="cli-create-traits">
-      ```bash
+      ```bash showLineNumbers=5
       $ tctl create -f traits.yaml
-      # user "alice" has been updated
       ```
     </CodeBlock>
   </File>
