@@ -1,27 +1,49 @@
 ---
 title: MCP Servers
-description: Guides to protecting MCP servers with Teleport
+description: Protect MCP servers with Teleport's access controls, identity governance, and auditing capabilities 
+template: doc-page
 tags:
  - mcp
  - zero-trust
 ---
 
-Teleport can provide secure connections to your MCP (Model Context Protocol)
-servers while improving both access control and visibility.
+import DocHero, { DocHeroProps } from "@site/src/components/Pages/Landing/DocHero";
+import UseCasesList, { UseCasesListProps } from "@site/src/components/Pages/Landing/UseCasesList";
 
-![Architecture diagram for enrolling MCP servers with Teleport](../../../img/mcp-access/architecture-stdio.svg)
+<DocHero
+  title="Get Started with MCP servers"
+  image={IdentitySecurityImg}
+  links={[
+    {
+      title: "MCP Access Controls",
+      description: "Use Teleport's role-based access control (RBAC) system to set up granular permissions for authenticating to MCP servers connected to Teleport.",
+      href: "./rbac/",
+    },
+    {
+      title: "Troubleshooting",
+      description: "Understand common issues that you might encounter in managing access to MCP servers with Teleport and how to work around or resolve them.",
+      href: "./troubleshooting/",
+    },
+  ]}
+>
+Connect an MCP server with the Teleport application service, configure and assign a role granting MCP permissions, and connect and query the server with the Teleport CLI or your AI platform of choice.
 
+[Connect your first MCP server](./getting-started.mdx)
+</DocHero>
 
-## Getting started
-- [Quick-start with demo MCP server](./getting-started.mdx): Provides instructions to set up a Teleport Service and enable secure access to a demo MCP server.
-
-## Guides
-- [MCP Access with Stdio MCP Server](./stdio.mdx): Set up a Teleport Service and enable secure access to a MCP server with stdio transport.
-- [Configure MCP clients](../../connect-your-client/model-context-protocol/mcp-access.mdx): How to configure MCP clients such as Claude Desktop to access MCP servers.
-
-## Configuration & management
-- [MCP Access Controls](./rbac.mdx): Role-Based Access Control (RBAC) for Teleport MCP access.
-- [Dynamic Registration](./dynamic-registration.mdx): Register/unregister MCP servers without restarting Teleport.
-
-## Troubleshooting & support
-- [Troubleshooting MCP Access](./troubleshooting.mdx): Describes common issues and solutions for access to MCP servers.
+<UseCasesList
+  title="MCP Server Access"
+  description="Connect to and query MCP servers with the AI platform of your choice"
+  useCases={[
+    {
+      title: "MCP Access with Stdio MCP Server",
+      description: "Enroll an MCP server with stdio transport into your Teleport cluster and connect to it through Teleport.",
+      href: "./machine-workload-identity/getting-started/",
+    },  
+    {
+      title: "Dynamic MCP Server Registration",
+      description: "Register MCP servers (or update existing ones) without having to update the static configuration files read by Teleport Application Service instances.",
+      href: "./machine-workload-identity/getting-started/",
+    },
+  ]}
+/>
