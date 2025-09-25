@@ -35,7 +35,7 @@ import mcpAndAiSvg from "@site/src/components/Icon/teleport-svg/mcp-and-ai.svg";
     },
     {
       title: "Auto-Discovery",
-      description: "Use the Discovery Service to automatically enroll resources",
+      description: "Automatically discover and enroll resources",
       href: "./auto-discovery/",
       icon: magicWandSvg,
     },
@@ -61,30 +61,35 @@ href="./application-access/"
 tagLists={
   [
     {
-      title: "Cloud Provider APIs", 
+      title: "Types of applications", 
       tags: 
         [
           {
-            name: "AWS Console & CLI",
-            href: "./application-access/cloud-apis/aws-console/",
+            name: "Cloud consoles",
+            href: "./application-access/cloud-apis/",
             icon: "aws",
           },
           {
-            name: "Google Cloud Console",
-            href: "./application-access/cloud-apis/google-cloud/",
+            name: "Web apps",
+            href: "./application-access/guides/connecting-apps/",
             icon: "googleCloud",
           },
           {
-            name: "Azure CLI",
-            href: "./application-access/cloud-apis/azure/",
+            name: "TCP apps",
+            href: "./application-access/guides/tcp/",
             icon: "azure",
+          },
+          {
+            name: "more",
+            href: "./application-access/guides/",
+            arrow: true,
           }
         ] 
     },
   ]
 }
 >
-Teleport secures access to applications and cloud provider APIs through the Teleport Application Service. It applies the same RBAC system used for infrastructure to protect management consoles, CLI tools, and internal apps.
+Secure access to web applications, TCP apps, cloud provider consoles and CLIs, and more.
 </Method>
 <Method
 title="Databases"
@@ -121,7 +126,7 @@ tagLists={
   ]
 }
 >
-Teleport enables users to obtain short-lived database certificates via SSO, enforce RBAC with custom Access Requests workflow and capture database activity in Teleport’s audit logs.
+Secure, auditable access to cloud- and self-hosted databases as well as DBaaS.
 </Method>
 <Method
 title="Kubernetes Clusters"
@@ -134,11 +139,11 @@ tagLists={
       tags: 
         [
           {
-            name: "Enroll Kubernetes Clusters",
+            name: "Enroll Kubernetes clusters",
             href: "./kubernetes-access/getting-started/",
           },
           {
-            name: "Setup Access Controls for Kubernets",
+            name: "Access controls",
             href: "./kubernetes-access/controls/",
           },
         ] 
@@ -146,7 +151,7 @@ tagLists={
   ]
 }
 >
-Enable secure Kubernetes clusters with SSO integration, granular role-based access controls, and session recording for compliance. Learn how to protect clusters with Teleport for different deployment options for Community and Enterprise editions.
+Protect Kubernetes clusters with SSO integration, RBAC, and session recordings.
 </Method>
 <Method
 title="Windows Desktop"
@@ -159,7 +164,7 @@ tagLists={
       tags: 
         [
           {
-            name: "Local Windows Users",
+            name: "Local Windows users",
             href: "./desktop-access/getting-started/",
           },
           {
@@ -167,7 +172,7 @@ tagLists={
             href: "./desktop-access/active-directory/",
           },
           {
-            name: "Directory Sharing",
+            name: "Directory sharing",
             href: "./desktop-access/directory-sharing/",
           },
         ] 
@@ -175,7 +180,7 @@ tagLists={
   ]
 }
 >
-Configure Teleport for secure, passwordless access to Windows Desktops and servers including Active Directory integration, local user access, file transfers via Directory Sharing, dynamic desktop registration and RBAC
+Passwordless access to Windows Desktops and servers for domain users and local users.
 </Method>
 <Method
 title="Linux Servers"
@@ -188,24 +193,24 @@ tagLists={
       tags: 
         [
           {
-            name: "Agentless OpenSSH Integration",
+            name: "Get started guide",
             href: "./server-access/openssh/openssh-agentless/",
           },
           {
-            name: "Visual Studio Code",
+            name: "Agentless OpenSSH",
             href: "./server-access/guides/vscode/",
           },
-         {
-            name: "JetBrains SFTP",
-            href: "./server-access/guides/jetbrains-sftp/",
-            icon: "jetbrains",
-          },
+          {
+            name: "more",
+            href: "./server-access/guides/",
+            arrow: true,
+          }
         ] 
     },
   ]
 }
 >
-Teleport consolidates SSH access across all environments, decreases configuration complexity, supports industry best practices and compliance while giving complete visibility over all sessions and events.
+Streamline SSH access, reduce configuration overhead, and provide auditability.
 </Method>
 <Method
 title="MCP Servers"
@@ -218,11 +223,15 @@ tagLists={
       tags: 
         [
           {
-            name: "MCP Access with Stdio MCP Server",
-            href: "./mcp-access/stdio/",
+            name: "Get Started Guide",
+            href: "./mcp-access/getting-started/",
           },
           {
             name: "Configure MCP clients",
+            href: "./mcp-access/rbac/",
+          },
+          {
+            name: "DB access for MCP",
             href: "./mcp-access/getting-started/",
           },
         ] 
@@ -230,7 +239,7 @@ tagLists={
   ]
 }
 >
-Securely connect to MCP servers with Teleport, manage access and easily enroll and connect demo servers in your cluster.
+Secure the vibes with access controls and auditability for all MCP access.
 </Method>
 </EnrollmentMethods>
 
@@ -243,8 +252,8 @@ Securely connect to MCP servers with Teleport, manage access and easily enroll a
       href: './auto-discovery/databases/'
     },
     {
-      title: 'Applications',
-      iconComponent: applicationSvg,
+      title: 'Servers',
+      iconComponent: linuxServersSvg,
       href: './auto-discovery/kubernetes-applications/'
     },
     {
@@ -253,11 +262,11 @@ Securely connect to MCP servers with Teleport, manage access and easily enroll a
       href: './auto-discovery/kubernetes/'
     },
     {
-      title: 'Servers',
-      iconComponent: mcpAndAiSvg,
+      title: 'Kube services as apps',
+      iconComponent: applicationSvg,
       href: './auto-discovery/servers/'
     },
   ]}
 >
-The Teleport Discovery Service automatically detects and enrolls resources in your Teleport cluster. Running on Teleport Agents, it periodically queries cloud provider APIs to list infrastructure resources and reconciles them with the Auth Service backend, enabling secure access to servers, databases, and Kubernetes clusters with no additional configuration.
+Automatically detect and enroll resources in your Teleport cluster with the Teleport Discovery Service.
 </ResourceGrid>
