@@ -21,18 +21,6 @@ import kubernetesSvg from "@site/src/components/Icon/svg/kubernetes2.svg";
 <DocHero
   title="Introduction"
   image={IdentitySecurityImg}
-  links={[
-    {
-      title: "Enroll a Kubernetes Cluster",
-      description: "Deploy the Teleport Kubernetes Service on your Kubernetes cluster to secure it.",
-      href: "./getting-started/",
-    }, 
-    {
-      title: "Troubleshooting",
-      description: "Common Kubernetes access issues and their solutions.",
-      href: "./troubleshooting/",
-    },
-  ]}
   ctaLinks={[
     {
       title: "Get started with server access",
@@ -49,6 +37,27 @@ import kubernetesSvg from "@site/src/components/Icon/svg/kubernetes2.svg";
 >
 Log into Teleport with your preferred SSO provider and you can switch between Kubernetes clusters without additional logins, and  you can achieve compliance through session recordings and detailed audit logs.
 </DocHero>
+
+<UseCasesList
+  variant="doc"
+  useCases={[
+    {
+      title: "Enroll a Kubernetes Cluster",
+      description: "Deploy the Teleport Kubernetes Service on your Kubernetes cluster to secure it.",
+      href: "./getting-started/",
+    }, 
+    {
+      title: "Deployment Guides",
+      description: "Self-hosting Teleport community edition and enterprise on Kubernetes.",
+      href: "../zero-trust-access/deploy-a-cluster/helm-deployments/",
+    },
+    {
+      title: "Troubleshooting",
+      description: "Common Kubernetes access issues and their solutions.",
+      href: "./troubleshooting/",
+    },
+  ]}
+/>
 
 <Resources
   title="Access Controls"
