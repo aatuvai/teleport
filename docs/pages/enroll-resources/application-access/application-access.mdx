@@ -1,30 +1,240 @@
 ---
 title: Applications
-description: Guides to using Teleport to protect web applications, cloud provider APIs, and more.
+description: Protect applications with Teleport by deploying the Teleport Application Service.
+template: doc-page
 tags:
  - zero-trust
  - infrastructure-identity
 ---
 
-The guides in this section explain how to protect applications with
-Teleport by deploying the Teleport Application Service.
+import DocHero, { DocHeroProps } from "@site/src/components/Pages/Landing/DocHero";
+import UseCasesList, { UseCasesListProps } from "@site/src/components/Pages/Landing/UseCasesList";
 
-It is also possible to enroll applications in your cluster by deploying the
-Teleport SAML identity provider and configuring the applications as service
-providers. For more information, read [Configure Teleport as an identity
-provider](../../identity-governance/idps/idps.mdx).
+import IdentitySecurityImg from "@content/docs/img/resource-health-check/database-health-warning-indicator.png";
+import awsCliSvg from "@site/src/components/Icons/svg/aws-cli.svg";
+import azureSvg from "@site/src/components/Icons/svg/azure.svg";
+import googleCloudSvg from "@site/src/components/Icons/svg/googleCloud.svg";
+import amazonAthenaSvg from "@site/src/components/Icons/svg/amazon-athena.svg";
+import amazonDynamoDbSvg from "@site/src/components/Icons/svg/amazon-dynamo-db.svg";
 
-## Getting started
-- [Introduction to Enrolling Applications](./introduction.mdx): How to set up Teleport to protect applications and cloud provider APIs
-- [Protect a Web Application with Teleport](./getting-started.mdx): Provides instructions to set up the Teleport Application Service and enable secure access to a web application.
+<DocHero
+  title="Enroll your first application"
+  image={IdentitySecurityImg}
+  ctaLinks={[
+    {
+      title: "Get Started with Application Access",
+      href: "./getting-started/",
+      variant: "primary",
+      arrow: true,
+    },
+  ]}
+>
+Teleport provides secure access applications and cloud provider APIs with RBAC, audit logging, and just-in-time access. 
 
-## Guides
-- [Guides (section)](./guides/): Guides for configuring Teleport application access.
-- [Securing Access to Cloud APIs (section)](./cloud-apis/): How to use Teleport to achieve secure access while managing your cloud-based infrastructure.
-- [JWT Authentication (section)](./jwt/): Guides for using Teleport application access JWT authentication.
+The Teleport Application Service enables secure connections to private networks, support Teleport JWTs for authentication, and provide guidance on app enrollment and access control configuration.
+</DocHero>
 
-## Configuration & management
-- [Role-Based Access Control](./controls.mdx): Role-Based Access Control (RBAC) for Teleport application access.
+<UseCasesList
+  title={null}
+  variant="doc"
+  useCases={[
+    {
+      title: "Role-Based Access Control",
+      description: "Set up granular access policies for Applications connected to Teleport.",
+      href: "./controls/",
+    }, 
+    {
+      title: "Configure Teleport as an IdP",
+      description: "Securely log in to both internal and external applications using identity provider.",
+      href: "./cloud-apis/",
+    },
+    {
+      title: "Troubleshooting",
+      description: "Common Applications access issues with Teleport and their solutions.",
+      href: "./troubleshooting/",
+    },
+  ]}
+/>
 
-## Troubleshooting & support
-- [Troubleshooting](./troubleshooting-apps.mdx): Describes common issues and solutions for access to applications protected by Teleport.
+<UseCasesList
+  title="Enrolling Applications"
+  variant="doc"
+  desktopColumnCount={1}
+  narrowBottomPadding={true}
+  useCases={[
+    {
+      title: "Cloud Provider APIs",
+      description: "Prevent unauthorized access to cloud APIs, consoles, and CLI tools using RBAC.",
+      href: "./controls/",
+      tags: [
+        {
+          name: "AWS Console and CLI",
+          href: "./cloud-apis/aws-console/",
+          icon: "aws",
+        },
+        {
+          name: "Google Cloud Web Console",
+          href: "./cloud-apis/google-cloud/",
+          icon: "googleCloud",
+        },
+        {
+          name: "Google Cloud CLI Applications",
+          href: "./cloud-apis/google-cloud/",
+          icon: "googleCloud",
+        },
+       {
+          name: "Azure CLI Applications",
+          href: "./cloud-apis/azure/",
+          icon: "azure",
+        },
+      ]
+    },
+  ]}
+/>
+
+<UseCasesList
+  title={null}
+  variant="doc"
+  useCases={[
+    {
+      title: "Web Apps",
+      description: "Connect a web application to manage and control access, set up RBAC, audit logging and more.",
+      href: "./guides/connecting-apps/",
+    }, 
+    {
+      title: "TCP Apps",
+      description: "Connect to services not natively supported by Teleport, like SMTP servers and databases.",
+      href: "./guides/tcp/",
+    },
+    {
+      title: "REST and gRPC APIs",
+      description: "Access application (REST or Teleport's gRPC) APIs with tools like curl or Postman.",
+      href: "./guides/api-access/",
+    },
+  ]}
+/>
+
+<Resources
+  title="Securing Access to Cloud APIs"
+  variant="doc"
+  desktopColumnsCount={3}
+  resources={[
+    {
+      title: "AWS",
+      description: "Secure AWS console and API access with RBAC, Just-in-Time Access, and identity governance via IAM Roles.",
+      iconComponent: keyholeSvg,
+      href: "./introduction/",
+      tags: [
+        {
+          name: "AWS Console and CLI Access",
+          href: "./aws-console/",
+        },
+      ]
+    },
+    {
+      title: "Azure",
+      description: "Control Azure CLI and API access using the same RBAC as your infrastructure.",
+      iconComponent: activeDirectorySvg,
+      href: "./active-directory/",
+      tags: [
+        {
+          name: "Protect Azure CLIs and APIs with Teleport",
+          href: "/cloud-apis/azure/",
+        },
+        {
+          name: "Protect Azure CLIs with Teleport App Access on AKS",
+          href: "/cloud-apis/azure-aks-workload-id/", 
+        }
+      ]
+    },
+    {
+      title: "Google Cloud",
+      description: "Secure Google Cloud CLI and API access with RBAC and Teleport SAML IdP.”",
+      iconComponent: windowsSvg,
+      href: "./getting-started/",
+      tags: [
+        {
+          name: "Protect Google Cloud API Access with Teleport",
+          href: "/cloud-apis/google-cloud/",
+        },
+        {
+          name: "Access GCP Web Console and API",
+          href: "../../identity-governance/idps/saml-gcp-workforce-identity-federation/", 
+        }
+      ]
+    },
+  ]}
+/>
+
+<Resources
+  title="Securing Access to Cloud APIs"
+  variant="doc"
+  desktopColumnsCount={3}
+  narrowBottomPadding={true}
+  resources={[
+    {
+      title: "AWS",
+      description: "Secure AWS console and API access with RBAC, Just-in-Time Access, and identity governance via IAM Roles.",
+      iconComponent: awsCliSvg,
+      href: "./introduction/",
+      tags: [
+        {
+          name: "AWS Console and CLI Access",
+          href: "./aws-console/",
+        },
+      ]
+    },
+    {
+      title: "Azure",
+      description: "Control Azure CLI and API access using the same RBAC as your infrastructure.",
+      iconComponent: azureSvg,
+      href: "./active-directory/",
+      tags: [
+        {
+          name: "Protect Azure CLIs and APIs with Teleport",
+          href: "/cloud-apis/azure/",
+        },
+        {
+          name: "Protect Azure CLIs with Teleport App Access on AKS",
+          href: "/cloud-apis/azure-aks-workload-id/", 
+        }
+      ]
+    },
+    {
+      title: "Google Cloud",
+      description: "Secure Google Cloud CLI and API access with RBAC and Teleport SAML IdP.”",
+      iconComponent: googleCloudSvg,
+      href: "./getting-started/",
+      tags: [
+        {
+          name: "Protect Google Cloud API Access with Teleport",
+          href: "/cloud-apis/google-cloud/",
+        },
+        {
+          name: "Access GCP Web Console and API",
+          href: "../../identity-governance/idps/saml-gcp-workforce-identity-federation/", 
+        }
+      ]
+    },
+  ]}
+/>
+
+<Resources
+  title={null}
+  variant="doc"
+  desktopColumnsCount={2}
+  resources={[
+    {
+      title: "Amazon Athena Access",
+      description: "Set up secure access to Amazon Athena using AWS CLI and Console.",
+      iconComponent: amazonAthenaSvg,
+      href: "./guides/amazon-athena/",
+    },
+    {
+      title: "Amazon DynamoDB",
+      description: "Set up the Teleport Application Service to secure access to Amazon DynamoDB",
+      iconComponent: amazonDynamoDbSvg,
+      href: "./guides/dynamodb/",
+    },
+  ]}
+/>
