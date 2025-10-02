@@ -119,69 +119,17 @@ The Teleport Application Service enables secure connections to private networks,
   title="Securing Access to Cloud APIs"
   variant="doc"
   desktopColumnsCount={3}
-  resources={[
-    {
-      title: "AWS",
-      description: "Secure AWS console and API access with RBAC, Just-in-Time Access, and identity governance via IAM Roles.",
-      iconComponent: keyholeSvg,
-      href: "./introduction/",
-      tags: [
-        {
-          name: "AWS Console and CLI Access",
-          href: "./aws-console/",
-        },
-      ]
-    },
-    {
-      title: "Azure",
-      description: "Control Azure CLI and API access using the same RBAC as your infrastructure.",
-      iconComponent: activeDirectorySvg,
-      href: "./active-directory/",
-      tags: [
-        {
-          name: "Protect Azure CLIs and APIs with Teleport",
-          href: "/cloud-apis/azure/",
-        },
-        {
-          name: "Protect Azure CLIs with Teleport App Access on AKS",
-          href: "/cloud-apis/azure-aks-workload-id/", 
-        }
-      ]
-    },
-    {
-      title: "Google Cloud",
-      description: "Secure Google Cloud CLI and API access with RBAC and Teleport SAML IdP.”",
-      iconComponent: windowsSvg,
-      href: "./getting-started/",
-      tags: [
-        {
-          name: "Protect Google Cloud API Access with Teleport",
-          href: "/cloud-apis/google-cloud/",
-        },
-        {
-          name: "Access GCP Web Console and API",
-          href: "../../identity-governance/idps/saml-gcp-workforce-identity-federation/", 
-        }
-      ]
-    },
-  ]}
-/>
-
-<Resources
-  title="Securing Access to Cloud APIs"
-  variant="doc"
-  desktopColumnsCount={3}
   narrowBottomPadding={true}
   resources={[
     {
       title: "AWS",
       description: "Secure AWS console and API access with RBAC, Just-in-Time Access, and identity governance via IAM Roles.",
       iconComponent: awsCliSvg,
-      href: "./introduction/",
+      href: "./cloud-apis/aws-console-roles-anywhere/",
       tags: [
         {
           name: "AWS Console and CLI Access",
-          href: "./aws-console/",
+          href: "./cloud-apis/aws-console/",
         },
       ]
     },
@@ -193,11 +141,11 @@ The Teleport Application Service enables secure connections to private networks,
       tags: [
         {
           name: "Protect Azure CLIs and APIs with Teleport",
-          href: "/cloud-apis/azure/",
+          href: "./cloud-apis/azure/",
         },
         {
           name: "Protect Azure CLIs with Teleport App Access on AKS",
-          href: "/cloud-apis/azure-aks-workload-id/", 
+          href: "./cloud-apis/azure-aks-workload-id/", 
         }
       ]
     },
@@ -209,7 +157,7 @@ The Teleport Application Service enables secure connections to private networks,
       tags: [
         {
           name: "Protect Google Cloud API Access with Teleport",
-          href: "/cloud-apis/google-cloud/",
+          href: "./cloud-apis/google-cloud/",
         },
         {
           name: "Access GCP Web Console and API",
