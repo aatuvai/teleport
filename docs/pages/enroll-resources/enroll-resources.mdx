@@ -26,6 +26,7 @@ import mcpAndAiSvg from "@site/src/components/Icon/teleport-svg/mcp-and-ai.svg";
   title="Enroll Resources"
   image={IdentitySecurityImg}
   linksTitle="Enrollment Methods"
+  linksColumnCount={3}
   links={[
     {
       title: "Infrastructure as a Code",
@@ -50,7 +51,7 @@ import mcpAndAiSvg from "@site/src/components/Icon/teleport-svg/mcp-and-ai.svg";
 Teleport protects infrastructure resources such as servers, databases, and Kubernetes clusters by enforcing strong access controls and auditability. Once a resource is enrolled with Teleport, you can manage access to it using the Teleport role-based access control (RBAC) system, allowing you to define which users or teams can connect and what actions they are permitted to perform.
 - [Learn about Teleport agent architecture](../reference/architecture/agents.mdx)
 - [Restrict access to resources with RBAC](../zero-trust-access/rbac-get-started/rbac-get-started.mdx)
-- [Enrolling resources using Infrastructure as Code (IaC)](../reference/infrastructure-as-code/infrastructure-as-code.mdx)
+- [Enrolling resources using Infrastructure as Code (IaC)](../zero-trust-access/infrastructure-as-code/managing-resources/managing-resources.mdx)
 </LandingHero>
 
 <EnrollmentMethods>
@@ -194,7 +195,7 @@ tagLists={
         [
           {
             name: "Get started guide",
-            href: "./server-access/openssh/openssh-agentless/",
+            href: "./server-access/getting-started/",
           },
           {
             name: "Agentless OpenSSH",
@@ -232,7 +233,7 @@ tagLists={
           },
           {
             name: "DB access for MCP",
-            href: "./mcp-access/getting-started/",
+            href: "../connect-your-client/model-context-protocol/database-access/",
           },
         ] 
     },
@@ -254,7 +255,7 @@ Secure the vibes with access controls and auditability for all MCP access.
     {
       title: 'Servers',
       iconComponent: linuxServersSvg,
-      href: './auto-discovery/kubernetes-applications/'
+      href: './auto-discovery/servers/'
     },
     {
       title: 'Kubernetes Clusters',
@@ -264,7 +265,7 @@ Secure the vibes with access controls and auditability for all MCP access.
     {
       title: 'Kube services as apps',
       iconComponent: applicationSvg,
-      href: './auto-discovery/servers/'
+      href: './auto-discovery/kubernetes-applications/'
     },
   ]}
 >
