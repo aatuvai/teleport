@@ -195,6 +195,10 @@ type Config struct {
 	// (for example, using command-line flags).
 	ExplicitUsername bool
 
+	// Scope is the target scope, used during authentication/login to request certificates
+	// that are limited (pinned) to a given target scope.
+	Scope string
+
 	// Remote host to connect
 	Host string
 
@@ -1286,10 +1290,6 @@ type TeleportClient struct {
 
 	localAgent *LocalKeyAgent
 
-	// OnChannelRequest gets called when SSH channel requests are
-	// received. It's safe to keep it nil.
-	OnChannelRequest tracessh.ChannelRequestCallback
-
 	// OnShellCreated gets called when the shell is created. It's
 	// safe to keep it nil.
 	OnShellCreated ShellCreatedCallback
@@ -2285,7 +2285,7 @@ func (tc *TeleportClient) runShellOrCommandOnSingleNode(ctx context.Context, clt
 		// Reuse the existing nodeClient we connected above.
 		return nodeClient.RunCommand(ctx, command)
 	}
-	return trace.Wrap(nodeClient.RunInteractiveShell(ctx, types.SessionPeerMode, nil, tc.OnChannelRequest, nil))
+	return trace.Wrap(nodeClient.RunInteractiveShell(ctx, types.SessionPeerMode, nil, nil))
 }
 
 func (tc *TeleportClient) runShellOrCommandOnMultipleNodes(ctx context.Context, clt *ClusterClient, nodes []TargetNode, command []string) error {
@@ -2439,7 +2439,7 @@ func (tc *TeleportClient) Join(ctx context.Context, mode types.SessionParticipan
 	}
 
 	// running shell with a given session means "join" it:
-	err = nc.RunInteractiveShell(ctx, mode, session, tc.OnChannelRequest, beforeStart)
+	err = nc.RunInteractiveShell(ctx, mode, session, beforeStart)
 	return trace.Wrap(err)
 }
 
@@ -2577,6 +2577,10 @@ func playSession(ctx context.Context, sessionID string, speed float64, streamer 
 		default:
 			continue
 		}
+	}
+
+	if err := player.Err(); err != nil {
+		return trace.Wrap(err)
 	}
 
 	return nil
@@ -4023,6 +4027,20 @@ func (tc *TeleportClient) SSHLogin(ctx context.Context, sshLoginFunc SSHLoginFun
 	// be persisted in the profile
 	tc.ProfileDefaultRelayAddr = response.ClientOptions.DefaultRelayAddr
 
+	tlsCert, err := tlsca.ParseCertificatePEM(response.TLSCert)
+	if err != nil {
+		return nil, trace.Wrap(err)
+	}
+
+	ident, err := tlsca.FromSubject(tlsCert.Subject, time.Time{})
+	if err != nil {
+		return nil, trace.Wrap(err)
+	}
+
+	if ident.ScopePin != nil {
+		log.DebugContext(ctx, "got scoped certificate identity", "scope", ident.ScopePin.Scope, "assignments", ident.ScopePin.Assignments)
+	}
+
 	return keyRing, nil
 }
 
@@ -4146,6 +4164,7 @@ func (tc *TeleportClient) NewSSHLogin(keyRing *KeyRing) (SSHLogin, error) {
 		TTL:                     tc.KeyTTL,
 		Insecure:                tc.InsecureSkipVerify,
 		Pool:                    loopbackPool(tc.WebProxyAddr),
+		Scope:                   tc.Scope,
 		Compatibility:           tc.CertificateFormat,
 		RouteToCluster:          tc.SiteName,
 		KubernetesCluster:       tc.KubernetesCluster,
@@ -5561,6 +5580,12 @@ func (tc *TeleportClient) DialMCPServer(ctx context.Context, appName string) (ne
 	}
 	if !apps[0].IsMCP() {
 		return nil, trace.BadParameter("app %q is not a MCP server", appName)
+	}
+
+	// TODO(greedy52) support streamable HTTP for "tsh mcp connect" before
+	// release.
+	if transport := types.GetMCPServerTransportType(apps[0].GetURI()); transport == types.MCPTransportHTTP {
+		return nil, trace.NotImplemented("MCP support for %s is not yet implemented", transport)
 	}
 
 	cert, err := tc.issueMCPCertWithMFA(ctx, apps[0])
