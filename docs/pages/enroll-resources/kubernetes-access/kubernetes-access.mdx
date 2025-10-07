@@ -11,7 +11,7 @@ import DocHero, { DocHeroProps } from "@site/src/components/Pages/Landing/DocHer
 import Resources from "@site/src/components/Pages/Homepage/Resources";
 import UseCasesList from "@site/src/components/Pages/Landing/UseCasesList";
 
-import IdentitySecurityImg from "@content/docs/img/resource-health-check/database-health-warning-indicator.png";
+import kubernetesImg from '@version/docs/img/kubernetes-access/kubernetes-clusters-hero.png';
 import identificationBadgeSvg from "@site/src/components/Icon/svg/identification-badge.svg";
 import listChecksSvg from "@site/src/components/Icon/svg/list-checks.svg";
 import clipboardTextSvg from "@site/src/components/Icon/svg/clipboard-text.svg";
@@ -20,19 +20,14 @@ import iamSvg from "@site/src/components/Icon/svg/awsIdentity.svg";
 import kubernetesSvg from "@site/src/components/Icon/svg/kubernetes2.svg";
 
 <DocHero
-  title="Introduction"
-  image={IdentitySecurityImg}
+  title="Enroll your first Kubernetes cluster"
+  image={kubernetesImg}
   ctaLinks={[
     {
       title: "Get started with server access",
       href: "./getting-started/",
-      variant: "primary",
-      arrow: true,
-    },
-    {
-      title: "How it works",
-      href: "./getting-started/#how-it-works/",
       variant: "secondary",
+      arrow: true,
     },
   ]}
 >
@@ -42,17 +37,13 @@ Log into Teleport with your preferred SSO provider and you can switch between Ku
 <UseCasesList
   title={null}
   variant="doc"
+  desktopColumnsCount={2}
   useCases={[
     {
-      title: "Enroll a Kubernetes Cluster",
-      description: "Deploy the Teleport Kubernetes Service on your Kubernetes cluster to secure it.",
-      href: "./getting-started/",
+      title: "Kubernetes Access Overview",
+      description: "Securely access Kubernetes cluster with SSO, RBAC and audit logging.",
+      href: "./introduction/",
     }, 
-    {
-      title: "Deployment Guides",
-      description: "Self-hosting Teleport community edition and enterprise on Kubernetes.",
-      href: "../../zero-trust-access/deploy-a-cluster/helm-deployments/",
-    },
     {
       title: "Troubleshooting",
       description: "Common Kubernetes access issues and their solutions.",
@@ -68,13 +59,13 @@ Log into Teleport with your preferred SSO provider and you can switch between Ku
   resources={[
     {
       title: "RBAC for Kubernetes",
-      description: "Configure role-based access control (RBAC) for access to Kubernetes clusters, groups, users, and resources.",
+      description: "Configure role-based access control (RBAC) for Kubernetes clusters, groups, users, and resources.",
       iconComponent: identificationBadgeSvg,
       href: "./controls/"
     },
     {
       title: "Configure and Set up",
-      description: "Enforce role-based access in Kubernetes by intercepting user requests and their actions. And configure these roles for your connected clusters.",
+      description: "Enforce RBAC by intercepting user requests and their actions. And configure these roles for your connected clusters.",
       iconComponent: listChecksSvg,
       href: "./manage-access/"
     },
@@ -94,7 +85,7 @@ Log into Teleport with your preferred SSO provider and you can switch between Ku
   resources={[
     {
       title: "Dynamic Kubernetes Cluster Registration",
-      description: "Manage connected Kubernetes clusters without changing each service’s configuration files.",
+      description: "Manage connected Kubernetes clusters without changing each service's configuration files.",
       iconComponent: kubernetesClustersSvg,
       href: "./register-clusters/dynamic-registration/"
     },
