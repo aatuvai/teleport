@@ -39,9 +39,9 @@ import (
 	"github.com/gravitational/trace"
 	"github.com/pkg/sftp"
 	"github.com/schollz/progressbar/v3"
-	"golang.org/x/crypto/ssh"
 
 	"github.com/gravitational/teleport"
+	tracessh "github.com/gravitational/teleport/api/observability/tracing/ssh"
 	"github.com/gravitational/teleport/lib/defaults"
 	"github.com/gravitational/teleport/lib/sshutils/scp"
 )
@@ -161,6 +161,9 @@ type FileSystem interface {
 	Readlink(name string) (string, error)
 	// Getwd gets the current working directory.
 	Getwd() (string, error)
+	// RealPath canonicalizes a path name, including resolving ".." and
+	// following symlinks.
+	RealPath(path string) (string, error)
 }
 
 // CreateUploadConfig returns a Config ready to upload files over SFTP.
@@ -307,24 +310,29 @@ func (c *Config) setDefaults() {
 
 // TransferFiles transfers files from the configured source paths to the
 // configured destination path over SFTP or HTTP depending on the Config.
-func (c *Config) TransferFiles(ctx context.Context, sshClient *ssh.Client) error {
-	s, err := sshClient.NewSession()
+// moderatedSessionID must be provided for filetransfers in a moderated session.
+func (c *Config) TransferFiles(ctx context.Context, sshClient *tracessh.Client, moderatedSessionID string) error {
+	s, err := sshClient.NewSessionWithParams(ctx, &tracessh.SessionParams{
+		// File transfers in a moderated session require this variable
+		// to check for approval on the ssh server
+		ModeratedSessionID: moderatedSessionID,
+	})
 	if err != nil {
 		return trace.Wrap(err)
 	}
 	defer s.Close()
 
-	// File transfers in a moderated session require this variable
-	// to check for approval on the ssh server
-	if moderatedSessionID, ok := ctx.Value(ModeratedSessionID).(string); ok {
-		s.Setenv(string(ModeratedSessionID), moderatedSessionID)
+	// TODO(Joerger): DELETE IN v20.0.0 - moderated session ID is provided
+	// in the session channel params above instead of indirectly through env vars.
+	if moderatedSessionID != "" {
+		s.Setenv(ctx, EnvModeratedSessionID, moderatedSessionID)
 	}
 
 	pe, err := s.StderrPipe()
 	if err != nil {
 		return trace.Wrap(err)
 	}
-	if err := s.RequestSubsystem(teleport.SFTPSubsystem); err != nil {
+	if err := s.RequestSubsystem(ctx, teleport.SFTPSubsystem); err != nil {
 		// If the subsystem request failed and a generic error is
 		// returned, return the session's stderr as the error if it's
 		// non-empty, as the session's stderr may have a more useful
@@ -547,7 +555,7 @@ func (c *Config) transfer(ctx context.Context) error {
 		}
 
 		if fi.IsDir() {
-			if err := c.transferDir(ctx, dstPath, matchedPaths[i], fi); err != nil {
+			if err := c.transferDir(ctx, dstPath, matchedPaths[i], fi, nil); err != nil {
 				return trace.Wrap(err)
 			}
 		} else {
@@ -561,10 +569,22 @@ func (c *Config) transfer(ctx context.Context) error {
 }
 
 // transferDir transfers a directory
-func (c *Config) transferDir(ctx context.Context, dstPath, srcPath string, srcFileInfo os.FileInfo) error {
+func (c *Config) transferDir(ctx context.Context, dstPath, srcPath string, srcFileInfo os.FileInfo, visited map[string]struct{}) error {
+	if visited == nil {
+		visited = make(map[string]struct{})
+	}
+	realSrcPath, err := c.srcFS.RealPath(srcPath)
+	if err != nil {
+		return trace.Wrap(err)
+	}
+	if _, ok := visited[realSrcPath]; ok {
+		c.Log.DebugContext(ctx, "symlink loop detected, directory will be skipped", "link", srcPath, "target", realSrcPath)
+		return nil
+	}
+	visited[realSrcPath] = struct{}{}
 	c.Log.DebugContext(ctx, "transferring contents of directory", "source_fs", c.srcFS.Type(), "source_path", srcPath, "dest_fs", c.dstFS.Type(), "dest_path", dstPath)
 
-	err := c.dstFS.Mkdir(dstPath)
+	err = c.dstFS.Mkdir(dstPath)
 	if err != nil && !errors.Is(err, os.ErrExist) {
 		return trace.Errorf("error creating %s directory %q: %w", c.dstFS.Type(), dstPath, err)
 	}
@@ -582,7 +602,7 @@ func (c *Config) transferDir(ctx context.Context, dstPath, srcPath string, srcFi
 		lSubPath := path.Join(srcPath, info.Name())
 
 		if info.IsDir() {
-			if err := c.transferDir(ctx, dstSubPath, lSubPath, info); err != nil {
+			if err := c.transferDir(ctx, dstSubPath, lSubPath, info, visited); err != nil {
 				return trace.Wrap(err)
 			}
 		} else {
