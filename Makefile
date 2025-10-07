@@ -904,6 +904,7 @@ helmunit/installed:
 test-helm: helmunit/installed
 	helm unittest -3 --with-subchart=false examples/chart/teleport-cluster
 	helm unittest -3 --with-subchart=false examples/chart/teleport-kube-agent
+	helm unittest -3 --with-subchart=false examples/chart/teleport-relay
 	helm unittest -3 --with-subchart=false examples/chart/teleport-cluster/charts/teleport-operator
 	helm unittest -3 --with-subchart=false examples/chart/access/*
 	helm unittest -3 --with-subchart=false examples/chart/event-handler
@@ -913,6 +914,7 @@ test-helm: helmunit/installed
 test-helm-update-snapshots: helmunit/installed
 	helm unittest -3 -u --with-subchart=false examples/chart/teleport-cluster
 	helm unittest -3 -u --with-subchart=false examples/chart/teleport-kube-agent
+	helm unittest -3 -u --with-subchart=false examples/chart/teleport-relay
 	helm unittest -3 -u --with-subchart=false examples/chart/teleport-cluster/charts/teleport-operator
 	helm unittest -3 -u --with-subchart=false examples/chart/access/*
 	helm unittest -3 -u --with-subchart=false examples/chart/event-handler
@@ -1326,7 +1328,7 @@ lint-helm:
 		if [ "$${CI}" = "true" ]; then echo "This is a failure when running in CI." && exit 1; fi; \
 		exit 0; \
 	fi; \
-	for CHART in ./examples/chart/teleport-cluster ./examples/chart/teleport-kube-agent ./examples/chart/teleport-cluster/charts/teleport-operator ./examples/chart/tbot; do \
+	for CHART in ./examples/chart/teleport-cluster ./examples/chart/teleport-kube-agent ./examples/chart/teleport-relay ./examples/chart/teleport-cluster/charts/teleport-operator ./examples/chart/tbot; do \
 		if [ -d $${CHART}/.lint ]; then \
 			for VALUES in $${CHART}/.lint/*.yaml; do \
 				export HELM_TEMP=$$(mktemp); \
@@ -1335,6 +1337,7 @@ lint-helm:
 				helm lint --quiet --strict $${CHART} -f $${VALUES} || exit 1; \
 				helm template test $${CHART} -f $${VALUES} 1>$${HELM_TEMP} || exit 1; \
 				yamllint -c examples/chart/.lint-config.yaml $${HELM_TEMP} || { cat -en $${HELM_TEMP}; exit 1; }; \
+				echo; \
 			done \
 		else \
 			export HELM_TEMP=$$(mktemp); \
@@ -1863,7 +1866,7 @@ ensure-js-deps:
 ifeq ($(WEBASSETS_SKIP_BUILD),1)
 ensure-wasm-deps:
 else
-ensure-wasm-deps: ensure-wasm-bindgen ensure-wasm-opt rustup-install-wasm-toolchain
+ensure-wasm-deps: ensure-wasm-bindgen ensure-wasm-opt
 
 WASM_BINDGEN_VERSION = $(shell awk ' \
   $$1 == "name" && $$3 == "\"wasm-bindgen\"" { in_pkg=1; next } \
@@ -1874,21 +1877,20 @@ WASM_BINDGEN_VERSION = $(shell awk ' \
 print-wasm-bindgen-version:
 	@echo $(WASM_BINDGEN_VERSION)
 
+RUST_TOOLCHAIN_VERSION = $(shell awk '$$1 == "channel" && $$2 == "=" { gsub(/"/, "", $$3); print $$3 }' rust-toolchain.toml )
+
+.PHONY: print-rust-toolchain-version
+print-rust-toolchain-version:
+	@echo $(RUST_TOOLCHAIN_VERSION)
+
 ensure-wasm-bindgen: NEED_VERSION = $(WASM_BINDGEN_VERSION)
 ensure-wasm-bindgen: INSTALLED_VERSION = $(word 2,$(shell wasm-bindgen --version 2>/dev/null))
 ensure-wasm-bindgen:
-ifneq ($(CI)$(FORCE),)
 	@: $(or $(NEED_VERSION),$(error Unknown wasm-bindgen version. Is it in Cargo.lock?))
 	$(if $(filter-out $(INSTALLED_VERSION),$(NEED_VERSION)),\
 		cargo install wasm-bindgen-cli --force --locked --version "$(NEED_VERSION)", \
 		@echo wasm-bindgen-cli up-to-date: $(INSTALLED_VERSION) \
 	)
-else
-	$(if $(filter-out $(INSTALLED_VERSION),$(NEED_VERSION)),\
-		@echo "Wrong wasm-bindgen version. Want $(NEED_VERSION) have $(INSTALLED_VERSION)"; \
-		echo "Run 'make $@ FORCE=true' to force installation." \
-	)
-endif
 endif
 
 .PHONY: ensure-wasm-opt
@@ -1908,22 +1910,18 @@ build-ui-e: ensure-js-deps ensure-wasm-deps
 docker-ui:
 	$(MAKE) -C build.assets ui
 
+# TODO(rhammonds): Remove this target once all references to it have
+# been removed from e submodule and e ref is updated.
 .PHONY: rustup-set-version
-rustup-set-version: RUST_VERSION := $(shell $(MAKE) --no-print-directory -C build.assets print-rust-version)
-rustup-set-version:
-	rustup override set $(RUST_VERSION)
+rustup-set-version: ; # obsoleted by toolchain file
 
 # rustup-install-target-toolchain ensures the required rust compiler is
 # installed to build for $(ARCH)/$(OS) for the version of rust we use, as
 # defined in build.assets/Makefile. It assumes that `rustup` is already
 # installed for managing the rust toolchain.
 .PHONY: rustup-install-target-toolchain
-rustup-install-target-toolchain: rustup-set-version
+rustup-install-target-toolchain:
 	rustup target add $(RUST_TARGET_ARCH)
-
-.PHONY: rustup-install-wasm-toolchain
-rustup-install-wasm-toolchain: rustup-set-version
-	rustup target add $(CARGO_WASM_TARGET)
 
 # changelog generates PR changelog between the provided base tag and the tip of
 # the specified branch.
