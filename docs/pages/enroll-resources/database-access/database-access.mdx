@@ -10,7 +10,7 @@ import DocHero from "@site/src/components/Pages/Landing/DocHero";
 import UseCasesList from "@site/src/components/Pages/Landing/UseCasesList";
 import Resources from "@site/src/components/Pages/Homepage/Resources";
 
-import IdentitySecurityImg from '@content/docs/img/resource-health-check/database-health-warning-indicator.png';
+import databasesImg from '@version/docs/img/database-access/databases-hero.png';
 import postgresSvg from '@site/src/components/Icon/svg/postgresql.svg';
 import mysqlSvg from '@site/src/components/Icon/svg/mysql.svg';
 import mariaDbSvg from '@site/src/components/Icon/svg/maria-db.svg';
@@ -19,32 +19,37 @@ import mongoDbSvg from '@site/src/components/Icon/svg/mongodb.svg';
 
 <DocHero
   title="Introduction"
-  image={IdentitySecurityImg}
-  links={[
-    {
-      title: "Access controls for servers",
-      description: "Teleport's role-based access control (RBAC) system to set up granular permissions for authenticating to Linux servers connected to Teleport.",
-      href: "./rbac/",
-    },
-    {
-      title: "Troubleshooting",
-      description: "Common issues you might encounter in managing access to servers with Teleport and how to resolve them.",
-      href: "./troubleshooting/",
-    },
-  ]}
+  image={databasesImg}
   ctaLinks={[
     {
-      title: "Get started with server access",
+      title: "Get Started with Database Access",
       href: "./getting-started/",
       variant: "secondary",
       arrow: true,
     },
   ]}
 >
-Consolidates SSH access across all environments, decreases configuration complexity, supports industry best practices and compliance while giving complete visibility over all sessions and events.
-
-Teleport protects servers through the Teleport SSH Service, which is a Teleport agent service. For more information on agent services, read [Teleport Agent Architecture](../../reference/architecture/agents.mdx).
+Provide secure database access through its Database Service by providing short-lived certificates via SSO, RBAC with Access Requests, and audit logs. Improve access control and visibility while centralizing management across infrastructure.
 </DocHero>
+
+
+<UseCasesList
+  title={null}
+  variant="doc"
+  desktopColumnsCount={2}
+  useCases={[
+    {
+      title: "Access Control",
+      description: "Apply RBAC to databases for users to access required data.",
+      href: "./rbac/",
+    },
+    {
+      title: "Troubleshooting",
+      description: "Common Database access issues with Teleport and their solutions.",
+      href: "./troubleshooting/",
+    },
+  ]}
+/>
 
 <UseCasesList
   title="Database Guides"
