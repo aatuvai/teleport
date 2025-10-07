@@ -25,7 +25,7 @@ import amazonDynamoDbSvg from "@site/src/components/Icon/svg/amazon-dynamo-db.sv
     {
       title: "Get Started with Application Access",
       href: "./getting-started/",
-      variant: "primary",
+      variant: "secondary",
       arrow: true,
     },
   ]}
@@ -184,6 +184,28 @@ The Teleport Application Service enables secure connections to private networks,
       description: "Set up the Teleport Application Service to secure access to Amazon DynamoDB",
       iconComponent: amazonDynamoDbSvg,
       href: "./guides/dynamodb/",
+    },
+  ]}
+/>
+
+<UseCasesList
+  title="Application Access Guides"
+  variant="doc"
+  useCases={[
+    {
+      title: "VNet",
+      description: "Use VNet to proxy TCP connections through a proxy service on custom public addresses.",
+      href: "./guides/vnet/",
+    }, 
+    {
+      title: "Dynamic App Registration",
+      description: "Admin can register new apps without updating static configuration files.",
+      href: "./guides/dynamic-registration/",
+    },
+    {
+      title: "Application Service HA",
+      description: "Configure Teleport Application Service for high availability using combined and separate instances.",
+      href: "./guides/ha/",
     },
   ]}
 />
