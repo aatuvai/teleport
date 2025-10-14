@@ -12,6 +12,10 @@ import UseCasesList from "@site/src/components/Pages/Landing/UseCasesList";
 import Resources from "@site/src/components/Pages/Homepage/Resources";
 
 import applicationsImg from "@version/docs/img/application-access/applications-hero.jpg";
+import userCheckSvg from "@site/src/components/Icon/svg/user-check.svg";
+import slidersHorizontalSvg from "@site/src/components/Icon/svg/sliders-horizontal.svg";
+import clusterSvg from "@site/src/components/Icon/teleport-svg/cluster.svg";
+import questionSvg from "@site/src/components/Icon/svg/question2.svg";
 import awsCliSvg from "@site/src/components/Icon/svg/aws-cli.svg";
 import azureSvg from "@site/src/components/Icon/svg/azure.svg";
 import googleCloudSvg from "@site/src/components/Icon/svg/googleCloud.svg";
@@ -29,33 +33,37 @@ import amazonDynamoDbSvg from "@site/src/components/Icon/svg/amazon-dynamo-db.sv
       arrow: true,
     },
   ]}
->
-Teleport provides secure access applications and cloud provider APIs with RBAC, audit logging, and just-in-time access. 
-
-The Teleport Application Service enables secure connections to private networks, support Teleport JWTs for authentication, and provide guidance on app enrollment and access control configuration.
-</DocHero>
-
-<UseCasesList
-  title={null}
-  variant="doc"
-  useCases={[
+  links={[
     {
       title: "Role-Based Access Control",
       description: "Set up granular access policies for Applications connected to Teleport.",
       href: "./controls/",
+      icon: userCheckSvg,
     }, 
     {
       title: "Configure Teleport as an IdP",
       description: "Securely log in to both internal and external applications using identity provider.",
       href: "./cloud-apis/",
+      icon: slidersHorizontalSvg,
     },
+    {
+      title: "VNet",
+      description: "Use VNet to proxy TCP connections through a proxy service on custom public addresses.",
+      href: "./guides/vnet/",
+      icon: clusterSvg,
+    }, 
     {
       title: "Troubleshooting",
       description: "Common Applications access issues with Teleport and their solutions.",
       href: "./troubleshooting-apps/",
+      icon: questionSvg,
     },
   ]}
-/>
+>
+Teleport provides secure access to applications and cloud provider APIs with RBAC, audit logging, and just-in-time access.
+
+The Teleport Application Service enables secure connections to applications on private networks, supports Teleport-signed JWTs for authentication, and enforces access policies across all connected applications.
+</DocHero>
 
 <UseCasesList
   title="Enrolling Applications"
@@ -65,7 +73,7 @@ The Teleport Application Service enables secure connections to private networks,
   useCases={[
     {
       title: "Cloud Provider APIs",
-      description: "Prevent unauthorized access to cloud APIs, consoles, and CLI tools using RBAC.",
+      description: "Secure access to cloud APIs, consoles, and CLI tools with Teleport RBAC.",
       href: "./controls/",
       tags: [
         {
@@ -191,12 +199,8 @@ The Teleport Application Service enables secure connections to private networks,
 <UseCasesList
   title="Application Access Guides"
   variant="doc"
-  useCases={[
-    {
-      title: "VNet",
-      description: "Use VNet to proxy TCP connections through a proxy service on custom public addresses.",
-      href: "./guides/vnet/",
-    }, 
+  desktopColumnsCount={2}
+  useCases={[ 
     {
       title: "Dynamic App Registration",
       description: "Admin can register new apps without updating static configuration files.",
