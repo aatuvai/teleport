@@ -11,6 +11,8 @@ import DocHero from "@site/src/components/Pages/Landing/DocHero";
 import UseCasesList from "@site/src/components/Pages/Landing/UseCasesList";
 
 import mcpServersImg from '@version/docs/img/mcp-access/mcp-servers-hero.jpg';
+import userCheckSvg from "@site/src/components/Icon/svg/user-check.svg";
+import questionSvg from "@site/src/components/Icon/svg/question2.svg";
 
 <DocHero
   title="Enroll your first MCP server"
@@ -23,27 +25,23 @@ import mcpServersImg from '@version/docs/img/mcp-access/mcp-servers-hero.jpg';
       arrow: true,
     },
   ]}
->
-Connect an MCP server with the Teleport application service, configure and assign a role granting MCP permissions, and connect and query the server with the Teleport CLI or your AI platform of choice.
-</DocHero>
-
-<UseCasesList
-  title={null}
-  variant="doc"
-  desktopColumnsCount={2}
-  useCases={[
+  links={[
     {
       title: "MCP Access Controls",
       description: "Use Teleport's role-based access control (RBAC) system to set up granular permissions for authenticating to MCP servers connected to Teleport.",
       href: "./rbac/",
+      icon: userCheckSvg,
     },
     {
       title: "Troubleshooting",
       description: "Understand common issues that you might encounter in managing access to MCP servers with Teleport and how to work around or resolve them.",
       href: "./troubleshooting/",
+      icon: questionSvg,
     },
   ]}
-/>
+>
+Connect an MCP server with the Teleport application service, configure and assign a role granting MCP permissions, and connect and query the server with the Teleport CLI or your AI platform of choice.
+</DocHero>
 
 <UseCasesList
   title="MCP Server Access"
