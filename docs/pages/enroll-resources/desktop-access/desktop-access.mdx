@@ -11,7 +11,9 @@ import DocHero, { DocHeroProps } from "@site/src/components/Pages/Landing/DocHer
 import Resources from "@site/src/components/Pages/Homepage/Resources";
 import UseCasesList from "@site/src/components/Pages/Landing/UseCasesList";
 
-import windowsDesktopsImg from "@version/docs/img/desktop-access/windows-desktops-hero.jpg";
+import userCheckSvg from "@site/src/components/Icon/svg/user-check.svg";
+import questionSvg from "@site/src/components/Icon/svg/question2.svg";
+import slidersHorizontalSvg from "@site/src/components/Icon/svg/sliders-horizontal.svg";
 import keyholeSvg from "@site/src/components/Icon/svg/keyhole.svg";
 import activeDirectorySvg from "@site/src/components/Icon/svg/active-directory.svg";
 import windowsSvg from "@site/src/components/Icon/svg/windows2.svg";
@@ -20,7 +22,7 @@ import folderNotchOpenSvg from "@site/src/components/Icon/svg/folder-notch-open.
 
 <DocHero
   title="Configure access for local Windows users"
-  image={windowsDesktopsImg}
+  youtubeVideoId="n2h0GisWdss"
   ctaLinks={[
     {
       title: "Get started with Windows access",
@@ -29,31 +31,29 @@ import folderNotchOpenSvg from "@site/src/components/Icon/svg/folder-notch-open.
       arrow: true,
     },
   ]}
->
-Provide secure, passwordless access to Microsoft Windows desktops and servers, backed by short-lived certificates, role-based access controls, clipboard and directory sharing, session recordings, and detailed audit logs.
-</DocHero>
-
-<UseCasesList
-  title={null}
-  variant="doc"
-  useCases={[
+  links={[
     {
       title: "Windows Desktop RBAC",
       description: "Set up granular access policies for Windows Desktops connected to Teleport.",
       href: "./getting-started/",
+      icon: userCheckSvg,
     }, 
     {
       title: "Desktop Config Options",
       description: "Configure access, audit events, sessions recordings, user creation and more.",
       href: "../../reference/deployment/config/#windows-desktop-service/",
+      icon: slidersHorizontalSvg,
     },
     {
       title: "Troubleshooting",
       description: "Common Windows Desktop access issues with Teleport and their solutions.",
       href: "./troubleshooting/",
+      icon: questionSvg,
     },
   ]}
-/>
+>
+Provide secure, passwordless access to Microsoft Windows desktops and servers, backed by short-lived certificates, role-based access controls, clipboard and directory sharing, session recordings, and detailed audit logs.
+</DocHero>
 
 <Resources
   title="Windows Desktop Access Guides"
