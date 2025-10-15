@@ -11,7 +11,8 @@ import DocHero, { DocHeroProps } from "@site/src/components/Pages/Landing/DocHer
 import Resources from "@site/src/components/Pages/Homepage/Resources";
 import UseCasesList from "@site/src/components/Pages/Landing/UseCasesList";
 
-import kubernetesImg from "@version/docs/img/kubernetes-access/kubernetes-clusters-hero.jpg";
+import noteSvg from "@site/src/components/Icon/svg/note2.svg";
+import questionSvg from "@site/src/components/Icon/svg/question2.svg";
 import identificationBadgeSvg from "@site/src/components/Icon/svg/identification-badge.svg";
 import listChecksSvg from "@site/src/components/Icon/svg/list-checks.svg";
 import clipboardTextSvg from "@site/src/components/Icon/svg/clipboard-text.svg";
@@ -21,7 +22,7 @@ import kubernetesSvg from "@site/src/components/Icon/svg/kubernetes2.svg";
 
 <DocHero
   title="Enroll your first Kubernetes cluster"
-  image={kubernetesImg}
+  youtubeVideoId="rQiloHM2oRQ"
   ctaLinks={[
     {
       title: "Get started with server access",
@@ -30,27 +31,23 @@ import kubernetesSvg from "@site/src/components/Icon/svg/kubernetes2.svg";
       arrow: true,
     },
   ]}
->
-Log into Teleport with your preferred SSO provider and you can switch between Kubernetes clusters without additional logins, and  you can achieve compliance through session recordings and detailed audit logs.
-</DocHero>
-
-<UseCasesList
-  title={null}
-  variant="doc"
-  desktopColumnsCount={2}
-  useCases={[
+  links={[
     {
       title: "Kubernetes Access Overview",
       description: "Securely access Kubernetes cluster with SSO, RBAC and audit logging.",
       href: "./introduction/",
+      iconComponent: noteSvg,
     }, 
     {
       title: "Troubleshooting",
       description: "Common Kubernetes access issues and their solutions.",
       href: "./troubleshooting/",
+      iconComponent: questionSvg,
     },
   ]}
-/>
+>
+Log into Teleport with your preferred SSO provider and you can switch between Kubernetes clusters without additional logins, and  you can achieve compliance through session recordings and detailed audit logs.
+</DocHero>
 
 <Resources
   title="Access Controls"
