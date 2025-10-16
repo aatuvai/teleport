@@ -91,27 +91,27 @@ Started](./get-started.mdx) guide to enroll your first resource with Teleport.
         {
           title: 'Role-Based Access Control (RBAC)',
           description: 'Govern infrastructure access with granular permissions',
-          href: './admin-guides/access-controls/'
+          href: './zero-trust-access/authentication/'
         },
         {
           title: 'Passwordless Authentication',
           description: 'Log in securely using biometrics',
-          href: './admin-guides/access-controls/guides/passwordless'
+          href: './zero-trust-access/authentication/passwordless/'
         },
         {
           title: 'Integrate with SSO Providers',
           description: 'Connect Okta, Entra ID, Google, and more',
-          href: './admin-guides/access-controls/sso/'
+          href: './zero-trust-access/sso/'
         },
         {
           title: 'Structured Audit Export',
           description: 'Forward audit logs to SIEMs like Splunk and Datadog',
-          href: './admin-guides/management/export-audit-events/'
+          href: './zero-trust-access/export-audit-events/'
         },
         {
           title: 'Identity-Based Audit Events',
           description: 'Detailed audit logs for every user action',
-          href: './reference/monitoring/audit/'
+          href: './reference/deployment/monitoring/audit/'
         },
         {
           title: 'Session Recording and Playback',
@@ -121,17 +121,17 @@ Started](./get-started.mdx) guide to enroll your first resource with Teleport.
         {
           title: 'Session Sharing and Moderation',
           description: 'Require a moderator for privileged sessions',
-          href: './admin-guides/access-controls/guides/joining-sessions/'
+          href: './zero-trust-access/authentication/joining-sessions/'
         },
         {
           title: 'Dual Authorization Capabilities',
           description: 'Require approvals to perform critical actions',
-          href: './admin-guides/access-controls/guides/dual-authz/'
+          href: './identity-governance/access-requests/'
         },
         {
           title: 'Manage Clusters with IaC',
           description: 'Create, update, and manage Teleport in declarative code.',
-          href: './admin-guides/infrastructure-as-code/'
+          href: './zero-trust-access/infrastructure-as-code/'
         }
       ]
     },
@@ -156,7 +156,7 @@ Started](./get-started.mdx) guide to enroll your first resource with Teleport.
         {
           title: 'Secure Infrastructure as Code',
           description: 'Manage IaC workflows in Terraform and Pulumi',
-          href: './admin-guides/infrastructure-as-code/terraform-provider/'
+          href: './zero-trust-access/infrastructure-as-code/terraform-provider/'
         },
         {
           title: 'Hybrid & Multi-Cloud Authentication',
@@ -191,7 +191,7 @@ Started](./get-started.mdx) guide to enroll your first resource with Teleport.
         {
           title: 'Manage Standing Access for Teams',
           description: 'Sync IdP groups to roles w/ automated reviews',
-          href: './identity-governance/okta/app-and-group-sync/'
+          href: './identity-governance/integrations/okta/app-and-group-sync/'
         },
         {
           title: 'Require Managed Devices for Access',
@@ -206,12 +206,12 @@ Started](./get-started.mdx) guide to enroll your first resource with Teleport.
         {
           title: 'Integrate w/your Identity Provider(s)',
           description: 'Okta, Entra ID, and Sailpoint w/ SCIM group sync',
-          href: './identity-governance/okta/'
+          href: './identity-governance/integrations/okta/'
         },
         {
           title: 'Federate Users to External Services',
           description: 'Use Teleport as SAML IdP to 3rd-party apps',
-          href: './admin-guides/access-controls/idps/'
+          href: './identity-governance/idps/'
         },
       ]
     },
@@ -231,12 +231,12 @@ Started](./get-started.mdx) guide to enroll your first resource with Teleport.
         {
           title: 'Identify Over-Privileged Users',
           description: 'Identify users with excessive standing privileges',
-          href: './identity-security/policy-how-to-use/#dashboard-standing-privileges'
+          href: './identity-security/usage/#dashboard-standing-privileges'
         },
         {
           title: 'Monitor Changes to Critical Resources',
           description: 'Monitor, alert on, and visualize access changes',
-          href: './identity-security/crown-jewels'
+          href: './identity-security/usage/crown-jewels/'
         },
         {
           title: 'Centralize Visibility Across Systems',
@@ -246,7 +246,7 @@ Started](./get-started.mdx) guide to enroll your first resource with Teleport.
         {
           title: 'Query Roles, Groups, & Permissions',
           description: 'Create custom tailored queries w/the SQL Editor',
-          href: './identity-security/policy-how-to-use/#sql-editor'
+          href: './identity-security/usage/#sql-editor'
         }
       ]
     }
@@ -346,7 +346,7 @@ Started](./get-started.mdx) guide to enroll your first resource with Teleport.
     },
     {
       title: 'Okta',
-      href: './identity-governance/okta/',
+      href: './identity-governance/integrations/okta/',
       iconColor: '#0000001A',
       iconComponent: oktaSvg,
     },
