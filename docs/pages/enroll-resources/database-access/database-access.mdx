@@ -10,6 +10,8 @@ import DocHero from "@site/src/components/Pages/Landing/DocHero";
 import UseCasesList from "@site/src/components/Pages/Landing/UseCasesList";
 import Resources from "@site/src/components/Pages/Homepage/Resources";
 
+import userCheckSvg from "@site/src/components/Icon/svg/user-check.svg";
+import questionSvg from "@site/src/components/Icon/svg/question2.svg";
 import postgresSvg from '@site/src/components/Icon/svg/postgresql.svg';
 import mysqlSvg from '@site/src/components/Icon/svg/mysql.svg';
 import mariaDbSvg from '@site/src/components/Icon/svg/maria-db.svg';
@@ -27,28 +29,23 @@ import mongoDbSvg from '@site/src/components/Icon/svg/mongodb.svg';
       arrow: true,
     },
   ]}
->
-Provide secure database access through its Database Service by providing short-lived certificates via SSO, RBAC with Access Requests, and audit logs. Improve access control and visibility while centralizing management across infrastructure.
-</DocHero>
-
-
-<UseCasesList
-  title={null}
-  variant="doc"
-  desktopColumnsCount={2}
-  useCases={[
+  links={[
     {
       title: "Access Control",
       description: "Apply RBAC to databases for users to access required data.",
       href: "./rbac/",
+      icon: userCheckSvg,
     },
     {
       title: "Troubleshooting",
       description: "Common Database access issues with Teleport and their solutions.",
       href: "./troubleshooting/",
+      icon: questionSvg,
     },
   ]}
-/>
+>
+Provide secure database access through its Database Service by providing short-lived certificates via SSO, RBAC with Access Requests, and audit logs. Improve access control and visibility while centralizing management across infrastructure.
+</DocHero>
 
 <UseCasesList
   title="Database Guides"
