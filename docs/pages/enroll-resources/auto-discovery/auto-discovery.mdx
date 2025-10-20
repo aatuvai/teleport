@@ -19,17 +19,25 @@ import kubernetesSvg from "@site/src/components/Icon/svg/kubernetes2.svg";
 <DocHero
   title="Get started with Auto-Discovery"
   image={autoDiscoveryImg}
+  ctaLinks={[
+    {
+      title: "Get started with server access",
+      href: "./getting-started/",
+      variant: "secondary",
+      arrow: true,
+    },
+  ]}
 >
-Streamline the infrastructure security management with Teleport Discovery service. Once deployed, it continuously scans cloud environments, enroll new or updated resources - such as servers, databases, and kubernetes clusters into your Teleport clusters.
+Streamline infrastructure security with the Teleport discovery service. When you deploy servers, databases, and Kubernetes clusters, the service enables secure access to them with no further configuration needed.
 
-[Teleport Agents](../../reference/architecture/agents.mdx) power the Discovery Service, automatically scanning cloud APIs and syncing discovered resources with the Auth Service.
+[Teleport Agents](../../reference/architecture/agents.mdx) power the discovery service, automatically syncing resources with the Auth Service.
 </DocHero>
 
-<EnrollmentMethods>
+<EnrollmentMethods title="Auto-discovery guides">
 <Method
 title="Database Discovery"
 icon={databaseAccessImg}
-href="./application-access/"
+href="./databases/"
 tagLists={
   [
     {
@@ -55,7 +63,7 @@ tagLists={
 <Method
 title="Server Discovery"
 icon={linuxServersSvg}
-href="./database-access/"
+href="./servers/"
 tagLists={
   [
     {
@@ -86,7 +94,7 @@ tagLists={
 <Method
 title="Kubernetes Clusters Discovery"
 icon={kubernetesClustersSvg}
-href="./kubernetes-access/"
+href="./kubernetes/"
 tagLists={
   [
     {
