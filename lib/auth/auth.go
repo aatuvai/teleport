@@ -488,7 +488,11 @@ func NewServer(cfg *InitConfig, opts ...ServerOption) (as *Server, err error) {
 		cfg.WorkloadIdentity = workloadIdentity
 	}
 	if cfg.Summarizer == nil {
-		summarizer, err := local.NewSummarizerService(cfg.Backend)
+		summarizer, err := local.NewSummarizerService(local.SummarizerServiceConfig{
+			Backend: cfg.Backend,
+			// TODO(bl-nero): Relax this condition once we implement spend controls.
+			EnableBedrock: !modules.GetModules().Features().Cloud,
+		})
 		if err != nil {
 			return nil, trace.Wrap(err, "creating Summarizer service")
 		}
@@ -569,6 +573,13 @@ func NewServer(cfg *InitConfig, opts ...ServerOption) (as *Server, err error) {
 		}
 	}
 
+	if cfg.ScopedTokenService == nil {
+		cfg.ScopedTokenService, err = local.NewScopedTokenService(cfg.Backend)
+		if err != nil {
+			return nil, trace.Wrap(err)
+		}
+	}
+
 	scopedAccessCache, err := scopedaccesscache.NewCache(scopedaccesscache.CacheConfig{
 		Events: cfg.Events,
 		Reader: cfg.ScopedAccess,
@@ -635,6 +646,7 @@ func NewServer(cfg *InitConfig, opts ...ServerOption) (as *Server, err error) {
 		RecordingEncryptionManager:      cfg.RecordingEncryption,
 		MultipartHandler:                cfg.MultipartHandler,
 		Summarizer:                      cfg.Summarizer,
+		ScopedTokenService:              cfg.ScopedTokenService,
 	}
 
 	as = &Server{
@@ -814,7 +826,7 @@ func NewServer(cfg *InitConfig, opts ...ServerOption) (as *Server, err error) {
 		return nil, trace.Wrap(err)
 	}
 
-	as.botVersionReporter, err = machineidv1.NewAutoUpdateVersionReporter(machineidv1.AutoUpdateVersionReporterConfig{
+	as.BotInstanceVersionReporter, err = machineidv1.NewAutoUpdateVersionReporter(machineidv1.AutoUpdateVersionReporterConfig{
 		Clock: cfg.Clock,
 		Logger: as.logger.With(
 			teleport.ComponentKey,
@@ -826,9 +838,6 @@ func NewServer(cfg *InitConfig, opts ...ServerOption) (as *Server, err error) {
 		Cache:      as.Cache,
 	})
 	if err != nil {
-		return nil, trace.Wrap(err)
-	}
-	if err := as.botVersionReporter.Run(as.CloseContext()); err != nil {
 		return nil, trace.Wrap(err)
 	}
 
@@ -906,6 +915,7 @@ type Services struct {
 	RecordingEncryptionManager
 	events.MultipartHandler
 	services.Summarizer
+	services.ScopedTokenService
 }
 
 // GetWebSession returns existing web session described by req.
@@ -1031,6 +1041,7 @@ var (
 		[]string{
 			teleport.TagUpgrader,
 			teleport.TagVersion,
+			teleport.TagUpgraderStatus,
 		},
 	)
 
@@ -1340,9 +1351,9 @@ type Server struct {
 	// plugin. The summarizer itself summarizes session recordings.
 	sessionSummarizerProvider *summarizer.SessionSummarizerProvider
 
-	// botVersionReporter is called periodically to generate a report of the
-	// number of bot instances by version and update group.
-	botVersionReporter *machineidv1.AutoUpdateVersionReporter
+	// BotInstanceVersionReporter is called periodically to generate a report of
+	// the number of bot instances by version and update group.
+	BotInstanceVersionReporter *machineidv1.AutoUpdateVersionReporter
 }
 
 // SetSAMLService registers svc as the SAMLService that provides the SAML
@@ -1858,7 +1869,7 @@ func (a *Server) runPeriodicOperations() {
 			case autoUpdateAgentReportKey:
 				go a.reportAgentVersions(a.closeCtx)
 			case autoUpdateBotInstanceReportKey:
-				go a.botVersionReporter.Report(a.closeCtx)
+				go a.BotInstanceVersionReporter.Report(a.closeCtx)
 			case autoUpdateBotInstanceMetricsKey:
 				go a.updateBotInstanceMetrics()
 			}
@@ -2170,8 +2181,9 @@ func (a *Server) updateAgentMetrics() {
 	upgraderCountsMetric.Reset()
 	for metadata, count := range imp.UpgraderCounts() {
 		upgraderCountsMetric.With(prometheus.Labels{
-			teleport.TagUpgrader: metadata.upgraderType,
-			teleport.TagVersion:  metadata.version,
+			teleport.TagUpgrader:       metadata.upgraderType,
+			teleport.TagVersion:        metadata.version,
+			teleport.TagUpgraderStatus: metadata.status,
 		}).Set(float64(count))
 	}
 }
