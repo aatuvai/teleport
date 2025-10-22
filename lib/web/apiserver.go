@@ -73,6 +73,7 @@ import (
 	"github.com/gravitational/teleport/api/types"
 	apievents "github.com/gravitational/teleport/api/types/events"
 	"github.com/gravitational/teleport/api/types/installers"
+	"github.com/gravitational/teleport/api/utils/clientutils"
 	"github.com/gravitational/teleport/api/utils/keys"
 	apisshutils "github.com/gravitational/teleport/api/utils/sshutils"
 	"github.com/gravitational/teleport/entitlements"
@@ -942,6 +943,7 @@ func (h *Handler) bindDefaultEndpoints() {
 	// Kube access handlers.
 	h.GET("/webapi/sites/:site/kubernetes", h.WithClusterAuth(h.clusterKubesGet))
 	h.GET("/webapi/sites/:site/kubernetes/resources", h.WithClusterAuth(h.clusterKubeResourcesGet))
+	h.GET("/webapi/sites/:site/kubernetesservers", h.WithClusterAuth(h.clusterKubeServersList))
 
 	// Github connector handlers
 	h.GET("/webapi/github/login/web", h.WithRedirect(h.githubLoginWeb))
@@ -1507,7 +1509,15 @@ func getAuthSettings(ctx context.Context, authClient authclient.ClientI, logger 
 
 			as = oidcSettings(oidcConnector, authPreference)
 		} else {
-			oidcConnectors, err := authClient.GetOIDCConnectors(ctx, false)
+			// TODO(okraport): DELETE IN v21.0.0, remove GetOIDCConnectors
+			oidcConnectors, err := clientutils.CollectWithFallback(ctx,
+				func(ctx context.Context, limit int, start string) ([]types.OIDCConnector, string, error) {
+					return authClient.ListOIDCConnectors(ctx, limit, start, false)
+				},
+				func(ctx context.Context) ([]types.OIDCConnector, error) {
+					return authClient.GetOIDCConnectors(ctx, false)
+				},
+			)
 			if err != nil {
 				return webclient.AuthenticationSettings{}, trace.Wrap(err)
 			}
@@ -3423,6 +3433,10 @@ func (h *Handler) clusterUnifiedResourcesGet(w http.ResponseWriter, request *htt
 			unifiedResources = append(unifiedResources, kube)
 		case types.KubeServer:
 			kube := ui.MakeKubeCluster(r.GetCluster(), accessChecker, enriched.RequiresRequest)
+			targetHealth := r.GetTargetHealth()
+			if targetHealth != nil {
+				kube.TargetHealth = *targetHealth
+			}
 			unifiedResources = append(unifiedResources, kube)
 		default:
 			return nil, trace.Errorf("UI Resource has unknown type: %T", enriched)
@@ -5313,6 +5327,7 @@ func makeTeleportClientConfig(ctx context.Context, sctx *SessionContext) (*clien
 		HostKeyCallback:   callback,
 		TLSRoutingEnabled: proxyListenerMode == types.ProxyListenerMode_Multiplex,
 		Tracer:            apitracing.DefaultProvider().Tracer("webterminal"),
+		AddKeysToAgent:    client.AddKeysToAgentNo,
 	}
 
 	return config, nil

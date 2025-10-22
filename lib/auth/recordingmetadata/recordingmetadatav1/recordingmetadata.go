@@ -28,6 +28,7 @@ import (
 
 	"github.com/gravitational/trace"
 	"github.com/hinshun/vt10x"
+	"golang.org/x/sync/semaphore"
 	"google.golang.org/protobuf/encoding/protodelim"
 	"google.golang.org/protobuf/proto"
 	"google.golang.org/protobuf/types/known/durationpb"
@@ -58,9 +59,10 @@ type UploadHandler interface {
 
 // RecordingMetadataService processes session recordings to generate metadata and thumbnails.
 type RecordingMetadataService struct {
-	logger        *slog.Logger
-	streamer      player.Streamer
-	uploadHandler UploadHandler
+	logger             *slog.Logger
+	streamer           player.Streamer
+	uploadHandler      UploadHandler
+	concurrencyLimiter *semaphore.Weighted
 }
 
 // RecordingMetadataServiceConfig defines the configuration for the RecordingMetadataService.
@@ -77,6 +79,9 @@ const (
 
 	// maxThumbnails is the maximum number of thumbnails to store in the session metadata.
 	maxThumbnails = 1000
+
+	// concurrencyLimit limits the number of concurrent processing operations (matches the session summarizer).
+	concurrencyLimit = 150
 )
 
 // NewRecordingMetadataService creates a new instance of RecordingMetadataService with the provided configuration.
@@ -89,15 +94,29 @@ func NewRecordingMetadataService(cfg RecordingMetadataServiceConfig) (*Recording
 	}
 
 	return &RecordingMetadataService{
-		streamer:      cfg.Streamer,
-		uploadHandler: cfg.UploadHandler,
-		logger:        slog.With(teleport.ComponentKey, "recording_metadata"),
+		streamer:           cfg.Streamer,
+		uploadHandler:      cfg.UploadHandler,
+		logger:             slog.With(teleport.ComponentKey, "recording_metadata"),
+		concurrencyLimiter: semaphore.NewWeighted(concurrencyLimit),
 	}, nil
 }
 
 // ProcessSessionRecording processes the session recording associated with the provided session ID.
 // It streams session events, generates metadata, and uploads thumbnails and metadata.
 func (s *RecordingMetadataService) ProcessSessionRecording(ctx context.Context, sessionID session.ID) error {
+	sessionsPendingMetric.Inc()
+
+	if err := s.concurrencyLimiter.Acquire(ctx, 1); err != nil {
+		sessionsPendingMetric.Dec()
+		return trace.Wrap(err)
+	}
+	defer s.concurrencyLimiter.Release(1)
+
+	sessionsPendingMetric.Dec()
+
+	sessionsProcessingMetric.Inc()
+	defer sessionsProcessingMetric.Dec()
+
 	ctx, cancel := context.WithCancel(ctx)
 	defer cancel()
 
@@ -130,9 +149,15 @@ func (s *RecordingMetadataService) ProcessSessionRecording(ctx context.Context, 
 	sampler := newThumbnailBucketSampler(maxThumbnails, thumbnailInterval)
 
 	recordThumbnail := func(start time.Time) {
-		state := vt.DumpState()
+		cols, rows := vt.Size()
 
-		sampler.add(&state, start)
+		sampler.add(&thumbnailState{
+			svg:           terminal.VtToSvg(vt),
+			cols:          cols,
+			rows:          rows,
+			cursorVisible: vt.CursorVisible(),
+			cursor:        vt.Cursor(),
+		}, start)
 	}
 
 	var hasSeenPrintEvent bool
@@ -287,7 +312,15 @@ loop:
 
 	thumbnails := sampler.result()
 
-	return s.upload(ctx, sessionID, metadata, thumbnails)
+	if err := s.upload(ctx, sessionID, metadata, thumbnails); err != nil {
+		sessionsProcessedMetric.WithLabelValues( /* success */ "false").Inc()
+
+		return trace.Wrap(err)
+	}
+
+	sessionsProcessedMetric.WithLabelValues( /* success */ "true").Inc()
+
+	return nil
 }
 
 func (s *RecordingMetadataService) upload(ctx context.Context, sessionID session.ID, metadata *pb.SessionRecordingMetadata, thumbnails []*thumbnailEntry) error {
@@ -333,12 +366,12 @@ func (s *RecordingMetadataService) upload(ctx context.Context, sessionID session
 
 func thumbnailEntryToProto(t *thumbnailEntry) *pb.SessionRecordingThumbnail {
 	return &pb.SessionRecordingThumbnail{
-		Svg:           terminal.VtStateToSvg(t.state),
-		Cols:          int32(t.state.Cols),
-		Rows:          int32(t.state.Rows),
-		CursorX:       int32(t.state.CursorX),
-		CursorY:       int32(t.state.CursorY),
-		CursorVisible: t.state.CursorVisible,
+		Svg:           t.state.svg,
+		Cols:          int32(t.state.cols),
+		Rows:          int32(t.state.rows),
+		CursorX:       int32(t.state.cursor.X),
+		CursorY:       int32(t.state.cursor.Y),
+		CursorVisible: t.state.cursorVisible,
 		StartOffset:   durationpb.New(t.startOffset),
 		EndOffset:     durationpb.New(t.endOffset),
 	}
