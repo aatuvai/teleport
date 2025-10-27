@@ -15,7 +15,6 @@ import noteSvg from "@site/src/components/Icon/svg/note2.svg";
 import questionSvg from "@site/src/components/Icon/svg/question2.svg";
 import identificationBadgeSvg from "@site/src/components/Icon/svg/identification-badge.svg";
 import listChecksSvg from "@site/src/components/Icon/svg/list-checks.svg";
-import clipboardTextSvg from "@site/src/components/Icon/svg/clipboard-text.svg";
 import kubernetesClustersSvg from "@site/src/components/Icon/teleport-svg/kubernetes-clusters.svg";
 import iamSvg from "@site/src/components/Icon/svg/awsIdentity.svg";
 import kubernetesSvg from "@site/src/components/Icon/svg/kubernetes2.svg";
@@ -46,7 +45,7 @@ import kubernetesSvg from "@site/src/components/Icon/svg/kubernetes2.svg";
     },
   ]}
 >
-Log into Teleport with your preferred SSO provider and you can switch between Kubernetes clusters without additional logins, and  you can achieve compliance through session recordings and detailed audit logs.
+Log in with SSO and switch between Kubernetes clusters without additional logins. Manage access within clusters with granular RBAC down to specific cluster resources, and achieve compliance needs with session recordings and detailed audit logs.
 </DocHero>
 
 <Resources
@@ -65,12 +64,6 @@ Log into Teleport with your preferred SSO provider and you can switch between Ku
       description: "Enforce RBAC by intercepting user requests and their actions. And configure these roles for your connected clusters.",
       iconComponent: listChecksSvg,
       href: "./manage-access/"
-    },
-    {
-      title: "Evaluate Teleport Roles",
-      description: "Intercepts user requests, enforces authorization, and forwards only approved requests to the API server using Teleport Kubernetes Service",
-      iconComponent: clipboardTextSvg,
-      href: "../../reference/access-controls/roles/"
     },
   ]}
 />
