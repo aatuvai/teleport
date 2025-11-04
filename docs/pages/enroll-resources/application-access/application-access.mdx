@@ -21,7 +21,7 @@ import questionSvg from "@site/src/components/Icon/svg/question2.svg";
   youtubeVideoId="cvW4b96aPL0"
   ctaLinks={[
     {
-      title: "Get Started with Application Access",
+      title: "Get started with application access",
       href: "./getting-started/",
       variant: "secondary",
       arrow: true,
@@ -29,44 +29,44 @@ import questionSvg from "@site/src/components/Icon/svg/question2.svg";
   ]}
   links={[
     {
-      title: "Role-Based Access Control",
-      description: "Set up granular access policies for Applications connected to Teleport.",
+      title: "Role-based access control",
+      description: "Set up granular access policies for applications connected to Teleport.",
       href: "./controls/",
       icon: userCheckSvg,
     }, 
     {
       title: "Configure Teleport as an IdP",
-      description: "Securely log in to both internal and external applications using identity provider.",
+      description: "Securely log into internal and external apps with Teleport as an identity provider.",
       href: "./cloud-apis/",
       icon: slidersHorizontalSvg,
     },
     {
-      title: "VNet",
-      description: "Use VNet to proxy TCP connections through a proxy service on custom public addresses.",
+      title: "VNet: Build without VPNs",
+      description: "Secure app and SSH access with no VPNs or proxies",
       href: "./guides/vnet/",
       icon: graphSvg,
     }, 
     {
       title: "Troubleshooting",
-      description: "Common Applications access issues with Teleport and their solutions.",
+      description: "Common applications access issues with Teleport and their solutions.",
       href: "./troubleshooting-apps/",
       icon: questionSvg,
     },
   ]}
 >
-Teleport provides secure access to applications and cloud provider APIs with RBAC, audit logging, and just-in-time access.
+Teleport provides secure access to applications and cloud provider APIs with RBAC, audit logging, and just-in-time access. 
 
-The Teleport Application Service enables secure connections to applications on private networks, supports Teleport-signed JWTs for authentication, and enforces access policies across all connected applications.
+The Teleport Application Service enables secure connections to private networks, supports Teleport JWTs for authentication, and provides guidance on app enrollment and access control configuration.
 </DocHero>
 
 <UseCasesList
-  title="Enrolling Applications"
+  title="Enrolling applications"
   variant="doc"
   desktopColumnsCount={1}
   narrowBottomPadding={true}
   useCases={[
     {
-      title: "Cloud Provider APIs",
+      title: "Cloud provider APIs",
       description: "Secure access to cloud APIs, consoles, and CLI tools with Teleport RBAC.",
       href: "./controls/",
       tags: [
@@ -100,36 +100,36 @@ The Teleport Application Service enables secure connections to applications on p
   variant="doc"
   useCases={[
     {
-      title: "Web Apps",
+      title: "Web apps",
       description: "Connect a web application to manage and control access, set up RBAC, audit logging and more.",
       href: "./guides/connecting-apps/",
     }, 
     {
-      title: "TCP Apps",
+      title: "TCP apps",
       description: "Connect to services not natively supported by Teleport, like SMTP servers and databases.",
       href: "./guides/tcp/",
     },
     {
-      title: "REST and gRPC APIs",
-      description: "Access application (REST or Teleport's gRPC) APIs with tools like curl or Postman.",
+      title: "REST APIs",
+      description: "Use Teleport to access REST APIs with tools like curl or Postman.",
       href: "./guides/api-access/",
     },
   ]}
 />
 
 <UseCasesList
-  title="Application Access Guides"
+  title="Application access guides"
   variant="doc"
   desktopColumnsCount={2}
   useCases={[ 
     {
-      title: "Dynamic App Registration",
+      title: "Dynamic app registration",
       description: "Admin can register new apps without updating static configuration files.",
       href: "./guides/dynamic-registration/",
     },
     {
-      title: "Application Service HA",
-      description: "Configure Teleport Application Service for high availability using combined and separate instances.",
+      title: "High availability app access",
+      description: "Configure the Teleport application service for high availability.",
       href: "./guides/ha/",
     },
   ]}
