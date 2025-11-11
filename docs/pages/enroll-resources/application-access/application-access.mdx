@@ -62,43 +62,13 @@ The Teleport Application Service enables secure connections to private networks,
 <UseCasesList
   title="Enrolling applications"
   variant="doc"
-  desktopColumnsCount={1}
-  narrowBottomPadding={true}
+  desktopColumnsCount={2}
   useCases={[
     {
       title: "Cloud provider APIs",
       description: "Secure access to cloud APIs, consoles, and CLI tools with Teleport RBAC.",
-      href: "./controls/",
-      tags: [
-        {
-          name: "AWS Console and CLI",
-          href: "./cloud-apis/aws-console/",
-          icon: "aws",
-        },
-        {
-          name: "Google Cloud Web Console",
-          href: "./cloud-apis/google-cloud/",
-          icon: "googleCloud",
-        },
-        {
-          name: "Google Cloud CLI",
-          href: "./cloud-apis/google-cloud/",
-          icon: "googleCloud",
-        },
-       {
-          name: "Azure CLI",
-          href: "./cloud-apis/azure/",
-          icon: "azure",
-        },
-      ]
+      href: "./cloud-apis/",
     },
-  ]}
-/>
-
-<UseCasesList
-  title={null}
-  variant="doc"
-  useCases={[
     {
       title: "Web apps",
       description: "Connect a web application to manage and control access, set up RBAC, audit logging and more.",
