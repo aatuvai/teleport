@@ -940,6 +940,9 @@ func Run(ctx context.Context, args []string, opts ...CliOption) error {
 	app.HelpFlag.Short('h')
 	app.Flag("piv-slot", "Specify a PIV slot key to use for Hardware Key support instead of the default. Ex: \"9d\".").Envar("TELEPORT_PIV_SLOT").StringVar(&cf.PIVSlot)
 	app.Flag("check-update", "Check for availability of managed update.").Envar(toolsCheckUpdateEnvVar).Hidden().BoolVar(&cf.checkManagedUpdates)
+	app.Flag("home-dir", "Home location for tsh configuration and data.").Envar(types.HomeEnvVar).StringVar(&cf.HomePath)
+	app.Flag("cluster-name", "Name of a Teleport root or leaf cluster.").Envar(clusterEnvVar).StringVar(&cf.SiteName)
+	app.Flag("config-path", "Location of global tsh config file.").Envar(globalTshConfigEnvVar).Default("/etc/tsh.yaml").StringVar(&cf.GlobalTshConfigPath)
 
 	ver := app.Command("version", "Print the tsh client and Proxy server versions for the current context.")
 	ver.Flag("format", defaults.FormatFlagDescription(defaults.DefaultFormats...)).Short('f').Default(teleport.Text).EnumVar(&cf.Format, defaults.DefaultFormats...)
