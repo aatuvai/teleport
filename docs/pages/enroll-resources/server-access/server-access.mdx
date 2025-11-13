@@ -52,31 +52,25 @@ import addUserSvg from "@site/src/components/Icon/svg/add-user.svg";
 >
 Consolidates SSH access across all environments, decreases configuration complexity, supports industry best practices and compliance while giving complete visibility over all sessions and events.
 
-Teleport protects servers through the Teleport SSH Service, which is a Teleport agent service. For more information on agent services, read [Teleport Agent Architecture](../../reference/architecture/agents.mdx).
+Teleport protects servers through the Teleport SSH Service, which is a Teleport Agent service. For more information on agent services, read [Teleport Agent Architecture](../../reference/architecture/agents.mdx).
 </DocHero>
 
 <Resources
   title="Enrollment Options"
   variant="doc"
-  desktopColumnsCount={3}
+  desktopColumnsCount={2}
   resources={[
     {
       title: "SSH server access",
       description: "Secure a server by running the Teleport SSH Service and enrolling it in your cluster.",
       iconComponent: linuxServersSvg,
-      href: "../../reference/architecture/agents/"
+      href: "./getting-started/"
     },
     {
       title: "Agentless OpenSSH",
       description: "Use Teleport in agentless mode on systems with OpenSSH and sshd.",
       iconComponent: cliSvg,
-      href: "./openssh/openssh-agentless/"
-    },
-    {
-      title: "Agentless OpenSSH Manual",
-      description: "Use Teleport in agentless mode on systems with OpenSSH and sshd that can't run teleport.",
-      iconComponent: cliSvg,
-      href: "./openssh/openssh-manual-install/"
+      href: "./openssh/"
     },
   ]}
 />
@@ -116,25 +110,25 @@ Teleport protects servers through the Teleport SSH Service, which is a Teleport 
       title: "Teleport with PAM",
       description: "Configure Teleport SSH with PAM (Pluggable Authentication Modules).",
       iconComponent: teleportSvg,
-      href: "./guides/vscode/"
+      href: "./guides/ssh-pam/"
     },
     {
       title: "Linux auditing system",
       description: "Integrate Teleport with the Linux Auditing System (auditd).",
       iconComponent: linuxSvg,
-      href: "./guides/jetbrains-sftp/"
+      href: "./guides/auditd/"
     },
     {
       title: "BPF session recording",
       description: "Use BPF to record SSH session commands, modified files and network connections.",
       iconComponent: playCircleSvg,
-      href: "./guides/ansible/"
+      href: "./guides/bpf-session-recording/"
     },
     {
       title: "Create transient host users upon login",
       description: "Automatically create transient users with fine-grained access control on your host servers.",
       iconComponent: addUserSvg,
-      href: "./guides/ansible/"
+      href: "./guides/host-user-creation/"
     },
   ]}
 />
