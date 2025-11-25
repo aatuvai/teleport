@@ -95,6 +95,19 @@ Teleport handles all the PKI complexity behind the scenes with automatic certifi
 While the Web UI provides a guided experience, you can also enroll servers using the Teleport CLI as demonstrated in the [Server Access Getting Started Guide](../enroll-resources/server-access/getting-started.mdx).
 {/* vale messaging.protocol-products = YES */}
 
+<Checkpoint 
+  title="Verify your server enrollment" 
+  description="Make sure your Ubuntu server appears in the Teleport Web UI under Resources and that you can connect to it via SSH."
+  successButtonText="Yes, I was able to connect!"
+  failureButtonText="No, there was a problem."
+>
+  Here are some troubleshooting tips:
+  - **Server not showing up?** Ensure the Teleport Agent is running on your Ubuntu server.
+  - **Connection issues?** Double-check network connectivity and firewall settings between your Teleport cluster and the Ubuntu server.
+  - **Still stuck?** Reach out to our [Slack community](https://goteleport.com/slack) or [customer support](https://goteleport.com/support/) for help.
+</Checkpoint>
+
+
 ## Enroll other resource types
 
 While this step focuses on Ubuntu servers for demonstration purposes, you can enroll many other resource types through the same Web UI or CLI workflow:
