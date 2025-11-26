@@ -63,6 +63,15 @@ other policies.
   are so similar, we can assign variables to each user, and use just one role template
   for both Alice and Bob.
 
+  <Checkpoint 
+    title="Verify role creation" 
+    description="Ensure that the roles alice and bob have been created successfully from roles.yaml. Both roles should define SSH and Kubernetes group permissions as specified."
+  >
+    Here are some troubleshooting tips:
+    - Ensure that the Teleport Agent is running on your server.
+    - Check that both `tctl` and `tsh` are properly installed and configured.
+  </Checkpoint>
+
   <StepSection>Create a role template</StepSection>
 
   <Step id="create-role-template">
@@ -89,6 +98,15 @@ other policies.
   <Step id="cli-create-traits">
     Update both users' entries with the `tctl create -f` command.
   </Step>
+  <Checkpoint 
+    title="Verify user update success" 
+    description="Ensure that both Alice and Bob's user entries have been updated successfully with the new traits."
+  >
+    Here are some troubleshooting tips:
+    - Ensure that the Teleport Agent is running on your server.
+    - Check that both `tctl` and `tsh` are properly installed and configured.
+  </Checkpoint>
+
   <File name="roles.yaml" icon="file">
     <CodeBlock stepId="create-admin-role">
       ```yaml showLineNumbers
