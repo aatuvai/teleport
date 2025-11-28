@@ -1998,6 +1998,38 @@ cli-docs-tsh:
 	$(BUILDDIR)/tshdocs help 2>docs/pages/reference/cli/tsh.mdx && \
 	rm $(BUILDDIR)/tshdocs
 
+.PHONY: cli-docs-tctl
+cli-docs-tctl:
+	# Not executing go run since we don't want to redirect linker warnings
+	# along with the docs page content.
+	go build -o $(BUILDDIR)/tctldocs -tags docs ./tool/tctl && \
+	$(BUILDDIR)/tctldocs help 2>docs/pages/reference/cli/tctl.mdx && \
+	rm $(BUILDDIR)/tctldocs
+
+.PHONY: cli-docs-teleport-update
+cli-docs-teleport-update:
+	# Not executing go run since we don't want to redirect linker warnings
+	# along with the docs page content.
+	go build -o $(BUILDDIR)/teleport-updatedocs -tags docs ./tool/teleport-update && \
+	$(BUILDDIR)/teleport-updatedocs help 2>docs/pages/reference/cli/teleport-update.mdx && \
+	rm $(BUILDDIR)/teleport-updatedocs
+
+.PHONY: cli-docs-tbot
+cli-docs-tbot:
+	# Not executing go run since we don't want to redirect linker warnings
+	# along with the docs page content.
+	go build -o $(BUILDDIR)/tbotdocs -tags docs ./tool/tbot && \
+	$(BUILDDIR)/tbotdocs help 2>docs/pages/reference/cli/tbot.mdx && \
+	rm $(BUILDDIR)/tbotdocs
+
+.PHONY: cli-docs-teleport
+cli-docs-teleport:
+	# Not executing go run since we don't want to redirect linker warnings
+	# along with the docs page content.
+	go build -o $(BUILDDIR)/teleportdocs -tags docs ./tool/teleport && \
+	$(BUILDDIR)/teleportdocs help 2>docs/pages/reference/cli/teleport.mdx && \
+	rm $(BUILDDIR)/teleportdocs
+
 # audit-event-reference generates audit event reference docs using the Web UI
 # source.
 .PHONY: audit-event-reference

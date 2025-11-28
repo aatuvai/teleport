@@ -62,7 +62,7 @@ This guide provides a comprehensive list of commands, arguments, and flags for
 {{ end -}}
 
 {{template "FormatUsage" .App -}}
-{{if .Context.Flags -}}
+{{if .Context.Flags|AnyVisibleFlags -}}
 Global flags:
 
 |Flag|Default|Description|
