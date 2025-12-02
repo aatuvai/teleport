@@ -107,6 +107,15 @@ staging  env=mwi-demo,region=us-west-2  18.1.5
 In our examples, we'll use the `env` label with the value `mwi-demo` to control
 what our GitHub Actions workflow can access.
 
+<Checkpoint 
+  title="Verify user update success" 
+  description="Ensure that both Alice and Bob's user entries have been updated successfully with the new traits."
+>
+  Here are some troubleshooting tips:
+  - Ensure that the Teleport Agent is running on your server.
+  - Check that both `tctl` and `tsh` are properly installed and configured.
+</Checkpoint>
+
 ## Step 2/5. Choose or create a role
 
 Now, we'll create a role which will grant access to our target resource. If you
@@ -183,6 +192,15 @@ $ tctl create -f role.yaml
 </TabItem>
 </Tabs>
 
+<Checkpoint 
+  title="Verify user update success" 
+  description="Ensure that both Alice and Bob's user entries have been updated successfully with the new traits."
+>
+  Here are some troubleshooting tips:
+  - Ensure that the Teleport Agent is running on your server.
+  - Check that both `tctl` and `tsh` are properly installed and configured.
+</Checkpoint>
+
 ## Step 3/5. Create a bot
 
 In Teleport, a **Bot** represents an identity for a machine. This is similar to
@@ -212,6 +230,16 @@ Use `tctl create` to create the bot from the file:
 ```code
 $ tctl create -f ./bot.yaml
 ```
+
+<Checkpoint 
+  title="Verify user update success" 
+  description="Ensure that both Alice and Bob's user entries have been updated successfully with the new traits."
+>
+  Here are some troubleshooting tips:
+  - Ensure that the Teleport Agent is running on your server.
+  - Check that both `tctl` and `tsh` are properly installed and configured.
+</Checkpoint>
+
 
 ## Step 4/5 Create a join token
 
@@ -265,6 +293,15 @@ Use `tctl create` to create the join token from the file:
 ```code
 $ tctl create -f join_token.yaml
 ```
+
+<Checkpoint 
+  title="Verify user update success" 
+  description="Ensure that both Alice and Bob's user entries have been updated successfully with the new traits."
+>
+  Here are some troubleshooting tips:
+  - Ensure that the Teleport Agent is running on your server.
+  - Check that both `tctl` and `tsh` are properly installed and configured.
+</Checkpoint>
 
 ## Step 5/5 Access a resource from GitHub Actions
 
@@ -450,6 +487,15 @@ Commit and push this file to your repository.
 
 </TabItem>
 </Tabs>
+
+<Checkpoint 
+  title="Verify user update success" 
+  description="Ensure that both Alice and Bob's user entries have been updated successfully with the new traits."
+>
+  Here are some troubleshooting tips:
+  - Ensure that the Teleport Agent is running on your server.
+  - Check that both `tctl` and `tsh` are properly installed and configured.
+</Checkpoint>
 
 ### Run the workflow
 
