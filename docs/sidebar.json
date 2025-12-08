@@ -139,7 +139,7 @@
   ],
   "zta": [
     {
-      "label": "Introduction",
+      "label": "Zero Trust Access",
       "type": "doc",
       "id": "zero-trust-access/zero-trust-access"
     },
@@ -165,7 +165,7 @@
   "mwi": [
     {
       "type": "doc",
-      "label": "Introduction",
+      "label": "Machine Workload Identity",
       "id": "machine-workload-identity/machine-workload-identity"
     },
     {
@@ -176,7 +176,7 @@
   "idg": [
     {
       "type": "doc",
-      "label": "Introduction",
+      "label": "Identity Governance",
       "id": "identity-governance/identity-governance"
     },
     {
@@ -187,7 +187,7 @@
   "ids": [
     {
       "type": "doc",
-      "label": "Introduction",
+      "label": "Identity Security",
       "id": "identity-security/identity-security"
     },
     {
