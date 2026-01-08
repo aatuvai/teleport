@@ -49,6 +49,8 @@ import (
 	"sync"
 	"time"
 
+	"github.com/aws/aws-sdk-go-v2/aws"
+	"github.com/aws/aws-sdk-go-v2/service/organizations"
 	"github.com/google/uuid"
 	liblicense "github.com/gravitational/license"
 	"github.com/gravitational/trace"
@@ -104,6 +106,7 @@ import (
 	"github.com/gravitational/teleport/lib/boundkeypair"
 	"github.com/gravitational/teleport/lib/cache"
 	inventorycache "github.com/gravitational/teleport/lib/cache/inventory"
+	"github.com/gravitational/teleport/lib/cloud/awsconfig"
 	"github.com/gravitational/teleport/lib/cryptosuites"
 	"github.com/gravitational/teleport/lib/decision"
 	"github.com/gravitational/teleport/lib/defaults"
@@ -124,6 +127,7 @@ import (
 	"github.com/gravitational/teleport/lib/join/gcp"
 	"github.com/gravitational/teleport/lib/join/githubactions"
 	"github.com/gravitational/teleport/lib/join/gitlab"
+	"github.com/gravitational/teleport/lib/join/iamjoin"
 	"github.com/gravitational/teleport/lib/join/spacelift"
 	"github.com/gravitational/teleport/lib/join/terraformcloud"
 	"github.com/gravitational/teleport/lib/join/tpmjoin"
@@ -192,6 +196,9 @@ const (
 const (
 	notificationsPageReadInterval = 5 * time.Millisecond
 	notificationsWriteInterval    = 40 * time.Millisecond
+
+	accessListsPageReadInterval = 5 * time.Millisecond
+	accessListsPageSize         = 20
 )
 
 const (
@@ -569,6 +576,17 @@ func NewServer(cfg *InitConfig, opts ...ServerOption) (as *Server, err error) {
 		cfg.Logger = slog.With(teleport.ComponentKey, teleport.ComponentAuth)
 	}
 
+	if cfg.AWSOrganizationsClientGetter == nil {
+		organizationsClientFromSDK := func(c aws.Config) iamjoin.OrganizationsAPI {
+			return organizations.NewFromConfig(c)
+		}
+
+		cfg.AWSOrganizationsClientGetter, err = awsOrganizationsClientUsingAmbientCredentials(closeCtx, cfg.Clock, organizationsClientFromSDK)
+		if err != nil {
+			return nil, trace.Wrap(err)
+		}
+	}
+
 	limiter := limiter.NewConnectionsLimiter(defaults.LimiterMaxConcurrentSignatures)
 
 	if cfg.KubeWaitingContainers == nil {
@@ -603,6 +621,13 @@ func NewServer(cfg *InitConfig, opts ...ServerOption) (as *Server, err error) {
 		cfg.AppAuthConfig, err = local.NewAppAuthConfigService(cfg.Backend)
 		if err != nil {
 			return nil, trace.Wrap(err, "creating AppAuthConfig service")
+		}
+	}
+
+	if cfg.MFAService == nil {
+		cfg.MFAService, err = local.NewMFAService(cfg.Backend)
+		if err != nil {
+			return nil, trace.Wrap(err, "creating MFAService")
 		}
 	}
 
@@ -674,33 +699,35 @@ func NewServer(cfg *InitConfig, opts ...ServerOption) (as *Server, err error) {
 		Summarizer:                      cfg.Summarizer,
 		ScopedTokenService:              cfg.ScopedTokenService,
 		AppAuthConfig:                   cfg.AppAuthConfig,
+		MFAService:                      cfg.MFAService,
 	}
 
 	as = &Server{
-		bk:                        cfg.Backend,
-		clock:                     cfg.Clock,
-		limiter:                   limiter,
-		Authority:                 cfg.Authority,
-		AuthServiceName:           cfg.AuthServiceName,
-		ServerID:                  cfg.HostUUID,
-		cancelFunc:                cancelFunc,
-		closeCtx:                  closeCtx,
-		emitter:                   cfg.Emitter,
-		Streamer:                  cfg.Streamer,
-		Unstable:                  local.NewUnstableService(cfg.Backend, cfg.AssertionReplayService),
-		Services:                  services,
-		Cache:                     services,
-		scopedAccessBackend:       cfg.ScopedAccess,
-		ScopedAccessCache:         scopedAccessCache,
-		keyStore:                  cfg.KeyStore,
-		traceClient:               cfg.TraceClient,
-		fips:                      cfg.FIPS,
-		loadAllCAs:                cfg.LoadAllCAs,
-		httpClientForAWSSTS:       cfg.HTTPClientForAWSSTS,
-		accessMonitoringEnabled:   cfg.AccessMonitoringEnabled,
-		logger:                    cfg.Logger,
-		sessionSummarizerProvider: cfg.SessionSummarizerProvider,
-		recordingMetadataProvider: cfg.RecordingMetadataProvider,
+		bk:                           cfg.Backend,
+		clock:                        cfg.Clock,
+		limiter:                      limiter,
+		Authority:                    cfg.Authority,
+		AuthServiceName:              cfg.AuthServiceName,
+		ServerID:                     cfg.HostUUID,
+		cancelFunc:                   cancelFunc,
+		closeCtx:                     closeCtx,
+		emitter:                      cfg.Emitter,
+		Streamer:                     cfg.Streamer,
+		Unstable:                     local.NewUnstableService(cfg.Backend, cfg.AssertionReplayService),
+		Services:                     services,
+		Cache:                        services,
+		scopedAccessBackend:          cfg.ScopedAccess,
+		ScopedAccessCache:            scopedAccessCache,
+		keyStore:                     cfg.KeyStore,
+		traceClient:                  cfg.TraceClient,
+		fips:                         cfg.FIPS,
+		loadAllCAs:                   cfg.LoadAllCAs,
+		httpClientForAWSSTS:          cfg.HTTPClientForAWSSTS,
+		accessMonitoringEnabled:      cfg.AccessMonitoringEnabled,
+		logger:                       cfg.Logger,
+		sessionSummarizerProvider:    cfg.SessionSummarizerProvider,
+		recordingMetadataProvider:    cfg.RecordingMetadataProvider,
+		awsOrganizationsClientGetter: cfg.AWSOrganizationsClientGetter,
 	}
 	as.inventory = inventory.NewController(as, services,
 		inventory.WithAuthServerID(cfg.HostUUID),
@@ -879,75 +906,73 @@ func NewServer(cfg *InitConfig, opts ...ServerOption) (as *Server, err error) {
 	return as, nil
 }
 
-// Services is a collection of services that are used by the auth server.
-// Avoid using this type as a dependency and instead depend on the actual
-// methods/services you need. It should really only be necessary to directly
-// reference this type on auth.Server itself and on code that manages
-// the lifecycle of the auth server.
-type Services struct {
-	services.TrustInternal
-	services.PresenceInternal
-	services.Provisioner
-	services.Identity
-	services.Access
-	services.DynamicAccessExt
-	services.ClusterConfigurationInternal
-	services.Restrictions
-	services.Applications
-	services.Kubernetes
-	services.Databases
-	services.DatabaseServices
-	services.WindowsDesktops
-	services.DynamicWindowsDesktops
-	services.SAMLIdPServiceProviders
-	services.UserGroups
-	services.SessionTrackerService
-	services.ConnectionsDiagnostic
-	services.StatusInternal
-	services.Integrations
-	services.IntegrationsTokenGenerator
-	services.UserTasks
-	services.DiscoveryConfigs
-	services.Okta
-	services.AccessListsInternal
-	services.DatabaseObjectImportRules
-	services.DatabaseObjects
-	services.UserLoginStates
-	services.UserPreferences
-	services.PluginData
-	services.SCIM
-	services.Notifications
-	usagereporter.UsageReporter
-	types.Events
-	events.AuditLogSessionStreamer
-	services.SecReports
-	services.KubeWaitingContainer
-	services.AccessMonitoringRules
-	services.CrownJewels
-	services.BotInstance
-	services.AccessGraphSecretsGetter
-	services.DevicesGetter
-	services.SPIFFEFederations
-	services.StaticHostUser
-	services.AutoUpdateService
-	services.ProvisioningStates
-	services.IdentityCenter
-	services.Plugins
-	services.PluginStaticCredentials
-	services.GitServers
-	services.WorkloadIdentities
-	services.StableUNIXUsersInternal
-	services.WorkloadIdentityX509Revocations
-	services.WorkloadIdentityX509Overrides
-	services.SigstorePolicies
-	services.HealthCheckConfig
-	services.AppAuthConfig
-	services.BackendInfoService
-	services.VnetConfigService
-	RecordingEncryptionManager
-	events.MultipartHandler
-	services.Summarizer
-	services.ScopedTokenService
+// awsOrganizationsClientUsingAmbientCredentials returns an AWS Organizations client getter
+// that uses ambient credentials to create the client.
+func awsOrganizationsClientUsingAmbientCredentials(ctx context.Context, clock clockwork.Clock, organizationsClientFromConfig func(aws.Config) iamjoin.OrganizationsAPI) (iamjoin.OrganizationsAPIGetter, error) {
+	awsConfigProvider, err := awsconfig.NewCache()
+	if err != nil {
+		return nil, trace.Wrap(err)
+	}
+
+	// Adding a cache layer for the DescribeAccount calls allows us to avoid being rate limited when thousands of EC2 instances try to join at once.
+	describeAccountAPICache, err := utils.NewFnCache(utils.FnCacheConfig{
+		// Organizations data doesn't change often, so we can cache it for a long period.
+		TTL:     1 * time.Minute,
+		Clock:   clock,
+		Context: ctx,
+	})
+	if err != nil {
+		return nil, trace.Wrap(err)
+	}
+	return &organizationsClientGetter{
+		describeAccountAPICache:       describeAccountAPICache,
+		awsConfig:                     awsConfigProvider,
+		organizationsClientFromConfig: organizationsClientFromConfig,
+	}, nil
+}
+
+type organizationsClientGetter struct {
+	describeAccountAPICache       *utils.FnCache
+	awsConfig                     awsconfig.Provider
+	organizationsClientFromConfig func(aws.Config) iamjoin.OrganizationsAPI
+}
+
+func (o *organizationsClientGetter) Get(ctx context.Context) (iamjoin.OrganizationsAPI, error) {
+	// For IAM Join flow, the join token might allow instances under an Organization to join the cluster.
+	// In order to validate the organization ID of the joining identity, a call to organizations:DescribeAccount is performed.
+	// This requires AWS credentials to be accessible to the Auth Service.
+	//
+	// Currently, only ambient credentials are supported, which are not available when running within Teleport Cloud.
+	// In that scenario a NotImplemented error is returned.
+	if modules.GetModules().Features().Cloud {
+		return nil, trace.NotImplemented("IAM Joins based on AWS Organization ID are not currently supported in Teleport Cloud")
+	}
+
+	// Organizations API is global, so we use an empty string for region.
+	const noRegion = ""
+	awsConfig, err := o.awsConfig.GetConfig(ctx, noRegion, awsconfig.WithAmbientCredentials())
+	if err != nil {
+		return nil, trace.Wrap(err)
+	}
+
+	return &organizationsClient{
+		describeAccountAPICache: o.describeAccountAPICache,
+		remoteAPI:               o.organizationsClientFromConfig(awsConfig),
+	}, nil
+}
+
+type organizationsClient struct {
+	describeAccountAPICache *utils.FnCache
+	remoteAPI               iamjoin.OrganizationsAPI
+}
+
+func (o *organizationsClient) DescribeAccount(ctx context.Context, params *organizations.DescribeAccountInput, optFns ...func(*organizations.Options)) (*organizations.DescribeAccountOutput, error) {
+	describeAccountOutput, err := utils.FnCacheGet(ctx, o.describeAccountAPICache, aws.ToString(params.AccountId), func(ctx context.Context) (*organizations.DescribeAccountOutput, error) {
+		remoteDescribeAccountOutput, err := o.remoteAPI.DescribeAccount(ctx, params, optFns...)
+		return remoteDescribeAccountOutput, trace.Wrap(err)
+	})
+
+	return describeAccountOutput, trace.Wrap(err)
 }
 
 // GetWebSession returns existing web session described by req.
@@ -1397,6 +1422,10 @@ type Server struct {
 	// AWSRolesAnywhereCreateSessionOverride overrides the AWS Roles Anywhere Create Session API wrapper with a mocked one.
 	// Used for testing.
 	AWSRolesAnywhereCreateSessionOverride func(ctx context.Context, req createsession.CreateSessionRequest) (*createsession.CreateSessionResponse, error)
+
+	// awsOrganizationsClientGetter provides an AWS client that can call Organizations APIs.
+	// This is used to allow the IAM join method to validate that an AWS account belongs to a specific AWS Organization.
+	awsOrganizationsClientGetter iamjoin.OrganizationsAPIGetter
 
 	// sigstorePolicyEvaluator checks workload signatures and attestations
 	// against Sigstore policies.
@@ -6907,7 +6936,8 @@ const (
 
 // createAccessListReminderNotificationsOptions defines the optional parameters for CreateAccessListReminderNotifications.
 type createAccessListReminderNotificationsOptions struct {
-	createNotificationInterval time.Duration
+	createNotificationInterval  time.Duration
+	accessListsPageReadInterval time.Duration
 }
 
 // CreateAccessListReminderNotificationsOptions is a functional option for CreateAccessListReminderNotifications.
@@ -6920,11 +6950,19 @@ func WithCreateNotificationInterval(d time.Duration) CreateAccessListReminderNot
 	}
 }
 
+// WithAccessListsPageReadInterval sets the interval between reading pages of access lists.
+func WithAccessListsPageReadInterval(d time.Duration) CreateAccessListReminderNotificationsOptions {
+	return func(o *createAccessListReminderNotificationsOptions) {
+		o.accessListsPageReadInterval = d
+	}
+}
+
 // CreateAccessListReminderNotifications checks if there are any access lists expiring soon and creates notifications to remind their owners if so.
 func (a *Server) CreateAccessListReminderNotifications(ctx context.Context, opts ...CreateAccessListReminderNotificationsOptions) {
 	opt := &createAccessListReminderNotificationsOptions{
 		// defaults to notificationsWriteInterval aka 40ms
-		createNotificationInterval: notificationsWriteInterval,
+		createNotificationInterval:  notificationsWriteInterval,
+		accessListsPageReadInterval: accessListsPageReadInterval,
 	}
 	for _, o := range opts {
 		o(opt)
@@ -6962,21 +7000,36 @@ func (a *Server) CreateAccessListReminderNotifications(ctx context.Context, opts
 
 	// Fetch all access lists
 	var accessLists []*accesslist.AccessList
-	err = clientutils.IterateResources(ctx, a.Cache.ListAccessLists, func(al *accesslist.AccessList) error {
-		if !al.IsReviewable() {
-			return nil
+	var accessListsPageKey string
+	accessListsReadLimiter := time.NewTicker(opt.accessListsPageReadInterval)
+	defer accessListsReadLimiter.Stop()
+	for {
+		select {
+		case <-accessListsReadLimiter.C:
+		case <-ctx.Done():
+			return
 		}
 
-		// Only keep access lists that fall within our thresholds in memory
-		if al.Spec.Audit.NextAuditDate.Sub(now) <= 15*24*time.Hour {
-			accessLists = append(accessLists, al)
+		response, nextKey, err := a.Cache.ListAccessLists(ctx, accessListsPageSize, accessListsPageKey)
+		if err != nil {
+			a.logger.WarnContext(ctx, "failed to list access lists for periodic reminder notification check", "error", err)
 		}
-		return nil
-	})
-	if err != nil {
-		a.logger.WarnContext(ctx, "failed to list access lists for periodic reminder notification check",
-			"error", err)
-		return
+
+		for _, al := range response {
+			if !al.IsReviewable() {
+				continue
+			}
+
+			// Only keep access lists that fall within our thresholds in memory
+			if al.Spec.Audit.NextAuditDate.Sub(now) <= 15*24*time.Hour {
+				accessLists = append(accessLists, al)
+			}
+		}
+
+		if nextKey == "" {
+			break
+		}
+		accessListsPageKey = nextKey
 	}
 
 	reminderThresholds := []struct {
