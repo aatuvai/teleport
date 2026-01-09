@@ -25,6 +25,27 @@ The guides in this section show you how to integrate your IdP with Teleport.
 For an overview of how Teleport integrates with single sign-on providers, see
 [Single Sign-On](../sso.mdx).
 
+## A. Integrating your provider
+
+Integrating a provider with Teleport includes the following steps:
+
+1. **Configure your IdP** to register Teleport as an application, resulting in a
+   client ID, client secret, and other data about your application.
+1. **Determine a role mapping:** When a user authenticates to Teleport, Teleport
+   issues certificates containing the user's roles. A role mapping configures
+   how Teleport selects roles for the user based on the user's GitHub teams,
+   SAML attributes, or OIDC claims.
+1. **Apply an authentication connector:** The authentication connector includes
+   information about the role mapping and Teleport application, giving Teleport
+   the information it needs to exchange SAML, OIDC, and GitHub SSO messages with
+   your IdP and issue certificates to users. 
+1. **Apply a cluster authentication preference:** The cluster auth preference
+   resource selects an SSO provider as the default authentication method for
+   Teleport users.
+
+<br />
+<br />
+
 <EnterpriseFeatureCallout title="Enable Enterprise SSO for your team.">
   Use GitHub SSO in Community Edition, or connect Okta, Google Workspace, and more with an Enterprise trial.
 </EnterpriseFeatureCallout>
@@ -104,29 +125,8 @@ For an overview of how Teleport integrates with single sign-on providers, see
   }}
 />
 
-## Integrating your provider
 
-Integrating a provider with Teleport includes the following steps:
-
-1. **Configure your IdP** to register Teleport as an application, resulting in a
-   client ID, client secret, and other data about your application.
-1. **Determine a role mapping:** When a user authenticates to Teleport, Teleport
-   issues certificates containing the user's roles. A role mapping configures
-   how Teleport selects roles for the user based on the user's GitHub teams,
-   SAML attributes, or OIDC claims.
-1. **Apply an authentication connector:** The authentication connector includes
-   information about the role mapping and Teleport application, giving Teleport
-   the information it needs to exchange SAML, OIDC, and GitHub SSO messages with
-   your IdP and issue certificates to users. 
-1. **Apply a cluster authentication preference:** The cluster auth preference
-   resource selects an SSO provider as the default authentication method for
-   Teleport users.
-
-Teleport supports the following identity providers:
-
-<DocCardList kind="labelOnly" />
-
-## Provider-specific workarounds
+## B. Provider-specific workarounds
 
 Certain SSO providers may require or benefit from changes to Teleport's SSO
 flow. These provider-specific changes can be enabled by setting the
@@ -144,7 +144,7 @@ values to match your identity provider:
 
 At this time, the `spec.provider` field should not be set for any other identity providers.
 
-## Customizing authentication buttons 
+## C. Customizing authentication buttons 
 
 Use the `display` field in an authentication connector to control the appearance
 of SSO buttons in the Teleport Web UI.
