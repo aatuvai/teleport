@@ -3,7 +3,7 @@ title: Teleport Agentic Identity Framework
 template: doc-page
 ---
 import LandingHero from '@site/src/components/Pages/Landing/LandingHero';
-import EnrollmentMethods, { Method } from '@site/src/components/Pages/Landing/EnrollmentMethods';
+import EnrollmentMethods, { Method } from '@site/src/components/Pages/Landing/EnrollmentMethods/EnrollmentMethods';
 import Resources from '@site/src/components/Pages/Homepage/Resources';
 import Integrations from "@site/src/components/Pages/Homepage/Integrations";
 import shieldCheckSvg from "@site/src/components/Icon/svg/shield-check2.svg";
@@ -204,6 +204,11 @@ import elasticsearchSvg from "@site/src/components/Icon/svg/elastic-stack.svg";
   title="D. Scheduling & Orchestration" 
   description="Integrations and SDKs for modern agentic orchestration tools enable secure identities for agentic workflows accessing resources like databases and git repositories, as well as file sharing and developer tooling."
   variant="rows"
+  additionalNote={(
+    <p>
+      We're building the future of Agentic AI. <a href="https://goteleport.com/community/">Join us</a> and collaborate on what's next.
+    </p>
+  )}
   >
   <Method
     title="Data Sharing"
