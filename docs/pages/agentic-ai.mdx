@@ -1,11 +1,13 @@
 ---
 title: Teleport Agentic Identity Framework
-template: doc-page
+template: landing-page
 ---
 import LandingHero from '@site/src/components/Pages/Landing/LandingHero';
 import EnrollmentMethods, { Method } from '@site/src/components/Pages/Landing/EnrollmentMethods/EnrollmentMethods';
 import Resources from '@site/src/components/Pages/Homepage/Resources';
 import Integrations from "@site/src/components/Pages/Homepage/Integrations";
+
+import agenticAiImg from '@version/docs/img/agentic-ai/agentic-ai-hero.png';
 import shieldCheckSvg from "@site/src/components/Icon/svg/shield-check2.svg";
 import keySvg from "@site/src/components/Icon/svg/key.svg";
 import gaugeSvg from "@site/src/components/Icon/svg/gauge.svg";
@@ -29,7 +31,8 @@ import elasticsearchSvg from "@site/src/components/Icon/svg/elastic-stack.svg";
 
 <LandingHero
   title="Teleport Agentic Identity Framework"
-    links={[
+  subTitle="Agentic Identity • Agentic Access • Agentic Security • Scheduling and Orchestration"
+  links={[
     {
       title: "Deploy agents safely across infrastructure",
       description: (
@@ -92,14 +95,7 @@ import elasticsearchSvg from "@site/src/components/Icon/svg/elastic-stack.svg";
     },
   ]}
 >
-  ## Agentic Identity • Agentic Access • Agentic Security • Scheduling and Orchestration
-
   The Teleport Agentic Identity Framework is a standards-driven security architecture and a reference implementation for deploying AI agents across infrastructure. It provides designs and reference implementations for safe agent adoption across infrastructure with built-in security invariants, observability, and governance. The framework is architected for the pace and scale of AI, enabling engineers to integrate security into agentic systems from the initial design phase.
-
-  As with the AI ecosystem as a whole, the Teleport Agentic Identity Framework is under development. Each component includes one of the following status categories:
-  - Ready: Available for production use.
-  - Development: Partially complete.
-  - Planned: Not yet it development, but on the roadmap.
 </LandingHero>
 
 <EnrollmentMethods 
