@@ -178,9 +178,9 @@
       "items": [],
       "link": {
         "type": "doc",
-        "id": "agentic-ai",
-        "customProps": {"tag" : "new"}
-      }
+        "id": "agentic-ai"
+      },
+      "customProps": {"tag" : "new"}
     },
     {
       "type": "category",
