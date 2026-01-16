@@ -173,9 +173,13 @@
       ]
     },
     {
-      "type": "doc",
+      "type": "category",
       "label": "Agentic AI",
-      "id": "agentic-ai",
+      "items": [],
+      "link": {
+        "type": "doc",
+        "id": "agentic-ai"
+      },
       "customProps": {"tag" : "new"}
     },
     {
