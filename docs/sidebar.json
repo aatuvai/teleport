@@ -176,9 +176,6 @@
       "type": "doc",
       "label": "Agentic AI",
       "id": "agentic-ai",
-      "link": {
-        "type": "doc"
-      },
       "customProps": {"tag" : "new"}
     },
     {
