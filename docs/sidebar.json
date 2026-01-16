@@ -179,7 +179,7 @@
       "link": {
         "type": "doc",
         "id": "agentic-ai",
-        "tag": "New"
+        "customProps": {"tag" : "new"}
       }
     },
     {
