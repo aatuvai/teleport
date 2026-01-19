@@ -18,7 +18,7 @@ organization's existing processes for managing users.
 To get started integrating your identity provider with Teleport, read <InlineCTA href="./integrate-idp/" imageName="ssoIntegrations">Integrate
 your Identity Provider</InlineCTA>
 
-## How Teleport uses SSO
+## A. How Teleport uses SSO
 
 You can register your Teleport cluster as an application with your SSO provider.
 When a user signs in to Teleport, your SSO provider will execute its own
@@ -142,7 +142,7 @@ $ ssh-keygen -L -f ~/.tsh/keys/${TELEPORT_CLUSTER}/${SSO_USER}-ssh/${TELEPORT_CL
 
 </details>
 
-## Logging in via SSO
+## B. Logging in via SSO
 
 Users can log in to Teleport via your SSO provider by executing a command
 similar to the following, using the `--auth` flag to specify the provider:
