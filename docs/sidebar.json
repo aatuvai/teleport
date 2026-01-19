@@ -174,18 +174,9 @@
     },
     {
       
-      "type": "category",
+      "type": "doc",
       "label": "Agentic AI",
-      "items": [
-        {
-          "type": "doc",
-          "id": "enroll-resources/enroll-resources"
-        }
-      ],
-      "link": {
-        "type": "doc",
-        "id": "agentic-ai"
-      },
+      "id": "agentic-ai",
       "customProps": {"tag" : "new"}
     },
     {
