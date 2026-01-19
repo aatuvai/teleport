@@ -174,9 +174,9 @@
     },
     {
       
-      "type": "link",
+      "type": "doc",
       "label": "Agentic AI",
-      "href": "./agentic-ai",
+      "id": "agentic-ai",
       "customProps": {"tag" : "new"}
     },
     {
