@@ -11,7 +11,7 @@ There are two ways to configure a Teleport cluster:
 - **Static configuration file:** At startup, a Teleport process reads a configuration file from the local filesystem (the default path is `/etc/teleport.yaml`). Static configuration settings control aspects of a cluster that are not expected to change frequently, like the ports that services listen on. (See the [Configuration Reference](../../reference/deployment/config.mdx) for all static configuration options.)
 - **Dynamic resources:** Dynamic resources control aspects of your cluster that are likely to change over time, such as roles, local users, and Teleport-protected infrastructure resources.
 
-![The Teleport Auth Service stores dynamic resources on its cluster state backend, and clients can authenticate to the Auth Service to read or write dynamic resources, depending on their permissions. Infrastructure as code tools can authenticate to a Teleport cluster to manage dynamic resources.](../../../../img/infrastructure-as-code/iac-hero.png)
+![The Teleport Auth Service stores dynamic resources on its cluster state backend, and clients can authenticate to the Auth Service to read or write dynamic resources, depending on their permissions. Infrastructure as code tools can authenticate to a Teleport cluster to manage dynamic resources.](../../../img/infrastructure-as-code/iac-hero.png)
 
 ## A. Reconciling static and dynamic configurations
 
