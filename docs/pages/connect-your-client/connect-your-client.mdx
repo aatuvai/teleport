@@ -1,37 +1,107 @@
 ---
-title: Teleport User Guides
+title: User Guides
 sidebar_label: User Guides
-description: Provides instructions to help users connect to infrastructure resources with Teleport.
+description: Learn how to access infrastructure resources protected by Teleport.
+template: doc-page
 tags:
  - platform-wide
 ---
+import Resources from '@site/src/components/Pages/Homepage/Resources';
+import UseCasesList from '@site/src/components/Pages/Homepage/UseCasesList';
 
-The guides in this section explain how to access infrastructure resources
-protected by Teleport.
+import mcpServersSvg from "@site/src/components/Icon/teleport-svg/linux-servers.svg";
+import databaseSvg from "@site/src/components/Icon/teleport-svg/database-access.svg";
+import kubernetesClustersSvg from "@site/src/components/Icon/teleport-svg/kubernetes-clusters.svg";
+import vsCodeSvg from "@site/src/components/Icon/svg/vscode.svg";
+import jetbrainsSvg from "@site/src/components/Icon/svg/jetbrains.svg";
+import ansibleSvg from "@site/src/components/Icon/svg/ansible.svg";
 
-## Teleport clients
+<Resources
+  title="Secure infrastructure access with MCP Clients"
+  variant="doc"
+  iconsSize="large"
+  desktopColumnsCount={3}
+  descriptionsFontSize="lg"
+  resources={[
+    {
+      title: "MCP Servers",
+      iconComponent: mcpServersSvg,
+    },
+    {
+      title: "Databases",
+      iconComponent: databaseSvg,
+    },
+    {
+      title: "Kubernetes Clusters",
+      iconComponent: kubernetesClustersSvg,
+    },
+  ]}
+/>
 
-Teleport Connect is a graphical interface that allows you to access protected
-resources, often without needing a third-party client tool. For a similar
-experience within your browser, you can use the Teleport Web UI.
+<UseCasesList
+  title="Client tools"
+  variant="doc"
+  descriptionsFontSize="lg"
+  desktopColumnsCount={3}
+  useCases={[
+    {
+      title: "tsh",
+      description: "Access infrastructure resources in your Teleport cluster using tsh.",
+    },
+    {
+      title: "Access Requests",
+      description: "Access Teleport roles and resources with current Teleport permissions using tsh client.",
+    },
+    {
+      title: "Notifications",
+      description: "Manage notifications in the Web UI and allow admins to create custom alerts for users.",
+    },
+    {
+      title: "Teleport Connect",
+      description: "Securely access SSH servers, databases, apps, Windows desktops, MCP servers, and Kubernetes clusters.",
+    },
+    {
+      title: "Web UI",
+      description: "Access resources, manage users, review sessions, and handle Access Requests through a web-based interface.",
+    },
+    {
+      title: "VNet",
+      description: "Connect to TCP applications and SSH servers via Teleport using VNet.",
+    }
+  ]}
+/>
 
-Teleport provides a command-line tool, `tsh`, that allows you to access
-Teleport-protected resources using terminal-based workflows the same as a
-protected resource's native tooling.
-
-Read the [Introduction to Teleport
-Clients](./teleport-clients/teleport-clients.mdx).
-
-## MCP clients
-
-You can configure MCP clients like Cursor and Claude Desktop to securely access
-Teleport-protected resources.
-
-Read [MCP Clients](./model-context-protocol/model-context-protocol.mdx).
-
-## Third-party clients
-
-You can use Teleport-issued credentials to give your third-party client tools,
-including graphical clients and IDEs, access to Teleport-protected resources.
-Read [Third-Party Clients](./third-party/third-party.mdx).
-
+<Resources
+  title="Third-Party Clients"
+  variant="doc"
+  iconsSize="large"
+  desktopColumnsCount={3}
+  descriptionsFontSize="lg"
+  resources={[
+    {
+      title: "Ansible",
+      description: "Configure OpenSSH to connect through Teleport and run an Ansible playbook.",
+      iconComponent: ansibleSvg,
+    },
+    {
+      title: "Database GUI Clients",
+      description: "Configure popular graphical database clients to connect through Teleport.",
+      iconComponent: databaseSvg,
+    },
+    {
+      title: "JetBrains SFTP",
+      description: "Configure with a JetBrains IDE like PyCharm, GoLand, and IntelliJ, to access files over SFTP.",
+      iconComponent: jetbrainsSvg,
+    },
+    {
+      title: "PuTTY and WinSCP",
+      description: "Configure tsh client to add saved sessions and connect to SSH nodes using PuTTY.",
+      iconComponent: kubernetesClustersSvg,
+    },
+    {
+      title: "Visual Studio Code",
+      description: "Configure with Visual Studio Code's Remote SSH extension to connect to infrastructure.",
+      iconComponent: vsCodeSvg,
+    }
+  ]}
+/>
