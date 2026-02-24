@@ -15,9 +15,10 @@ import kubernetesClustersSvg from "@site/src/components/Icon/teleport-svg/kubern
 import vsCodeSvg from "@site/src/components/Icon/svg/vscode.svg";
 import jetbrainsSvg from "@site/src/components/Icon/svg/jetbrains.svg";
 import ansibleSvg from "@site/src/components/Icon/svg/ansible.svg";
+import puttyWinSCPSvg from "@site/src/components/Icon/svg/putty-winscp.svg";
 
 <Resources
-  title="Secure infrastructure access with MCP Clients"
+  title="Secure infrastructure access with MCP clients"
   variant="doc"
   iconsSize="large"
   desktopColumnsCount={3}
@@ -48,22 +49,12 @@ import ansibleSvg from "@site/src/components/Icon/svg/ansible.svg";
   title="Client tools"
   variant="doc"
   descriptionsFontSize="lg"
-  desktopColumnsCount={3}
+  desktopColumnsCount={4}
   useCases={[
     {
       title: "tsh",
       description: "Access infrastructure resources in your Teleport cluster using tsh.",
       href: "./teleport-clients/tsh/",
-    },
-    {
-      title: "Access Requests",
-      description: "Access Teleport roles and resources with current Teleport permissions using tsh client.",
-      href: "./teleport-clients/request-access/",
-    },
-    {
-      title: "Notifications",
-      description: "Manage notifications in the Web UI and allow admins to create custom alerts for users.",
-      href: "./teleport-clients/notifications/",
     },
     {
       title: "Teleport Connect",
@@ -84,7 +75,7 @@ import ansibleSvg from "@site/src/components/Icon/svg/ansible.svg";
 />
 
 <Resources
-  title="Third-Party Clients"
+  title="Third-party clients"
   variant="doc"
   iconsSize="large"
   desktopColumnsCount={3}
@@ -97,7 +88,7 @@ import ansibleSvg from "@site/src/components/Icon/svg/ansible.svg";
       iconComponent: ansibleSvg,
     },
     {
-      title: "Database GUI Clients",
+      title: "Database GUI clients",
       description: "Configure popular graphical database clients to connect through Teleport.",
       href: "./third-party/gui-clients/",
       iconComponent: databaseSvg,
@@ -112,7 +103,7 @@ import ansibleSvg from "@site/src/components/Icon/svg/ansible.svg";
       title: "PuTTY and WinSCP",
       description: "Configure tsh client to add saved sessions and connect to SSH nodes using PuTTY.",
       href: "./third-party/putty-winscp/",
-      iconComponent: kubernetesClustersSvg,
+      iconComponent: puttyWinSCPSvg,
     },
     {
       title: "Visual Studio Code",
