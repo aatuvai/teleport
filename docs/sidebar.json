@@ -122,11 +122,10 @@
       ]
     },
     {
-      
       "type": "doc",
       "label": "Agentic Identity Framework",
       "id": "agentic-identity-framework",
-      "customProps": {"tag" : "new"}
+      "customProps": { "tag": "new" }
     },
     {
       "type": "category",
@@ -142,6 +141,13 @@
           "dirName": "connect-your-client"
         }
       ]
+    }
+  ],
+  "agentic": [
+    {
+      "type": "doc",
+      "label": "Agentic Identity Framework",
+      "id": "agentic-identity/agentic-identity"
     }
   ],
   "zta": [
