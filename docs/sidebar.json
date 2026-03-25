@@ -143,6 +143,13 @@
       ]
     }
   ],
+  "agentic": [
+    {
+      "type": "doc",
+      "label": "Agentic Identity Framework",
+      "id": "agentic-identity/agentic-identity"
+    }
+  ],
   "zta": [
     {
       "label": "Zero Trust Access",
