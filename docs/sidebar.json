@@ -122,12 +122,6 @@
       ]
     },
     {
-      "type": "doc",
-      "label": "Agentic Identity Framework",
-      "id": "agentic-identity-framework",
-      "customProps": { "tag": "new" }
-    },
-    {
       "type": "category",
       "label": "User Guides",
       "collapsible": true,
@@ -147,7 +141,8 @@
     {
       "type": "doc",
       "label": "Agentic Identity Framework",
-      "id": "agentic-identity-framework"
+      "id": "agentic-identity-framework",
+      "customProps": { "tag": "new" }
     }
   ],
   "zta": [
