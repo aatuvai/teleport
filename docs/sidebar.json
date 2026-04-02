@@ -137,17 +137,9 @@
       ]
     }
   ],
-  "agentic": [
-    {
-      "type": "doc",
-      "label": "Agentic Identity Framework",
-      "id": "agentic-identity-framework",
-      "customProps": { "tag": "new" }
-    }
-  ],
   "zta": [
     {
-      "label": "Zero Trust Access",
+      "label": "Overview",
       "type": "doc",
       "id": "zero-trust-access/zero-trust-access"
     },
@@ -173,7 +165,7 @@
   "mwi": [
     {
       "type": "doc",
-      "label": "Machine Workload Identity",
+      "label": "Overview",
       "id": "machine-workload-identity/machine-workload-identity"
     },
     {
@@ -184,7 +176,7 @@
   "idg": [
     {
       "type": "doc",
-      "label": "Identity Governance",
+      "label": "Overview",
       "id": "identity-governance/identity-governance"
     },
     {
@@ -195,7 +187,7 @@
   "ids": [
     {
       "type": "doc",
-      "label": "Identity Security",
+      "label": "Overview",
       "id": "identity-security/identity-security"
     },
     {
@@ -206,7 +198,7 @@
   "ref": [
     {
       "type": "doc",
-      "label": "Reference",
+      "label": "Overview",
       "id": "reference/reference"
     },
     {
