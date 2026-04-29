@@ -698,7 +698,7 @@ a stolen renewable certificate to request very long lived certificates and
 maintain access for a much longer period.
 
 If your use case absolutely requires long-lived certificates,
-[`tctl auth sign`](../reference/cli/tctl.mdx#tctl-auth-sign) can
+[`tctl auth sign`](reference/cli/tctl.mdx#tctl-auth-sign) can
 alternatively be used, however this loses the security benefits of MWI's
 short-lived renewable certificates.
 
@@ -713,15 +713,15 @@ Note that both `tbot` and the Teleport Proxy need to be running v17.2.7 to take
 advantage of this functionality.
 
 Refer to the
-[CLI reference](../reference/cli/tbot.mdx#tbot-start-kubernetesv2) and
-[config reference](../reference/machine-workload-identity/configuration.mdx#kubernetesv2)
+[CLI reference](reference/cli/tbot.mdx#tbot-start-kubernetesv2) and
+[config reference](reference/machine-workload-identity/configuration.mdx#kubernetesv2)
 for more information.
 
 ### Does `tbot` support Windows?
 
 Yes, the `tbot` binary is available for Windows. It can be found in the client
 tools archive that also includes `tsh` and `tctl`. See the
-[Installing Teleport guide](../installation/single-machine/single-machine.mdx) for further information.
+[Installing Teleport guide](installation/single-machine/single-machine.mdx) for further information.
 
 However, there are a few limitations to be aware of:
 
@@ -785,7 +785,7 @@ This feature is planned for future release.
 For new detection requests based on customer needs, [reach out to the Identity Security Team](https://goteleport.com/contact-us/). Customer feedback is welcomed and helps prioritize new detection development.
 
 #### How do I deploy Identity Security Alerts?
-Teleport Identity Security is a separately licensed product available to Teleport Enterprise customers. Alerts and Investigate view are only available in AWS self-hosted deployments. To deploy Identity Security, follow the instructions in [Self-Host Teleport Security - Identity Activity Center](../access-graph/identity-activity-center.mdx).
+Teleport Identity Security is a separately licensed product available to Teleport Enterprise customers. Alerts and Investigate view are only available in AWS self-hosted deployments. To deploy Identity Security, follow the instructions in [Self-Host Teleport Security - Identity Activity Center](identity-security/access-graph/identity-activity-center.mdx).
 
 <FAQSection icon="hardDrives">
   ## Enroll Resources
@@ -820,7 +820,7 @@ For PostgreSQL, Oracle and MySQL, the following Cloud-hosted versions are suppor
 - Azure Database
 - Oracle Exadata
 
-See the available [guides](guides/guides.mdx) for all supported configurations.
+See the available [guides](enroll-resources/database-access/guides/guides.mdx) for all supported configurations.
 
 #### Which PostgreSQL protocol features are not supported?
 
@@ -850,14 +850,14 @@ This is useful when the Teleport Web UI is running behind an L7 load balancer
 (e.g. ALB in AWS), in which case the PostgreSQL/MySQL proxy needs to be exposed
 on a plain TCP load balancer (e.g. NLB in AWS).
 
-Using [TLS routing](../../reference/architecture/tls-routing.mdx) for the Teleport Proxy Service allows for all 
+Using [TLS routing](reference/architecture/tls-routing.mdx) for the Teleport Proxy Service allows for all 
 database connections with the web public address.
 
 </TabItem>
 <TabItem scope={["cloud","team"]} label="Cloud-Hosted">
 
 In Teleport Enterprise (Cloud), database connections use the web public address
-since [TLS routing](../../reference/architecture/tls-routing.mdx) is applied.
+since [TLS routing](reference/architecture/tls-routing.mdx) is applied.
 
 </TabItem>
 </Tabs>
@@ -870,7 +870,7 @@ should work.
 
 Standard command-line clients such as `psql`, `mysql`, `mongo` or `mongosh` are
 supported. There are also instructions for configuring select
-[graphical clients](../../connect-your-client/third-party/gui-clients.mdx).
+[graphical clients](connect-your-client/third-party/gui-clients.mdx).
 
 #### When will you support X database?
 
@@ -940,22 +940,21 @@ is useful when the Kubernetes clusters' nodes can be downsized to zero, but you
 still want to be able to access the Kubernetes API.
 
 Check out the
-[Kubernetes Service Standalone Guide](./register-clusters/static-kubeconfig.mdx).
+[Kubernetes Service Standalone Guide](enroll-resources/kubernetes-access/register-clusters/static-kubeconfig.mdx).
 
 #### Can Teleport be used to restrict access to Kubernetes resources?
 
 Yes. Teleport can be used to restrict access to individual
 Kubernetes resources.
 
-Check out the [Teleport Kubernetes RBAC Guide](./controls.mdx) for
+Check out the [Teleport Kubernetes RBAC Guide](enroll-resources/kubernetes-access/controls.mdx) for
 more information and examples.
 
 #### Can Teleport automatically discover my Kubernetes clusters on cloud providers (AWS, GCP, Azure)?
 
 Teleport can discover your Kubernetes clusters on AWS, GCP, and Azure.
 
-Check out the [Kubernetes Service Discovery
-Guide](../auto-discovery/kubernetes/kubernetes.mdx) for more
+Check out the [Kubernetes Service Discovery Guide](enroll-resources/auto-discovery/kubernetes/kubernetes.mdx) for more
 documentation and examples.
 
 #### Does Teleport work with Kubernetes desktop UI applications?
