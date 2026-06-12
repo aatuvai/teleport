@@ -1,0 +1,53 @@
+---
+title: {{ .Section.SectionName }}
+description: Provides a reference of fields for the `{{ .Section.YAMLName }}` section of Teleport configuration.
+sidebar_label: {{ .Section.SectionName }}
+---
+{/* vale 3rd-party-products.former-names = NO */}
+{/* vale messaging.capitalization = NO */}
+{/* Automatically generated from: {{ .Section.SourcePath}} */}
+{/* DO NOT EDIT */}
+
+{{ or .Introduction .Section.Description }}
+
+{{- if gt (len .Section.SectionExample) 0 }}
+
+Example definition:
+```yaml
+{{ .Section.SectionExample }}
+```
+{{- end }}
+
+## Top-level fields
+
+Example:
+
+```yaml
+{{ .Section.YAMLExample -}}
+```
+|Field Name|Description|Type|
+|---|---|---|
+{{ range .Section.Fields -}}
+|{{.Name}}|{{.Description}}|{{.Type}}|
+{{ end }}
+
+{{- range .Fields }}
+## {{ .SectionName }}
+
+{{ .Description }}
+
+{{ if ne .YAMLExample "" }}
+Example:
+
+```yaml
+{{ .YAMLExample -}}
+```
+{{ end }}
+{{- if gt (len .Fields) 0 }}
+|Field Name|Description|Type|
+|---|---|---|
+{{ range .Fields -}}
+|{{.Name}}|{{.Description}}|{{.Type}}|
+{{ end }} 
+{{- end }}
+{{- end }}

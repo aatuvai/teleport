@@ -1,0 +1,227 @@
+---
+title: Proxy Service
+description: Provides a reference of fields for the `proxy_service` section of Teleport configuration.
+sidebar_label: Proxy Service
+---
+{/* vale 3rd-party-products.former-names = NO */}
+{/* vale messaging.capitalization = NO */}
+{/* Automatically generated from: lib/config/fileconf.go */}
+{/* DO NOT EDIT */}
+
+Represents the `proxy_service` section of the configuration file.
+
+## Top-level fields
+
+Example:
+
+```yaml
+enabled: "string"
+listen_addr: "string"
+web_listen_addr: "string"
+tunnel_listen_addr: "string"
+peer_listen_addr: "string"
+peer_public_addr: "string"
+https_key_file: "string"
+https_cert_file: "string"
+proxy_protocol: "string"
+proxy_protocol_allow_downgrade: # [...]
+kubernetes: # [...]
+kube_listen_addr: "string"
+kube_public_addr: # [...]
+public_addr: # [...]
+ssh_public_addr: # [...]
+tunnel_public_addr: # [...]
+https_keypairs: 
+  - # [...]
+  - # [...]
+  - # [...]
+https_keypairs_reload_interval: # See description
+acme: # [...]
+mysql_listen_addr: "string"
+mysql_public_addr: # [...]
+mysql_server_version: "string"
+postgres_listen_addr: "string"
+postgres_public_addr: # [...]
+mongo_listen_addr: "string"
+mongo_public_addr: # [...]
+idp: # [...]
+ui: # [...]
+trust_x_forwarded_for: # [...]
+automatic_upgrades_channels: # [...]
+```
+|Field Name|Description|Type|
+|---|---|---|
+|acme|Configures ACME protocol support|[ACME](#acme)|
+|automatic_upgrades_channels|A map of all version channels used by the proxy built-in version server to retrieve target versions. This is part of the automatic upgrades.|[Channels](#channels)|
+|enabled||string|
+|https_cert_file|A TLS Certificate file|string|
+|https_key_file|A TLS key file|string|
+|https_keypairs|A list of x509 key pairs the proxy will load.|[][Key Pair](#key-pair)|
+|https_keypairs_reload_interval|The interval between attempts to reload x509 key pairs. If set to 0, then periodic reloading is disabled.||
+|idp|Configuration for identity providers.|[IdP](#idp)|
+|kube_listen_addr|A shorthand for enabling the Kubernetes endpoint without a local Kubernetes cluster.|string|
+|kube_public_addr|A public address of the kubernetes endpoint.|[Strings](#strings)|
+|kubernetes|Proxy configures kubernetes protocol support of the proxy|[Kube Proxy](#kube-proxy)|
+|listen_addr||string|
+|mongo_listen_addr|Mongo proxy listen address.|string|
+|mongo_public_addr|The hostport the proxy advertises for Mongo client connections.|[Strings](#strings)|
+|mysql_listen_addr|MySQL proxy listen address.|string|
+|mysql_public_addr|The hostport the proxy advertises for MySQL client connections.|[Strings](#strings)|
+|mysql_server_version|Allow to overwrite proxy default mysql engine version reported by Teleport proxy.|string|
+|peer_listen_addr|The address this proxy will be dialed at by its peers.|string|
+|peer_public_addr|The hostport the proxy advertises for peer proxy client connections.|string|
+|postgres_listen_addr|Postgres proxy listen address.|string|
+|postgres_public_addr|The hostport the proxy advertises for Postgres client connections.|[Strings](#strings)|
+|proxy_protocol|Turns on support for HAProxy PROXY protocol this is the option that has be turned on only by administrator, as only admin knows whether service is in front of trusted load balancer or not.|string|
+|proxy_protocol_allow_downgrade|Controls support for downgrading IPv6 source addresses in PROXY headers to pseudo IPv4 addresses when connecting to an IPv4 destination|[Bool Option](#bool-option)|
+|public_addr|Sets the hostport the proxy advertises for the HTTP endpoint. The hosts in PublicAddr are included in the list of host principals on the SSH certificate.|[Strings](#strings)|
+|ssh_public_addr|Sets the hostport the proxy advertises for the SSH endpoint. The hosts in PublicAddr are included in the list of host principals on the SSH certificate.|[Strings](#strings)|
+|trust_x_forwarded_for|Enables the service to take client source IPs from the "X-Forwarded-For" headers for web APIs received from layer 7 load balancers or reverse proxies.|[Bool](#bool)|
+|tunnel_listen_addr|A reverse tunnel address|string|
+|tunnel_public_addr|Sets the hostport the proxy advertises for the tunnel endpoint. The hosts in PublicAddr are included in the list of host principals on the SSH certificate.|[Strings](#strings)|
+|ui|Provides config options for the web UI|[UIConfig](#uiconfig)|
+|web_listen_addr|A web UI listen address|string|
+
+## ACME
+
+Configures ACME protocol - automatic X.509 certificates
+
+
+Example:
+
+```yaml
+enabled: "string"
+email: "string"
+uri: "string"
+```
+
+|Field Name|Description|Type|
+|---|---|---|
+|email|The email that will receive problems with certificate renewals|string|
+|enabled|Whether ACME should be enabled|string|
+|uri|ACME server URI|string|
+
+## Bool
+
+A wrapper around boolean values
+
+
+## Bool Option
+
+A wrapper around bool that can take multiple values: * true, false and non-set (when pointer is nil) and can marshal itself to protobuf equivalent BoolValue
+
+
+Example:
+
+```yaml
+: true
+```
+
+|Field Name|Description|Type|
+|---|---|---|
+|Value|A value of the option|Boolean|
+
+## Channels
+
+A map of Channel objects.
+
+
+## IdP
+
+Represents the configuration for identity providers running within the proxy.
+
+
+Example:
+
+```yaml
+saml: # [...]
+```
+
+|Field Name|Description|Type|
+|---|---|---|
+|saml|Represents configuratino options for the SAML identity provider.|[SAML IdP](#saml-idp)|
+
+## Key Pair
+
+Represents a path on disk to a private key and certificate.
+
+
+Example:
+
+```yaml
+key_file: "string"
+cert_file: "string"
+```
+
+|Field Name|Description|Type|
+|---|---|---|
+|cert_file|The path on disk to a PEM encoded x509 certificate.|string|
+|key_file|The path on disk to a PEM encoded private key,|string|
+
+## Kube Proxy
+
+A `kubernetes` section in `proxy_service`.
+
+
+Example:
+
+```yaml
+enabled: "string"
+listen_addr: "string"
+public_addr: # [...]
+kubeconfig_file: "string"
+cluster_name: "string"
+```
+
+|Field Name|Description|Type|
+|---|---|---|
+|cluster_name|The name of a kubernetes cluster this proxy is running in. If set, this proxy will handle kubernetes requests for the cluster.|string|
+|enabled||string|
+|kubeconfig_file|An optional path to kubeconfig file, if specified, teleport will use API server address and trusted certificate authority information from it|string|
+|listen_addr||string|
+|public_addr|A publicly advertised address of the kubernetes proxy|[Strings](#strings)|
+
+## SAML IdP
+
+Represents the configuration for the SAML identity provider.
+
+
+Example:
+
+```yaml
+enabled: "string"
+base_url: "string"
+```
+
+|Field Name|Description|Type|
+|---|---|---|
+|base_url|The base URL to provide to the SAML IdP.|string|
+|enabled|Enabled turns the SAML IdP on or off for this process.|string|
+
+## Show Resources
+
+Determines which resources are shown in the web UI. Default if unset is "requestable" which means resources the user has access to and resources they can request will be shown in the resources UI. If set to `accessible_only`, only resources the user already has access to will be shown.
+
+
+## Strings
+
+A list of string that can unmarshal from list of strings or a scalar string from scalar yaml or json property
+
+
+## UIConfig
+
+Provides config options for the web UI served by the proxy service.
+
+
+Example:
+
+```yaml
+scrollback_lines: 1
+show_resources: # [...]
+```
+
+|Field Name|Description|Type|
+|---|---|---|
+|scrollback_lines|The max number of lines the UI terminal can display in its history|number|
+|show_resources|Determines which resources are shown in the web UI. Default if unset is "requestable" which means resources the user has access to and resources they can request will be shown in the resources UI. If set to `accessible_only`, only resources the user already has access to will be shown.|[Show Resources](#show-resources)|
+

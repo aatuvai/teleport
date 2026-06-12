@@ -2118,6 +2118,10 @@ gen-docs: gen-resource-docs audit-event-reference
 gen-resource-docs:
 	cd build.assets/tooling/cmd/resource-ref-generator && go run . -config config.yaml
 
+.PHONY: gen-config-docs
+gen-config-docs:
+	cd build.assets/tooling/cmd/config-ref-generator && go run . -config config.yaml
+
 .PHONY: resource-docs-up-to-date
 resource-docs-up-to-date: must-start-clean/host gen-resource-docs
 	@if ! git diff --quiet; then \

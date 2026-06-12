@@ -1,0 +1,48 @@
+---
+title: Access Graph
+description: Provides a reference of fields for the `access_graph` section of Teleport configuration.
+sidebar_label: Access Graph
+---
+{/* vale 3rd-party-products.former-names = NO */}
+{/* vale messaging.capitalization = NO */}
+{/* Automatically generated from: lib/config/fileconf.go */}
+{/* DO NOT EDIT */}
+
+Represents the `access_graph` section of the configuration file.
+
+## Top-level fields
+
+Example:
+
+```yaml
+enabled: true
+endpoint: "string"
+ca: "string"
+insecure: true
+audit_log: # [...]
+```
+|Field Name|Description|Type|
+|---|---|---|
+|audit_log|Contains audit log export details.|[Audit Log Config](#audit-log-config)|
+|ca|The path to the CA certificate for the AccessGraph service.|string|
+|enabled|Enables the AccessGraph service.|Boolean|
+|endpoint|The endpoint of the AccessGraph service.|string|
+|insecure|True if the AccessGraph service should not verify the CA.|Boolean|
+
+## Audit Log Config
+
+Specifies the audit log event export setup.
+
+
+Example:
+
+```yaml
+enabled: true
+start_date: # See description
+```
+
+|Field Name|Description|Type|
+|---|---|---|
+|enabled|Indicates if Audit Log event exporting is enabled.|Boolean|
+|start_date|The start date for exporting audit logs. It defaults to 90 days ago on the first export.||
+

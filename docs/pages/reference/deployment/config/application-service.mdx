@@ -1,0 +1,475 @@
+---
+title: Application Service
+description: Provides a reference of fields for the `app_service` section of Teleport configuration.
+sidebar_label: Application Service
+---
+{/* vale 3rd-party-products.former-names = NO */}
+{/* vale messaging.capitalization = NO */}
+{/* Automatically generated from: lib/config/fileconf.go */}
+{/* DO NOT EDIT */}
+
+Represents the `app_service` section of the configuration file.
+
+Example definition:
+```yaml
+app_service:
+    # Turns 'app' role on. Default is false
+    enabled: true
+    # Teleport contains a small debug app that can be used to make sure the
+    # Application Service is working correctly. The app outputs JWTs so it can
+    # be useful when extending your application.
+    debug_app: true
+    # Enables the builtin Teleport demo MCP server that shows current user and
+    # session information. To access it, this MCP server uses the app label
+    # "teleport.internal/resource-type" with the value "demo".
+    mcp_demo_server: true
+
+    # Matchers for dynamic application resources
+    #
+    # All application resources have a predefined "teleport.dev/origin" label with
+    # one of the following values:
+    # "dynamic": application resources created via an Auth Service API 
+    # client like `tctl` or the Teleport Terraform provider
+    # "config": application resources defined in the "apps" array below
+    resources:
+      - labels:
+          "*": "*"
+
+    apps:
+    - name: "kubernetes-dashboard"
+      # Optional: For access to cloud provider APIs, specify the cloud
+      # provider. Allowed values are "AWS", "Azure", and "GCP".
+      cloud: ""
+      # Optional: Free-form description of the application.
+      description: "Kubernetes Dashboard to development cluster"
+      # URI of Application. For TCP applications
+      # use tcp, ex: tcp://localhost:5432.
+      uri: "http://10.0.1.27:8000"
+      # Optionally skip TLS verification. default false
+      # insecure_skip_verify: true
+      # Optional Public Addr
+      public_addr: "example.com"
+      # Optional Label: These can be used in combination with RBAC rules
+      # to limit access to applications
+      labels:
+         env: "prod"
+
+      # # Optional list of Teleport application names that require a session for this app to function correctly.
+      # # When launching this app, any app listed here will also be launched, and a session will be created.
+      # # These sessions follow their respective RBAC policies.
+      # required_apps:
+      #   - "my-api"
+      #   - "prod-database"
+      #   # Add more required app names as needed
+
+      # # Optional CORS policy is used for preflight requests only. It does not overwrite the contained
+      # # app's CORS policy per route but is used by Teleport to respond to unauthenticated OPTION requests.
+      # # Important Notes:
+      # # - Each field in the CORS spec is optional.
+      # # - The allowed_headers field accepts wildcard entries. However, in requests with "allow_credentials: true",
+      # #   a wildcard is treated as the literal header name "*" without special semantics.
+      # # - The Authorization header can't be set with a wildcard and always needs to be listed explicitly.
+      # cors:
+      #   # Specifies which origins are allowed to make cross-origin requests.
+      #   allowed_origins:
+      #     - "https://example.com"
+      #     - "https://app.example.com"
+      #   # HTTP methods that are allowed when accessing the resource.
+      #   allowed_methods:
+      #     - "GET"
+      #     - "POST"
+      #     - "PUT"
+      #     - "DELETE"
+      #     - "OPTIONS"
+      #   # HTTP headers that can be used during the actual request.
+      #   allowed_headers:
+      #     - "Content-Type"
+      #     - "Authorization"
+      #     - "X-Custom-Header"
+      #   # Headers that browsers are allowed to access.
+      #   exposed_headers:
+      #     - "Content-Type"
+      #     - "X-Custom-Response-Header"
+      #   # Indicates whether the request can include credentials.
+      #   allow_credentials: true
+      #   # Indicates how long (in seconds) the results of a preflight request can be cached.
+      #   max_age: 3600
+
+      # Optional Dynamic Labels
+      commands:
+      - name: "os"
+        command: ["/usr/bin/uname"]
+        period: "5s"
+      ## Optional list of rewrite rules to apply to requests and responses
+      # rewrite:
+        ## Optional simple rewriting of Location header
+        ## Rewrite the "Location" header on redirect responses replacing the
+        ## host with the public address of this application.
+        # redirect:
+        #   - "localhost"
+        #   - "jenkins.internal.dev"
+        ## Optional list of extra headers to inject in to requests.
+        # headers:
+        #   For example:
+        #   - "Host: jenkins.example.com"
+        ## Optional rewrite to remove parts of the JWT token.
+        ## Can be one of three options:
+        ## - roles-and-traits: include both roles and traits in the JWT token
+        ## - roles: include only roles in the JWT token
+        ## - traits: include only traits in the JWT token
+        ## - none: include neither roles nor traits in the JWT token
+        ## Default: roles-and-traits
+        # jwt_claims: roles-and-traits
+
+      # Contains MCP server-related configurations.
+      mcp:
+        # Command to launch stdio-based MCP servers.
+        command: "docker"
+        # Args to execute with the command.
+        args: ["run", "-i", "--rm", "mcp/everything"]
+        # Name of the host user account under which the command will be
+        # executed. Required for stdio-based MCP servers.
+        run_as_host_user: "docker"
+
+
+
+```
+
+## Top-level fields
+
+Example:
+
+```yaml
+enabled: "string"
+listen_addr: "string"
+debug_app: true
+mcp_demo_server: true
+apps: 
+  - # [...]
+  - # [...]
+  - # [...]
+resources: 
+  - # [...]
+  - # [...]
+  - # [...]
+```
+|Field Name|Description|Type|
+|---|---|---|
+|apps|A list of applications that will be run by this service.|[][App](#app)|
+|debug_app|Turns on a header debugging application.|Boolean|
+|enabled||string|
+|listen_addr||string|
+|mcp_demo_server|Enables the "Teleport Demo" MCP server.|Boolean|
+|resources|Match cluster application resources.|[][Resource Matcher](#resource-matcher)|
+
+## App
+
+The specific application that will be proxied by the application service.
+
+
+Example:
+
+```yaml
+name: "string"
+description: "string"
+uri: "string"
+public_addr: "string"
+labels: 
+  "string": "string"
+  "string": "string"
+  "string": "string"
+commands: 
+  - # [...]
+  - # [...]
+  - # [...]
+insecure_skip_verify: true
+rewrite: # [...]
+aws: # [...]
+cloud: "string"
+required_apps: 
+  - "string"
+  - "string"
+  - "string"
+use_any_proxy_public_addr: true
+cors: # [...]
+tcp_ports: 
+  - # [...]
+  - # [...]
+  - # [...]
+mcp: # [...]
+inference: # [...]
+tls: # [...]
+```
+
+|Field Name|Description|Type|
+|---|---|---|
+|aws|Contains additional options for AWS applications.|[App AWS](#app-aws)|
+|cloud|Identifies the cloud instance the app represents.|string|
+|commands|A list of commands that generate dynamic labels to apply to this application.|[][Command Label](#command-label)|
+|cors|Defines the Cross-Origin Resource Sharing configuration for the app, controlling how resources are shared across different origins.|[CORS](#cors)|
+|description|An optional free-form app description.|string|
+|inference|Contains LLM inference endpoint related configurations.|[LLM](#llm)|
+|insecure_skip_verify|Used to skip validating the servers certificate.|Boolean|
+|labels|A map of static labels to apply to this application.|map[string]string|
+|mcp|Contains MCP server-related configurations.|[MCP](#mcp)|
+|name|Of the application.|string|
+|public_addr|Public address of the application. This is the address users will access the application at.|string|
+|required_apps|A list of app names that are required for this app to function. Any app listed here will be part of the authentication redirect flow and authenticate along side this app.|[]string|
+|rewrite|Defines a block that is used to rewrite requests and responses.|[Rewrite](#rewrite)|
+|tcp_ports|A list of ports and port ranges that an app agent can forward connections to. Only applicable to TCP App Access. If this field is not empty, URI is expected to contain no port number and start with the tcp protocol.|[][Port Range](#port-range)|
+|tls|Contains the app TLS configuration.|[App TLS](#app-tls)|
+|uri|The internal address of the application.|string|
+|use_any_proxy_public_addr|Will rebuild this app's fqdn based on the proxy public addr that the request originated from. This should be true if your proxy has multiple proxy public addrs and you want the app to be accessible from any of them. If `public_addr` is explicitly set in the app spec, setting this value to true will overwrite that public address in the web UI.|Boolean|
+
+## App AWS
+
+Contains additional options for AWS applications.
+
+
+Example:
+
+```yaml
+external_id: "string"
+```
+
+|Field Name|Description|Type|
+|---|---|---|
+|external_id|The AWS External ID used when assuming roles in this app.|string|
+
+## App TLS
+
+Contains the app TLS configuration.
+
+
+Example:
+
+```yaml
+mode: "string"
+server_name: "string"
+server_spiffe_id: "string"
+allowed_cas: 
+  - "string"
+  - "string"
+  - "string"
+allowed_cas_files: 
+  - "string"
+  - "string"
+  - "string"
+client_cert_mode: "string"
+```
+
+|Field Name|Description|Type|
+|---|---|---|
+|allowed_cas|The list of user provided CAs used for verifying upstream certificates. Accepted values are PEM-encoded CA certificates and Teleport CA aliases.|[]string|
+|allowed_cas_files|List of CA certificates file paths that will be used for verifying upstream certificates.|[]string|
+|client_cert_mode|Specifies which client certificate mode to use for the upstream connection.|string|
+|mode|Defines the TLS verification.|string|
+|server_name|Specifies a custom hostname used for TLS verification against the upstream certificate.|string|
+|server_spiffe_id|Specifies a SPIFFE ID that must be present on the server certificate.|string|
+
+## CORS
+
+Represents the configuration for Cross-Origin Resource Sharing (CORS) settings that control how the app responds to requests from different origins.
+
+
+Example:
+
+```yaml
+allowed_origins: 
+  - "string"
+  - "string"
+  - "string"
+allowed_methods: 
+  - "string"
+  - "string"
+  - "string"
+allowed_headers: 
+  - "string"
+  - "string"
+  - "string"
+exposed_headers: 
+  - "string"
+  - "string"
+  - "string"
+allow_credentials: true
+max_age: 1
+```
+
+|Field Name|Description|Type|
+|---|---|---|
+|allow_credentials|Indicates whether credentials such as cookies or authorization headers are allowed to be included in the requests.|Boolean|
+|allowed_headers|Specifies the HTTP headers that can be used when making requests to the app. Example: "Content-Type", "Authorization", "X-Custom-Header"|[]string|
+|allowed_methods|Specifies the HTTP methods that are allowed when accessing the app. Example: "POST", "GET", "OPTIONS", "PUT", "DELETE"|[]string|
+|allowed_origins|Specifies the list of origins that are allowed to access the app. Example: "https://client.teleport.example.com:3080"|[]string|
+|exposed_headers|Indicate which response headers should be made available to scripts running in the browser, in response to a cross-origin request.|[]string|
+|max_age|Specifies how long (in seconds) the results of a preflight request can be cached. Example: 86400 (which equals 24 hours)|number|
+
+## Command Label
+
+`command` section of `ssh_service` in the config file
+
+
+Example:
+
+```yaml
+name: "string"
+command,flow: 
+  - "string"
+  - "string"
+  - "string"
+period: # See description
+```
+
+|Field Name|Description|Type|
+|---|---|---|
+|command,flow||[]string|
+|name||string|
+|period|||
+
+## LLM
+
+Contains LLM inference endpoint related configurations.
+
+
+Example:
+
+```yaml
+format: "string"
+provider: "string"
+models: 
+  - # [...]
+  - # [...]
+  - # [...]
+fallback_model: "string"
+```
+
+|Field Name|Description|Type|
+|---|---|---|
+|fallback_model|A model that will be used if the model requested is not on the list.|string|
+|format|The LLM inference API format.|string|
+|models|The list of supported models, and optionally their name on the inference provider.|[][LLMModel](#llmmodel)|
+|provider|The inference provider that will be used to serve the requests.|string|
+
+## LLMModel
+
+A provider model definition.
+
+
+Example:
+
+```yaml
+name: "string"
+provider_name: "string"
+```
+
+|Field Name|Description|Type|
+|---|---|---|
+|name|Defines the model name.|string|
+|provider_name|The model name in the configured provider.|string|
+
+## MCP
+
+Contains MCP server-related configurations.
+
+
+Example:
+
+```yaml
+command: "string"
+args: 
+  - "string"
+  - "string"
+  - "string"
+run_as_host_user: "string"
+```
+
+|Field Name|Description|Type|
+|---|---|---|
+|args|To execute with the command.|[]string|
+|command|To launch stdio-based MCP servers.|string|
+|run_as_host_user|The host user account under which the command will be executed. Required for stdio-based MCP servers.|string|
+
+## Port Range
+
+Describes a port range for TCP apps. The range starts with Port and ends with EndPort. PortRange can be used to describe a single port in which case the Port field is the port and the EndPort field is 0.
+
+
+Example:
+
+```yaml
+port: 1
+end_port: 1
+```
+
+|Field Name|Description|Type|
+|---|---|---|
+|end_port|Describes the end of the range, inclusive. When describing a port range, it must be greater than Port and less than or equal to 65535. When describing a single port, it must be set to 0.|number|
+|port|Describes the start of the range. It must be between 1 and 65535.|number|
+
+## Resource Matcher
+
+Matches cluster resources.
+
+
+Example:
+
+```yaml
+labels: 
+  "string": # [...]
+  "string": # [...]
+  "string": # [...]
+aws: # [...]
+```
+
+|Field Name|Description|Type|
+|---|---|---|
+|aws|Contains AWS specific settings.|[Resource Matcher AWS](#resource-matcher-aws)|
+|labels|Match resource labels.|map[string][Strings](#strings)|
+
+## Resource Matcher AWS
+
+Contains AWS specific settings for resource matcher.
+
+
+Example:
+
+```yaml
+assume_role_arn: "string"
+external_id: "string"
+```
+
+|Field Name|Description|Type|
+|---|---|---|
+|assume_role_arn|The AWS role to assume to before accessing the database.|string|
+|external_id|An optional AWS external ID used to enable assuming an AWS role across accounts.|string|
+
+## Rewrite
+
+A list of rewriting rules to apply to requests and responses.
+
+
+Example:
+
+```yaml
+redirect: 
+  - "string"
+  - "string"
+  - "string"
+headers: 
+  - "string"
+  - "string"
+  - "string"
+jwt_claims: "string"
+```
+
+|Field Name|Description|Type|
+|---|---|---|
+|headers|A list of extra headers to inject in the request.|[]string|
+|jwt_claims|Configures whether roles/traits are included in the JWT token|string|
+|redirect|A list of hosts that should be rewritten to the public address.|[]string|
+
+## Strings
+
+A list of string that can unmarshal from list of strings or a scalar string from scalar yaml or json property
+
+

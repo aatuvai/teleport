@@ -1,0 +1,296 @@
+---
+title: Instance-wide settings
+description: Provides a reference of fields for the `teleport` section of Teleport configuration.
+sidebar_label: Instance-wide settings
+---
+{/* vale 3rd-party-products.former-names = NO */}
+{/* vale messaging.capitalization = NO */}
+{/* Automatically generated from: lib/config/fileconf.go */}
+{/* DO NOT EDIT */}
+
+Represents the `teleport` section of the configuration file.
+
+## Top-level fields
+
+Example:
+
+```yaml
+nodename: "string"
+data_dir: "string"
+pid_file: "string"
+join_params: # [...]
+auth_servers: 
+  - "string"
+  - "string"
+  - "string"
+auth_token: "string"
+auth_server: "string"
+proxy_server: "string"
+relay_server: "string"
+connection_limits: # [...]
+log: # [...]
+storage: # [...]
+advertise_ip: "string"
+cache: # [...]
+shutdown_delay: # [...]
+ciphersuites: 
+  - "string"
+  - "string"
+  - "string"
+ciphers: 
+  - "string"
+  - "string"
+  - "string"
+kex_algos: 
+  - "string"
+  - "string"
+  - "string"
+mac_algos: 
+  - "string"
+  - "string"
+  - "string"
+ca_signature_algo: "string"
+ca_pin: # [...]
+diag_addr: "string"
+auth_connection_config: # [...]
+```
+|Field Name|Description|Type|
+|---|---|---|
+|advertise_ip||string|
+|auth_connection_config|Defines the parameters used to connect to the Auth Service.|[Auth Connection Config](#auth-connection-config)|
+|auth_server|V3|string|
+|auth_servers|V1, v2|[]string|
+|auth_token|The old way of configuring the token to be used by the node to join the Teleport cluster. `JoinParams.TokenName` should be used instead with `JoinParams.JoinMethod = types.JoinMethodToken`.|string|
+|ca_pin|The SKPI hash of the CA used to verify the Auth Server. Can be a single value or a list.|[Strings](#strings)|
+|ca_signature_algo|Ignored but ketp for config backwards compat|string|
+|cache||[Cache Policy](#cache-policy)|
+|ciphers|A list of SSH ciphers that the server supports. If omitted, the defaults will be used.|[]string|
+|ciphersuites|A list of TLS ciphersuites that Teleport supports. If omitted, a Teleport selected list of defaults will be used.|[]string|
+|connection_limits||[Connection Limits](#connection-limits)|
+|data_dir||string|
+|diag_addr|The address to expose a diagnostics HTTP endpoint.|string|
+|join_params||[Join Params](#join-params)|
+|kex_algos|A list of SSH key exchange (KEX) algorithms that the server supports. If omitted, the defaults will be used.|[]string|
+|log||[Log](#log)|
+|mac_algos|A list of SSH message authentication codes (MAC) that the server supports. If omitted the defaults will be used.|[]string|
+|nodename||string|
+|pid_file||string|
+|proxy_server||string|
+|relay_server||string|
+|shutdown_delay|A fixed delay between receiving a termination signal and the beginning of the shutdown procedures.|[Duration](#duration)|
+|storage||[Config](#config)|
+
+## Auth Connection Config
+
+Defines the parameters used to connect to the Auth Service.
+
+
+Example:
+
+```yaml
+upper_limit_between_retries: # See description
+initial_connection_delay: # See description
+backoff_step_duration: # See description
+```
+
+|Field Name|Description|Type|
+|---|---|---|
+|backoff_step_duration|The amount of time added to the retry delay.||
+|initial_connection_delay|The initial delay before the first retry attempt. The retry logic will apply jitter to this duration.||
+|upper_limit_between_retries|The upper limit for how long to wait between retries.||
+
+## Azure Join Params
+
+Configures the parameters specific to the Azure join method.
+
+
+Example:
+
+```yaml
+client_id: "string"
+```
+
+|Field Name|Description|Type|
+|---|---|---|
+|client_id||string|
+
+## Bound Keypair Params
+
+Contains parameters specific to bound keypair joining.
+
+
+Example:
+
+```yaml
+registration_secret_value: "string"
+registration_secret_path: "string"
+static_key_path: "string"
+```
+
+|Field Name|Description|Type|
+|---|---|---|
+|registration_secret_path|A path to a file on the local disk containing a registration secret. It is incompatible with RegistrationSecretValue.|string|
+|registration_secret_value|An explicit registration secret value, used to authenticate the initial join with a bound keypair token. It becomes inert once used.|string|
+|static_key_path|A path to a file on the local disk containing a static keypair to be used for bound keypair joining. Static keys are immutable and are not managed automatically. They must be preregistered, do not support automatic keypair rotation, and must be used with a token set to use `insecure` recovery mode.|string|
+
+## Cache Policy
+
+Used to control  local cache
+
+
+Example:
+
+```yaml
+type: "string"
+enabled: "string"
+ttl: "string"
+max_backoff: # See description
+```
+
+|Field Name|Description|Type|
+|---|---|---|
+|enabled|Enables or disables cache|string|
+|max_backoff|Sets the maximum backoff on error.||
+|ttl|Sets maximum TTL for the cached values|string|
+|type|For cache type `sqlite` or `in-memory`|string|
+
+## Config
+
+Used for 'storage' config section. It's a combination of values for various backends: 'etcd', 'filesystem', 'dynamodb', etc.
+
+
+Example:
+
+```yaml
+type: "string"
+,inline: # [...]
+```
+
+|Field Name|Description|Type|
+|---|---|---|
+|,inline|A generic key/value property bag which allows arbitrary values to be passed to backend|[Params](#params)|
+|type|Indicates which backend to use (etcd, dynamodb, etc)|string|
+
+## Connection Limits
+
+Sets up connection limiter
+
+
+Example:
+
+```yaml
+max_connections: 1
+rates: 
+  - # [...]
+  - # [...]
+  - # [...]
+max_users: 1
+```
+
+|Field Name|Description|Type|
+|---|---|---|
+|max_connections||number|
+|max_users|Deprecated: MaxUsers has no effect.|number|
+|rates||[][Connection Rate](#connection-rate)|
+
+## Connection Rate
+
+Configures rate limiter
+
+
+Example:
+
+```yaml
+period: # See description
+average: 1
+burst: 1
+```
+
+|Field Name|Description|Type|
+|---|---|---|
+|average||number|
+|burst||number|
+|period|||
+
+## Duration
+
+A wrapper around duration to set up custom marshal/unmarshal
+
+
+## Join Method
+
+The method used for new nodes to join the cluster.
+
+
+## Join Params
+
+Configures the parameters for Simplified Node Joining.
+
+
+Example:
+
+```yaml
+token_name: "string"
+token_secret: "string"
+method: # [...]
+azure: # [...]
+bound_keypair: # [...]
+```
+
+|Field Name|Description|Type|
+|---|---|---|
+|azure||[Azure Join Params](#azure-join-params)|
+|bound_keypair||[Bound Keypair Params](#bound-keypair-params)|
+|method||[Join Method](#join-method)|
+|token_name||string|
+|token_secret||string|
+
+## Log
+
+Configures teleport logging
+
+
+Example:
+
+```yaml
+output: "string"
+severity: "string"
+format: # [...]
+```
+
+|Field Name|Description|Type|
+|---|---|---|
+|format|Defines the logs output format and extra fields|[Log Format](#log-format)|
+|output|Defines where logs go. It can be one of the following: "stderr", "stdout" or a path to a log file|string|
+|severity|Defines how verbose the log will be. Possible values are "error", "info", "warn"|string|
+
+## Log Format
+
+Specifies the logs output format and extra fields
+
+
+Example:
+
+```yaml
+output: "string"
+extra_fields: 
+  - "string"
+  - "string"
+  - "string"
+```
+
+|Field Name|Description|Type|
+|---|---|---|
+|extra_fields|Lists the output fields from KnownFormatFields. Example format: [timestamp, component, caller]|[]string|
+|output|Defines the output format. Possible values are 'text' and 'json'.|string|
+
+## Params
+
+Type defines a flexible unified back-end configuration API. It is just a map of key/value pairs which gets populated by `storage` section in Teleport YAML config.
+
+
+## Strings
+
+A list of string that can unmarshal from list of strings or a scalar string from scalar yaml or json property
+
+
