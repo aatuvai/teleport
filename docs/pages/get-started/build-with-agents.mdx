@@ -1,0 +1,57 @@
+---
+title: Build with Teleport Agents
+description: Install reusable skills for common Teleport operations.
+tags:
+  - get-started
+page_type: how-to
+---
+
+## How can skills be useful with Teleport?
+
+Skills help AI agents work more effectively with Teleport by providing task-specific instructions and 
+recommended workflows for common operations such as infrastructure access, resource enrollment, access 
+requests, and identity management. Rather than relying solely on general knowledge, agents can follow 
+guidance tailored to Teleport workflows and resources.
+
+### Benefits
+ - Reduce setup complexity by providing guided workflows for common Teleport tasks.
+ - Improve accuracy with instructions designed for specific Teleport operations.
+ - Follow Teleport best practices for identity, access, and infrastructure management.
+ - Enable more consistent and secure execution of tasks across environments.
+
+## Available skills
+
+<SkillsTable />
+
+## Install skills using CLI
+
+Use the `npx skills` CLI to install skills to your project
+
+A. To install all skills from a repo:
+```bash
+npx skills add https://github.com/gravitational/teleport
+```
+
+B. To install a specific skill:
+```bash
+npx skills add https://github.com/gravitational/teleport/tree/master/skills/teleport-acl-review
+```
+
+## Plain text docs
+
+Teleport documentation is available in Markdown format by appending .md to any documentation URL. 
+For example: https://goteleport.com/docs/identity-governance/access-requests.md
+
+Markdown provides a simplified, machine-friendly version of the documentation that is easier for AI 
+assistants, agents, and automation tools to consume. It removes most presentation-layer elements while 
+preserving the structure and content needed for retrieval, analysis, and referencing.
+
+### Benefits
+- Reduced formatting and UI overhead for easier processing.
+- Preserves document structure through headings, lists, and sections.
+- Improves content retrieval, indexing, and summarization by AI systems.
+- Simplifies sharing, copying, and referencing complete documentation pages.
+
+Teleport also publishes an llms.txt file to help AI tools discover and navigate documentation more effectively. 
+By supporting the emerging llms.txt standard, Teleport makes documentation easier for AI assistants and 
+agents to locate, retrieve, and understand.
