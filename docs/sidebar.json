@@ -53,7 +53,7 @@
             {
               "type": "doc",
               "id": "get-started/agent-skills",
-              "label": "Agent Skills for Teleport",
+              "label": "Agent Skills",
               "customProps": { "tag": "new" }
             }
           ]
