@@ -27,6 +27,8 @@ import (
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
+
+	"github.com/gravitational/teleport/build.assets/tooling/lib/refgen"
 )
 
 // replaceBackticks replaces the "BACKTICK" placeholder text with backticks so
@@ -48,16 +50,16 @@ func TestReferenceDataFromDeclaration(t *testing.T) {
 	cases := []struct {
 		description string
 		source      string
-		expected    map[PackageInfo]ReferenceEntry
+		expected    map[refgen.PackageInfo]refgen.ReferenceEntry
 		// Go source fixtures that the test uses for named type fields.
 		declSources []string
 		// Substring to expect in a resulting error message
 		errorSubstring string
-		declInfo       PackageInfo
+		declInfo       refgen.PackageInfo
 	}{
 		{
 			description: "scalar fields with one field ignored",
-			declInfo: PackageInfo{
+			declInfo: refgen.PackageInfo{
 				DeclName:    "CachePolicy",
 				PackagePath: "github.com/gravitational/teleport/src",
 			},
@@ -76,8 +78,8 @@ type CachePolicy struct {
     MaxBackoff uint BACKTICKyaml:"max_backoff"BACKTICK
 }
 `,
-			expected: map[PackageInfo]ReferenceEntry{
-				PackageInfo{
+			expected: map[refgen.PackageInfo]refgen.ReferenceEntry{
+				refgen.PackageInfo{
 					DeclName:    "CachePolicy",
 					PackagePath: "github.com/gravitational/teleport/src",
 				}: {
@@ -89,18 +91,18 @@ type CachePolicy struct {
 ttl: "string"
 max_backoff: 1
 `,
-					Fields: []Field{
-						Field{
+					Fields: []refgen.Field{
+						refgen.Field{
 							Name:        "max_backoff",
 							Description: "Sets the maximum backoff on error.",
 							Type:        "number",
 						},
-						Field{
+						refgen.Field{
 							Name:        "ttl",
 							Description: "Sets maximum TTL for the cached values.",
 							Type:        "string",
 						},
-						Field{
+						refgen.Field{
 							Name:        "type",
 							Description: "For cache type sqlite or in-memory.",
 							Type:        "string",
@@ -111,7 +113,7 @@ max_backoff: 1
 		},
 		{
 			description: "sequences of scalars",
-			declInfo: PackageInfo{
+			declInfo: refgen.PackageInfo{
 				DeclName:    "Log",
 				PackagePath: "github.com/gravitational/teleport/src",
 			},
@@ -128,8 +130,8 @@ type Log struct {
     Flags []bool BACKTICKyaml:"flags"BACKTICK
 }
 `,
-			expected: map[PackageInfo]ReferenceEntry{
-				PackageInfo{
+			expected: map[refgen.PackageInfo]refgen.ReferenceEntry{
+				refgen.PackageInfo{
 					DeclName:    "Log",
 					PackagePath: "github.com/gravitational/teleport/src",
 				}: {
@@ -150,18 +152,18 @@ flags:
   - true
   - true
 `,
-					Fields: []Field{
-						Field{
+					Fields: []refgen.Field{
+						refgen.Field{
 							Name:        "flags",
 							Description: "A list of extra flags.",
 							Type:        "[]Boolean",
 						},
-						Field{
+						refgen.Field{
 							Name:        "outputs",
 							Description: "A list of logging outputs.",
 							Type:        "[]string",
 						},
-						Field{
+						refgen.Field{
 							Name:        "severity_levels",
 							Description: "A list of severity levels.",
 							Type:        "[]number",
@@ -172,7 +174,7 @@ flags:
 		},
 		{
 			description: "a map of strings to sequences",
-			declInfo: PackageInfo{
+			declInfo: refgen.PackageInfo{
 				DeclName:    "PluginService",
 				PackagePath: "github.com/gravitational/teleport/src",
 			},
@@ -185,8 +187,8 @@ type PluginService struct {
   Plugins map[string][]string BACKTICKyaml:"plugins"BACKTICK
 }
 `,
-			expected: map[PackageInfo]ReferenceEntry{
-				PackageInfo{
+			expected: map[refgen.PackageInfo]refgen.ReferenceEntry{
+				refgen.PackageInfo{
 					DeclName:    "PluginService",
 					PackagePath: "github.com/gravitational/teleport/src",
 				}: {
@@ -208,8 +210,8 @@ type PluginService struct {
     - "string"
     - "string"
 `,
-					Fields: []Field{
-						Field{
+					Fields: []refgen.Field{
+						refgen.Field{
 							Name:        "plugins",
 							Description: "A map of matchers for enabled plugin resources.",
 							Type:        "map[string][]string",
@@ -220,7 +222,7 @@ type PluginService struct {
 		},
 		{
 			description: "an undeclared custom type field",
-			declInfo: PackageInfo{
+			declInfo: refgen.PackageInfo{
 				DeclName:    "Auth",
 				PackagePath: "github.com/gravitational/teleport/src",
 			},
@@ -237,16 +239,16 @@ type Auth struct {
     Authentication types.AuthenticationConfig BACKTICKyaml:"authentication"BACKTICK
 }
 `,
-			expected: map[PackageInfo]ReferenceEntry{
-				PackageInfo{
+			expected: map[refgen.PackageInfo]refgen.ReferenceEntry{
+				refgen.PackageInfo{
 					DeclName:    "Auth",
 					PackagePath: "github.com/gravitational/teleport/src",
-				}: ReferenceEntry{
+				}: refgen.ReferenceEntry{
 					SectionName: "Auth",
 					Description: "Includes information about auth service registered with Teleport.",
 					SourcePath:  "github.com/gravitational/teleport/src/myfile.go",
 					YAMLName:    "Auth",
-					Fields: []Field{
+					Fields: []refgen.Field{
 						{
 							Name:        "authentication",
 							Description: "Contains authentication config.",
@@ -264,7 +266,7 @@ type Auth struct {
 		},
 		{
 			description: "named scalar type",
-			declInfo: PackageInfo{
+			declInfo: refgen.PackageInfo{
 				PackagePath: "github.com/gravitational/teleport/src",
 				DeclName:    "Auth",
 			},
@@ -289,16 +291,16 @@ type Auth struct {
 type ClusterName string
 `,
 			},
-			expected: map[PackageInfo]ReferenceEntry{
-				PackageInfo{
+			expected: map[refgen.PackageInfo]refgen.ReferenceEntry{
+				refgen.PackageInfo{
 					DeclName:    "Auth",
 					PackagePath: "github.com/gravitational/teleport/src",
-				}: ReferenceEntry{
+				}: refgen.ReferenceEntry{
 					SectionName: "Auth",
 					Description: "Includes information about auth service registered with Teleport.",
 					SourcePath:  "github.com/gravitational/teleport/src/myfile.go",
 					YAMLName:    "Auth",
-					Fields: []Field{
+					Fields: []refgen.Field{
 						{
 							Name:        "authentication",
 							Description: "Contains authentication config.",
@@ -317,10 +319,10 @@ type ClusterName string
 					},
 					YAMLExample: "listen_addr: \"string\"\nauthentication: # See description\ncluster_name: # [...]\n",
 				},
-				PackageInfo{
+				refgen.PackageInfo{
 					DeclName:    "ClusterName",
 					PackagePath: "github.com/gravitational/teleport/src",
-				}: ReferenceEntry{
+				}: refgen.ReferenceEntry{
 					SectionName: "Cluster Name",
 					Description: "A named string that we'll process downstream",
 					SourcePath:  "github.com/gravitational/teleport/src/myfile0.go",
@@ -332,7 +334,7 @@ type ClusterName string
 		},
 		{
 			description: "custom type fields with a custom JSON unmarshaller",
-			declInfo: PackageInfo{
+			declInfo: refgen.PackageInfo{
 				DeclName:    "Auth",
 				PackagePath: "github.com/gravitational/teleport/src",
 			},
@@ -357,16 +359,16 @@ func (s *Auth) UnmarshalJSON (b []byte) error {
 }
 `,
 			},
-			expected: map[PackageInfo]ReferenceEntry{
-				PackageInfo{
+			expected: map[refgen.PackageInfo]refgen.ReferenceEntry{
+				refgen.PackageInfo{
 					DeclName:    "Auth",
 					PackagePath: "github.com/gravitational/teleport/src",
-				}: ReferenceEntry{
+				}: refgen.ReferenceEntry{
 					SectionName: "Auth",
 					Description: "Includes information about auth service registered with Teleport.",
 					SourcePath:  "github.com/gravitational/teleport/src/myfile.go",
 					YAMLName:    "Auth",
-					Fields: []Field{
+					Fields: []refgen.Field{
 						{
 							Name:        "authentication",
 							Description: "Contains authentication config.",
@@ -384,7 +386,7 @@ func (s *Auth) UnmarshalJSON (b []byte) error {
 		},
 		{
 			description: "custom type with custom YAML unmarshaller",
-			declInfo: PackageInfo{
+			declInfo: refgen.PackageInfo{
 				DeclName:    "Log",
 				PackagePath: "github.com/gravitational/teleport/src",
 			},
@@ -409,16 +411,16 @@ func (a *Log) UnmarshalYAML(value *yaml.Node) error {
 }
 `,
 			},
-			expected: map[PackageInfo]ReferenceEntry{
-				PackageInfo{
+			expected: map[refgen.PackageInfo]refgen.ReferenceEntry{
+				refgen.PackageInfo{
 					DeclName:    "Log",
 					PackagePath: "github.com/gravitational/teleport/src",
-				}: ReferenceEntry{
+				}: refgen.ReferenceEntry{
 					SectionName: "Log",
 					Description: "Includes information about log service registered with Teleport.",
 					SourcePath:  "github.com/gravitational/teleport/src/myfile.go",
 					YAMLName:    "Log",
-					Fields: []Field{
+					Fields: []refgen.Field{
 						{
 							Name:        "format",
 							Description: "Contains formatting options.",
@@ -436,7 +438,7 @@ func (a *Log) UnmarshalYAML(value *yaml.Node) error {
 		},
 		{
 			description: "a custom type field declared in a second source file",
-			declInfo: PackageInfo{
+			declInfo: refgen.PackageInfo{
 				DeclName:    "Auth",
 				PackagePath: "github.com/gravitational/teleport/src",
 			},
@@ -464,8 +466,8 @@ type AuthenticationConfig struct {
     IsLocal bool BACKTICKyaml:"is_local"BACKTICK
 }`,
 			},
-			expected: map[PackageInfo]ReferenceEntry{
-				PackageInfo{
+			expected: map[refgen.PackageInfo]refgen.ReferenceEntry{
+				refgen.PackageInfo{
 					DeclName:    "Auth",
 					PackagePath: "github.com/gravitational/teleport/src",
 				}: {
@@ -476,20 +478,20 @@ type AuthenticationConfig struct {
 					YAMLExample: `listen_addr: "string"
 authentication: # [...]
 `,
-					Fields: []Field{
-						Field{
+					Fields: []refgen.Field{
+						refgen.Field{
 							Name:        "authentication",
 							Description: "Contains authentication config.",
 							Type:        "[Authentication Config](#authentication-config)",
 						},
-						Field{
+						refgen.Field{
 							Name:        "listen_addr",
 							Description: "The listen address of the service.",
 							Type:        "string",
 						},
 					},
 				},
-				PackageInfo{
+				refgen.PackageInfo{
 					DeclName:    "AuthenticationConfig",
 					PackagePath: "github.com/gravitational/teleport/src",
 				}: {
@@ -501,18 +503,18 @@ authentication: # [...]
 timeout: 1
 is_local: true
 `,
-					Fields: []Field{
-						Field{
+					Fields: []refgen.Field{
+						refgen.Field{
 							Name:        "is_local",
 							Description: "Tells if local auth is enabled.",
 							Type:        "Boolean",
 						},
-						Field{
+						refgen.Field{
 							Name:        "timeout",
 							Description: "Session max duration.",
 							Type:        "number",
 						},
-						Field{
+						refgen.Field{
 							Name:        "type",
 							Description: "The type of the auth preference.",
 							Type:        "string",
@@ -523,7 +525,7 @@ is_local: true
 		},
 		{
 			description: "composite field type with named scalar type",
-			declInfo: PackageInfo{
+			declInfo: refgen.PackageInfo{
 				DeclName:    "Auth",
 				PackagePath: "github.com/gravitational/teleport/src",
 			},
@@ -552,8 +554,8 @@ type AuthenticationConfig struct {
 type StaticToken string
 `,
 			},
-			expected: map[PackageInfo]ReferenceEntry{
-				PackageInfo{
+			expected: map[refgen.PackageInfo]refgen.ReferenceEntry{
+				refgen.PackageInfo{
 					DeclName:    "Auth",
 					PackagePath: "github.com/gravitational/teleport/src",
 				}: {
@@ -576,20 +578,20 @@ token_maps:
     "string": # [...]
     "string": # [...]
 `,
-					Fields: []Field{
-						Field{
+					Fields: []refgen.Field{
+						refgen.Field{
 							Name:        "authentication",
 							Description: "Contains authentication config.",
 							Type:        "[Authentication Config](#authentication-config)",
 						},
-						Field{
+						refgen.Field{
 							Name:        "token_maps",
 							Description: "Includes a map of strings to tokens.",
 							Type:        "[]map[string][Static Token](#static-token)",
 						},
 					},
 				},
-				PackageInfo{
+				refgen.PackageInfo{
 					DeclName:    "AuthenticationConfig",
 					PackagePath: "github.com/gravitational/teleport/src",
 				}: {
@@ -599,15 +601,15 @@ token_maps:
 					YAMLName:    "AuthenticationConfig",
 					YAMLExample: `type: "string"
 `,
-					Fields: []Field{
-						Field{
+					Fields: []refgen.Field{
+						refgen.Field{
 							Name:        "type",
 							Description: "The type of the auth preference.",
 							Type:        "string",
 						},
 					},
 				},
-				PackageInfo{
+				refgen.PackageInfo{
 					DeclName:    "StaticToken",
 					PackagePath: "github.com/gravitational/teleport/src",
 				}: {
@@ -622,7 +624,7 @@ token_maps:
 		},
 		{
 			description: "struct type with an interface field",
-			declInfo: PackageInfo{
+			declInfo: refgen.PackageInfo{
 				DeclName:    "JoinParams",
 				PackagePath: "github.com/gravitational/teleport/src",
 			},
@@ -644,8 +646,8 @@ type JoinMethod interface{
 }
 `,
 			},
-			expected: map[PackageInfo]ReferenceEntry{
-				PackageInfo{
+			expected: map[refgen.PackageInfo]refgen.ReferenceEntry{
+				refgen.PackageInfo{
 					DeclName:    "JoinParams",
 					PackagePath: "github.com/gravitational/teleport/src",
 				}: {
@@ -653,7 +655,7 @@ type JoinMethod interface{
 					Description: "Includes information about Simplified Node Joining.",
 					SourcePath:  "github.com/gravitational/teleport/src/myfile.go",
 					YAMLName:    "JoinParams",
-					Fields: []Field{
+					Fields: []refgen.Field{
 						{
 							Name:        "method",
 							Description: "The join method.",
@@ -669,10 +671,10 @@ type JoinMethod interface{
 method: # [...]
 `,
 				},
-				PackageInfo{
+				refgen.PackageInfo{
 					DeclName:    "JoinMethod",
 					PackagePath: "github.com/gravitational/teleport/src",
-				}: ReferenceEntry{
+				}: refgen.ReferenceEntry{
 					SectionName: "Join Method",
 					Description: "A joining method with name.",
 					SourcePath:  "github.com/gravitational/teleport/src/myfile0.go",
@@ -684,7 +686,7 @@ method: # [...]
 		},
 		{
 			description: "embedded struct",
-			declInfo: PackageInfo{
+			declInfo: refgen.PackageInfo{
 				DeclName:    "SSH",
 				PackagePath: "github.com/gravitational/teleport/src",
 			},
@@ -710,16 +712,16 @@ type Service struct {
     Enabled bool BACKTICKyaml:"enabled"BACKTICK
 }`,
 			},
-			expected: map[PackageInfo]ReferenceEntry{
-				PackageInfo{
+			expected: map[refgen.PackageInfo]refgen.ReferenceEntry{
+				refgen.PackageInfo{
 					DeclName:    "SSH",
 					PackagePath: "github.com/gravitational/teleport/src",
-				}: {
+				}: refgen.ReferenceEntry{
 					SectionName: "SSH",
 					Description: "A SSH service config.",
 					SourcePath:  "github.com/gravitational/teleport/src/myfile.go",
 					YAMLName:    "SSH",
-					Fields: []Field{
+					Fields: []refgen.Field{
 						{
 							Name:        "enabled",
 							Description: "Indicates whether the service is enabled.",
@@ -745,7 +747,7 @@ enabled: true
 		},
 		{
 			description: "embedded struct with struct field",
-			declInfo: PackageInfo{
+			declInfo: refgen.PackageInfo{
 				DeclName:    "Proxy",
 				PackagePath: "github.com/gravitational/teleport/src",
 			},
@@ -775,16 +777,16 @@ type Command struct {
     Period bool BACKTICKyaml:"period"BACKTICK
 }`,
 			},
-			expected: map[PackageInfo]ReferenceEntry{
-				PackageInfo{
+			expected: map[refgen.PackageInfo]refgen.ReferenceEntry{
+				refgen.PackageInfo{
 					DeclName:    "Proxy",
 					PackagePath: "github.com/gravitational/teleport/src",
-				}: {
+				}: refgen.ReferenceEntry{
 					SectionName: "Proxy",
 					Description: "A proxy configuration.",
 					SourcePath:  "github.com/gravitational/teleport/src/myfile.go",
 					YAMLName:    "Proxy",
-					Fields: []Field{
+					Fields: []refgen.Field{
 						{
 							Name:        "commands",
 							Description: "Command details",
@@ -800,15 +802,15 @@ type Command struct {
 commands: # [...]
 `,
 				},
-				PackageInfo{
+				refgen.PackageInfo{
 					DeclName:    "Command",
 					PackagePath: "github.com/gravitational/teleport/src",
-				}: {
+				}: refgen.ReferenceEntry{
 					SectionName: "Command",
 					SourcePath:  "github.com/gravitational/teleport/src/myfile0.go",
 					Description: "Command details.",
 					YAMLName:    "Command",
-					Fields: []Field{
+					Fields: []refgen.Field{
 						{
 							Name:        "name",
 							Description: "The name of command.",
@@ -828,7 +830,7 @@ period: true
 		},
 		{
 			description: "embedded struct with base in the same package",
-			declInfo: PackageInfo{
+			declInfo: refgen.PackageInfo{
 				DeclName:    "SSH",
 				PackagePath: "github.com/gravitational/teleport/src",
 			},
@@ -851,16 +853,16 @@ type Service struct {
     Enabled bool BACKTICKyaml:"enabled"BACKTICK
 }`,
 			},
-			expected: map[PackageInfo]ReferenceEntry{
-				PackageInfo{
+			expected: map[refgen.PackageInfo]refgen.ReferenceEntry{
+				refgen.PackageInfo{
 					DeclName:    "SSH",
 					PackagePath: "github.com/gravitational/teleport/src",
-				}: {
+				}: refgen.ReferenceEntry{
 					SectionName: "SSH",
 					Description: "A SSH service config.",
 					SourcePath:  "github.com/gravitational/teleport/src/myfile.go",
 					YAMLName:    "SSH",
-					Fields: []Field{
+					Fields: []refgen.Field{
 						{
 							Name:        "enabled",
 							Description: "Indicates whether the service is enabled.",
@@ -886,7 +888,7 @@ enabled: true
 		},
 		{
 			description: "struct with two embedded structs",
-			declInfo: PackageInfo{
+			declInfo: refgen.PackageInfo{
 				DeclName:    "SSH",
 				PackagePath: "github.com/gravitational/teleport/src",
 			},
@@ -919,16 +921,16 @@ type LegacyLog struct{
     Active bool BACKTICKyaml:"active"BACKTICK
 }`,
 			},
-			expected: map[PackageInfo]ReferenceEntry{
-				PackageInfo{
+			expected: map[refgen.PackageInfo]refgen.ReferenceEntry{
+				refgen.PackageInfo{
 					DeclName:    "SSH",
 					PackagePath: "github.com/gravitational/teleport/src",
-				}: {
+				}: refgen.ReferenceEntry{
 					SectionName: "SSH",
 					Description: "A SSH service config.",
 					SourcePath:  "github.com/gravitational/teleport/src/myfile.go",
 					YAMLName:    "SSH",
-					Fields: []Field{
+					Fields: []refgen.Field{
 						{
 							Name:        "active",
 							Description: "Indicates whether the log is currently active.",
@@ -954,7 +956,7 @@ active: true
 		},
 		{
 			description: "embedded struct with an embedded struct",
-			declInfo: PackageInfo{
+			declInfo: refgen.PackageInfo{
 				DeclName:    "SSH",
 				PackagePath: "github.com/gravitational/teleport/src",
 			},
@@ -988,16 +990,16 @@ type LegacyLog struct{
     Active bool BACKTICKyaml:"active"BACKTICK
 }`,
 			},
-			expected: map[PackageInfo]ReferenceEntry{
-				PackageInfo{
+			expected: map[refgen.PackageInfo]refgen.ReferenceEntry{
+				refgen.PackageInfo{
 					DeclName:    "SSH",
 					PackagePath: "github.com/gravitational/teleport/src",
-				}: {
+				}: refgen.ReferenceEntry{
 					SectionName: "SSH",
 					Description: "A SSH service config.",
 					SourcePath:  "github.com/gravitational/teleport/src/myfile.go",
 					YAMLName:    "SSH",
-					Fields: []Field{
+					Fields: []refgen.Field{
 						{
 							Name:        "active",
 							Description: "Indicates whether the log is currently active.",
@@ -1023,7 +1025,7 @@ active: true
 		},
 		{
 			description: "ignored fields with non-YAML-comptabible types",
-			declInfo: PackageInfo{
+			declInfo: refgen.PackageInfo{
 				DeclName:    "CachePolicy",
 				PackagePath: "github.com/gravitational/teleport/src",
 			},
@@ -1038,19 +1040,19 @@ type CachePolicy struct {
     XXX_unrecognized     []byte   BACKTICKyaml:"-"BACKTICK
 }
 `,
-			expected: map[PackageInfo]ReferenceEntry{
-				PackageInfo{
+			expected: map[refgen.PackageInfo]refgen.ReferenceEntry{
+				refgen.PackageInfo{
 					DeclName:    "CachePolicy",
 					PackagePath: "github.com/gravitational/teleport/src",
-				}: {
+				}: refgen.ReferenceEntry{
 					SectionName: "Cache Policy",
 					Description: "Used to control local cache. Every cache policy in Teleport has custom parameters.",
 					SourcePath:  "github.com/gravitational/teleport/src/myfile.go",
 					YAMLName:    "CachePolicy",
 					YAMLExample: `type: "string"
 `,
-					Fields: []Field{
-						Field{
+					Fields: []refgen.Field{
+						refgen.Field{
 							Name:        "type",
 							Description: "For cache type sqlite or in-memory.",
 							Type:        "string",
@@ -1061,7 +1063,7 @@ type CachePolicy struct {
 		},
 		{
 			description: "non-embedded custom field type declared in the same package as the containing struct",
-			declInfo: PackageInfo{
+			declInfo: refgen.PackageInfo{
 				DeclName:    "Databases",
 				PackagePath: "github.com/gravitational/teleport/src",
 			},
@@ -1086,22 +1088,22 @@ type DatabaseTLS struct {
 	CACertFile string BACKTICKyaml:"ca_cert_file,omitempty"BACKTICK
 }`,
 			},
-			expected: map[PackageInfo]ReferenceEntry{
-				PackageInfo{
+			expected: map[refgen.PackageInfo]refgen.ReferenceEntry{
+				refgen.PackageInfo{
 					DeclName:    "Databases",
 					PackagePath: "github.com/gravitational/teleport/src",
-				}: ReferenceEntry{
+				}: refgen.ReferenceEntry{
 					SectionName: "Databases",
 					Description: "Represents database configuration.",
 					SourcePath:  "github.com/gravitational/teleport/src/myfile.go",
 					YAMLName:    "Databases",
-					Fields: []Field{
-						Field{
+					Fields: []refgen.Field{
+						refgen.Field{
 							Name:        "protocol",
 							Description: "The database protocol.",
 							Type:        "string",
 						},
-						Field{
+						refgen.Field{
 							Name:        "tls",
 							Description: "Database TLS connection settings.",
 							Type:        "[DatabaseTLS](#databasetls)",
@@ -1111,15 +1113,15 @@ type DatabaseTLS struct {
 tls: # [...]
 `,
 				},
-				PackageInfo{
+				refgen.PackageInfo{
 					DeclName:    "DatabaseTLS",
 					PackagePath: "github.com/gravitational/teleport/src",
-				}: ReferenceEntry{
+				}: refgen.ReferenceEntry{
 					SectionName: "DatabaseTLS",
 					Description: "TLS settings",
 					SourcePath:  "github.com/gravitational/teleport/src/myfile0.go",
 					YAMLName:    "DatabaseTLS",
-					Fields: []Field{
+					Fields: []refgen.Field{
 						{
 							Name:        "ca_cert_file",
 							Description: "Ca path of LDAP.",
@@ -1139,7 +1141,7 @@ ca_cert_file: "string"
 		},
 		{
 			description: "pointer field",
-			declInfo: PackageInfo{
+			declInfo: refgen.PackageInfo{
 				DeclName:    "Databases",
 				PackagePath: "github.com/gravitational/teleport/src",
 			},
@@ -1160,17 +1162,17 @@ type DatabaseTLS struct {
 	ServerName string BACKTICKyaml:"server_name"BACKTICK
 }`,
 			},
-			expected: map[PackageInfo]ReferenceEntry{
-				PackageInfo{
+			expected: map[refgen.PackageInfo]refgen.ReferenceEntry{
+				refgen.PackageInfo{
 					DeclName:    "Databases",
 					PackagePath: "github.com/gravitational/teleport/src",
-				}: ReferenceEntry{
+				}: refgen.ReferenceEntry{
 					SectionName: "Databases",
 					Description: "Represents database configuration.",
 					SourcePath:  "github.com/gravitational/teleport/src/myfile.go",
 					YAMLName:    "Databases",
-					Fields: []Field{
-						Field{
+					Fields: []refgen.Field{
+						refgen.Field{
 							Name:        "tls",
 							Description: "Database TLS connection settings.",
 							Type:        "[DatabaseTLS](#databasetls)",
@@ -1179,16 +1181,16 @@ type DatabaseTLS struct {
 					YAMLExample: `tls: # [...]
 `,
 				},
-				PackageInfo{
+				refgen.PackageInfo{
 					DeclName:    "DatabaseTLS",
 					PackagePath: "github.com/gravitational/teleport/src",
-				}: ReferenceEntry{
+				}: refgen.ReferenceEntry{
 					SectionName: "DatabaseTLS",
 					Description: "TLS settings",
 					SourcePath:  "github.com/gravitational/teleport/src/myfile0.go",
 					YAMLName:    "DatabaseTLS",
-					Fields: []Field{
-						{
+					Fields: []refgen.Field{
+						refgen.Field{
 							Name:        "server_name",
 							Description: "The host name of LDAP.",
 							Type:        "string",
@@ -1201,7 +1203,7 @@ type DatabaseTLS struct {
 		},
 		{
 			description: "map of strings to an undeclared field",
-			declInfo: PackageInfo{
+			declInfo: refgen.PackageInfo{
 				PackagePath: "github.com/gravitational/teleport/src",
 				DeclName:    "Auth",
 			},
@@ -1225,8 +1227,8 @@ type ServerSpecV1 struct {
     Address string BACKTICKyaml:"address"BACKTICK
 }`,
 			},
-			expected: map[PackageInfo]ReferenceEntry{
-				PackageInfo{
+			expected: map[refgen.PackageInfo]refgen.ReferenceEntry{
+				refgen.PackageInfo{
 					DeclName:    "Auth",
 					PackagePath: "github.com/gravitational/teleport/src",
 				}: {
@@ -1249,13 +1251,13 @@ token_maps:
     "string": # See description
     "string": # See description
 `,
-					Fields: []Field{
-						Field{
+					Fields: []refgen.Field{
+						refgen.Field{
 							Name:        "listen_addr",
 							Description: "The listen address of the service.",
 							Type:        "string",
 						},
-						Field{
+						refgen.Field{
 							Name:        "token_maps",
 							Description: "Includes a map of strings to tokens.",
 							Type:        "[]map[string]",
@@ -1266,7 +1268,7 @@ token_maps:
 		},
 		{
 			description: "type parameter",
-			declInfo: PackageInfo{
+			declInfo: refgen.PackageInfo{
 				PackagePath: "github.com/gravitational/teleport/src",
 				DeclName:    "Global",
 			},
@@ -1293,19 +1295,19 @@ func (stream *streamFunc[T]) Next() bool {
 }
 `,
 			},
-			expected: map[PackageInfo]ReferenceEntry{
-				PackageInfo{
+			expected: map[refgen.PackageInfo]refgen.ReferenceEntry{
+				refgen.PackageInfo{
 					PackagePath: "github.com/gravitational/teleport/src",
 					DeclName:    "Global",
-				}: ReferenceEntry{
+				}: refgen.ReferenceEntry{
 					SectionName: "Global",
 					Description: "Configuration.",
 					SourcePath:  "github.com/gravitational/teleport/src/myfile.go",
 					YAMLName:    "Global",
 					YAMLExample: `nodename: "string"
 `,
-					Fields: []Field{
-						Field{
+					Fields: []refgen.Field{
+						refgen.Field{
 							Name:        "nodename",
 							Description: "The node name.",
 							Type:        "string",
@@ -1316,7 +1318,7 @@ func (stream *streamFunc[T]) Next() bool {
 		},
 		{
 			description: "field type not declared in a loaded package",
-			declInfo: PackageInfo{
+			declInfo: refgen.PackageInfo{
 				PackagePath: "github.com/gravitational/teleport/src",
 				DeclName:    "Global",
 			},
@@ -1332,11 +1334,11 @@ type Global struct {
   Expiry time.Time BACKTICKyaml:"expiry"BACKTICK
 }
 `,
-			expected: map[PackageInfo]ReferenceEntry{
-				PackageInfo{
+			expected: map[refgen.PackageInfo]refgen.ReferenceEntry{
+				refgen.PackageInfo{
 					PackagePath: "github.com/gravitational/teleport/src",
 					DeclName:    "Global",
-				}: ReferenceEntry{
+				}: refgen.ReferenceEntry{
 					SectionName: "Global",
 					Description: "Configuration.",
 					SourcePath:  "github.com/gravitational/teleport/src/myfile.go",
@@ -1344,13 +1346,13 @@ type Global struct {
 					YAMLExample: `nodename: "string"
 expiry: # See description
 `,
-					Fields: []Field{
-						Field{
+					Fields: []refgen.Field{
+						refgen.Field{
 							Name:        "expiry",
 							Description: "Expiration time.",
 							Type:        "",
 						},
-						Field{
+						refgen.Field{
 							Name:        "nodename",
 							Description: "The node name.",
 							Type:        "string",
@@ -1362,7 +1364,7 @@ expiry: # See description
 		},
 		{
 			description: "byte slice",
-			declInfo: PackageInfo{
+			declInfo: refgen.PackageInfo{
 				PackagePath: "github.com/gravitational/teleport/src",
 				DeclName:    "BoundKeypairParams",
 			},
@@ -1377,11 +1379,11 @@ type BoundKeypairParams struct {
     StaticPrivateKey []byte BACKTICKyaml:"static_private_key"BACKTICK
 }
 `,
-			expected: map[PackageInfo]ReferenceEntry{
-				PackageInfo{
+			expected: map[refgen.PackageInfo]refgen.ReferenceEntry{
+				refgen.PackageInfo{
 					DeclName:    "BoundKeypairParams",
 					PackagePath: "github.com/gravitational/teleport/src",
-				}: {
+				}: refgen.ReferenceEntry{
 					SectionName: "Bound Keypair Params",
 					Description: "Contains parameters for joining.",
 					SourcePath:  "github.com/gravitational/teleport/src/myfile.go",
@@ -1389,13 +1391,13 @@ type BoundKeypairParams struct {
 					YAMLExample: `registration_secret_value: "string"
 static_private_key: BASE64_STRING
 `,
-					Fields: []Field{
-						Field{
+					Fields: []refgen.Field{
+						refgen.Field{
 							Name:        "registration_secret_value",
 							Description: "Registration secret.",
 							Type:        "string",
 						},
-						Field{
+						refgen.Field{
 							Name:        "static_private_key",
 							Description: "Private key.",
 							Type:        "base64-encoded string",
@@ -1406,7 +1408,7 @@ static_private_key: BASE64_STRING
 		},
 		{
 			description: "named import in embedded struct field",
-			declInfo: PackageInfo{
+			declInfo: refgen.PackageInfo{
 				PackagePath: "github.com/gravitational/teleport/src",
 				DeclName:    "Auth",
 			},
@@ -1436,37 +1438,37 @@ type Service struct {
     Address string BACKTICKyaml:"address"BACKTICK
 }`,
 			},
-			expected: map[PackageInfo]ReferenceEntry{
-				PackageInfo{
+			expected: map[refgen.PackageInfo]refgen.ReferenceEntry{
+				refgen.PackageInfo{
 					DeclName:    "Auth",
 					PackagePath: "github.com/gravitational/teleport/src",
-				}: {
+				}: refgen.ReferenceEntry{
 					SectionName: "Auth",
 					Description: "Includes information about auth service.",
 					SourcePath:  "github.com/gravitational/teleport/src/myfile.go",
 					YAMLName:    "Auth",
 					YAMLExample: `spec: # [...]
 `,
-					Fields: []Field{
-						Field{
+					Fields: []refgen.Field{
+						refgen.Field{
 							Name:        "spec",
 							Description: "Contains SSH options.",
 							Type:        "[SSH](#ssh)",
 						},
 					},
 				},
-				PackageInfo{
+				refgen.PackageInfo{
 					DeclName:    "SSH",
 					PackagePath: "github.com/gravitational/teleport/src",
-				}: {
+				}: refgen.ReferenceEntry{
 					SectionName: "SSH",
 					Description: "SSH configuration.",
 					SourcePath:  "github.com/gravitational/teleport/src/myfile0.go",
 					YAMLName:    "SSH",
 					YAMLExample: `address: "string"
 `,
-					Fields: []Field{
-						Field{
+					Fields: []refgen.Field{
+						refgen.Field{
 							Name:        "address",
 							Description: "The listen address.",
 							Type:        "string",
@@ -1477,7 +1479,7 @@ type Service struct {
 		},
 		{
 			description: "named import in named struct field",
-			declInfo: PackageInfo{
+			declInfo: refgen.PackageInfo{
 				PackagePath: "github.com/gravitational/teleport/src",
 				DeclName:    "Auth",
 			},
@@ -1508,17 +1510,17 @@ type AddressInfo struct {
     Address string BACKTICKyaml:"address"BACKTICK
 }`,
 			},
-			expected: map[PackageInfo]ReferenceEntry{
-				PackageInfo{
+			expected: map[refgen.PackageInfo]refgen.ReferenceEntry{
+				refgen.PackageInfo{
 					DeclName:    "AddressInfo",
 					PackagePath: "github.com/gravitational/teleport/src",
-				}: {
+				}: refgen.ReferenceEntry{
 					SectionName: "Address Info",
 					Description: "Provides information about an address.",
 					SourcePath:  "github.com/gravitational/teleport/src/myfile1.go",
 					YAMLName:    "AddressInfo",
-					Fields: []Field{
-						{
+					Fields: []refgen.Field{
+						refgen.Field{
 							Name:        "address",
 							Description: "The address of the server.",
 							Type:        "string",
@@ -1526,35 +1528,35 @@ type AddressInfo struct {
 					},
 					YAMLExample: "address: \"string\"\n",
 				},
-				PackageInfo{
+				refgen.PackageInfo{
 					DeclName:    "Auth",
 					PackagePath: "github.com/gravitational/teleport/src",
-				}: {
+				}: refgen.ReferenceEntry{
 					SectionName: "Auth",
 					Description: "Includes information about auth service.",
 					SourcePath:  "github.com/gravitational/teleport/src/myfile.go",
 					YAMLName:    "Auth",
 					YAMLExample: `spec: # [...]
 `,
-					Fields: []Field{
-						Field{
+					Fields: []refgen.Field{
+						refgen.Field{
 							Name:        "spec",
 							Description: "Contains SSH options.",
 							Type:        "[SSH](#ssh)"},
 					},
 				},
-				PackageInfo{
+				refgen.PackageInfo{
 					DeclName:    "SSH",
 					PackagePath: "github.com/gravitational/teleport/src",
-				}: {
+				}: refgen.ReferenceEntry{
 					SectionName: "SSH",
 					Description: "SSH configuration.",
 					SourcePath:  "github.com/gravitational/teleport/src/myfile0.go",
 					YAMLName:    "SSH",
 					YAMLExample: `info: # [...]
 `,
-					Fields: []Field{
-						Field{
+					Fields: []refgen.Field{
+						refgen.Field{
 							Name:        "info",
 							Description: "Address info.",
 							Type:        "[Address Info](#address-info)",
@@ -1565,7 +1567,7 @@ type AddressInfo struct {
 		},
 		{
 			description: "scalar fields with two unexported fields",
-			declInfo: PackageInfo{
+			declInfo: refgen.PackageInfo{
 				DeclName:    "CachePolicy",
 				PackagePath: "github.com/gravitational/teleport/src",
 			},
@@ -1585,11 +1587,11 @@ type CachePolicy struct {
     sizeCache     protoimpl.SizeCache
 }
 `,
-			expected: map[PackageInfo]ReferenceEntry{
-				PackageInfo{
+			expected: map[refgen.PackageInfo]refgen.ReferenceEntry{
+				refgen.PackageInfo{
 					DeclName:    "CachePolicy",
 					PackagePath: "github.com/gravitational/teleport/src",
-				}: {
+				}: refgen.ReferenceEntry{
 					SectionName: "Cache Policy",
 					Description: "Used to control local cache. Every cache policy in Teleport has custom parameters.",
 					SourcePath:  "github.com/gravitational/teleport/src/myfile.go",
@@ -1597,13 +1599,13 @@ type CachePolicy struct {
 					YAMLExample: `type: "string"
 ttl: "string"
 `,
-					Fields: []Field{
-						Field{
+					Fields: []refgen.Field{
+						refgen.Field{
 							Name:        "ttl",
 							Description: "Sets maximum TTL for the cached values.",
 							Type:        "string",
 						},
-						Field{
+						refgen.Field{
 							Name:        "type",
 							Description: "For cache type.",
 							Type:        "string",
@@ -1614,7 +1616,7 @@ ttl: "string"
 		},
 		{
 			description: "curly braces in descriptions",
-			declInfo: PackageInfo{
+			declInfo: refgen.PackageInfo{
 				DeclName:    "CachePolicy",
 				PackagePath: "github.com/gravitational/teleport/src",
 			},
@@ -1627,19 +1629,19 @@ type CachePolicy struct {
     Type string BACKTICKyaml:"type"BACKTICK
 }
 `,
-			expected: map[PackageInfo]ReferenceEntry{
-				PackageInfo{
+			expected: map[refgen.PackageInfo]refgen.ReferenceEntry{
+				refgen.PackageInfo{
 					DeclName:    "CachePolicy",
 					PackagePath: "github.com/gravitational/teleport/src",
-				}: {
+				}: refgen.ReferenceEntry{
 					SectionName: "Cache Policy",
 					Description: "Used to control `{local cache}`. Every cache policy in Teleport has custom parameters.",
 					SourcePath:  "github.com/gravitational/teleport/src/myfile.go",
 					YAMLName:    "CachePolicy",
 					YAMLExample: `type: "string"
 `,
-					Fields: []Field{
-						Field{
+					Fields: []refgen.Field{
+						refgen.Field{
 							Name:        "type",
 							Description: "The `{cache type}`.",
 							Type:        "string",
@@ -1702,7 +1704,7 @@ type CachePolicy struct {
 			}
 			// Remove the temporary directory from package paths
 			// since we can't know it in advance in test cases.
-			declsWithoutTmp := make(map[PackageInfo]DeclarationInfo)
+			declsWithoutTmp := make(map[refgen.PackageInfo]refgen.DeclarationInfo)
 			for k, d := range sourceData.TypeDecls {
 				k.PackagePath = cleanPath(k.PackagePath)
 				d.PackageName = cleanPath(d.PackageName)
@@ -1784,7 +1786,7 @@ import "my/multi/segment/pkg"
 				parser.ParseComments,
 			)
 			assert.NoError(t, err)
-			assert.Equal(t, c.expected, NamedImports(f))
+			assert.Equal(t, c.expected, refgen.NamedImports(f))
 		})
 	}
 }
@@ -1796,22 +1798,22 @@ func TestMakeFieldTableInfo(t *testing.T) {
 
 	cases := []struct {
 		description string
-		input       []rawField
-		expected    []Field
+		input       []refgen.RawField
+		expected    []refgen.Field
 	}{
 		{
 			description: "angle brackets in GoDoc",
-			input: []rawField{
-				rawField{
-					packageName: "mypkg",
-					doc:         `An ID, e.g., "<myid>"`,
-					kind:        yamlString{},
-					name:        "ObjectID",
-					yamlName:    "object_id",
-					tags:        `yaml:"object_id"`,
+			input: []refgen.RawField{
+				refgen.RawField{
+					PackageName: "mypkg",
+					Doc:         `An ID, e.g., "<myid>"`,
+					Kind:        refgen.YAMLString{},
+					Name:        "ObjectID",
+					FieldName:   "object_id",
+					Tags:        `yaml:"object_id"`,
 				},
 			},
-			expected: []Field{
+			expected: []refgen.Field{
 				{
 					Name:        "object_id",
 					Description: `An ID, e.g., "\<myid\>"`,
@@ -1821,23 +1823,23 @@ func TestMakeFieldTableInfo(t *testing.T) {
 		},
 		{
 			description: "pipe in field description",
-			input: []rawField{
+			input: []refgen.RawField{
 				{
-					packageName: "mypkg",
-					doc:         "Specifies the locking mode (strict|best_effort) to be applied with the role.",
-					kind: yamlCustomType{
-						name: "LockingMode",
-						declarationInfo: PackageInfo{
+					PackageName: "mypkg",
+					Doc:         "Specifies the locking mode (strict|best_effort) to be applied with the role.",
+					Kind: refgen.YAMLCustomType{
+						Name: "LockingMode",
+						DeclarationInfo: refgen.PackageInfo{
 							DeclName:    "LockingMode",
 							PackagePath: "mypkg",
 						},
 					},
-					name:     "LockingMode",
-					yamlName: "locking_mode",
-					tags:     "yaml:\"locking_mode\"",
+					Name:      "LockingMode",
+					FieldName: "locking_mode",
+					Tags:      "yaml:\"locking_mode\"",
 				},
 			},
-			expected: []Field{
+			expected: []refgen.Field{
 				{
 					Name:        "locking_mode",
 					Description: `Specifies the locking mode (strict\|best_effort) to be applied with the role.`,
@@ -1848,7 +1850,7 @@ func TestMakeFieldTableInfo(t *testing.T) {
 	}
 	for _, c := range cases {
 		t.Run(c.description, func(t *testing.T) {
-			f, err := makeFieldTableInfo(c.input, camelCaseExceptions)
+			f, err := refgen.MakeFieldTableInfo(c.input, camelCaseExceptions)
 			assert.NoError(t, err)
 			assert.Equal(t, c.expected, f)
 		})
@@ -1900,7 +1902,7 @@ func TestGetYAMLTag(t *testing.T) {
 
 	for _, c := range cases {
 		t.Run(c.description, func(t *testing.T) {
-			g := getYAMLTag(c.input)
+			g := refgen.GetTag(c.input, "yaml")
 			assert.Equal(t, c.expected, g)
 		})
 	}
@@ -1929,7 +1931,7 @@ type Foo struct {
 `, parser.ParseComments)
 	require.NoError(t, err)
 
-	allDecls := map[PackageInfo]DeclarationInfo{
+	allDecls := map[refgen.PackageInfo]refgen.DeclarationInfo{
 		{DeclName: "Foo", PackagePath: protoPkg}: {
 			Decl:        protoFile.Decls[0],
 			FilePath:    "proto/proto.go",
@@ -1939,15 +1941,15 @@ type Foo struct {
 			Decl:         wrapperFile.Decls[1], // skip import decl
 			FilePath:     "wrapper/wrapper.go",
 			PackageName:  wrapperPkg,
-			NamedImports: NamedImports(wrapperFile),
+			NamedImports: refgen.NamedImports(wrapperFile),
 		},
 	}
 
-	wrapperDecl := allDecls[PackageInfo{DeclName: "Foo", PackagePath: wrapperPkg}]
-	rs, err := typeForDecl(wrapperDecl, allDecls)
+	wrapperDecl := allDecls[refgen.PackageInfo{DeclName: "Foo", PackagePath: wrapperPkg}]
+	rs, err := refgen.TypeForDecl(wrapperDecl, allDecls, "yaml")
 	require.NoError(t, err)
 
-	_, err = allFieldsForDecl(wrapperDecl, rs.fields, allDecls)
+	_, err = refgen.AllFieldsForDecl(wrapperDecl, rs.Fields, allDecls, "yaml")
 	require.NoError(t, err)
 }
 
@@ -1962,7 +1964,7 @@ type FileConfig struct {
 	f, err := parser.ParseFile(fset, "mock.go", cleanedCode, parser.ParseComments)
 	require.NoError(t, err)
 
-	allDecls := map[PackageInfo]DeclarationInfo{
+	allDecls := map[refgen.PackageInfo]refgen.DeclarationInfo{
 		{DeclName: "FileConfig", PackagePath: "github.com/gravitational/teleport/src"}: {
 			Decl:        f.Decls[0],
 			FilePath:    "src/mock.go",
@@ -2060,7 +2062,7 @@ func TestPrintableDescription(t *testing.T) {
 
 	for _, c := range cases {
 		t.Run(c.description, func(t *testing.T) {
-			assert.Equal(t, c.expected, printableDescription(c.input, c.name, ""))
+			assert.Equal(t, c.expected, refgen.PrintableDescription(c.input, c.name, ""))
 		})
 	}
 }
@@ -2068,28 +2070,29 @@ func TestPrintableDescription(t *testing.T) {
 func TestMakeYAMLExample(t *testing.T) {
 	cases := []struct {
 		description string
-		input       []rawField
+		input       []refgen.RawField
 		expected    string
 	}{
 		{
 			description: "all scalars",
-			input: []rawField{
-				rawField{
-					doc:  "myInt is an int",
-					kind: yamlNumber{},
-					name: "myInt",
-					tags: `yaml:"my_int"`,
+			input: []refgen.RawField{
+				refgen.RawField{
+					Doc:  "myInt is an int",
+					Kind: refgen.YAMLNumber{},
+					Name: "myInt",
+					Tags: `yaml:"my_int"`,
 				},
-				rawField{
-					doc:  "myBool is a Boolean",
-					kind: yamlBool{},
-					name: "myBool",
-					tags: `yaml:"my_bool"`,
+				refgen.RawField{
+					Doc:  "myBool is a Boolean",
+					Kind: refgen.YAMLBool{},
+					Name: "myBool",
+					Tags: `yaml:"my_bool"`,
 				},
-				rawField{
-					doc:  "myString is a string",
-					kind: yamlString{},
-					tags: `yaml:"my_string"`,
+				refgen.RawField{
+					Doc:  "myString is a string",
+					Kind: refgen.YAMLString{},
+					Name: "myString",
+					Tags: `yaml:"my_string"`,
 				},
 			},
 			expected: `my_int: 1
@@ -2099,14 +2102,14 @@ my_string: "string"
 		},
 		{
 			description: "sequence of sequence of strings",
-			input: []rawField{
-				rawField{
-					name: "mySeq",
-					doc:  "mySeq is a sequence of sequences of strings",
-					tags: `yaml:"my_seq"`,
-					kind: yamlSequence{
-						elementKind: yamlSequence{
-							elementKind: yamlString{},
+			input: []refgen.RawField{
+				refgen.RawField{
+					Name: "mySeq",
+					Doc:  "mySeq is a sequence of sequences of strings",
+					Tags: `yaml:"my_seq"`,
+					Kind: refgen.YAMLSequence{
+						ElementKind: refgen.YAMLSequence{
+							ElementKind: refgen.YAMLString{},
 						},
 					},
 				},
@@ -2128,14 +2131,14 @@ my_string: "string"
 		},
 		{
 			description: "maps of numbers to strings",
-			input: []rawField{
-				rawField{
-					name: "myMap",
-					doc:  "myMap is a map of ints to strings",
-					tags: `yaml:"my_map"`,
-					kind: yamlMapping{
-						keyKind:   yamlNumber{},
-						valueKind: yamlString{},
+			input: []refgen.RawField{
+				refgen.RawField{
+					Name: "myMap",
+					Doc:  "myMap is a map of ints to strings",
+					Tags: `yaml:"my_map"`,
+					Kind: refgen.YAMLMapping{
+						KeyKind:   refgen.YAMLNumber{},
+						ValueKind: refgen.YAMLString{},
 					},
 				},
 			},
@@ -2147,15 +2150,15 @@ my_string: "string"
 		},
 		{
 			description: "sequence of maps of strings to Booleans",
-			input: []rawField{
-				rawField{
-					name: "mySeq",
-					doc:  "mySeq is a complex type",
-					tags: `yaml:"my_seq"`,
-					kind: yamlSequence{
-						elementKind: yamlMapping{
-							keyKind:   yamlString{},
-							valueKind: yamlBool{},
+			input: []refgen.RawField{
+				refgen.RawField{
+					Name: "mySeq",
+					Doc:  "mySeq is a complex type",
+					Tags: `yaml:"my_seq"`,
+					Kind: refgen.YAMLSequence{
+						ElementKind: refgen.YAMLMapping{
+							KeyKind:   refgen.YAMLString{},
+							ValueKind: refgen.YAMLBool{},
 						},
 					},
 				},
@@ -2177,15 +2180,15 @@ my_string: "string"
 		},
 		{
 			description: "sequences of custom types",
-			input: []rawField{
-				rawField{
-					name: "labels",
-					doc:  "labels is a list of labels",
-					tags: `yaml:"labels"`,
-					kind: yamlSequence{
-						elementKind: yamlCustomType{
-							name: "label",
-							declarationInfo: PackageInfo{
+			input: []refgen.RawField{
+				refgen.RawField{
+					Name: "labels",
+					Doc:  "labels is a list of labels",
+					Tags: `yaml:"labels"`,
+					Kind: refgen.YAMLSequence{
+						ElementKind: refgen.YAMLCustomType{
+							Name: "label",
+							DeclarationInfo: refgen.PackageInfo{
 								DeclName:    "label",
 								PackagePath: "mypkg",
 							},
@@ -2201,16 +2204,16 @@ my_string: "string"
 		},
 		{
 			description: "maps of strings to custom types",
-			input: []rawField{
-				rawField{
-					name: "labels",
-					doc:  "labels is a map of strings to labels",
-					tags: `yaml:"labels"`,
-					kind: yamlMapping{
-						keyKind: yamlString{},
-						valueKind: yamlCustomType{
-							name: "label",
-							declarationInfo: PackageInfo{
+			input: []refgen.RawField{
+				refgen.RawField{
+					Name: "labels",
+					Doc:  "labels is a map of strings to labels",
+					Tags: `yaml:"labels"`,
+					Kind: refgen.YAMLMapping{
+						KeyKind: refgen.YAMLString{},
+						ValueKind: refgen.YAMLCustomType{
+							Name: "label",
+							DeclarationInfo: refgen.PackageInfo{
 								DeclName:    "label",
 								PackagePath: "mypkg",
 							},
@@ -2228,7 +2231,7 @@ my_string: "string"
 
 	for _, c := range cases {
 		t.Run(c.description, func(t *testing.T) {
-			e, err := makeYAMLExample(c.input)
+			e, err := refgen.MakeYAMLExample(c.input, "yaml")
 			assert.NoError(t, err)
 			assert.Equal(t, c.expected, e)
 		})
@@ -2292,7 +2295,7 @@ func TestSplitCamelCase(t *testing.T) {
 
 	for _, c := range cases {
 		t.Run(c.description, func(t *testing.T) {
-			assert.Equal(t, c.expected, splitCamelCase(c.original, camelCaseExceptions))
+			assert.Equal(t, c.expected, refgen.SplitCamelCase(c.original, camelCaseExceptions))
 		})
 	}
 }

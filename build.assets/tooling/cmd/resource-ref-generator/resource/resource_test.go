@@ -25,6 +25,7 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/gravitational/teleport/build.assets/tooling/lib/refgen"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
@@ -43,16 +44,16 @@ func TestReferenceDataFromDeclaration(t *testing.T) {
 	cases := []struct {
 		description string
 		source      string
-		expected    map[PackageInfo]ReferenceEntry
+		expected    map[refgen.PackageInfo]refgen.ReferenceEntry
 		// Go source fixtures that the test uses for named type fields.
 		declSources []string
 		// Substring to expect in a resulting error message
 		errorSubstring string
-		declInfo       PackageInfo
+		declInfo       refgen.PackageInfo
 	}{
 		{
 			description: "scalar fields with one field ignored",
-			declInfo: PackageInfo{
+			declInfo: refgen.PackageInfo{
 				DeclName:    "Metadata",
 				PackagePath: "github.com/gravitational/teleport/src",
 			},
@@ -74,8 +75,8 @@ type Metadata struct {
     Active bool BACKTICKjson:"active"BACKTICK
 }
 `,
-			expected: map[PackageInfo]ReferenceEntry{
-				PackageInfo{
+			expected: map[refgen.PackageInfo]refgen.ReferenceEntry{
+				refgen.PackageInfo{
 					DeclName:    "Metadata",
 					PackagePath: "github.com/gravitational/teleport/src",
 				}: {
@@ -87,23 +88,23 @@ description: "string"
 age: 1
 active: true
 `,
-					Fields: []Field{
-						Field{
+					Fields: []refgen.Field{
+						{
 							Name:        "active",
 							Description: "Indicates whether the resource is currently in use.",
 							Type:        "Boolean",
 						},
-						Field{
+						{
 							Name:        "age",
 							Description: "The resource's age in seconds.",
 							Type:        "number",
 						},
-						Field{
+						{
 							Name:        "description",
 							Description: "The resource's description.",
 							Type:        "string",
 						},
-						Field{
+						{
 							Name:        "name",
 							Description: "The name of the resource.",
 							Type:        "string",
@@ -114,7 +115,7 @@ active: true
 		},
 		{
 			description: "sequences of scalars",
-			declInfo: PackageInfo{
+			declInfo: refgen.PackageInfo{
 				DeclName:    "Metadata",
 				PackagePath: "github.com/gravitational/teleport/src",
 			},
@@ -132,8 +133,8 @@ type Metadata struct {
     Booleans []bool BACKTICKjson:"booleans"BACKTICK
 }
 `,
-			expected: map[PackageInfo]ReferenceEntry{
-				PackageInfo{
+			expected: map[refgen.PackageInfo]refgen.ReferenceEntry{
+				refgen.PackageInfo{
 					DeclName:    "Metadata",
 					PackagePath: "github.com/gravitational/teleport/src",
 				}: {
@@ -153,18 +154,18 @@ booleans:
   - true
   - true
 `,
-					Fields: []Field{
-						Field{
+					Fields: []refgen.Field{
+						{
 							Name:        "booleans",
 							Description: "A list of Booleans.",
 							Type:        "[]Boolean",
 						},
-						Field{
+						{
 							Name:        "names",
 							Description: "A list of names.",
 							Type:        "[]string",
 						},
-						Field{
+						{
 							Name:        "numbers",
 							Description: "A list of numbers.",
 							Type:        "[]number",
@@ -175,7 +176,7 @@ booleans:
 		},
 		{
 			description: "a map of strings to sequences",
-			declInfo: PackageInfo{
+			declInfo: refgen.PackageInfo{
 				DeclName:    "Metadata",
 				PackagePath: "github.com/gravitational/teleport/src",
 			},
@@ -189,8 +190,8 @@ type Metadata struct {
   Attributes map[string][]string BACKTICKjson:"attributes"BACKTICK
 }
 `,
-			expected: map[PackageInfo]ReferenceEntry{
-				PackageInfo{
+			expected: map[refgen.PackageInfo]refgen.ReferenceEntry{
+				refgen.PackageInfo{
 					DeclName:    "Metadata",
 					PackagePath: "github.com/gravitational/teleport/src",
 				}: {
@@ -211,8 +212,8 @@ type Metadata struct {
     - "string"
     - "string"
 `,
-					Fields: []Field{
-						Field{
+					Fields: []refgen.Field{
+						{
 							Name:        "attributes",
 							Description: "Indicates additional data for the resource.",
 							Type:        "map[string][]string",
@@ -223,7 +224,7 @@ type Metadata struct {
 		},
 		{
 			description: "an undeclared custom type field",
-			declInfo: PackageInfo{
+			declInfo: refgen.PackageInfo{
 				DeclName:    "Server",
 				PackagePath: "github.com/gravitational/teleport/src",
 			},
@@ -240,15 +241,15 @@ type Server struct {
     Spec types.ServerSpecV1 BACKTICKjson:"spec"BACKTICK
 }
 `,
-			expected: map[PackageInfo]ReferenceEntry{
-				PackageInfo{
+			expected: map[refgen.PackageInfo]refgen.ReferenceEntry{
+				refgen.PackageInfo{
 					DeclName:    "Server",
 					PackagePath: "github.com/gravitational/teleport/src",
-				}: ReferenceEntry{
+				}: refgen.ReferenceEntry{
 					SectionName: "Server",
 					Description: "Includes information about a server registered with Teleport.",
 					SourcePath:  "src/myfile.go",
-					Fields: []Field{
+					Fields: []refgen.Field{
 						{
 							Name:        "name",
 							Description: "The name of the resource.",
@@ -266,7 +267,7 @@ type Server struct {
 		},
 		{
 			description: "named scalar type",
-			declInfo: PackageInfo{
+			declInfo: refgen.PackageInfo{
 				PackagePath: "github.com/gravitational/teleport/src",
 				DeclName:    "Server",
 			},
@@ -291,15 +292,15 @@ type Server struct {
 type Labels []string
 `,
 			},
-			expected: map[PackageInfo]ReferenceEntry{
-				PackageInfo{
+			expected: map[refgen.PackageInfo]refgen.ReferenceEntry{
+				refgen.PackageInfo{
 					DeclName:    "Server",
 					PackagePath: "github.com/gravitational/teleport/src",
-				}: ReferenceEntry{
+				}: refgen.ReferenceEntry{
 					SectionName: "Server",
 					Description: "Includes information about a server registered with Teleport.",
 					SourcePath:  "src/myfile.go",
-					Fields: []Field{
+					Fields: []refgen.Field{
 						{
 							Name:        "labels",
 							Description: "Specifies labels for the server.",
@@ -318,10 +319,10 @@ type Labels []string
 					},
 					YAMLExample: "name: \"string\"\nspec: # See description\nlabels: # [...]\n",
 				},
-				PackageInfo{
+				refgen.PackageInfo{
 					DeclName:    "Labels",
 					PackagePath: "github.com/gravitational/teleport/src",
-				}: ReferenceEntry{
+				}: refgen.ReferenceEntry{
 					SectionName: "Labels",
 					Description: "A slice of strings that we'll process downstream",
 					SourcePath:  "src/myfile0.go",
@@ -332,7 +333,7 @@ type Labels []string
 		},
 		{
 			description: "custom type fields with a custom JSON unmarshaller",
-			declInfo: PackageInfo{
+			declInfo: refgen.PackageInfo{
 				DeclName:    "Server",
 				PackagePath: "github.com/gravitational/teleport/src",
 			},
@@ -357,15 +358,15 @@ func (s *Server) UnmarshalJSON (b []byte) error {
 }
 `,
 			},
-			expected: map[PackageInfo]ReferenceEntry{
-				PackageInfo{
+			expected: map[refgen.PackageInfo]refgen.ReferenceEntry{
+				refgen.PackageInfo{
 					DeclName:    "Server",
 					PackagePath: "github.com/gravitational/teleport/src",
-				}: ReferenceEntry{
+				}: refgen.ReferenceEntry{
 					SectionName: "Server",
 					Description: "Includes information about a server registered with Teleport.",
 					SourcePath:  "src/myfile.go",
-					Fields: []Field{
+					Fields: []refgen.Field{
 						{
 							Name:        "name",
 							Description: "The name of the resource.",
@@ -383,7 +384,7 @@ func (s *Server) UnmarshalJSON (b []byte) error {
 		},
 		{
 			description: "custom type with custom YAML unmarshaller",
-			declInfo: PackageInfo{
+			declInfo: refgen.PackageInfo{
 				DeclName:    "Application",
 				PackagePath: "github.com/gravitational/teleport/src",
 			},
@@ -408,15 +409,15 @@ func (a *Application) UnmarshalYAML(value *yaml.Node) error {
 }
 `,
 			},
-			expected: map[PackageInfo]ReferenceEntry{
-				PackageInfo{
+			expected: map[refgen.PackageInfo]refgen.ReferenceEntry{
+				refgen.PackageInfo{
 					DeclName:    "Application",
 					PackagePath: "github.com/gravitational/teleport/src",
-				}: ReferenceEntry{
+				}: refgen.ReferenceEntry{
 					SectionName: "Application",
 					Description: "Includes information about an application registered with Teleport.",
 					SourcePath:  "src/myfile.go",
-					Fields: []Field{
+					Fields: []refgen.Field{
 						{
 							Name:        "name",
 							Description: "The name of the resource.",
@@ -434,7 +435,7 @@ func (a *Application) UnmarshalYAML(value *yaml.Node) error {
 		},
 		{
 			description: "a custom type field declared in a second source file",
-			declInfo: PackageInfo{
+			declInfo: refgen.PackageInfo{
 				DeclName:    "Server",
 				PackagePath: "github.com/gravitational/teleport/src",
 			},
@@ -462,34 +463,34 @@ type ServerSpecV1 struct {
     IsActive bool BACKTICKjson:"is_active"BACKTICK
 }`,
 			},
-			expected: map[PackageInfo]ReferenceEntry{
-				PackageInfo{
+			expected: map[refgen.PackageInfo]refgen.ReferenceEntry{
+				refgen.PackageInfo{
 					DeclName:    "Server",
 					PackagePath: "github.com/gravitational/teleport/src",
-				}: {
+				}: refgen.ReferenceEntry{
 					SectionName: "Server",
 					Description: "Includes information about a server registered with Teleport.",
 					SourcePath:  "src/myfile.go",
 					YAMLExample: `name: "string"
 spec: # [...]
 `,
-					Fields: []Field{
-						Field{
+					Fields: []refgen.Field{
+						{
 							Name:        "name",
 							Description: "The name of the resource.",
 							Type:        "string",
 						},
-						Field{
+						{
 							Name:        "spec",
 							Description: "Contains information about the server.",
 							Type:        "[Server Spec V1](#server-spec-v1)",
 						},
 					},
 				},
-				PackageInfo{
+				refgen.PackageInfo{
 					DeclName:    "ServerSpecV1",
 					PackagePath: "github.com/gravitational/teleport/src",
-				}: {
+				}: refgen.ReferenceEntry{
 					SectionName: "Server Spec V1",
 					Description: "Includes aspects of a proxied server.",
 					SourcePath:  "src/myfile0.go",
@@ -497,18 +498,18 @@ spec: # [...]
 ttl: 1
 is_active: true
 `,
-					Fields: []Field{
-						Field{
+					Fields: []refgen.Field{
+						{
 							Name:        "address",
 							Description: "The address of the server.",
 							Type:        "string",
 						},
-						Field{
+						{
 							Name:        "is_active",
 							Description: "Whether the server is active.",
 							Type:        "Boolean",
 						},
-						Field{
+						{
 							Name:        "ttl",
 							Description: "How long the resource is valid.",
 							Type:        "number",
@@ -519,7 +520,7 @@ is_active: true
 		},
 		{
 			description: "composite field type with named scalar type",
-			declInfo: PackageInfo{
+			declInfo: refgen.PackageInfo{
 				DeclName:    "Server",
 				PackagePath: "github.com/gravitational/teleport/src",
 			},
@@ -548,11 +549,11 @@ type ServerSpecV1 struct {
 type Label string
 `,
 			},
-			expected: map[PackageInfo]ReferenceEntry{
-				PackageInfo{
+			expected: map[refgen.PackageInfo]refgen.ReferenceEntry{
+				refgen.PackageInfo{
 					DeclName:    "Server",
 					PackagePath: "github.com/gravitational/teleport/src",
-				}: {
+				}: refgen.ReferenceEntry{
 					SectionName: "Server",
 					Description: "Includes information about a server registered with Teleport.",
 					SourcePath:  "src/myfile.go",
@@ -571,40 +572,40 @@ label_maps:
     "string": # [...]
     "string": # [...]
 `,
-					Fields: []Field{
-						Field{
+					Fields: []refgen.Field{
+						{
 							Name:        "label_maps",
 							Description: "Includes a map of strings to labels.",
 							Type:        "[]map[string][Label](#label)",
 						},
-						Field{
+						{
 							Name:        "spec",
 							Description: "Contains information about the server.",
 							Type:        "[Server Spec V1](#server-spec-v1)",
 						},
 					},
 				},
-				PackageInfo{
+				refgen.PackageInfo{
 					DeclName:    "ServerSpecV1",
 					PackagePath: "github.com/gravitational/teleport/src",
-				}: {
+				}: refgen.ReferenceEntry{
 					SectionName: "Server Spec V1",
 					Description: "Includes aspects of a proxied server.",
 					SourcePath:  "src/myfile0.go",
 					YAMLExample: `address: "string"
 `,
-					Fields: []Field{
-						Field{
+					Fields: []refgen.Field{
+						{
 							Name:        "address",
 							Description: "The address of the server.",
 							Type:        "string",
 						},
 					},
 				},
-				PackageInfo{
+				refgen.PackageInfo{
 					DeclName:    "Label",
 					PackagePath: "github.com/gravitational/teleport/src",
-				}: {
+				}: refgen.ReferenceEntry{
 					SectionName: "Label",
 					Description: "A custom type that we unmarshal in a non-default way.",
 					SourcePath:  "src/myfile1.go",
@@ -614,7 +615,7 @@ label_maps:
 		},
 		{
 			description: "struct type with an interface field",
-			declInfo: PackageInfo{
+			declInfo: refgen.PackageInfo{
 				DeclName:    "Server",
 				PackagePath: "github.com/gravitational/teleport/src",
 			},
@@ -636,15 +637,15 @@ type ServerImplementation interface{
 }
 `,
 			},
-			expected: map[PackageInfo]ReferenceEntry{
-				PackageInfo{
+			expected: map[refgen.PackageInfo]refgen.ReferenceEntry{
+				refgen.PackageInfo{
 					DeclName:    "Server",
 					PackagePath: "github.com/gravitational/teleport/src",
-				}: {
+				}: refgen.ReferenceEntry{
 					SectionName: "Server",
 					Description: "Includes information about a server registered with Teleport.",
 					SourcePath:  "src/myfile.go",
-					Fields: []Field{
+					Fields: []refgen.Field{
 						{
 							Name:        "impl",
 							Description: "The implementation of the server.",
@@ -660,10 +661,10 @@ type ServerImplementation interface{
 impl: # [...]
 `,
 				},
-				PackageInfo{
+				refgen.PackageInfo{
 					DeclName:    "ServerImplementation",
 					PackagePath: "github.com/gravitational/teleport/src",
-				}: ReferenceEntry{
+				}: refgen.ReferenceEntry{
 					SectionName: "Server Implementation",
 					Description: "A remote service with a URL.",
 					SourcePath:  "src/myfile0.go",
@@ -674,7 +675,7 @@ impl: # [...]
 		},
 		{
 			description: "embedded struct",
-			declInfo: PackageInfo{
+			declInfo: refgen.PackageInfo{
 				DeclName:    "MyResource",
 				PackagePath: "github.com/gravitational/teleport/src",
 			},
@@ -701,15 +702,15 @@ type Metadata struct {
     Active bool BACKTICKjson:"active"BACKTICK
 }`,
 			},
-			expected: map[PackageInfo]ReferenceEntry{
-				PackageInfo{
+			expected: map[refgen.PackageInfo]refgen.ReferenceEntry{
+				refgen.PackageInfo{
 					DeclName:    "MyResource",
 					PackagePath: "github.com/gravitational/teleport/src",
-				}: {
+				}: refgen.ReferenceEntry{
 					SectionName: "My Resource",
 					Description: "A resource declared for testing.",
 					SourcePath:  "src/myfile.go",
-					Fields: []Field{
+					Fields: []refgen.Field{
 						{
 							Name:        "active",
 							Description: "Indicates whether the resource is currently in use.",
@@ -735,7 +736,7 @@ active: true
 		},
 		{
 			description: "embedded struct with struct field",
-			declInfo: PackageInfo{
+			declInfo: refgen.PackageInfo{
 				DeclName:    "MyResource",
 				PackagePath: "github.com/gravitational/teleport/src",
 			},
@@ -766,15 +767,15 @@ type Metadata struct {
     Active bool BACKTICKjson:"active"BACKTICK
 }`,
 			},
-			expected: map[PackageInfo]ReferenceEntry{
-				PackageInfo{
+			expected: map[refgen.PackageInfo]refgen.ReferenceEntry{
+				refgen.PackageInfo{
 					DeclName:    "MyResource",
 					PackagePath: "github.com/gravitational/teleport/src",
-				}: {
+				}: refgen.ReferenceEntry{
 					SectionName: "My Resource",
 					Description: "A resource declared for testing.",
 					SourcePath:  "src/myfile.go",
-					Fields: []Field{
+					Fields: []refgen.Field{
 						{
 							Name:        "alias",
 							Description: "Another name to call the resource.",
@@ -790,14 +791,14 @@ type Metadata struct {
 metadata: # [...]
 `,
 				},
-				PackageInfo{
+				refgen.PackageInfo{
 					DeclName:    "Metadata",
 					PackagePath: "github.com/gravitational/teleport/src",
 				}: {
 					SectionName: "Metadata",
 					SourcePath:  "src/myfile0.go",
 					Description: "Describes information about a dynamic resource. Every dynamic resource in Teleport has a metadata object.",
-					Fields: []Field{
+					Fields: []refgen.Field{
 						{
 							Name:        "active",
 							Description: "Indicates whether the resource is currently in use.",
@@ -817,7 +818,7 @@ active: true
 		},
 		{
 			description: "embedded struct with base in the same package",
-			declInfo: PackageInfo{
+			declInfo: refgen.PackageInfo{
 				DeclName:    "MyResource",
 				PackagePath: "github.com/gravitational/teleport/src",
 			},
@@ -841,15 +842,15 @@ type Metadata struct {
     Active bool BACKTICKjson:"active"BACKTICK
 }`,
 			},
-			expected: map[PackageInfo]ReferenceEntry{
-				PackageInfo{
+			expected: map[refgen.PackageInfo]refgen.ReferenceEntry{
+				refgen.PackageInfo{
 					DeclName:    "MyResource",
 					PackagePath: "github.com/gravitational/teleport/src",
 				}: {
 					SectionName: "My Resource",
 					Description: "A resource declared for testing.",
 					SourcePath:  "src/myfile.go",
-					Fields: []Field{
+					Fields: []refgen.Field{
 						{
 							Name:        "active",
 							Description: "Indicates whether the resource is currently in use.",
@@ -875,7 +876,7 @@ active: true
 		},
 		{
 			description: "struct with two embedded structs",
-			declInfo: PackageInfo{
+			declInfo: refgen.PackageInfo{
 				DeclName:    "MyResource",
 				PackagePath: "github.com/gravitational/teleport/src",
 			},
@@ -909,15 +910,15 @@ type ActivityStatus struct{
     Active bool BACKTICKjson:"active"BACKTICK
 }`,
 			},
-			expected: map[PackageInfo]ReferenceEntry{
-				PackageInfo{
+			expected: map[refgen.PackageInfo]refgen.ReferenceEntry{
+				refgen.PackageInfo{
 					DeclName:    "MyResource",
 					PackagePath: "github.com/gravitational/teleport/src",
 				}: {
 					SectionName: "My Resource",
 					Description: "A resource declared for testing.",
 					SourcePath:  "src/myfile.go",
-					Fields: []Field{
+					Fields: []refgen.Field{
 						{
 							Name:        "active",
 							Description: "Indicates whether the resource is currently in use.",
@@ -943,7 +944,7 @@ active: true
 		},
 		{
 			description: "embedded struct with an embedded struct",
-			declInfo: PackageInfo{
+			declInfo: refgen.PackageInfo{
 				DeclName:    "MyResource",
 				PackagePath: "github.com/gravitational/teleport/src",
 			},
@@ -978,15 +979,15 @@ type ActivityStatus struct{
     Active bool BACKTICKjson:"active"BACKTICK
 }`,
 			},
-			expected: map[PackageInfo]ReferenceEntry{
-				PackageInfo{
+			expected: map[refgen.PackageInfo]refgen.ReferenceEntry{
+				refgen.PackageInfo{
 					DeclName:    "MyResource",
 					PackagePath: "github.com/gravitational/teleport/src",
 				}: {
 					SectionName: "My Resource",
 					Description: "A resource declared for testing.",
 					SourcePath:  "src/myfile.go",
-					Fields: []Field{
+					Fields: []refgen.Field{
 						{
 							Name:        "active",
 							Description: "Indicates whether the resource is currently in use.",
@@ -1012,7 +1013,7 @@ active: true
 		},
 		{
 			description: "ignored fields with non-YAML-comptabible types",
-			declInfo: PackageInfo{
+			declInfo: refgen.PackageInfo{
 				DeclName:    "Metadata",
 				PackagePath: "github.com/gravitational/teleport/src",
 			},
@@ -1029,8 +1030,8 @@ type Metadata struct {
 
 }
 `,
-			expected: map[PackageInfo]ReferenceEntry{
-				PackageInfo{
+			expected: map[refgen.PackageInfo]refgen.ReferenceEntry{
+				refgen.PackageInfo{
 					DeclName:    "Metadata",
 					PackagePath: "github.com/gravitational/teleport/src",
 				}: {
@@ -1039,8 +1040,8 @@ type Metadata struct {
 					SourcePath:  "src/myfile.go",
 					YAMLExample: `name: "string"
 `,
-					Fields: []Field{
-						Field{
+					Fields: []refgen.Field{
+						refgen.Field{
 							Name:        "name",
 							Description: "The name of the resource.",
 							Type:        "string",
@@ -1051,7 +1052,7 @@ type Metadata struct {
 		},
 		{
 			description: "non-embedded custom field type declared in the same package as the containing struct",
-			declInfo: PackageInfo{
+			declInfo: refgen.PackageInfo{
 				DeclName:    "DatabaseServerV3",
 				PackagePath: "github.com/gravitational/teleport/src",
 			},
@@ -1076,21 +1077,21 @@ type Metadata struct {
 	Description string BACKTICKprotobuf:"bytes,3,opt,name=Description,proto3" json:"description,omitempty"BACKTICK
 }`,
 			},
-			expected: map[PackageInfo]ReferenceEntry{
-				PackageInfo{
+			expected: map[refgen.PackageInfo]refgen.ReferenceEntry{
+				refgen.PackageInfo{
 					DeclName:    "DatabaseServerV3",
 					PackagePath: "github.com/gravitational/teleport/src",
-				}: ReferenceEntry{
+				}: refgen.ReferenceEntry{
 					SectionName: "Database Server V3",
 					Description: "Represents a database access server.",
 					SourcePath:  "src/myfile.go",
-					Fields: []Field{
-						Field{
+					Fields: []refgen.Field{
+						refgen.Field{
 							Name:        "kind",
 							Description: "The database server resource kind.",
 							Type:        "string",
 						},
-						Field{
+						refgen.Field{
 							Name:        "metadata",
 							Description: "The database server metadata.",
 							Type:        "[Metadata](#metadata)",
@@ -1100,14 +1101,14 @@ type Metadata struct {
 metadata: # [...]
 `,
 				},
-				PackageInfo{
+				refgen.PackageInfo{
 					DeclName:    "Metadata",
 					PackagePath: "github.com/gravitational/teleport/src",
-				}: ReferenceEntry{
+				}: refgen.ReferenceEntry{
 					SectionName: "Metadata",
 					Description: "Resource metadata",
 					SourcePath:  "src/myfile0.go",
-					Fields: []Field{
+					Fields: []refgen.Field{
 						{
 							Name:        "description",
 							Description: "Object description",
@@ -1127,7 +1128,7 @@ description: "string"
 		},
 		{
 			description: "pointer field",
-			declInfo: PackageInfo{
+			declInfo: refgen.PackageInfo{
 				DeclName:    "DatabaseServerV3",
 				PackagePath: "github.com/gravitational/teleport/src",
 			},
@@ -1148,16 +1149,16 @@ type Metadata struct {
 	Name string BACKTICKprotobuf:"bytes,1,opt,name=Name,proto3" json:"name"BACKTICK
 }`,
 			},
-			expected: map[PackageInfo]ReferenceEntry{
-				PackageInfo{
+			expected: map[refgen.PackageInfo]refgen.ReferenceEntry{
+				refgen.PackageInfo{
 					DeclName:    "DatabaseServerV3",
 					PackagePath: "github.com/gravitational/teleport/src",
-				}: ReferenceEntry{
+				}: refgen.ReferenceEntry{
 					SectionName: "Database Server V3",
 					Description: "Represents a database access server.",
 					SourcePath:  "src/myfile.go",
-					Fields: []Field{
-						Field{
+					Fields: []refgen.Field{
+						refgen.Field{
 							Name:        "metadata",
 							Description: "The database server metadata.",
 							Type:        "[Metadata](#metadata)",
@@ -1166,14 +1167,14 @@ type Metadata struct {
 					YAMLExample: `metadata: # [...]
 `,
 				},
-				PackageInfo{
+				refgen.PackageInfo{
 					DeclName:    "Metadata",
 					PackagePath: "github.com/gravitational/teleport/src",
-				}: ReferenceEntry{
+				}: refgen.ReferenceEntry{
 					SectionName: "Metadata",
 					Description: "Resource metadata",
 					SourcePath:  "src/myfile0.go",
-					Fields: []Field{
+					Fields: []refgen.Field{
 						{
 							Name:        "name",
 							Description: "An object name",
@@ -1187,7 +1188,7 @@ type Metadata struct {
 		},
 		{
 			description: "map of strings to an undeclared field",
-			declInfo: PackageInfo{
+			declInfo: refgen.PackageInfo{
 				PackagePath: "github.com/gravitational/teleport/src",
 				DeclName:    "Server",
 			},
@@ -1209,8 +1210,8 @@ type ServerSpecV1 struct {
     Address string BACKTICKjson:"address"BACKTICK
 }`,
 			},
-			expected: map[PackageInfo]ReferenceEntry{
-				PackageInfo{
+			expected: map[refgen.PackageInfo]refgen.ReferenceEntry{
+				refgen.PackageInfo{
 					DeclName:    "Server",
 					PackagePath: "github.com/gravitational/teleport/src",
 				}: {
@@ -1232,13 +1233,13 @@ label_maps:
     "string": # See description
     "string": # See description
 `,
-					Fields: []Field{
-						Field{
+					Fields: []refgen.Field{
+						refgen.Field{
 							Name:        "label_maps",
 							Description: "Includes a map of strings to labels.",
 							Type:        "[]map[string]",
 						},
-						Field{
+						refgen.Field{
 							Name:        "name",
 							Description: "The name of the server.",
 							Type:        "string"},
@@ -1248,7 +1249,7 @@ label_maps:
 		},
 		{
 			description: "type parameter",
-			declInfo: PackageInfo{
+			declInfo: refgen.PackageInfo{
 				PackagePath: "github.com/gravitational/teleport/src",
 				DeclName:    "Resource",
 			},
@@ -1275,18 +1276,18 @@ func (stream *streamFunc[T]) Next() bool {
 }
 `,
 			},
-			expected: map[PackageInfo]ReferenceEntry{
-				PackageInfo{
+			expected: map[refgen.PackageInfo]refgen.ReferenceEntry{
+				refgen.PackageInfo{
 					PackagePath: "github.com/gravitational/teleport/src",
 					DeclName:    "Resource",
-				}: ReferenceEntry{
+				}: refgen.ReferenceEntry{
 					SectionName: "Resource",
 					Description: "A resource.",
 					SourcePath:  "src/myfile.go",
 					YAMLExample: `name: "string"
 `,
-					Fields: []Field{
-						Field{
+					Fields: []refgen.Field{
+						refgen.Field{
 							Name:        "name",
 							Description: "The name of the resource.",
 							Type:        "string",
@@ -1297,7 +1298,7 @@ func (stream *streamFunc[T]) Next() bool {
 		},
 		{
 			description: "field type not declared in a loaded package",
-			declInfo: PackageInfo{
+			declInfo: refgen.PackageInfo{
 				PackagePath: "github.com/gravitational/teleport/src",
 				DeclName:    "Resource",
 			},
@@ -1313,24 +1314,24 @@ type Resource struct {
   Expiry time.Time BACKTICKjson:"expiry"BACKTICK
 }
 `,
-			expected: map[PackageInfo]ReferenceEntry{
-				PackageInfo{
+			expected: map[refgen.PackageInfo]refgen.ReferenceEntry{
+				refgen.PackageInfo{
 					PackagePath: "github.com/gravitational/teleport/src",
 					DeclName:    "Resource",
-				}: ReferenceEntry{
+				}: refgen.ReferenceEntry{
 					SectionName: "Resource",
 					Description: "A resource.",
 					SourcePath:  "src/myfile.go",
 					YAMLExample: `name: "string"
 expiry: # See description
 `,
-					Fields: []Field{
-						Field{
+					Fields: []refgen.Field{
+						refgen.Field{
 							Name:        "expiry",
 							Description: "How much time must elapse before the resource expires.",
 							Type:        "",
 						},
-						Field{
+						refgen.Field{
 							Name:        "name",
 							Description: "The name of the resource.",
 							Type:        "string",
@@ -1342,7 +1343,7 @@ expiry: # See description
 		},
 		{
 			description: "byte slice",
-			declInfo: PackageInfo{
+			declInfo: refgen.PackageInfo{
 				PackagePath: "github.com/gravitational/teleport/src",
 				DeclName:    "Metadata",
 			},
@@ -1358,8 +1359,8 @@ type Metadata struct {
     PrivateKey []byte BACKTICKjson:"private_key"BACKTICK
 }
 `,
-			expected: map[PackageInfo]ReferenceEntry{
-				PackageInfo{
+			expected: map[refgen.PackageInfo]refgen.ReferenceEntry{
+				refgen.PackageInfo{
 					DeclName:    "Metadata",
 					PackagePath: "github.com/gravitational/teleport/src",
 				}: {
@@ -1369,13 +1370,13 @@ type Metadata struct {
 					YAMLExample: `name: "string"
 private_key: BASE64_STRING
 `,
-					Fields: []Field{
-						Field{
+					Fields: []refgen.Field{
+						refgen.Field{
 							Name:        "name",
 							Description: "The name of the resource.",
 							Type:        "string",
 						},
-						Field{
+						refgen.Field{
 							Name:        "private_key",
 							Description: "The private key of the resource.",
 							Type:        "base64-encoded string",
@@ -1386,7 +1387,7 @@ private_key: BASE64_STRING
 		},
 		{
 			description: "named import in embedded struct field",
-			declInfo: PackageInfo{
+			declInfo: refgen.PackageInfo{
 				PackagePath: "github.com/gravitational/teleport/src",
 				DeclName:    "Server",
 			},
@@ -1418,8 +1419,8 @@ type ServerSpec struct {
     Address string BACKTICKjson:"address"BACKTICK
 }`,
 			},
-			expected: map[PackageInfo]ReferenceEntry{
-				PackageInfo{
+			expected: map[refgen.PackageInfo]refgen.ReferenceEntry{
+				refgen.PackageInfo{
 					DeclName:    "Server",
 					PackagePath: "github.com/gravitational/teleport/src",
 				}: {
@@ -1429,20 +1430,20 @@ type ServerSpec struct {
 					YAMLExample: `name: "string"
 spec: # [...]
 `,
-					Fields: []Field{
-						Field{
+					Fields: []refgen.Field{
+						refgen.Field{
 							Name:        "name",
 							Description: "The name of the resource.",
 							Type:        "string",
 						},
-						Field{
+						refgen.Field{
 							Name:        "spec",
 							Description: "Contains information about the server.",
 							Type:        "[Server Spec V1](#server-spec-v1)",
 						},
 					},
 				},
-				PackageInfo{
+				refgen.PackageInfo{
 					DeclName:    "ServerSpecV1",
 					PackagePath: "github.com/gravitational/teleport/src",
 				}: {
@@ -1451,8 +1452,8 @@ spec: # [...]
 					SourcePath:  "src/myfile0.go",
 					YAMLExample: `address: "string"
 `,
-					Fields: []Field{
-						Field{
+					Fields: []refgen.Field{
+						refgen.Field{
 							Name:        "address",
 							Description: "The address of the server.",
 							Type:        "string",
@@ -1463,7 +1464,7 @@ spec: # [...]
 		},
 		{
 			description: "named import in named struct field",
-			declInfo: PackageInfo{
+			declInfo: refgen.PackageInfo{
 				PackagePath: "github.com/gravitational/teleport/src",
 				DeclName:    "Server",
 			},
@@ -1494,15 +1495,15 @@ type AddressInfo struct {
     Address string BACKTICKjson:"address"BACKTICK
 }`,
 			},
-			expected: map[PackageInfo]ReferenceEntry{
-				PackageInfo{
+			expected: map[refgen.PackageInfo]refgen.ReferenceEntry{
+				refgen.PackageInfo{
 					DeclName:    "AddressInfo",
 					PackagePath: "github.com/gravitational/teleport/src",
 				}: {
 					SectionName: "Address Info",
 					Description: "Provides information about an address.",
 					SourcePath:  "src/myfile1.go",
-					Fields: []Field{
+					Fields: []refgen.Field{
 						{
 							Name:        "address",
 							Description: "The address of the server.",
@@ -1511,7 +1512,7 @@ type AddressInfo struct {
 					},
 					YAMLExample: "address: \"string\"\n",
 				},
-				PackageInfo{
+				refgen.PackageInfo{
 					DeclName:    "Server",
 					PackagePath: "github.com/gravitational/teleport/src",
 				}: {
@@ -1520,14 +1521,14 @@ type AddressInfo struct {
 					SourcePath:  "src/myfile.go",
 					YAMLExample: `spec: # [...]
 `,
-					Fields: []Field{
-						Field{
+					Fields: []refgen.Field{
+						refgen.Field{
 							Name:        "spec",
 							Description: "Contains information about the server.",
 							Type:        "[Server Spec V1](#server-spec-v1)"},
 					},
 				},
-				PackageInfo{
+				refgen.PackageInfo{
 					DeclName:    "ServerSpecV1",
 					PackagePath: "github.com/gravitational/teleport/src",
 				}: {
@@ -1536,8 +1537,8 @@ type AddressInfo struct {
 					SourcePath:  "src/myfile0.go",
 					YAMLExample: `info: # [...]
 `,
-					Fields: []Field{
-						Field{
+					Fields: []refgen.Field{
+						refgen.Field{
 							Name:        "info",
 							Description: "Address information.",
 							Type:        "[Address Info](#address-info)",
@@ -1548,7 +1549,7 @@ type AddressInfo struct {
 		},
 		{
 			description: "scalar fields with two unexported fields",
-			declInfo: PackageInfo{
+			declInfo: refgen.PackageInfo{
 				DeclName:    "Metadata",
 				PackagePath: "github.com/gravitational/teleport/src",
 			},
@@ -1569,8 +1570,8 @@ type Metadata struct {
     sizeCache     protoimpl.SizeCache
 }
 `,
-			expected: map[PackageInfo]ReferenceEntry{
-				PackageInfo{
+			expected: map[refgen.PackageInfo]refgen.ReferenceEntry{
+				refgen.PackageInfo{
 					DeclName:    "Metadata",
 					PackagePath: "github.com/gravitational/teleport/src",
 				}: {
@@ -1580,13 +1581,13 @@ type Metadata struct {
 					YAMLExample: `name: "string"
 description: "string"
 `,
-					Fields: []Field{
-						Field{
+					Fields: []refgen.Field{
+						refgen.Field{
 							Name:        "description",
 							Description: "The resource's description.",
 							Type:        "string",
 						},
-						Field{
+						refgen.Field{
 							Name:        "name",
 							Description: "The name of the resource.",
 							Type:        "string",
@@ -1597,7 +1598,7 @@ description: "string"
 		},
 		{
 			description: "curly braces in descriptions",
-			declInfo: PackageInfo{
+			declInfo: refgen.PackageInfo{
 				DeclName:    "Metadata",
 				PackagePath: "github.com/gravitational/teleport/src",
 			},
@@ -1611,8 +1612,8 @@ type Metadata struct {
     Name string BACKTICKprotobuf:"bytes,1,opt,name=Name,proto3" json:"name"BACKTICK
 }
 `,
-			expected: map[PackageInfo]ReferenceEntry{
-				PackageInfo{
+			expected: map[refgen.PackageInfo]refgen.ReferenceEntry{
+				refgen.PackageInfo{
 					DeclName:    "Metadata",
 					PackagePath: "github.com/gravitational/teleport/src",
 				}: {
@@ -1621,8 +1622,8 @@ type Metadata struct {
 					SourcePath:  "src/myfile.go",
 					YAMLExample: `name: "string"
 `,
-					Fields: []Field{
-						Field{
+					Fields: []refgen.Field{
+						refgen.Field{
 							Name:        "name",
 							Description: "The `{name of the resource}`.",
 							Type:        "string",
@@ -1666,7 +1667,7 @@ type Metadata struct {
 
 			// Remove the temporary directory from package paths
 			// since we can't know it in advance in test cases.
-			declsWithoutTmp := make(map[PackageInfo]DeclarationInfo)
+			declsWithoutTmp := make(map[refgen.PackageInfo]refgen.DeclarationInfo)
 			for k, d := range sourceData.TypeDecls {
 				k.PackagePath = strings.ReplaceAll(k.PackagePath, filepath.Base(tmp)+"/", "")
 				d.PackageName = strings.ReplaceAll(k.PackagePath, filepath.Base(tmp)+"/", "")
@@ -1747,7 +1748,7 @@ import "my/multi/segment/pkg"
 				parser.ParseComments,
 			)
 			assert.NoError(t, err)
-			assert.Equal(t, c.expected, NamedImports(f))
+			assert.Equal(t, c.expected, refgen.NamedImports(f))
 		})
 	}
 }
@@ -1759,22 +1760,22 @@ func TestMakeFieldTableInfo(t *testing.T) {
 
 	cases := []struct {
 		description string
-		input       []rawField
-		expected    []Field
+		input       []refgen.RawField
+		expected    []refgen.Field
 	}{
 		{
 			description: "angle brackets in GoDoc",
-			input: []rawField{
-				rawField{
-					packageName: "mypkg",
-					doc:         `An ID, e.g., "<myid>"`,
-					kind:        yamlString{},
-					name:        "ObjectID",
-					jsonName:    "object_id",
-					tags:        `json:"object_id"`,
+			input: []refgen.RawField{
+				refgen.RawField{
+					PackageName: "mypkg",
+					Doc:         `An ID, e.g., "<myid>"`,
+					Kind:        refgen.YAMLString{},
+					Name:        "ObjectID",
+					FieldName:   "object_id",
+					Tags:        `json:"object_id"`,
 				},
 			},
-			expected: []Field{
+			expected: []refgen.Field{
 				{
 					Name:        "object_id",
 					Description: `An ID, e.g., "\<myid\>"`,
@@ -1784,23 +1785,23 @@ func TestMakeFieldTableInfo(t *testing.T) {
 		},
 		{
 			description: "pipe in field description",
-			input: []rawField{
+			input: []refgen.RawField{
 				{
-					packageName: "mypkg",
-					doc:         "Specifies the locking mode (strict|best_effort) to be applied with the role.",
-					kind: yamlCustomType{
-						name: "LockingMode",
-						declarationInfo: PackageInfo{
+					PackageName: "mypkg",
+					Doc:         "Specifies the locking mode (strict|best_effort) to be applied with the role.",
+					Kind: refgen.YAMLCustomType{
+						Name: "LockingMode",
+						DeclarationInfo: refgen.PackageInfo{
 							DeclName:    "LockingMode",
 							PackagePath: "mypkg",
 						},
 					},
-					name:     "LockingMode",
-					jsonName: "locking_mode",
-					tags:     "json:\"locking_mode\"",
+					Name:      "LockingMode",
+					FieldName: "locking_mode",
+					Tags:      "json:\"locking_mode\"",
 				},
 			},
-			expected: []Field{
+			expected: []refgen.Field{
 				{
 					Name:        "locking_mode",
 					Description: `Specifies the locking mode (strict\|best_effort) to be applied with the role.`,
@@ -1811,7 +1812,7 @@ func TestMakeFieldTableInfo(t *testing.T) {
 	}
 	for _, c := range cases {
 		t.Run(c.description, func(t *testing.T) {
-			f, err := makeFieldTableInfo(c.input, camelCaseExceptions)
+			f, err := refgen.MakeFieldTableInfo(c.input, camelCaseExceptions)
 			assert.NoError(t, err)
 			assert.Equal(t, c.expected, f)
 		})
@@ -1863,7 +1864,7 @@ func TestGetJSONTag(t *testing.T) {
 
 	for _, c := range cases {
 		t.Run(c.description, func(t *testing.T) {
-			g := getJSONTag(c.input)
+			g := refgen.GetTag(c.input, "json")
 			assert.Equal(t, c.expected, g)
 		})
 	}
@@ -1896,7 +1897,7 @@ type Foo struct {
 `, parser.ParseComments)
 	require.NoError(t, err)
 
-	allDecls := map[PackageInfo]DeclarationInfo{
+	allDecls := map[refgen.PackageInfo]refgen.DeclarationInfo{
 		{DeclName: "Foo", PackagePath: protoPkg}: {
 			Decl:        protoFile.Decls[0],
 			FilePath:    "proto/proto.go",
@@ -1906,15 +1907,15 @@ type Foo struct {
 			Decl:         wrapperFile.Decls[1], // skip import decl
 			FilePath:     "wrapper/wrapper.go",
 			PackageName:  wrapperPkg,
-			NamedImports: NamedImports(wrapperFile),
+			NamedImports: refgen.NamedImports(wrapperFile),
 		},
 	}
 
-	wrapperDecl := allDecls[PackageInfo{DeclName: "Foo", PackagePath: wrapperPkg}]
-	rs, err := typeForDecl(wrapperDecl, allDecls)
+	wrapperDecl := allDecls[refgen.PackageInfo{DeclName: "Foo", PackagePath: wrapperPkg}]
+	rs, err := refgen.TypeForDecl(wrapperDecl, allDecls, "json")
 	require.NoError(t, err)
 
-	_, err = allFieldsForDecl(wrapperDecl, rs.fields, allDecls)
+	_, err = refgen.AllFieldsForDecl(wrapperDecl, rs.Fields, allDecls, "json")
 	require.NoError(t, err)
 }
 
@@ -1990,7 +1991,7 @@ func TestPrintableDescription(t *testing.T) {
 
 	for _, c := range cases {
 		t.Run(c.description, func(t *testing.T) {
-			assert.Equal(t, c.expected, printableDescription(c.input, c.name))
+			assert.Equal(t, c.expected, refgen.PrintableDescription(c.input, c.name, ""))
 		})
 	}
 }
@@ -1998,28 +1999,28 @@ func TestPrintableDescription(t *testing.T) {
 func TestMakeYAMLExample(t *testing.T) {
 	cases := []struct {
 		description string
-		input       []rawField
+		input       []refgen.RawField
 		expected    string
 	}{
 		{
 			description: "all scalars",
-			input: []rawField{
-				rawField{
-					doc:  "myInt is an int",
-					kind: yamlNumber{},
-					name: "myInt",
-					tags: `json:"my_int"`,
+			input: []refgen.RawField{
+				refgen.RawField{
+					Doc:  "myInt is an int",
+					Kind: refgen.YAMLNumber{},
+					Name: "myInt",
+					Tags: `json:"my_int"`,
 				},
-				rawField{
-					doc:  "myBool is a Boolean",
-					kind: yamlBool{},
-					name: "myBool",
-					tags: `json:"my_bool"`,
+				refgen.RawField{
+					Doc:  "myBool is a Boolean",
+					Kind: refgen.YAMLBool{},
+					Name: "myBool",
+					Tags: `json:"my_bool"`,
 				},
-				rawField{
-					doc:  "myString is a string",
-					kind: yamlString{},
-					tags: `json:"my_string"`,
+				refgen.RawField{
+					Doc:  "myString is a string",
+					Kind: refgen.YAMLString{},
+					Tags: `json:"my_string"`,
 				},
 			},
 			expected: `my_int: 1
@@ -2029,15 +2030,15 @@ my_string: "string"
 		},
 		{
 			description: "sequence of sequence of strings",
-			input: []rawField{
-				rawField{
-					name:     "mySeq",
-					jsonName: "my_seq",
-					doc:      "mySeq is a sequence of sequences of strings",
-					tags:     `json:"my_seq"`,
-					kind: yamlSequence{
-						elementKind: yamlSequence{
-							elementKind: yamlString{},
+			input: []refgen.RawField{
+				refgen.RawField{
+					Name:      "mySeq",
+					FieldName: "my_seq",
+					Doc:       "mySeq is a sequence of sequences of strings",
+					Tags:      `json:"my_seq"`,
+					Kind: refgen.YAMLSequence{
+						ElementKind: refgen.YAMLSequence{
+							ElementKind: refgen.YAMLString{},
 						},
 					},
 				},
@@ -2059,15 +2060,15 @@ my_string: "string"
 		},
 		{
 			description: "maps of numbers to strings",
-			input: []rawField{
-				rawField{
-					name:     "myMap",
-					jsonName: "my_map",
-					doc:      "myMap is a map of ints to strings",
-					tags:     `json:"my_map"`,
-					kind: yamlMapping{
-						keyKind:   yamlNumber{},
-						valueKind: yamlString{},
+			input: []refgen.RawField{
+				refgen.RawField{
+					Name:      "myMap",
+					FieldName: "my_map",
+					Doc:       "myMap is a map of ints to strings",
+					Tags:      `json:"my_map"`,
+					Kind: refgen.YAMLMapping{
+						KeyKind:   refgen.YAMLNumber{},
+						ValueKind: refgen.YAMLString{},
 					},
 				},
 			},
@@ -2079,16 +2080,16 @@ my_string: "string"
 		},
 		{
 			description: "sequence of maps of strings to Booleans",
-			input: []rawField{
-				rawField{
-					name:     "mySeq",
-					jsonName: "my_seq",
-					doc:      "mySeq is a complex type",
-					tags:     `json:"my_seq"`,
-					kind: yamlSequence{
-						elementKind: yamlMapping{
-							keyKind:   yamlString{},
-							valueKind: yamlBool{},
+			input: []refgen.RawField{
+				refgen.RawField{
+					Name:      "mySeq",
+					FieldName: "my_seq",
+					Doc:       "mySeq is a complex type",
+					Tags:      `json:"my_seq"`,
+					Kind: refgen.YAMLSequence{
+						ElementKind: refgen.YAMLMapping{
+							KeyKind:   refgen.YAMLString{},
+							ValueKind: refgen.YAMLBool{},
 						},
 					},
 				},
@@ -2110,16 +2111,16 @@ my_string: "string"
 		},
 		{
 			description: "sequences of custom types",
-			input: []rawField{
-				rawField{
-					name:     "labels",
-					jsonName: "labels",
-					doc:      "labels is a list of labels",
-					tags:     `json:"labels"`,
-					kind: yamlSequence{
-						elementKind: yamlCustomType{
-							name: "label",
-							declarationInfo: PackageInfo{
+			input: []refgen.RawField{
+				refgen.RawField{
+					Name:      "labels",
+					FieldName: "labels",
+					Doc:       "labels is a list of labels",
+					Tags:      `json:"labels"`,
+					Kind: refgen.YAMLSequence{
+						ElementKind: refgen.YAMLCustomType{
+							Name: "label",
+							DeclarationInfo: refgen.PackageInfo{
 								DeclName:    "label",
 								PackagePath: "mypkg",
 							},
@@ -2135,17 +2136,17 @@ my_string: "string"
 		},
 		{
 			description: "maps of strings to custom types",
-			input: []rawField{
-				rawField{
-					name:     "labels",
-					jsonName: "labels",
-					doc:      "labels is a map of strings to labels",
-					tags:     `json:"labels"`,
-					kind: yamlMapping{
-						keyKind: yamlString{},
-						valueKind: yamlCustomType{
-							name: "label",
-							declarationInfo: PackageInfo{
+			input: []refgen.RawField{
+				refgen.RawField{
+					Name:      "labels",
+					FieldName: "labels",
+					Doc:       "labels is a map of strings to labels",
+					Tags:      `json:"labels"`,
+					Kind: refgen.YAMLMapping{
+						KeyKind: refgen.YAMLString{},
+						ValueKind: refgen.YAMLCustomType{
+							Name: "label",
+							DeclarationInfo: refgen.PackageInfo{
 								DeclName:    "label",
 								PackagePath: "mypkg",
 							},
@@ -2163,7 +2164,7 @@ my_string: "string"
 
 	for _, c := range cases {
 		t.Run(c.description, func(t *testing.T) {
-			e, err := makeYAMLExample(c.input)
+			e, err := refgen.MakeYAMLExample(c.input, "json")
 			assert.NoError(t, err)
 			assert.Equal(t, c.expected, e)
 		})
@@ -2227,7 +2228,7 @@ func TestSplitCamelCase(t *testing.T) {
 
 	for _, c := range cases {
 		t.Run(c.description, func(t *testing.T) {
-			assert.Equal(t, c.expected, splitCamelCase(c.original, camelCaseExceptions))
+			assert.Equal(t, c.expected, refgen.SplitCamelCase(c.original, camelCaseExceptions))
 		})
 	}
 }

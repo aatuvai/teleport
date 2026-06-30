@@ -26,6 +26,7 @@ import (
 	template "github.com/DataDog/datadog-agent/pkg/template/text"
 
 	"github.com/gravitational/teleport/build.assets/tooling/cmd/resource-ref-generator/resource"
+	"github.com/gravitational/teleport/build.assets/tooling/lib/refgen"
 )
 
 // pageContent represents a reference page for a single resource and its related
@@ -39,7 +40,7 @@ type pageContent struct {
 	Resource resourceSection
 	// Fields are the top-level fields of the dynamic resource for this
 	// page.
-	Fields map[resource.PackageInfo]resource.ReferenceEntry
+	Fields map[refgen.PackageInfo]refgen.ReferenceEntry
 }
 
 // resourceSection represents a top-level section of the resource reference
@@ -48,17 +49,7 @@ type resourceSection struct {
 	Version         string
 	Kind            string
 	ResourceExample string
-	resource.ReferenceEntry
-}
-
-// TypeInfo represents the name and package name of an exported Go type. It
-// makes no guarantees about whether the type was actually declared within the
-// package.
-type TypeInfo struct {
-	// Go package path (not a file path)
-	Package string `yaml:"package"`
-	// Name of the type, e.g., Metadata
-	Name string `yaml:"name"`
+	refgen.ReferenceEntry
 }
 
 // ResourceConfig describes a resource type to include in the reference.
@@ -93,20 +84,6 @@ type GeneratorConfig struct {
 	ExamplesDirectory string `yaml:"examples_directory"`
 }
 
-type GenerationError struct {
-	messages []error
-}
-
-func (g GenerationError) Error() string {
-	// Begin with a newline to format the first list item below the outer
-	// error.
-	final := "\n"
-	for _, e := range g.messages {
-		final += fmt.Sprintf("- %v\n", e)
-	}
-	return final
-}
-
 // Generate uses the provided user-facing configuration to write the resource
 // reference to fs. Uses prefix, e.g., github.com/gravitational/teleport, to
 // construct package paths.
@@ -116,16 +93,16 @@ func Generate(prefix string, conf GeneratorConfig, tmpl *template.Template) erro
 		return fmt.Errorf("loading Go source files: %w", err)
 	}
 
-	var errs GenerationError
+	var errs refgen.GenerationError
 	for _, r := range conf.Resources {
-		k := resource.PackageInfo{
+		k := refgen.PackageInfo{
 			DeclName:    r.TypeName,
 			PackagePath: r.PackagePath,
 		}
 
 		decl, ok := sourceData.TypeDecls[k]
 		if !ok {
-			errs.messages = append(errs.messages, fmt.Errorf("creating a reference entry for declaration %v.%v: cannot find a declaration of this resource type", k.PackagePath, k.DeclName))
+			errs.Messages = append(errs.Messages, fmt.Errorf("creating a reference entry for declaration %v.%v: cannot find a declaration of this resource type", k.PackagePath, k.DeclName))
 			continue
 		}
 
@@ -135,11 +112,11 @@ func Generate(prefix string, conf GeneratorConfig, tmpl *template.Template) erro
 		// decl is a dynamic resource type, so get data for the type and
 		// its dependencies.
 		entries, err := resource.ReferenceDataFromDeclaration(prefix, decl, sourceData.TypeDecls, conf.CamelCaseExceptions)
-		if errors.As(err, &resource.NotAGenDeclError{}) {
+		if errors.As(err, &refgen.NotAGenDeclError{}) {
 			continue
 		}
 		if err != nil {
-			errs.messages = append(errs.messages, fmt.Errorf("creating a reference entry for declaration %v.%v in file %v: %w", k.PackagePath, k.DeclName, decl.FilePath, err))
+			errs.Messages = append(errs.Messages, fmt.Errorf("creating a reference entry for declaration %v.%v in file %v: %w", k.PackagePath, k.DeclName, decl.FilePath, err))
 		}
 
 		pc.Resource.ReferenceEntry = entries[k]
@@ -158,16 +135,16 @@ func Generate(prefix string, conf GeneratorConfig, tmpl *template.Template) erro
 		docpath := filepath.Join(conf.DestinationDirectory, filename+".mdx")
 		doc, err := os.Create(docpath)
 		if err != nil {
-			errs.messages = append(errs.messages, fmt.Errorf("cannot create page at %v: %w", docpath, err))
+			errs.Messages = append(errs.Messages, fmt.Errorf("cannot create page at %v: %w", docpath, err))
 			continue
 		}
 		defer doc.Close()
 
 		if err := tmpl.Execute(doc, pc); err != nil {
-			errs.messages = append(errs.messages, fmt.Errorf("cannot populate the resource reference template: %w", err))
+			errs.Messages = append(errs.Messages, fmt.Errorf("cannot populate the resource reference template: %w", err))
 		}
 	}
-	if len(errs.messages) > 0 {
+	if len(errs.Messages) > 0 {
 		return errs
 	}
 

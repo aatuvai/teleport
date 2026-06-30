@@ -26,6 +26,8 @@ import (
 
 	template "github.com/DataDog/datadog-agent/pkg/template/text"
 
+	"github.com/gravitational/teleport/build.assets/tooling/lib/refgen"
+
 	"github.com/gravitational/teleport/build.assets/tooling/cmd/config-ref-generator/section"
 )
 
@@ -35,13 +37,13 @@ type pageContent struct {
 	Introduction string
 	Section      sectionEntry
 	// Fields are the top-level fields of the configuration section for this page.
-	Fields map[section.PackageInfo]section.ReferenceEntry
+	Fields map[refgen.PackageInfo]refgen.ReferenceEntry
 }
 
 // sectionEntry represents a top-level section of the configuration reference.
 type sectionEntry struct {
 	SectionExample string
-	section.ReferenceEntry
+	refgen.ReferenceEntry
 }
 
 // SectionConfig describes a section type to include in the reference.
@@ -72,20 +74,6 @@ type GeneratorConfig struct {
 	TitleWordReplacements []map[string]string `yaml:"title_word_replacements"`
 }
 
-type GenerationError struct {
-	messages []error
-}
-
-func (g GenerationError) Error() string {
-	// Begin with a newline to format the first list item below the outer
-	// error.
-	final := "\n"
-	for _, e := range g.messages {
-		final += fmt.Sprintf("- %v\n", e)
-	}
-	return final
-}
-
 // Generate uses the provided user-facing configuration to write the configuration
 // reference to fs. Uses prefix, e.g., github.com/gravitational/teleport, to
 // construct package paths.
@@ -100,10 +88,10 @@ func Generate(prefix string, conf GeneratorConfig, tmpl *template.Template) erro
 		return fmt.Errorf("creating destination directory: %w", err)
 	}
 
-	var errs GenerationError
+	var errs refgen.GenerationError
 	for _, r := range conf.Sections {
 		relPath := section.ToModuleRelativePath(conf.Source)
-		k := section.PackageInfo{
+		k := refgen.PackageInfo{
 			DeclName: r.TypeName,
 			PackagePath: path.Join(
 				prefix,
@@ -113,7 +101,7 @@ func Generate(prefix string, conf GeneratorConfig, tmpl *template.Template) erro
 
 		decl, ok := sourceData.TypeDecls[k]
 		if !ok {
-			errs.messages = append(errs.messages, fmt.Errorf("creating a configuration reference entry for declaration %v in %v: cannot find a declaration of this configuration section type", k.DeclName, k.PackagePath))
+			errs.Messages = append(errs.Messages, fmt.Errorf("creating a configuration reference entry for declaration %v in %v: cannot find a declaration of this configuration section type", k.DeclName, k.PackagePath))
 			continue
 		}
 
@@ -122,11 +110,11 @@ func Generate(prefix string, conf GeneratorConfig, tmpl *template.Template) erro
 
 		// decl is a configuration type, so get data for the type and its dependencies.
 		entries, err := section.ReferenceDataFromDeclaration(prefix, decl, sourceData.TypeDecls, conf.CamelCaseExceptions, conf.TitleWordReplacements)
-		if errors.As(err, &section.NotAGenDeclError{}) {
+		if errors.As(err, &refgen.NotAGenDeclError{}) {
 			continue
 		}
 		if err != nil {
-			errs.messages = append(errs.messages, fmt.Errorf("creating a reference entry for declaration %v in %v: %w", k.DeclName, k.PackagePath, err))
+			errs.Messages = append(errs.Messages, fmt.Errorf("creating a reference entry for declaration %v in %v: %w", k.DeclName, k.PackagePath, err))
 		}
 
 		pc.Section.ReferenceEntry = entries[k]
@@ -142,16 +130,16 @@ func Generate(prefix string, conf GeneratorConfig, tmpl *template.Template) erro
 		docpath := filepath.Join(conf.DestinationDirectory, filename+".mdx")
 		doc, err := os.Create(docpath)
 		if err != nil {
-			errs.messages = append(errs.messages, fmt.Errorf("cannot create page at %v: %w", docpath, err))
+			errs.Messages = append(errs.Messages, fmt.Errorf("cannot create page at %v: %w", docpath, err))
 			continue
 		}
 		defer doc.Close()
 
 		if err := tmpl.Execute(doc, pc); err != nil {
-			errs.messages = append(errs.messages, fmt.Errorf("cannot populate the configuration reference template: %w", err))
+			errs.Messages = append(errs.Messages, fmt.Errorf("cannot populate the configuration reference template: %w", err))
 		}
 	}
-	if len(errs.messages) > 0 {
+	if len(errs.Messages) > 0 {
 		return errs
 	}
 
