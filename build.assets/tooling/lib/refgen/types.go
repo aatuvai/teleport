@@ -104,10 +104,12 @@ func (e NotAGenDeclError) Error() string {
 	return "the declaration is not a GenDecl"
 }
 
-// GenerationError aggregates multiple errors that occur during the generation of a
-// reference. Used in the Generate function of a reference generator to report all
-// errors that occur during generation.
+// GenerationError aggregates errors encountered while generating a reference,
+// allowing to collect and report all failures rather than stopping at the first one.
 type GenerationError struct {
+	// The Messages field holds the individual errors collected during generation.
+	// Push errors to this field as they are encountered, then return the GenerationError
+	// once all entries have been processed.
 	Messages []error
 }
 
