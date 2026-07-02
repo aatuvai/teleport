@@ -18,7 +18,7 @@
 
 import {
   createEventSection,
-  createReferencePage,
+  createReferencePages,
   eventsWithoutExamples,
   ReferencePageEventData,
   removeUnknowns,
@@ -202,9 +202,7 @@ Example:
   });
 });
 
-describe('createReferencePage', () => {
-  const introParagraph = 'This is an intro paragraph.';
-
+describe('createReferencePages', () => {
   test('formats a list of events as expected', () => {
     const events = [
       {
@@ -251,7 +249,7 @@ describe('createReferencePage', () => {
       },
     ];
 
-    expect(createReferencePage(events, introParagraph)).toMatchSnapshot();
+    expect(createReferencePages(events)).toMatchSnapshot();
   });
 
   test('orders event sections by H2', () => {
@@ -294,7 +292,7 @@ describe('createReferencePage', () => {
       },
     ];
 
-    expect(createReferencePage(events, introParagraph)).toMatchSnapshot();
+    expect(createReferencePages(events)).toMatchSnapshot();
   });
 
   test('includes H3 sections for event codes if there are duplicate types', () => {
@@ -317,7 +315,7 @@ describe('createReferencePage', () => {
       },
     ];
 
-    expect(createReferencePage(events, introParagraph)).toMatchSnapshot();
+    expect(createReferencePages(events)).toMatchSnapshot();
   });
 
   test('deduplicates event codes', () => {
@@ -340,7 +338,7 @@ describe('createReferencePage', () => {
       },
     ];
 
-    expect(createReferencePage(events, introParagraph)).toMatchSnapshot();
+    expect(createReferencePages(events)).toMatchSnapshot();
   });
 
   test('displays multiple events with only one raw field', () => {
@@ -365,7 +363,7 @@ describe('createReferencePage', () => {
       },
     ];
 
-    expect(createReferencePage(events, introParagraph)).toMatchSnapshot();
+    expect(createReferencePages(events)).toMatchSnapshot();
   });
 
   test('includes H3 sections for event codes with duplicate types and partial fields', () => {
@@ -407,6 +405,6 @@ describe('createReferencePage', () => {
       },
     ];
 
-    expect(createReferencePage(events, introParagraph)).toMatchSnapshot();
+    expect(createReferencePages(events)).toMatchSnapshot();
   });
 });
