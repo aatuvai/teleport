@@ -17,6 +17,7 @@
  */
 
 import { Event, Formatters } from './types';
+import config from "./config.json";
 
 // eventsWithoutExamples returns an array of event objects based on the
 // elements in formatters that do not have corresponding examples in fixtures.
@@ -127,19 +128,22 @@ export interface ReferencePageEventData {
   };
 }
 
-// createReferencePage takes an array of JSON documents that define an audit
-// event test fixture and returns a string that contains the text of an audit
-// event reference guide.
-//
-// introParagraph contains the text of the introductory paragraph to include in
-// the guide.
+// getSegment returns the type of an audit event, which is defined as the 
+// first part of the event name, before the first period. If there is no 
+// period in the event name, the entire event name is returned.
+const getSegment = (event: ReferencePageEventData): string => {
+  return event.raw.event.split('.')[0] || event.raw.event;
+};
+
+// createReferencePages takes an array of JSON documents that define an audit
+// event test fixture and returns an array that contains the name and content of 
+// an audit event reference guide.
 //
 // See web/packages/teleport/src/Audit/fixtures/index.ts for the structure of an
 // audit event test fixture.
-export function createReferencePage(
+export function createReferencePages(
   jsonEvents: ReferencePageEventData[],
-  introParagraph: string
-): string {
+): { id: string; content: string }[] {
   const codeSet = new Set();
   let result = jsonEvents;
   result.sort((a, b) => {
@@ -149,13 +153,21 @@ export function createReferencePage(
       return 1;
     }
   });
-  const events = new Map<string, ReferencePageEventData[]>();
+
+  // Map event segments to their corresponding events. E.g. "session" => { "session.start" => [event1, event2], "session.end" => [event3] }
+  const eventSegmentsMap = new Map<string, Map<string, ReferencePageEventData[]>>();
   result.forEach(e => {
     if (codeSet.has(e.code)) {
       return;
     }
-    const codeData = events.get(e.raw.event);
+    const segment = getSegment(e);
+    const events = eventSegmentsMap.get(segment);
     codeSet.add(e.code);
+    if (!events) {
+      eventSegmentsMap.set(segment, new Map([[e.raw.event, [e]]]));
+      return;
+    }
+    const codeData = events.get(e.raw.event);
     if (!codeData) {
       events.set(e.raw.event, [e]);
       return;
@@ -163,22 +175,75 @@ export function createReferencePage(
     codeData.push(e);
   });
 
-  return events.keys().reduce(
-    (accum, current) => {
-      const codes = events.get(current);
-      if (codes.length == 1) {
-        return accum + '\n' + createEventSection(codes[0]);
-      }
-      return accum + '\n' + createMultipleEventsSection(codes);
-    },
-    `---
-title: "Audit Event Reference"
-description: "Provides a comprehensive list of Teleport audit events and their fields."
+  // Create a list of segments, each containing the events that belong to that segment.
+  // Each segment will be placed on a themed page based on the config.json file.
+  const segments = Array.from(eventSegmentsMap.keys()).map((segment) => {
+    const events = eventSegmentsMap.get(segment);
+    return {
+      type: segment,
+      content: events.keys().reduce(
+        (accum, current) => {
+          const codes = events.get(current);
+          if (codes.length == 1) {
+            return accum + '\n' + createEventSection(codes[0]);
+          }
+          return accum + '\n' + createMultipleEventsSection(codes);
+        },
+        '',
+      ),
+    };
+  });
+
+  // Create a list of themed pages based on the config.json file. Each page will contain the segments that belong to that theme.
+  const themePages = config.themes.map((theme: { id: string; name: string; segments: string[]; introduction?: string }) => {
+    return {
+      id: theme.id,
+      content: segments.filter(segment => theme.segments.indexOf(segment.type) !== -1).reduce(
+        (accum, current) => {
+          return accum + '\n' + current.content;
+        },
+        `---
+title: ${theme.name} Audit Events
+description: "Provides a list of ${theme.name} audit events."
 ---
 {/* Generated file. Do not edit. */}
 {/* To regenerate, run \`make audit-event-reference\` */}
 
-${introParagraph}
-`
-  );
+{/*cSpell:disable*/}
+
+{/* Formatted event examples sometimes include different capitalization than
+what we standardize on in the docs*/}
+{/* vale messaging.capitalization = NO */}
+${theme.introduction ? `\n${theme.introduction}\n` : ''}
+`,
+      ),
+    };
+  });
+
+  // Add a miscellaneous page for any segments that do have not been added under a theme.
+  const segmentsNotInThemes = segments.some(segment => !config.themes.some(theme => theme.segments.indexOf(segment.type) !== -1))
+  if (segmentsNotInThemes) {
+    themePages.push({
+      id: "miscellaneous",
+      content: segments.filter(segment => !config.themes.some(theme => theme.segments.indexOf(segment.type) !== -1)).reduce(
+        (accum, current) => {
+          return accum + '\n' + current.content;
+        },
+      `---
+title: Miscellaneous Audit Events
+description: "Provides a list of miscellaneous audit events."
+---
+{/* Generated file. Do not edit. */}
+{/* To regenerate, run \`make audit-event-reference\` */}
+
+{/*cSpell:disable*/}
+
+{/* Formatted event examples sometimes include different capitalization than
+what we standardize on in the docs*/}
+{/* vale messaging.capitalization = NO */}
+`,
+      ),
+    });
+  }
+  return themePages;
 }

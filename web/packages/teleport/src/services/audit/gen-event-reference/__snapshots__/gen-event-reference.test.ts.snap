@@ -1,14 +1,276 @@
 // Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
-exports[`createReferencePage deduplicates event codes 1`] = `
-"---
-title: \\"Audit Event Reference\\"
-description: \\"Provides a comprehensive list of Teleport audit events and their fields.\\"
+exports[`createReferencePages deduplicates event codes 1`] = `
+Array [
+  Object {
+    "content": "---
+title: Database Audit Events
+description: \\"Provides a list of Database audit events.\\"
 ---
 {/* Generated file. Do not edit. */}
 {/* To regenerate, run \`make audit-event-reference\` */}
 
-This is an intro paragraph.
+{/*cSpell:disable*/}
+
+{/* Formatted event examples sometimes include different capitalization than
+what we standardize on in the docs*/}
+{/* vale messaging.capitalization = NO */}
+
+",
+    "id": "database",
+  },
+  Object {
+    "content": "---
+title: SSH Sessions Audit Events
+description: \\"Provides a list of SSH Sessions audit events.\\"
+---
+{/* Generated file. Do not edit. */}
+{/* To regenerate, run \`make audit-event-reference\` */}
+
+{/*cSpell:disable*/}
+
+{/* Formatted event examples sometimes include different capitalization than
+what we standardize on in the docs*/}
+{/* vale messaging.capitalization = NO */}
+
+",
+    "id": "ssh-sessions",
+  },
+  Object {
+    "content": "---
+title: Users & Authentication Audit Events
+description: \\"Provides a list of Users & Authentication audit events.\\"
+---
+{/* Generated file. Do not edit. */}
+{/* To regenerate, run \`make audit-event-reference\` */}
+
+{/*cSpell:disable*/}
+
+{/* Formatted event examples sometimes include different capitalization than
+what we standardize on in the docs*/}
+{/* vale messaging.capitalization = NO */}
+
+",
+    "id": "users-authentication",
+  },
+  Object {
+    "content": "---
+title: Access Control Audit Events
+description: \\"Provides a list of Access Control audit events.\\"
+---
+{/* Generated file. Do not edit. */}
+{/* To regenerate, run \`make audit-event-reference\` */}
+
+{/*cSpell:disable*/}
+
+{/* Formatted event examples sometimes include different capitalization than
+what we standardize on in the docs*/}
+{/* vale messaging.capitalization = NO */}
+
+",
+    "id": "access-control",
+  },
+  Object {
+    "content": "---
+title: Desktop Access Audit Events
+description: \\"Provides a list of Desktop Access audit events.\\"
+---
+{/* Generated file. Do not edit. */}
+{/* To regenerate, run \`make audit-event-reference\` */}
+
+{/*cSpell:disable*/}
+
+{/* Formatted event examples sometimes include different capitalization than
+what we standardize on in the docs*/}
+{/* vale messaging.capitalization = NO */}
+
+",
+    "id": "desktop-access",
+  },
+  Object {
+    "content": "---
+title: Application Access Audit Events
+description: \\"Provides a list of Application Access audit events.\\"
+---
+{/* Generated file. Do not edit. */}
+{/* To regenerate, run \`make audit-event-reference\` */}
+
+{/*cSpell:disable*/}
+
+{/* Formatted event examples sometimes include different capitalization than
+what we standardize on in the docs*/}
+{/* vale messaging.capitalization = NO */}
+
+",
+    "id": "application-access",
+  },
+  Object {
+    "content": "---
+title: Kubernetes Access Audit Events
+description: \\"Provides a list of Kubernetes Access audit events.\\"
+---
+{/* Generated file. Do not edit. */}
+{/* To regenerate, run \`make audit-event-reference\` */}
+
+{/*cSpell:disable*/}
+
+{/* Formatted event examples sometimes include different capitalization than
+what we standardize on in the docs*/}
+{/* vale messaging.capitalization = NO */}
+
+",
+    "id": "kubernetes-access",
+  },
+  Object {
+    "content": "---
+title: Device Trust Audit Events
+description: \\"Provides a list of Device Trust audit events.\\"
+---
+{/* Generated file. Do not edit. */}
+{/* To regenerate, run \`make audit-event-reference\` */}
+
+{/*cSpell:disable*/}
+
+{/* Formatted event examples sometimes include different capitalization than
+what we standardize on in the docs*/}
+{/* vale messaging.capitalization = NO */}
+
+",
+    "id": "device-trust",
+  },
+  Object {
+    "content": "---
+title: Identity Providers & SSO Audit Events
+description: \\"Provides a list of Identity Providers & SSO audit events.\\"
+---
+{/* Generated file. Do not edit. */}
+{/* To regenerate, run \`make audit-event-reference\` */}
+
+{/*cSpell:disable*/}
+
+{/* Formatted event examples sometimes include different capitalization than
+what we standardize on in the docs*/}
+{/* vale messaging.capitalization = NO */}
+
+",
+    "id": "identity-providers-sso",
+  },
+  Object {
+    "content": "---
+title: Machine Identity Audit Events
+description: \\"Provides a list of Machine Identity audit events.\\"
+---
+{/* Generated file. Do not edit. */}
+{/* To regenerate, run \`make audit-event-reference\` */}
+
+{/*cSpell:disable*/}
+
+{/* Formatted event examples sometimes include different capitalization than
+what we standardize on in the docs*/}
+{/* vale messaging.capitalization = NO */}
+
+",
+    "id": "machine-identity",
+  },
+  Object {
+    "content": "---
+title: MCP Sessions Audit Events
+description: \\"Provides a list of MCP Sessions audit events.\\"
+---
+{/* Generated file. Do not edit. */}
+{/* To regenerate, run \`make audit-event-reference\` */}
+
+{/*cSpell:disable*/}
+
+{/* Formatted event examples sometimes include different capitalization than
+what we standardize on in the docs*/}
+{/* vale messaging.capitalization = NO */}
+
+",
+    "id": "mcp-sessions",
+  },
+  Object {
+    "content": "---
+title: Infrastructure & Cluster Audit Events
+description: \\"Provides a list of Infrastructure & Cluster audit events.\\"
+---
+{/* Generated file. Do not edit. */}
+{/* To regenerate, run \`make audit-event-reference\` */}
+
+{/*cSpell:disable*/}
+
+{/* Formatted event examples sometimes include different capitalization than
+what we standardize on in the docs*/}
+{/* vale messaging.capitalization = NO */}
+
+",
+    "id": "infrastructure-cluster",
+  },
+  Object {
+    "content": "---
+title: Billing & Compliance Audit Events
+description: \\"Provides a list of Billing & Compliance audit events.\\"
+---
+{/* Generated file. Do not edit. */}
+{/* To regenerate, run \`make audit-event-reference\` */}
+
+{/*cSpell:disable*/}
+
+{/* Formatted event examples sometimes include different capitalization than
+what we standardize on in the docs*/}
+{/* vale messaging.capitalization = NO */}
+
+",
+    "id": "billing-compliance",
+  },
+  Object {
+    "content": "---
+title: Auto-Update Audit Events
+description: \\"Provides a list of Auto-Update audit events.\\"
+---
+{/* Generated file. Do not edit. */}
+{/* To regenerate, run \`make audit-event-reference\` */}
+
+{/*cSpell:disable*/}
+
+{/* Formatted event examples sometimes include different capitalization than
+what we standardize on in the docs*/}
+{/* vale messaging.capitalization = NO */}
+
+",
+    "id": "auto-update",
+  },
+  Object {
+    "content": "---
+title: AI & Inference Audit Events
+description: \\"Provides a list of AI & Inference audit events.\\"
+---
+{/* Generated file. Do not edit. */}
+{/* To regenerate, run \`make audit-event-reference\` */}
+
+{/*cSpell:disable*/}
+
+{/* Formatted event examples sometimes include different capitalization than
+what we standardize on in the docs*/}
+{/* vale messaging.capitalization = NO */}
+
+",
+    "id": "ai-inference",
+  },
+  Object {
+    "content": "---
+title: Miscellaneous Audit Events
+description: \\"Provides a list of miscellaneous audit events.\\"
+---
+{/* Generated file. Do not edit. */}
+{/* To regenerate, run \`make audit-event-reference\` */}
+
+{/*cSpell:disable*/}
+
+{/* Formatted event examples sometimes include different capitalization than
+what we standardize on in the docs*/}
+{/* vale messaging.capitalization = NO */}
+
 
 ## event.a
 
@@ -22,18 +284,80 @@ Example:
   \\"code\\": \\"ABC123\\"
 }
 \`\`\`
-"
+",
+    "id": "miscellaneous",
+  },
+]
 `;
 
-exports[`createReferencePage displays multiple events with only one raw field 1`] = `
-"---
-title: \\"Audit Event Reference\\"
-description: \\"Provides a comprehensive list of Teleport audit events and their fields.\\"
+exports[`createReferencePages displays multiple events with only one raw field 1`] = `
+Array [
+  Object {
+    "content": "---
+title: Database Audit Events
+description: \\"Provides a list of Database audit events.\\"
 ---
 {/* Generated file. Do not edit. */}
 {/* To regenerate, run \`make audit-event-reference\` */}
 
-This is an intro paragraph.
+{/*cSpell:disable*/}
+
+{/* Formatted event examples sometimes include different capitalization than
+what we standardize on in the docs*/}
+{/* vale messaging.capitalization = NO */}
+
+",
+    "id": "database",
+  },
+  Object {
+    "content": "---
+title: SSH Sessions Audit Events
+description: \\"Provides a list of SSH Sessions audit events.\\"
+---
+{/* Generated file. Do not edit. */}
+{/* To regenerate, run \`make audit-event-reference\` */}
+
+{/*cSpell:disable*/}
+
+{/* Formatted event examples sometimes include different capitalization than
+what we standardize on in the docs*/}
+{/* vale messaging.capitalization = NO */}
+
+",
+    "id": "ssh-sessions",
+  },
+  Object {
+    "content": "---
+title: Users & Authentication Audit Events
+description: \\"Provides a list of Users & Authentication audit events.\\"
+---
+{/* Generated file. Do not edit. */}
+{/* To regenerate, run \`make audit-event-reference\` */}
+
+{/*cSpell:disable*/}
+
+{/* Formatted event examples sometimes include different capitalization than
+what we standardize on in the docs*/}
+{/* vale messaging.capitalization = NO */}
+
+",
+    "id": "users-authentication",
+  },
+  Object {
+    "content": "---
+title: Access Control Audit Events
+description: \\"Provides a list of Access Control audit events.\\"
+---
+{/* Generated file. Do not edit. */}
+{/* To regenerate, run \`make audit-event-reference\` */}
+
+{/*cSpell:disable*/}
+
+{/* Formatted event examples sometimes include different capitalization than
+what we standardize on in the docs*/}
+{/* vale messaging.capitalization = NO */}
+
+
 
 ## access_request.review
 
@@ -42,6 +366,210 @@ Access Request Reviewed
 Code: \`T5002I\`
 
 Event: \`access_request.review\`
+",
+    "id": "access-control",
+  },
+  Object {
+    "content": "---
+title: Desktop Access Audit Events
+description: \\"Provides a list of Desktop Access audit events.\\"
+---
+{/* Generated file. Do not edit. */}
+{/* To regenerate, run \`make audit-event-reference\` */}
+
+{/*cSpell:disable*/}
+
+{/* Formatted event examples sometimes include different capitalization than
+what we standardize on in the docs*/}
+{/* vale messaging.capitalization = NO */}
+
+",
+    "id": "desktop-access",
+  },
+  Object {
+    "content": "---
+title: Application Access Audit Events
+description: \\"Provides a list of Application Access audit events.\\"
+---
+{/* Generated file. Do not edit. */}
+{/* To regenerate, run \`make audit-event-reference\` */}
+
+{/*cSpell:disable*/}
+
+{/* Formatted event examples sometimes include different capitalization than
+what we standardize on in the docs*/}
+{/* vale messaging.capitalization = NO */}
+
+",
+    "id": "application-access",
+  },
+  Object {
+    "content": "---
+title: Kubernetes Access Audit Events
+description: \\"Provides a list of Kubernetes Access audit events.\\"
+---
+{/* Generated file. Do not edit. */}
+{/* To regenerate, run \`make audit-event-reference\` */}
+
+{/*cSpell:disable*/}
+
+{/* Formatted event examples sometimes include different capitalization than
+what we standardize on in the docs*/}
+{/* vale messaging.capitalization = NO */}
+
+",
+    "id": "kubernetes-access",
+  },
+  Object {
+    "content": "---
+title: Device Trust Audit Events
+description: \\"Provides a list of Device Trust audit events.\\"
+---
+{/* Generated file. Do not edit. */}
+{/* To regenerate, run \`make audit-event-reference\` */}
+
+{/*cSpell:disable*/}
+
+{/* Formatted event examples sometimes include different capitalization than
+what we standardize on in the docs*/}
+{/* vale messaging.capitalization = NO */}
+
+",
+    "id": "device-trust",
+  },
+  Object {
+    "content": "---
+title: Identity Providers & SSO Audit Events
+description: \\"Provides a list of Identity Providers & SSO audit events.\\"
+---
+{/* Generated file. Do not edit. */}
+{/* To regenerate, run \`make audit-event-reference\` */}
+
+{/*cSpell:disable*/}
+
+{/* Formatted event examples sometimes include different capitalization than
+what we standardize on in the docs*/}
+{/* vale messaging.capitalization = NO */}
+
+",
+    "id": "identity-providers-sso",
+  },
+  Object {
+    "content": "---
+title: Machine Identity Audit Events
+description: \\"Provides a list of Machine Identity audit events.\\"
+---
+{/* Generated file. Do not edit. */}
+{/* To regenerate, run \`make audit-event-reference\` */}
+
+{/*cSpell:disable*/}
+
+{/* Formatted event examples sometimes include different capitalization than
+what we standardize on in the docs*/}
+{/* vale messaging.capitalization = NO */}
+
+",
+    "id": "machine-identity",
+  },
+  Object {
+    "content": "---
+title: MCP Sessions Audit Events
+description: \\"Provides a list of MCP Sessions audit events.\\"
+---
+{/* Generated file. Do not edit. */}
+{/* To regenerate, run \`make audit-event-reference\` */}
+
+{/*cSpell:disable*/}
+
+{/* Formatted event examples sometimes include different capitalization than
+what we standardize on in the docs*/}
+{/* vale messaging.capitalization = NO */}
+
+",
+    "id": "mcp-sessions",
+  },
+  Object {
+    "content": "---
+title: Infrastructure & Cluster Audit Events
+description: \\"Provides a list of Infrastructure & Cluster audit events.\\"
+---
+{/* Generated file. Do not edit. */}
+{/* To regenerate, run \`make audit-event-reference\` */}
+
+{/*cSpell:disable*/}
+
+{/* Formatted event examples sometimes include different capitalization than
+what we standardize on in the docs*/}
+{/* vale messaging.capitalization = NO */}
+
+",
+    "id": "infrastructure-cluster",
+  },
+  Object {
+    "content": "---
+title: Billing & Compliance Audit Events
+description: \\"Provides a list of Billing & Compliance audit events.\\"
+---
+{/* Generated file. Do not edit. */}
+{/* To regenerate, run \`make audit-event-reference\` */}
+
+{/*cSpell:disable*/}
+
+{/* Formatted event examples sometimes include different capitalization than
+what we standardize on in the docs*/}
+{/* vale messaging.capitalization = NO */}
+
+",
+    "id": "billing-compliance",
+  },
+  Object {
+    "content": "---
+title: Auto-Update Audit Events
+description: \\"Provides a list of Auto-Update audit events.\\"
+---
+{/* Generated file. Do not edit. */}
+{/* To regenerate, run \`make audit-event-reference\` */}
+
+{/*cSpell:disable*/}
+
+{/* Formatted event examples sometimes include different capitalization than
+what we standardize on in the docs*/}
+{/* vale messaging.capitalization = NO */}
+
+",
+    "id": "auto-update",
+  },
+  Object {
+    "content": "---
+title: AI & Inference Audit Events
+description: \\"Provides a list of AI & Inference audit events.\\"
+---
+{/* Generated file. Do not edit. */}
+{/* To regenerate, run \`make audit-event-reference\` */}
+
+{/*cSpell:disable*/}
+
+{/* Formatted event examples sometimes include different capitalization than
+what we standardize on in the docs*/}
+{/* vale messaging.capitalization = NO */}
+
+",
+    "id": "ai-inference",
+  },
+  Object {
+    "content": "---
+title: Miscellaneous Audit Events
+description: \\"Provides a list of miscellaneous audit events.\\"
+---
+{/* Generated file. Do not edit. */}
+{/* To regenerate, run \`make audit-event-reference\` */}
+
+{/*cSpell:disable*/}
+
+{/* Formatted event examples sometimes include different capitalization than
+what we standardize on in the docs*/}
+{/* vale messaging.capitalization = NO */}
+
 
 ## stable_unix_user.create
 
@@ -50,18 +578,131 @@ Stable UNIX user created
 Code: \`TSUU001I\`
 
 Event: \`stable_unix_user.create\`
-"
+",
+    "id": "miscellaneous",
+  },
+]
 `;
 
-exports[`createReferencePage formats a list of events as expected 1`] = `
-"---
-title: \\"Audit Event Reference\\"
-description: \\"Provides a comprehensive list of Teleport audit events and their fields.\\"
+exports[`createReferencePages formats a list of events as expected 1`] = `
+Array [
+  Object {
+    "content": "---
+title: Database Audit Events
+description: \\"Provides a list of Database audit events.\\"
 ---
 {/* Generated file. Do not edit. */}
 {/* To regenerate, run \`make audit-event-reference\` */}
 
-This is an intro paragraph.
+{/*cSpell:disable*/}
+
+{/* Formatted event examples sometimes include different capitalization than
+what we standardize on in the docs*/}
+{/* vale messaging.capitalization = NO */}
+
+",
+    "id": "database",
+  },
+  Object {
+    "content": "---
+title: SSH Sessions Audit Events
+description: \\"Provides a list of SSH Sessions audit events.\\"
+---
+{/* Generated file. Do not edit. */}
+{/* To regenerate, run \`make audit-event-reference\` */}
+
+{/*cSpell:disable*/}
+
+{/* Formatted event examples sometimes include different capitalization than
+what we standardize on in the docs*/}
+{/* vale messaging.capitalization = NO */}
+
+",
+    "id": "ssh-sessions",
+  },
+  Object {
+    "content": "---
+title: Users & Authentication Audit Events
+description: \\"Provides a list of Users & Authentication audit events.\\"
+---
+{/* Generated file. Do not edit. */}
+{/* To regenerate, run \`make audit-event-reference\` */}
+
+{/*cSpell:disable*/}
+
+{/* Formatted event examples sometimes include different capitalization than
+what we standardize on in the docs*/}
+{/* vale messaging.capitalization = NO */}
+
+",
+    "id": "users-authentication",
+  },
+  Object {
+    "content": "---
+title: Access Control Audit Events
+description: \\"Provides a list of Access Control audit events.\\"
+---
+{/* Generated file. Do not edit. */}
+{/* To regenerate, run \`make audit-event-reference\` */}
+
+{/*cSpell:disable*/}
+
+{/* Formatted event examples sometimes include different capitalization than
+what we standardize on in the docs*/}
+{/* vale messaging.capitalization = NO */}
+
+",
+    "id": "access-control",
+  },
+  Object {
+    "content": "---
+title: Desktop Access Audit Events
+description: \\"Provides a list of Desktop Access audit events.\\"
+---
+{/* Generated file. Do not edit. */}
+{/* To regenerate, run \`make audit-event-reference\` */}
+
+{/*cSpell:disable*/}
+
+{/* Formatted event examples sometimes include different capitalization than
+what we standardize on in the docs*/}
+{/* vale messaging.capitalization = NO */}
+
+",
+    "id": "desktop-access",
+  },
+  Object {
+    "content": "---
+title: Application Access Audit Events
+description: \\"Provides a list of Application Access audit events.\\"
+---
+{/* Generated file. Do not edit. */}
+{/* To regenerate, run \`make audit-event-reference\` */}
+
+{/*cSpell:disable*/}
+
+{/* Formatted event examples sometimes include different capitalization than
+what we standardize on in the docs*/}
+{/* vale messaging.capitalization = NO */}
+
+",
+    "id": "application-access",
+  },
+  Object {
+    "content": "---
+title: Kubernetes Access Audit Events
+description: \\"Provides a list of Kubernetes Access audit events.\\"
+---
+{/* Generated file. Do not edit. */}
+{/* To regenerate, run \`make audit-event-reference\` */}
+
+{/*cSpell:disable*/}
+
+{/* Formatted event examples sometimes include different capitalization than
+what we standardize on in the docs*/}
+{/* vale messaging.capitalization = NO */}
+
+
 
 ## kube.create
 
@@ -108,18 +749,419 @@ Example:
   \\"user\\": \\"05ff66c9-a948-42f4-af0e-a1b6ba62561e.root\\"
 }
 \`\`\`
-"
-`;
-
-exports[`createReferencePage includes H3 sections for event codes if there are duplicate types 1`] = `
-"---
-title: \\"Audit Event Reference\\"
-description: \\"Provides a comprehensive list of Teleport audit events and their fields.\\"
+",
+    "id": "kubernetes-access",
+  },
+  Object {
+    "content": "---
+title: Device Trust Audit Events
+description: \\"Provides a list of Device Trust audit events.\\"
 ---
 {/* Generated file. Do not edit. */}
 {/* To regenerate, run \`make audit-event-reference\` */}
 
-This is an intro paragraph.
+{/*cSpell:disable*/}
+
+{/* Formatted event examples sometimes include different capitalization than
+what we standardize on in the docs*/}
+{/* vale messaging.capitalization = NO */}
+
+",
+    "id": "device-trust",
+  },
+  Object {
+    "content": "---
+title: Identity Providers & SSO Audit Events
+description: \\"Provides a list of Identity Providers & SSO audit events.\\"
+---
+{/* Generated file. Do not edit. */}
+{/* To regenerate, run \`make audit-event-reference\` */}
+
+{/*cSpell:disable*/}
+
+{/* Formatted event examples sometimes include different capitalization than
+what we standardize on in the docs*/}
+{/* vale messaging.capitalization = NO */}
+
+",
+    "id": "identity-providers-sso",
+  },
+  Object {
+    "content": "---
+title: Machine Identity Audit Events
+description: \\"Provides a list of Machine Identity audit events.\\"
+---
+{/* Generated file. Do not edit. */}
+{/* To regenerate, run \`make audit-event-reference\` */}
+
+{/*cSpell:disable*/}
+
+{/* Formatted event examples sometimes include different capitalization than
+what we standardize on in the docs*/}
+{/* vale messaging.capitalization = NO */}
+
+",
+    "id": "machine-identity",
+  },
+  Object {
+    "content": "---
+title: MCP Sessions Audit Events
+description: \\"Provides a list of MCP Sessions audit events.\\"
+---
+{/* Generated file. Do not edit. */}
+{/* To regenerate, run \`make audit-event-reference\` */}
+
+{/*cSpell:disable*/}
+
+{/* Formatted event examples sometimes include different capitalization than
+what we standardize on in the docs*/}
+{/* vale messaging.capitalization = NO */}
+
+",
+    "id": "mcp-sessions",
+  },
+  Object {
+    "content": "---
+title: Infrastructure & Cluster Audit Events
+description: \\"Provides a list of Infrastructure & Cluster audit events.\\"
+---
+{/* Generated file. Do not edit. */}
+{/* To regenerate, run \`make audit-event-reference\` */}
+
+{/*cSpell:disable*/}
+
+{/* Formatted event examples sometimes include different capitalization than
+what we standardize on in the docs*/}
+{/* vale messaging.capitalization = NO */}
+
+",
+    "id": "infrastructure-cluster",
+  },
+  Object {
+    "content": "---
+title: Billing & Compliance Audit Events
+description: \\"Provides a list of Billing & Compliance audit events.\\"
+---
+{/* Generated file. Do not edit. */}
+{/* To regenerate, run \`make audit-event-reference\` */}
+
+{/*cSpell:disable*/}
+
+{/* Formatted event examples sometimes include different capitalization than
+what we standardize on in the docs*/}
+{/* vale messaging.capitalization = NO */}
+
+",
+    "id": "billing-compliance",
+  },
+  Object {
+    "content": "---
+title: Auto-Update Audit Events
+description: \\"Provides a list of Auto-Update audit events.\\"
+---
+{/* Generated file. Do not edit. */}
+{/* To regenerate, run \`make audit-event-reference\` */}
+
+{/*cSpell:disable*/}
+
+{/* Formatted event examples sometimes include different capitalization than
+what we standardize on in the docs*/}
+{/* vale messaging.capitalization = NO */}
+
+",
+    "id": "auto-update",
+  },
+  Object {
+    "content": "---
+title: AI & Inference Audit Events
+description: \\"Provides a list of AI & Inference audit events.\\"
+---
+{/* Generated file. Do not edit. */}
+{/* To regenerate, run \`make audit-event-reference\` */}
+
+{/*cSpell:disable*/}
+
+{/* Formatted event examples sometimes include different capitalization than
+what we standardize on in the docs*/}
+{/* vale messaging.capitalization = NO */}
+
+",
+    "id": "ai-inference",
+  },
+]
+`;
+
+exports[`createReferencePages includes H3 sections for event codes if there are duplicate types 1`] = `
+Array [
+  Object {
+    "content": "---
+title: Database Audit Events
+description: \\"Provides a list of Database audit events.\\"
+---
+{/* Generated file. Do not edit. */}
+{/* To regenerate, run \`make audit-event-reference\` */}
+
+{/*cSpell:disable*/}
+
+{/* Formatted event examples sometimes include different capitalization than
+what we standardize on in the docs*/}
+{/* vale messaging.capitalization = NO */}
+
+",
+    "id": "database",
+  },
+  Object {
+    "content": "---
+title: SSH Sessions Audit Events
+description: \\"Provides a list of SSH Sessions audit events.\\"
+---
+{/* Generated file. Do not edit. */}
+{/* To regenerate, run \`make audit-event-reference\` */}
+
+{/*cSpell:disable*/}
+
+{/* Formatted event examples sometimes include different capitalization than
+what we standardize on in the docs*/}
+{/* vale messaging.capitalization = NO */}
+
+",
+    "id": "ssh-sessions",
+  },
+  Object {
+    "content": "---
+title: Users & Authentication Audit Events
+description: \\"Provides a list of Users & Authentication audit events.\\"
+---
+{/* Generated file. Do not edit. */}
+{/* To regenerate, run \`make audit-event-reference\` */}
+
+{/*cSpell:disable*/}
+
+{/* Formatted event examples sometimes include different capitalization than
+what we standardize on in the docs*/}
+{/* vale messaging.capitalization = NO */}
+
+",
+    "id": "users-authentication",
+  },
+  Object {
+    "content": "---
+title: Access Control Audit Events
+description: \\"Provides a list of Access Control audit events.\\"
+---
+{/* Generated file. Do not edit. */}
+{/* To regenerate, run \`make audit-event-reference\` */}
+
+{/*cSpell:disable*/}
+
+{/* Formatted event examples sometimes include different capitalization than
+what we standardize on in the docs*/}
+{/* vale messaging.capitalization = NO */}
+
+",
+    "id": "access-control",
+  },
+  Object {
+    "content": "---
+title: Desktop Access Audit Events
+description: \\"Provides a list of Desktop Access audit events.\\"
+---
+{/* Generated file. Do not edit. */}
+{/* To regenerate, run \`make audit-event-reference\` */}
+
+{/*cSpell:disable*/}
+
+{/* Formatted event examples sometimes include different capitalization than
+what we standardize on in the docs*/}
+{/* vale messaging.capitalization = NO */}
+
+",
+    "id": "desktop-access",
+  },
+  Object {
+    "content": "---
+title: Application Access Audit Events
+description: \\"Provides a list of Application Access audit events.\\"
+---
+{/* Generated file. Do not edit. */}
+{/* To regenerate, run \`make audit-event-reference\` */}
+
+{/*cSpell:disable*/}
+
+{/* Formatted event examples sometimes include different capitalization than
+what we standardize on in the docs*/}
+{/* vale messaging.capitalization = NO */}
+
+",
+    "id": "application-access",
+  },
+  Object {
+    "content": "---
+title: Kubernetes Access Audit Events
+description: \\"Provides a list of Kubernetes Access audit events.\\"
+---
+{/* Generated file. Do not edit. */}
+{/* To regenerate, run \`make audit-event-reference\` */}
+
+{/*cSpell:disable*/}
+
+{/* Formatted event examples sometimes include different capitalization than
+what we standardize on in the docs*/}
+{/* vale messaging.capitalization = NO */}
+
+",
+    "id": "kubernetes-access",
+  },
+  Object {
+    "content": "---
+title: Device Trust Audit Events
+description: \\"Provides a list of Device Trust audit events.\\"
+---
+{/* Generated file. Do not edit. */}
+{/* To regenerate, run \`make audit-event-reference\` */}
+
+{/*cSpell:disable*/}
+
+{/* Formatted event examples sometimes include different capitalization than
+what we standardize on in the docs*/}
+{/* vale messaging.capitalization = NO */}
+
+",
+    "id": "device-trust",
+  },
+  Object {
+    "content": "---
+title: Identity Providers & SSO Audit Events
+description: \\"Provides a list of Identity Providers & SSO audit events.\\"
+---
+{/* Generated file. Do not edit. */}
+{/* To regenerate, run \`make audit-event-reference\` */}
+
+{/*cSpell:disable*/}
+
+{/* Formatted event examples sometimes include different capitalization than
+what we standardize on in the docs*/}
+{/* vale messaging.capitalization = NO */}
+
+",
+    "id": "identity-providers-sso",
+  },
+  Object {
+    "content": "---
+title: Machine Identity Audit Events
+description: \\"Provides a list of Machine Identity audit events.\\"
+---
+{/* Generated file. Do not edit. */}
+{/* To regenerate, run \`make audit-event-reference\` */}
+
+{/*cSpell:disable*/}
+
+{/* Formatted event examples sometimes include different capitalization than
+what we standardize on in the docs*/}
+{/* vale messaging.capitalization = NO */}
+
+",
+    "id": "machine-identity",
+  },
+  Object {
+    "content": "---
+title: MCP Sessions Audit Events
+description: \\"Provides a list of MCP Sessions audit events.\\"
+---
+{/* Generated file. Do not edit. */}
+{/* To regenerate, run \`make audit-event-reference\` */}
+
+{/*cSpell:disable*/}
+
+{/* Formatted event examples sometimes include different capitalization than
+what we standardize on in the docs*/}
+{/* vale messaging.capitalization = NO */}
+
+",
+    "id": "mcp-sessions",
+  },
+  Object {
+    "content": "---
+title: Infrastructure & Cluster Audit Events
+description: \\"Provides a list of Infrastructure & Cluster audit events.\\"
+---
+{/* Generated file. Do not edit. */}
+{/* To regenerate, run \`make audit-event-reference\` */}
+
+{/*cSpell:disable*/}
+
+{/* Formatted event examples sometimes include different capitalization than
+what we standardize on in the docs*/}
+{/* vale messaging.capitalization = NO */}
+
+",
+    "id": "infrastructure-cluster",
+  },
+  Object {
+    "content": "---
+title: Billing & Compliance Audit Events
+description: \\"Provides a list of Billing & Compliance audit events.\\"
+---
+{/* Generated file. Do not edit. */}
+{/* To regenerate, run \`make audit-event-reference\` */}
+
+{/*cSpell:disable*/}
+
+{/* Formatted event examples sometimes include different capitalization than
+what we standardize on in the docs*/}
+{/* vale messaging.capitalization = NO */}
+
+",
+    "id": "billing-compliance",
+  },
+  Object {
+    "content": "---
+title: Auto-Update Audit Events
+description: \\"Provides a list of Auto-Update audit events.\\"
+---
+{/* Generated file. Do not edit. */}
+{/* To regenerate, run \`make audit-event-reference\` */}
+
+{/*cSpell:disable*/}
+
+{/* Formatted event examples sometimes include different capitalization than
+what we standardize on in the docs*/}
+{/* vale messaging.capitalization = NO */}
+
+",
+    "id": "auto-update",
+  },
+  Object {
+    "content": "---
+title: AI & Inference Audit Events
+description: \\"Provides a list of AI & Inference audit events.\\"
+---
+{/* Generated file. Do not edit. */}
+{/* To regenerate, run \`make audit-event-reference\` */}
+
+{/*cSpell:disable*/}
+
+{/* Formatted event examples sometimes include different capitalization than
+what we standardize on in the docs*/}
+{/* vale messaging.capitalization = NO */}
+
+",
+    "id": "ai-inference",
+  },
+  Object {
+    "content": "---
+title: Miscellaneous Audit Events
+description: \\"Provides a list of miscellaneous audit events.\\"
+---
+{/* Generated file. Do not edit. */}
+{/* To regenerate, run \`make audit-event-reference\` */}
+
+{/*cSpell:disable*/}
+
+{/* Formatted event examples sometimes include different capitalization than
+what we standardize on in the docs*/}
+{/* vale messaging.capitalization = NO */}
+
 
 ## event.a
 
@@ -150,18 +1192,283 @@ Example:
   \\"code\\": \\"ABC456\\"
 }
 \`\`\`
-"
+",
+    "id": "miscellaneous",
+  },
+]
 `;
 
-exports[`createReferencePage includes H3 sections for event codes with duplicate types and partial fields 1`] = `
-"---
-title: \\"Audit Event Reference\\"
-description: \\"Provides a comprehensive list of Teleport audit events and their fields.\\"
+exports[`createReferencePages includes H3 sections for event codes with duplicate types and partial fields 1`] = `
+Array [
+  Object {
+    "content": "---
+title: Database Audit Events
+description: \\"Provides a list of Database audit events.\\"
 ---
 {/* Generated file. Do not edit. */}
 {/* To regenerate, run \`make audit-event-reference\` */}
 
-This is an intro paragraph.
+{/*cSpell:disable*/}
+
+{/* Formatted event examples sometimes include different capitalization than
+what we standardize on in the docs*/}
+{/* vale messaging.capitalization = NO */}
+
+",
+    "id": "database",
+  },
+  Object {
+    "content": "---
+title: SSH Sessions Audit Events
+description: \\"Provides a list of SSH Sessions audit events.\\"
+---
+{/* Generated file. Do not edit. */}
+{/* To regenerate, run \`make audit-event-reference\` */}
+
+{/*cSpell:disable*/}
+
+{/* Formatted event examples sometimes include different capitalization than
+what we standardize on in the docs*/}
+{/* vale messaging.capitalization = NO */}
+
+",
+    "id": "ssh-sessions",
+  },
+  Object {
+    "content": "---
+title: Users & Authentication Audit Events
+description: \\"Provides a list of Users & Authentication audit events.\\"
+---
+{/* Generated file. Do not edit. */}
+{/* To regenerate, run \`make audit-event-reference\` */}
+
+{/*cSpell:disable*/}
+
+{/* Formatted event examples sometimes include different capitalization than
+what we standardize on in the docs*/}
+{/* vale messaging.capitalization = NO */}
+
+",
+    "id": "users-authentication",
+  },
+  Object {
+    "content": "---
+title: Access Control Audit Events
+description: \\"Provides a list of Access Control audit events.\\"
+---
+{/* Generated file. Do not edit. */}
+{/* To regenerate, run \`make audit-event-reference\` */}
+
+{/*cSpell:disable*/}
+
+{/* Formatted event examples sometimes include different capitalization than
+what we standardize on in the docs*/}
+{/* vale messaging.capitalization = NO */}
+
+",
+    "id": "access-control",
+  },
+  Object {
+    "content": "---
+title: Desktop Access Audit Events
+description: \\"Provides a list of Desktop Access audit events.\\"
+---
+{/* Generated file. Do not edit. */}
+{/* To regenerate, run \`make audit-event-reference\` */}
+
+{/*cSpell:disable*/}
+
+{/* Formatted event examples sometimes include different capitalization than
+what we standardize on in the docs*/}
+{/* vale messaging.capitalization = NO */}
+
+",
+    "id": "desktop-access",
+  },
+  Object {
+    "content": "---
+title: Application Access Audit Events
+description: \\"Provides a list of Application Access audit events.\\"
+---
+{/* Generated file. Do not edit. */}
+{/* To regenerate, run \`make audit-event-reference\` */}
+
+{/*cSpell:disable*/}
+
+{/* Formatted event examples sometimes include different capitalization than
+what we standardize on in the docs*/}
+{/* vale messaging.capitalization = NO */}
+
+",
+    "id": "application-access",
+  },
+  Object {
+    "content": "---
+title: Kubernetes Access Audit Events
+description: \\"Provides a list of Kubernetes Access audit events.\\"
+---
+{/* Generated file. Do not edit. */}
+{/* To regenerate, run \`make audit-event-reference\` */}
+
+{/*cSpell:disable*/}
+
+{/* Formatted event examples sometimes include different capitalization than
+what we standardize on in the docs*/}
+{/* vale messaging.capitalization = NO */}
+
+",
+    "id": "kubernetes-access",
+  },
+  Object {
+    "content": "---
+title: Device Trust Audit Events
+description: \\"Provides a list of Device Trust audit events.\\"
+---
+{/* Generated file. Do not edit. */}
+{/* To regenerate, run \`make audit-event-reference\` */}
+
+{/*cSpell:disable*/}
+
+{/* Formatted event examples sometimes include different capitalization than
+what we standardize on in the docs*/}
+{/* vale messaging.capitalization = NO */}
+
+",
+    "id": "device-trust",
+  },
+  Object {
+    "content": "---
+title: Identity Providers & SSO Audit Events
+description: \\"Provides a list of Identity Providers & SSO audit events.\\"
+---
+{/* Generated file. Do not edit. */}
+{/* To regenerate, run \`make audit-event-reference\` */}
+
+{/*cSpell:disable*/}
+
+{/* Formatted event examples sometimes include different capitalization than
+what we standardize on in the docs*/}
+{/* vale messaging.capitalization = NO */}
+
+",
+    "id": "identity-providers-sso",
+  },
+  Object {
+    "content": "---
+title: Machine Identity Audit Events
+description: \\"Provides a list of Machine Identity audit events.\\"
+---
+{/* Generated file. Do not edit. */}
+{/* To regenerate, run \`make audit-event-reference\` */}
+
+{/*cSpell:disable*/}
+
+{/* Formatted event examples sometimes include different capitalization than
+what we standardize on in the docs*/}
+{/* vale messaging.capitalization = NO */}
+
+",
+    "id": "machine-identity",
+  },
+  Object {
+    "content": "---
+title: MCP Sessions Audit Events
+description: \\"Provides a list of MCP Sessions audit events.\\"
+---
+{/* Generated file. Do not edit. */}
+{/* To regenerate, run \`make audit-event-reference\` */}
+
+{/*cSpell:disable*/}
+
+{/* Formatted event examples sometimes include different capitalization than
+what we standardize on in the docs*/}
+{/* vale messaging.capitalization = NO */}
+
+",
+    "id": "mcp-sessions",
+  },
+  Object {
+    "content": "---
+title: Infrastructure & Cluster Audit Events
+description: \\"Provides a list of Infrastructure & Cluster audit events.\\"
+---
+{/* Generated file. Do not edit. */}
+{/* To regenerate, run \`make audit-event-reference\` */}
+
+{/*cSpell:disable*/}
+
+{/* Formatted event examples sometimes include different capitalization than
+what we standardize on in the docs*/}
+{/* vale messaging.capitalization = NO */}
+
+",
+    "id": "infrastructure-cluster",
+  },
+  Object {
+    "content": "---
+title: Billing & Compliance Audit Events
+description: \\"Provides a list of Billing & Compliance audit events.\\"
+---
+{/* Generated file. Do not edit. */}
+{/* To regenerate, run \`make audit-event-reference\` */}
+
+{/*cSpell:disable*/}
+
+{/* Formatted event examples sometimes include different capitalization than
+what we standardize on in the docs*/}
+{/* vale messaging.capitalization = NO */}
+
+",
+    "id": "billing-compliance",
+  },
+  Object {
+    "content": "---
+title: Auto-Update Audit Events
+description: \\"Provides a list of Auto-Update audit events.\\"
+---
+{/* Generated file. Do not edit. */}
+{/* To regenerate, run \`make audit-event-reference\` */}
+
+{/*cSpell:disable*/}
+
+{/* Formatted event examples sometimes include different capitalization than
+what we standardize on in the docs*/}
+{/* vale messaging.capitalization = NO */}
+
+",
+    "id": "auto-update",
+  },
+  Object {
+    "content": "---
+title: AI & Inference Audit Events
+description: \\"Provides a list of AI & Inference audit events.\\"
+---
+{/* Generated file. Do not edit. */}
+{/* To regenerate, run \`make audit-event-reference\` */}
+
+{/*cSpell:disable*/}
+
+{/* Formatted event examples sometimes include different capitalization than
+what we standardize on in the docs*/}
+{/* vale messaging.capitalization = NO */}
+
+",
+    "id": "ai-inference",
+  },
+  Object {
+    "content": "---
+title: Miscellaneous Audit Events
+description: \\"Provides a list of miscellaneous audit events.\\"
+---
+{/* Generated file. Do not edit. */}
+{/* To regenerate, run \`make audit-event-reference\` */}
+
+{/*cSpell:disable*/}
+
+{/* Formatted event examples sometimes include different capitalization than
+what we standardize on in the docs*/}
+{/* vale messaging.capitalization = NO */}
+
 
 ## event.a
 
@@ -196,18 +1503,283 @@ Event A starting
 Code: \`ABC789\`
 
 Event: \`event.a\`
-"
+",
+    "id": "miscellaneous",
+  },
+]
 `;
 
-exports[`createReferencePage orders event sections by H2 1`] = `
-"---
-title: \\"Audit Event Reference\\"
-description: \\"Provides a comprehensive list of Teleport audit events and their fields.\\"
+exports[`createReferencePages orders event sections by H2 1`] = `
+Array [
+  Object {
+    "content": "---
+title: Database Audit Events
+description: \\"Provides a list of Database audit events.\\"
 ---
 {/* Generated file. Do not edit. */}
 {/* To regenerate, run \`make audit-event-reference\` */}
 
-This is an intro paragraph.
+{/*cSpell:disable*/}
+
+{/* Formatted event examples sometimes include different capitalization than
+what we standardize on in the docs*/}
+{/* vale messaging.capitalization = NO */}
+
+",
+    "id": "database",
+  },
+  Object {
+    "content": "---
+title: SSH Sessions Audit Events
+description: \\"Provides a list of SSH Sessions audit events.\\"
+---
+{/* Generated file. Do not edit. */}
+{/* To regenerate, run \`make audit-event-reference\` */}
+
+{/*cSpell:disable*/}
+
+{/* Formatted event examples sometimes include different capitalization than
+what we standardize on in the docs*/}
+{/* vale messaging.capitalization = NO */}
+
+",
+    "id": "ssh-sessions",
+  },
+  Object {
+    "content": "---
+title: Users & Authentication Audit Events
+description: \\"Provides a list of Users & Authentication audit events.\\"
+---
+{/* Generated file. Do not edit. */}
+{/* To regenerate, run \`make audit-event-reference\` */}
+
+{/*cSpell:disable*/}
+
+{/* Formatted event examples sometimes include different capitalization than
+what we standardize on in the docs*/}
+{/* vale messaging.capitalization = NO */}
+
+",
+    "id": "users-authentication",
+  },
+  Object {
+    "content": "---
+title: Access Control Audit Events
+description: \\"Provides a list of Access Control audit events.\\"
+---
+{/* Generated file. Do not edit. */}
+{/* To regenerate, run \`make audit-event-reference\` */}
+
+{/*cSpell:disable*/}
+
+{/* Formatted event examples sometimes include different capitalization than
+what we standardize on in the docs*/}
+{/* vale messaging.capitalization = NO */}
+
+",
+    "id": "access-control",
+  },
+  Object {
+    "content": "---
+title: Desktop Access Audit Events
+description: \\"Provides a list of Desktop Access audit events.\\"
+---
+{/* Generated file. Do not edit. */}
+{/* To regenerate, run \`make audit-event-reference\` */}
+
+{/*cSpell:disable*/}
+
+{/* Formatted event examples sometimes include different capitalization than
+what we standardize on in the docs*/}
+{/* vale messaging.capitalization = NO */}
+
+",
+    "id": "desktop-access",
+  },
+  Object {
+    "content": "---
+title: Application Access Audit Events
+description: \\"Provides a list of Application Access audit events.\\"
+---
+{/* Generated file. Do not edit. */}
+{/* To regenerate, run \`make audit-event-reference\` */}
+
+{/*cSpell:disable*/}
+
+{/* Formatted event examples sometimes include different capitalization than
+what we standardize on in the docs*/}
+{/* vale messaging.capitalization = NO */}
+
+",
+    "id": "application-access",
+  },
+  Object {
+    "content": "---
+title: Kubernetes Access Audit Events
+description: \\"Provides a list of Kubernetes Access audit events.\\"
+---
+{/* Generated file. Do not edit. */}
+{/* To regenerate, run \`make audit-event-reference\` */}
+
+{/*cSpell:disable*/}
+
+{/* Formatted event examples sometimes include different capitalization than
+what we standardize on in the docs*/}
+{/* vale messaging.capitalization = NO */}
+
+",
+    "id": "kubernetes-access",
+  },
+  Object {
+    "content": "---
+title: Device Trust Audit Events
+description: \\"Provides a list of Device Trust audit events.\\"
+---
+{/* Generated file. Do not edit. */}
+{/* To regenerate, run \`make audit-event-reference\` */}
+
+{/*cSpell:disable*/}
+
+{/* Formatted event examples sometimes include different capitalization than
+what we standardize on in the docs*/}
+{/* vale messaging.capitalization = NO */}
+
+",
+    "id": "device-trust",
+  },
+  Object {
+    "content": "---
+title: Identity Providers & SSO Audit Events
+description: \\"Provides a list of Identity Providers & SSO audit events.\\"
+---
+{/* Generated file. Do not edit. */}
+{/* To regenerate, run \`make audit-event-reference\` */}
+
+{/*cSpell:disable*/}
+
+{/* Formatted event examples sometimes include different capitalization than
+what we standardize on in the docs*/}
+{/* vale messaging.capitalization = NO */}
+
+",
+    "id": "identity-providers-sso",
+  },
+  Object {
+    "content": "---
+title: Machine Identity Audit Events
+description: \\"Provides a list of Machine Identity audit events.\\"
+---
+{/* Generated file. Do not edit. */}
+{/* To regenerate, run \`make audit-event-reference\` */}
+
+{/*cSpell:disable*/}
+
+{/* Formatted event examples sometimes include different capitalization than
+what we standardize on in the docs*/}
+{/* vale messaging.capitalization = NO */}
+
+",
+    "id": "machine-identity",
+  },
+  Object {
+    "content": "---
+title: MCP Sessions Audit Events
+description: \\"Provides a list of MCP Sessions audit events.\\"
+---
+{/* Generated file. Do not edit. */}
+{/* To regenerate, run \`make audit-event-reference\` */}
+
+{/*cSpell:disable*/}
+
+{/* Formatted event examples sometimes include different capitalization than
+what we standardize on in the docs*/}
+{/* vale messaging.capitalization = NO */}
+
+",
+    "id": "mcp-sessions",
+  },
+  Object {
+    "content": "---
+title: Infrastructure & Cluster Audit Events
+description: \\"Provides a list of Infrastructure & Cluster audit events.\\"
+---
+{/* Generated file. Do not edit. */}
+{/* To regenerate, run \`make audit-event-reference\` */}
+
+{/*cSpell:disable*/}
+
+{/* Formatted event examples sometimes include different capitalization than
+what we standardize on in the docs*/}
+{/* vale messaging.capitalization = NO */}
+
+",
+    "id": "infrastructure-cluster",
+  },
+  Object {
+    "content": "---
+title: Billing & Compliance Audit Events
+description: \\"Provides a list of Billing & Compliance audit events.\\"
+---
+{/* Generated file. Do not edit. */}
+{/* To regenerate, run \`make audit-event-reference\` */}
+
+{/*cSpell:disable*/}
+
+{/* Formatted event examples sometimes include different capitalization than
+what we standardize on in the docs*/}
+{/* vale messaging.capitalization = NO */}
+
+",
+    "id": "billing-compliance",
+  },
+  Object {
+    "content": "---
+title: Auto-Update Audit Events
+description: \\"Provides a list of Auto-Update audit events.\\"
+---
+{/* Generated file. Do not edit. */}
+{/* To regenerate, run \`make audit-event-reference\` */}
+
+{/*cSpell:disable*/}
+
+{/* Formatted event examples sometimes include different capitalization than
+what we standardize on in the docs*/}
+{/* vale messaging.capitalization = NO */}
+
+",
+    "id": "auto-update",
+  },
+  Object {
+    "content": "---
+title: AI & Inference Audit Events
+description: \\"Provides a list of AI & Inference audit events.\\"
+---
+{/* Generated file. Do not edit. */}
+{/* To regenerate, run \`make audit-event-reference\` */}
+
+{/*cSpell:disable*/}
+
+{/* Formatted event examples sometimes include different capitalization than
+what we standardize on in the docs*/}
+{/* vale messaging.capitalization = NO */}
+
+",
+    "id": "ai-inference",
+  },
+  Object {
+    "content": "---
+title: Miscellaneous Audit Events
+description: \\"Provides a list of miscellaneous audit events.\\"
+---
+{/* Generated file. Do not edit. */}
+{/* To regenerate, run \`make audit-event-reference\` */}
+
+{/*cSpell:disable*/}
+
+{/* Formatted event examples sometimes include different capitalization than
+what we standardize on in the docs*/}
+{/* vale messaging.capitalization = NO */}
+
 
 ## event.a
 
@@ -247,5 +1819,8 @@ Example:
   \\"code\\": \\"GHI123\\"
 }
 \`\`\`
-"
+",
+    "id": "miscellaneous",
+  },
+]
 `;
