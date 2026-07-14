@@ -86,9 +86,9 @@ type SourceData struct {
 	// TypeDecls maps package and declaration names to data that the generator
 	// uses to format documentation for dynamic resource fields.
 	TypeDecls map[PackageInfo]DeclarationInfo
-	// ProtobufOneOfWrappers maps package and parent type names to data about
+	// ProtobufOneofWrappers maps package and parent type names to data about
 	// protobuf_oneof wrapper types.
-	ProtobufOneOfWrappers map[protobufOneofWrapperKey][]DeclarationInfo
+	ProtobufOneofWrappers map[protobufOneofWrapperKey][]DeclarationInfo
 }
 
 // NewSourceData extracts type declarations from the Go files rooted at
@@ -227,7 +227,7 @@ func NewSourceData(prefix string, rootPath string) (SourceData, error) {
 
 	return SourceData{
 		TypeDecls:             typeDecls,
-		ProtobufOneOfWrappers: protobufOneofWrappers,
+		ProtobufOneofWrappers: protobufOneofWrappers,
 	}, nil
 }
 

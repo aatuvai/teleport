@@ -1760,7 +1760,7 @@ type Metadata struct {
 			// Strip the temp directory from the wrappers index keys and
 			// PackageNames so they match the cleaned-up declsWithoutTmp paths.
 			wrappersWithoutTmp := make(map[protobufOneofWrapperKey][]DeclarationInfo)
-			for k, ds := range sourceData.ProtobufOneOfWrappers {
+			for k, ds := range sourceData.ProtobufOneofWrappers {
 				k.packagePath = strings.ReplaceAll(k.packagePath, filepath.Base(tmp)+"/", "")
 				cleaned := make([]DeclarationInfo, len(ds))
 				for i, d := range ds {
