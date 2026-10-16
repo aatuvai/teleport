@@ -11,6 +11,20 @@ tags:
  - infrastructure-identity
 page_type: how-to
 ---
+import DocsPagesIncludesMachineIdPluginPrerequisites from "@version/docs/pages/includes/machine-id/plugin-prerequisites.mdx";
+import DocsPagesIncludesPluginsRbacImpersonateEventHandlerMachineId from "@version/docs/pages/includes/plugins/rbac-impersonate-event-handler-machine-id.mdx";
+
+
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
+import DocsPagesIncludesTctl from "@version/docs/pages/includes/tctl.mdx";
+import DocsPagesIncludesPluginsInstallEventHandler from "@version/docs/pages/includes/plugins/install-event-handler.mdx";
+import DocsPagesIncludesPluginsConfigureEventHandler from "@version/docs/pages/includes/plugins/configure-event-handler.mdx";
+
+import DocsPagesIncludesPluginsEventHandlerRoleUser from "@version/docs/pages/includes/plugins/event-handler-role-user.mdx";
+import DocsPagesIncludesPluginsRbacImpersonateEventHandler from "@version/docs/pages/includes/plugins/rbac-impersonate-event-handler.mdx";
+
+import DocsPagesIncludesPluginsTbotIdentity from "@version/docs/pages/includes/plugins/tbot-identity.mdx";
+import DocsPagesIncludesPluginsIdentityExport from "@version/docs/pages/includes/plugins/identity-export.mdx";
 
 In this guide, you will set up the Teleport Event Handler plugin with credentials
 to authenticate to the Teleport Auth Service and access the events API.
@@ -22,14 +36,14 @@ cluster. It authenticates to your Teleport cluster using mutual TLS to begin for
 
 ## Prerequisites
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx!)
+<DocsPagesIncludesEditionPrereqsTabs />
 
-(!docs/pages/includes/machine-id/plugin-prerequisites.mdx!)
+<DocsPagesIncludesMachineIdPluginPrerequisites />
 
 - A server, virtual machine, Kubernetes cluster, or Docker environment to run the
   Teleport Event Handler plugin.
 
-- (!docs/pages/includes/tctl.mdx!)
+- <DocsPagesIncludesTctl />
 
 - On your workstation, create a folder called `event-handler`, to hold configuration files and plugin state:
 
@@ -40,7 +54,7 @@ cluster. It authenticates to your Teleport cluster using mutual TLS to begin for
 
 ## Step 1/2. Install the Event Handler plugin
 
-(!docs/pages/includes/plugins/install-event-handler.mdx!)
+<DocsPagesIncludesPluginsInstallEventHandler />
 
 ## Step 2/2. Set up the Event Handler plugin
 
@@ -56,17 +70,17 @@ your environment.
 <Tabs>
 <TabItem scope={["cloud","team"]} label="Cloud-Hosted">
 
-(!docs/pages/includes/plugins/configure-event-handler.mdx service="Teleport Enterprise Cloud account"!)
+<DocsPagesIncludesPluginsConfigureEventHandler service="Teleport Enterprise Cloud account" />
 
 </TabItem>
 <TabItem scope={["oss", "enterprise"]} label="Self-Hosted">
 
-(!docs/pages/includes/plugins/configure-event-handler.mdx!)
+<DocsPagesIncludesPluginsConfigureEventHandler />
 
 </TabItem>
 <TabItem scope={["oss", "enterprise", "cloud"]} label="Helm Chart">
 
-(!docs/pages/includes/plugins/configure-event-handler.mdx forwarder="fluentd.fluentd.svc.cluster.local" binary="docker run -v $(pwd):/opt/teleport-plugin -w /opt/teleport-plugin public.ecr.aws/gravitational/teleport-plugin-event-handler:(=teleport.version=)"!)
+<DocsPagesIncludesPluginsConfigureEventHandler forwarder="fluentd.fluentd.svc.cluster.local" binary="docker run -v $(pwd):/opt/teleport-plugin -w /opt/teleport-plugin public.ecr.aws/gravitational/teleport-plugin-event-handler:(=teleport.version=)" />
 
 In order to export audit events, you'll need to have the root certificate and the
 client credentials available as a secret. Use the following command to create
@@ -82,7 +96,7 @@ secret so the Helm chart can mount them to their appropriate path.
 </TabItem>
 <TabItem label="Local Docker test">
 
-(!docs/pages/includes/plugins/configure-event-handler.mdx binary="docker run -v $(pwd):/opt/teleport-plugin -w /opt/teleport-plugin public.ecr.aws/gravitational/teleport-plugin-event-handler:(=teleport.version=)"!)
+<DocsPagesIncludesPluginsConfigureEventHandler binary="docker run -v $(pwd):/opt/teleport-plugin -w /opt/teleport-plugin public.ecr.aws/gravitational/teleport-plugin-event-handler:(=teleport.version=)" />
 
 </TabItem>
 </Tabs>
@@ -104,16 +118,16 @@ key from the same certificate authority for the Teleport Event Handler to use.
 
 ### Define the Event Handler role
 
-(!docs/pages/includes/plugins/event-handler-role-user.mdx!)
+<DocsPagesIncludesPluginsEventHandlerRoleUser />
 
 ### Enable issuing of credentials for the Event Handler role
 
 <Tabs>
 <TabItem label="Machine & Workload Identity">
-(!docs/pages/includes/plugins/rbac-impersonate-event-handler-machine-id.mdx!)
+<DocsPagesIncludesPluginsRbacImpersonateEventHandlerMachineId />
 </TabItem>
 <TabItem label="Long-lived identity files">
-(!docs/pages/includes/plugins/rbac-impersonate-event-handler.mdx!)
+<DocsPagesIncludesPluginsRbacImpersonateEventHandler />
 </TabItem>
 </Tabs>
 
@@ -126,10 +140,10 @@ longer-lived identity files with `tctl`:
 
 <Tabs>
 <TabItem label="Machine & Workload Identity">
-(!docs/pages/includes/plugins/tbot-identity.mdx secret="teleport-plugin-event-handler-identity"!)
+<DocsPagesIncludesPluginsTbotIdentity secret="teleport-plugin-event-handler-identity" />
 </TabItem>
 <TabItem label="Long-lived identity files">
-(!docs/pages/includes/plugins/identity-export.mdx user="teleport-event-handler" plugin="event-handler" secret="teleport-plugin-event-handler-identity"!)
+<DocsPagesIncludesPluginsIdentityExport user="teleport-event-handler" plugin="event-handler" secret="teleport-plugin-event-handler-identity" />
 </TabItem>
 </Tabs>
 

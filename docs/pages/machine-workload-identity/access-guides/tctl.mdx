@@ -8,6 +8,12 @@ tags:
  - infrastructure-identity
 page_type: how-to
 ---
+import DocsPagesIncludesMachineIdReloadTbot from "@version/docs/pages/includes/machine-id/reload-tbot.mdx";
+
+
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
+import DocsPagesIncludesTctl from "@version/docs/pages/includes/tctl.mdx";
+import DocsPagesIncludesCreateRoleUsingWeb from "@version/docs/pages/includes/create-role-using-web.mdx";
 
 {/* lint disable page-structure remark-lint */}
 
@@ -22,9 +28,9 @@ then use `tctl` to deploy Teleport roles defined in files.
 
 ## Prerequisites
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx!)
+<DocsPagesIncludesEditionPrereqsTabs />
 
-- (!docs/pages/includes/tctl.mdx!)
+- <DocsPagesIncludesTctl />
 - `tbot` must already be installed and configured on the machine that will
   use `tctl`. For more information, see the
   [deployment guides](../deployment/deployment.mdx).
@@ -65,7 +71,7 @@ Replace `example-role` with a descriptive name related to your use case.
 
 Use `tctl create -f ./role.yaml` to create the role.
 
-(!docs/pages/includes/create-role-using-web.mdx!)
+<DocsPagesIncludesCreateRoleUsingWeb />
 
 Now, use `tctl bots update` to add the role to the Bot. Replace `example`
 with the name of the Bot you created in the deployment guide and `example-role`
@@ -99,7 +105,7 @@ services:
     path: /opt/machine-id
 ```
 
-(!docs/pages/includes/machine-id/reload-tbot.mdx resource="the generated credentials"!)
+<DocsPagesIncludesMachineIdReloadTbot resource="the generated credentials" />
 
 You should now see an `identity` file under `/opt/machine-id`. This contains
 the private key and signed certificates needed by `tctl` to

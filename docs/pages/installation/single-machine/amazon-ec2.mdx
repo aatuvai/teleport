@@ -7,6 +7,8 @@ tags:
  - reference
  - aws
 ---
+import DocsPagesIncludesTeleportAmis from "@version/docs/pages/includes/teleport-amis.mdx";
+
 
 We provide pre-built `amd64` and `arm64` Amazon Linux 2023 based EC2 AMIs with
 Teleport pre-installed.
@@ -30,4 +32,4 @@ the Teleport installation by setting configuration variables in the
 `/etc/teleport.d/conf` file on the EC2 instance. See the [Starter Cluster Configuration Template](https://github.com/gravitational/teleport/tree/branch/v(=teleport.major_version=)/examples/aws/terraform/starter-cluster/data.tpl)
 for a list of the available configuration options.
 
-(!docs/pages/includes/teleport-amis.mdx!)
+<DocsPagesIncludesTeleportAmis />

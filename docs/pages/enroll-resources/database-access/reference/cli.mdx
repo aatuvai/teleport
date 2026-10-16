@@ -8,6 +8,12 @@ tags:
  - infrastructure-identity
 page_type: reference
 ---
+import DocsPagesIncludesDbUserNameFlags from "@version/docs/pages/includes/db-user-name-flags.mdx";
+
+
+import DocsPagesIncludesTctl from "@version/docs/pages/includes/tctl.mdx";
+import DocsPagesIncludesCreateRoleUsingWeb from "@version/docs/pages/includes/create-role-using-web.mdx";
+import DocsPagesIncludesDatabaseAccessTtlNote from "@version/docs/pages/includes/database-access/ttl-note.mdx";
 
 This page lists the Teleport CLI commands that are relevant to managing
 Teleport-protected databases, including:
@@ -18,7 +24,7 @@ Teleport-protected databases, including:
 - The `tctl` administration tool, which you use to manage `db` resources that
   represent databases known to your Teleport cluster.
 
-  (!docs/pages/includes/tctl.mdx!)
+  <DocsPagesIncludesTctl />
 
 - The `tsh` client tool, which end-users run in order to access databases in
   your cluster.
@@ -236,7 +242,7 @@ Create the role:
 $ tctl create -f db-impersonator.yaml
 ```
 
-(!docs/pages/includes/create-role-using-web.mdx!)
+<DocsPagesIncludesCreateRoleUsingWeb />
 
 Open your Teleport user's dynamic configuration resource in your editor so you
 can add the `db-impersonator` role:
@@ -265,7 +271,7 @@ Log out of your Teleport cluster and log in again. You will now be able to run
 
 </details>
 
-(!docs/pages/includes/database-access/ttl-note.mdx!)
+<DocsPagesIncludesDatabaseAccessTtlNote />
 
 ## tctl db ls
 
@@ -340,7 +346,7 @@ $ tsh db login --db-user=postgres --db-name=postgres example
 | `--db-name` | The database name to log in to. |
 | `--db-roles` | Comma-separated list of database roles to use for auto-provisioned user. If not provided, all database roles will be assigned. |
 
-(!docs/pages/includes/db-user-name-flags.mdx!)
+<DocsPagesIncludesDbUserNameFlags />
 
 ## tsh db logout
 
@@ -377,7 +383,7 @@ $ tsh db connect --db-user=alice --db-name=db --db-roles reader example
 | `--db-name` | The database name to log in to. |
 | `--db-roles` | Comma-separated list of database roles to use for auto-provisioned user. If not provided, all database roles will be assigned. |
 
-(!docs/pages/includes/db-user-name-flags.mdx!)
+<DocsPagesIncludesDbUserNameFlags />
 
 ## tsh db exec
 

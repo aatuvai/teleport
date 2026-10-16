@@ -8,6 +8,10 @@ tags:
 enterprise: Hardware security module support
 page_type: how-to
 ---
+import DocsPagesIncludesTctl from "@version/docs/pages/includes/tctl.mdx";
+import DocsPagesIncludesEnterpriseHsmWarning from "@version/docs/pages/includes/enterprise/hsm-warning.mdx";
+import DocsPagesIncludesStartTeleport from "@version/docs/pages/includes/start-teleport.mdx";
+
 
 This guide shows you how to set up the Teleport Auth Service to use a hardware
 security module (HSM) to store and handle private keys.
@@ -25,11 +29,11 @@ from your HSM.
 ## Prerequisites
 
 - Teleport Enterprise (self-hosted).
-- (!docs/pages/includes/tctl.mdx!)
+- <DocsPagesIncludesTctl />
 - An HSM reachable from your Teleport Auth Service.
 - The PKCS#11 module for your HSM.
 
-(!docs/pages/includes/enterprise/hsm-warning.mdx!)
+<DocsPagesIncludesEnterpriseHsmWarning />
 
 While most PKCS#11 HSMs should be supported, the Teleport team tests with AWS
 CloudHSM, YubiHSM2, and SoftHSM2.
@@ -365,7 +369,7 @@ $ sudo systemctl reload teleport
 
 Otherwise, start Teleport on each Auth Service host:
 
-(!docs/pages/includes/start-teleport.mdx!)
+<DocsPagesIncludesStartTeleport />
 
 ## Step 4/5. Certificate Rotation with HSM
 

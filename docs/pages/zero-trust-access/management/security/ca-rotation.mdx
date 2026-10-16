@@ -7,6 +7,9 @@ tags:
  - resiliency
 page_type: how-to
 ---
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
+import DocsPagesIncludesTctl from "@version/docs/pages/includes/tctl.mdx";
+
 
 Components of a Teleport cluster authenticate to one another using either X.509
 or SSH certificates. To issue certificates, Teleport maintains several
@@ -62,9 +65,9 @@ and lists any manual steps that need to be completed.
 
 ## Prerequisites
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx!)
+<DocsPagesIncludesEditionPrereqsTabs />
 
-- (!docs/pages/includes/tctl.mdx!)
+- <DocsPagesIncludesTctl />
 
 - Your user must have a role with permission to `create` and `update` the
   `cert_authority` resource.

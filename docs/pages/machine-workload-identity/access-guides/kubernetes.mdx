@@ -8,6 +8,12 @@ tags:
  - infrastructure-identity
 page_type: how-to
 ---
+import DocsPagesIncludesMachineIdReloadTbot from "@version/docs/pages/includes/machine-id/reload-tbot.mdx";
+
+
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
+import DocsPagesIncludesTctl from "@version/docs/pages/includes/tctl.mdx";
+import DocsPagesIncludesCreateRoleUsingWeb from "@version/docs/pages/includes/create-role-using-web.mdx";
 
 {/* lint disable page-structure remark-lint */}
 
@@ -20,11 +26,11 @@ used to access a Kubernetes cluster enrolled with your Teleport cluster.
 
 ## Prerequisites
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx!)
+<DocsPagesIncludesEditionPrereqsTabs />
 
 - If you have not already connected your Kubernetes cluster to Teleport, follow
   [Enroll a Kubernetes Cluster](../../enroll-resources/kubernetes-access/getting-started.mdx).
-- (!docs/pages/includes/tctl.mdx!)
+- <DocsPagesIncludesTctl />
 - To configure the Kubernetes cluster, your client system will need to have
   `kubectl` installed. See the
   [Kubernetes documentation](https://kubernetes.io/docs/tasks/tools/) for
@@ -109,7 +115,7 @@ Adjust the `allow` field for your environment:
 
 Use `tctl create -f ./role.yaml` to create the role.
 
-(!docs/pages/includes/create-role-using-web.mdx!)
+<DocsPagesIncludesCreateRoleUsingWeb />
 
 Now, use `tctl bots update` to add the role to the Bot. Replace `example`
 with the name of the Bot you created in the deployment guide and `example-role`
@@ -163,7 +169,7 @@ services:
 Ensure you replace `example-k8s-cluster` with the name of the Kubernetes cluster
 as registered in Teleport and adjust `/opt/machine-id` if you wish.
 
-(!docs/pages/includes/machine-id/reload-tbot.mdx resource="your credentials"!)
+<DocsPagesIncludesMachineIdReloadTbot resource="your credentials" />
 
 ## Step 3/3. Connect to your Kubernetes cluster
 

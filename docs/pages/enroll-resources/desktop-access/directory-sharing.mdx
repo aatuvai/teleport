@@ -7,6 +7,11 @@ tags:
  - infrastructure-identity
 page_type: how-to
 ---
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
+import DocsPagesIncludesTctl from "@version/docs/pages/includes/tctl.mdx";
+import DocsPagesIncludesCreateRoleUsingWeb from "@version/docs/pages/includes/create-role-using-web.mdx";
+import DocsPagesIncludesAddRoleToUser from "@version/docs/pages/includes/add-role-to-user.mdx";
+
 
 Directory Sharing is a Teleport feature that makes it easy to move files
 between a local machine and a remote desktop—and apply changes to those
@@ -31,7 +36,7 @@ after the session ends.
 
 ## Prerequisites
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx!)
+<DocsPagesIncludesEditionPrereqsTabs />
 
 {/*lint ignore messaging to ignore the page title linked here*/}
 - The Teleport Desktop Service with at least one remote desktop registered in
@@ -50,7 +55,7 @@ after the session ends.
   You can see a full compatibility table in the [Mozilla Developer Network
   documentation](https://developer.mozilla.org/en-US/docs/Web/API/File_System_Access_API#browser_compatibility).
 
-- (!docs/pages/includes/tctl.mdx!)
+- <DocsPagesIncludesTctl />
 
 ## Step 1/4. Share a directory
 
@@ -184,9 +189,9 @@ Create the role:
 $ tctl create -f role.yaml
 ```
 
-(!docs/pages/includes/create-role-using-web.mdx!)
+<DocsPagesIncludesCreateRoleUsingWeb />
 
-(!docs/pages/includes/add-role-to-user.mdx role="no-sharing"!)
+<DocsPagesIncludesAddRoleToUser role="no-sharing" />
 
 ## Next steps
 

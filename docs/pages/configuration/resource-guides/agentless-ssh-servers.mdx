@@ -9,6 +9,9 @@ tags:
  - infrastructure-identity
 page_type: how-to
 ---
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
+import DocsPagesIncludesUuidgen from "@version/docs/pages/includes/uuidgen.mdx";
+
 
 In this guide, you will see how to register in Teleport your OpenSSH nodes
 through infrastructure as code (IaC). Teleport supports three ways to
@@ -44,7 +47,7 @@ To follow this guide, you must have:
 <Tabs>
 <TabItem label="tctl">
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx!)
+<DocsPagesIncludesEditionPrereqsTabs />
 
 </TabItem>
 <TabItem label="Kubernetes Operator">
@@ -126,7 +129,7 @@ for two things:
 - if you have multiple servers with identical hostnames, the unique ID allows
   you to pick a specific server.
 
-(!docs/pages/includes/uuidgen.mdx!)
+<DocsPagesIncludesUuidgen />
 
 Create the following `openssh-node-resource.yaml` file:
 
@@ -147,7 +150,7 @@ spec:
 </TabItem>
 <TabItem label="Kubernetes Operator">
 
-(!docs/pages/includes/uuidgen.mdx!)
+<DocsPagesIncludesUuidgen />
 
 Create the following `openssh-node-resource.yaml` file:
 

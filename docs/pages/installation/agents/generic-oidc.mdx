@@ -7,6 +7,17 @@ tags:
  - zero-trust
  - infrastructure-identity
 ---
+import DocsPagesIncludesIacClients from "@version/docs/pages/includes/iac-clients.mdx";
+import DocsPagesIncludesProvisionTokenGenericOidcSecurityNotes from "@version/docs/pages/includes/provision-token/generic-oidc-security-notes.mdx";
+import DocsPagesIncludesProvisionTokenGenericOidcSpec from "@version/docs/pages/includes/provision-token/generic-oidc-spec.mdx";
+import DocsPagesIncludesProvisionTokenGenericOidcSpecHcl from "@version/docs/pages/includes/provision-token/generic-oidc-spec-hcl.mdx";
+import DocsPagesIncludesProvisionTokenGenericOidcSpecKube from "@version/docs/pages/includes/provision-token/generic-oidc-spec-kube.mdx";
+
+
+import DocsPagesIncludesProvisionTokenGenericOidcHowItWorks from "@version/docs/pages/includes/provision-token/generic-oidc-how-it-works.mdx";
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
+import DocsPagesIncludesInstallLinux from "@version/docs/pages/includes/install-linux.mdx";
+import DocsPagesIncludesStartTeleport from "@version/docs/pages/includes/start-teleport.mdx";
 
 While Teleport natively supports many cloud platforms and identity providers, it
 is still often necessary to join Teleport services using identity providers that
@@ -21,20 +32,20 @@ OIDC-compatible issuer of your choice.
 
 ## How it works
 
-(!docs/pages/includes/provision-token/generic-oidc-how-it-works.mdx!)
+<DocsPagesIncludesProvisionTokenGenericOidcHowItWorks />
 
 ## Prerequisites
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx edition="Teleport (v18.11.0 or higher)"!)
+<DocsPagesIncludesEditionPrereqsTabs edition="Teleport (v18.11.0 or higher)" />
 
 - An OIDC-compatible issuer of your choice (see below for specific requirements)
 - An environment or workload that can fetch JWTs from your OIDC-compatible
   issuer
-- (!docs/pages/includes/iac-clients.mdx!)
+- <DocsPagesIncludesIacClients />
 
 ## Security considerations and limitations
 
-(!docs/pages/includes/provision-token/generic-oidc-security-notes.mdx!)
+<DocsPagesIncludesProvisionTokenGenericOidcSecurityNotes />
 
 ## Step 1/2. Create a Generic OIDC join token
 
@@ -131,7 +142,7 @@ refer to the matching token template to use as a starting point:
 
 Create `token.yaml` with this initial content:
 
-(!docs/pages/includes/provision-token/generic-oidc-spec.mdx!)
+<DocsPagesIncludesProvisionTokenGenericOidcSpec />
 
 Customize it as necessary, and when ready, create the token:
 
@@ -168,7 +179,7 @@ For now, either write all rules instead within `allow_any`, or create your
 Add the following resource to your Terraform configuration, adjusting values and
 rules as necessary:
 
-(!docs/pages/includes/provision-token/generic-oidc-spec-hcl.mdx!)
+<DocsPagesIncludesProvisionTokenGenericOidcSpecHcl />
 
 </TabItem>
 <TabItem label="Kubernetes">
@@ -185,7 +196,7 @@ limitation.
 Add the following Kubernetes resource manifest, adjusting values and rules as
 necessary:
 
-(!docs/pages/includes/provision-token/generic-oidc-spec-kube.mdx!)
+<DocsPagesIncludesProvisionTokenGenericOidcSpecKube />
 </TabItem>
 </Tabs>
 
@@ -237,7 +248,7 @@ Proxy, Kubernetes, Application, Database, or Desktop Service.
 
 1. Install Teleport on your target environment (VM or physical machine)
 
-   (!docs/pages/includes/install-linux.mdx!)
+   <DocsPagesIncludesInstallLinux />
 
 1. Configure your Teleport process with a custom `teleport.yaml` file. Use the
    `join_params` section with `token_name` matching your token created in Step 1
@@ -276,7 +287,7 @@ Proxy, Kubernetes, Application, Database, or Desktop Service.
 
 1. Start Teleport:
 
-   (!docs/pages/includes/start-teleport.mdx!)
+   <DocsPagesIncludesStartTeleport />
 
 1. Confirm that your Teleport process is able to connect to and join your
    cluster. You're all set!

@@ -9,6 +9,15 @@ tags:
  - aws
 page_type: how-to
 ---
+import DocsPagesIncludesIacClients from "@version/docs/pages/includes/iac-clients.mdx";
+import DocsPagesIncludesProvisionTokenEc2Spec from "@version/docs/pages/includes/provision-token/ec2-spec.mdx";
+import DocsPagesIncludesProvisionTokenEc2SpecHcl from "@version/docs/pages/includes/provision-token/ec2-spec-hcl.mdx";
+import DocsPagesIncludesProvisionTokenEc2SpecKube from "@version/docs/pages/includes/provision-token/ec2-spec-kube.mdx";
+
+
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
+import DocsPagesIncludesInstallLinux from "@version/docs/pages/includes/install-linux.mdx";
+import DocsPagesIncludesStartTeleport from "@version/docs/pages/includes/start-teleport.mdx";
 
 In this guide, you will use the **EC2 join method** to configure Teleport
 processes to join your Teleport cluster without sharing any secrets when they
@@ -44,9 +53,9 @@ Teleport processes joining the cluster.
 
 ## Prerequisites
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx edition="self-hosted Teleport"!)
+<DocsPagesIncludesEditionPrereqsTabs edition="self-hosted Teleport" />
 
-- (!docs/pages/includes/iac-clients.mdx!)
+- <DocsPagesIncludesIacClients />
 
 - An AWS EC2 instance to host a Teleport process, with the Teleport binary
   installed. The host should not have an existing data dir (`/var/lib/teleport`
@@ -137,7 +146,7 @@ or Kubernetes operator:
 Create the following `token.yaml` with an `allow` rule specifying your AWS
 account and the AWS regions in which your EC2 instances will run.
 
-(!docs/pages/includes/provision-token/ec2-spec.mdx!)
+<DocsPagesIncludesProvisionTokenEc2Spec />
 
 Run `tctl create token.yaml` to create the token.
 
@@ -147,14 +156,14 @@ Run `tctl create token.yaml` to create the token.
 Add the following resource to your Terraform configuration, replacing values as
 indicated:
 
-(!docs/pages/includes/provision-token/ec2-spec-hcl.mdx!)
+<DocsPagesIncludesProvisionTokenEc2SpecHcl />
 
 </TabItem>
 <TabItem label="Kubernetes">
 
 Add the following Kubernetes resource manifest, replacing values as indicated:
 
-(!docs/pages/includes/provision-token/ec2-spec-kube.mdx!)
+<DocsPagesIncludesProvisionTokenEc2SpecKube />
 
 </TabItem>
 </Tabs>
@@ -163,7 +172,7 @@ Add the following Kubernetes resource manifest, replacing values as indicated:
 
 Install Teleport on your AWS EC2 Instance.
 
-(!docs/pages/includes/install-linux.mdx!)
+<DocsPagesIncludesInstallLinux />
 
 ## Step 4/5. Configure your services
 
@@ -207,7 +216,7 @@ proxy_service:
 
 </Admonition>
 
-(!docs/pages/includes/start-teleport.mdx!)
+<DocsPagesIncludesStartTeleport />
 
 Start Teleport on the host and confirm that it is able to connect to and join
 your cluster. You're all set!

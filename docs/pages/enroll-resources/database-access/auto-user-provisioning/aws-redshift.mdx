@@ -9,8 +9,20 @@ tags:
  - aws
 page_type: how-to
 ---
+import DocsPagesIncludesDatabaseAccessAutoUserProvisioningIntro from "@version/docs/pages/includes/database-access/auto-user-provisioning/intro.mdx";
+import DocsPagesIncludesDatabaseAccessAutoUserProvisioningUsernameConflict from "@version/docs/pages/includes/database-access/auto-user-provisioning/username-conflict.mdx";
+import DocsPagesIncludesDatabaseAccessAutoUserProvisioningTroubleshootingRemoteUsername from "@version/docs/pages/includes/database-access/auto-user-provisioning/troubleshooting-remote-username.mdx";
+import DocsPagesIncludesDatabaseAccessPsqlSslSyscallError from "@version/docs/pages/includes/database-access/psql-ssl-syscall-error.mdx";
 
-(!docs/pages/includes/database-access/auto-user-provisioning/intro.mdx!)
+
+import DocsPagesIncludesDatabaseAccessAutoUserProvisioningCommonTeleportRole from "@version/docs/pages/includes/database-access/auto-user-provisioning/common-teleport-role.mdx";
+import DocsPagesIncludesDatabaseAccessAutoUserProvisioningConnect from "@version/docs/pages/includes/database-access/auto-user-provisioning/connect.mdx";
+import DocsPagesIncludesDatabaseAccessDbAccessWebuiAd from "@version/docs/pages/includes/database-access/db-access-webui-ad.mdx";
+import DocsPagesIncludesDatabaseAccessPgCancelRequestLimitation from "@version/docs/pages/includes/database-access/pg-cancel-request-limitation.mdx";
+
+import DocsPagesIncludesDatabaseAccessAutoUserProvisioningDbDefinition from "@version/docs/pages/includes/database-access/auto-user-provisioning/db-definition.mdx";
+
+<DocsPagesIncludesDatabaseAccessAutoUserProvisioningIntro />
 
 {/* lint ignore page-structure remark-lint */}
 
@@ -40,11 +52,11 @@ GRANT ROLE "sys:superuser" TO "teleport-admin";
 Users created by Teleport will be assigned the `teleport-auto-user` role in the
 database, which will be created automatically if it doesn't exist.
 
-(!docs/pages/includes/database-access/auto-user-provisioning/db-definition.mdx protocol="postgres" uri="redshift-cluster-1.abcdefghijklm.us-east-1.redshift.amazonaws.com:5439" !)
+<DocsPagesIncludesDatabaseAccessAutoUserProvisioningDbDefinition protocol="postgres" uri="redshift-cluster-1.abcdefghijklm.us-east-1.redshift.amazonaws.com:5439" />
 
 ## Step 2/3. Configure a Teleport role
 
-(!docs/pages/includes/database-access/auto-user-provisioning/common-teleport-role.mdx!)
+<DocsPagesIncludesDatabaseAccessAutoUserProvisioningCommonTeleportRole />
 
 Users created within the database will:
 
@@ -53,23 +65,23 @@ Users created within the database will:
 - Be assigned all roles from the Teleport user's role set that match the database.
   The role names must be valid and exist in the database.
 
-(!docs/pages/includes/database-access/auto-user-provisioning/username-conflict.mdx!)
+<DocsPagesIncludesDatabaseAccessAutoUserProvisioningUsernameConflict />
 
 ## Step 3/3. Connect to the database
 
-(!docs/pages/includes/database-access/auto-user-provisioning/connect.mdx gui="pgAdmin"!)
+<DocsPagesIncludesDatabaseAccessAutoUserProvisioningConnect gui="pgAdmin" />
 
-(!docs/pages/includes/database-access/db-access-webui-ad.mdx dbType="PostgreSQL"!)
+<DocsPagesIncludesDatabaseAccessDbAccessWebuiAd dbType="PostgreSQL" />
 
 ## Troubleshooting
 
 ### Use your mapped remote username error
 
-(!docs/pages/includes/database-access/auto-user-provisioning/troubleshooting-remote-username.mdx!)
+<DocsPagesIncludesDatabaseAccessAutoUserProvisioningTroubleshootingRemoteUsername />
 
-(!docs/pages/includes/database-access/pg-cancel-request-limitation.mdx PIDQuery="SELECT pid,starttime,duration,trim(user_name) AS user,trim(query) AS query FROM stv_recents WHERE status = 'Running';"!)
+<DocsPagesIncludesDatabaseAccessPgCancelRequestLimitation PIDQuery="SELECT pid,starttime,duration,trim(user_name) AS user,trim(query) AS query FROM stv_recents WHERE status = 'Running';" />
 
-(!docs/pages/includes/database-access/psql-ssl-syscall-error.mdx!)
+<DocsPagesIncludesDatabaseAccessPsqlSslSyscallError />
 
 ## Next steps
 

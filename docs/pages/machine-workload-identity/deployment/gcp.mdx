@@ -9,6 +9,13 @@ tags:
  - google-cloud
 page_type: how-to
 ---
+import DocsPagesIncludesMachineIdCreateABot from "@version/docs/pages/includes/machine-id/create-a-bot.mdx";
+
+
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
+import DocsPagesIncludesTctl from "@version/docs/pages/includes/tctl.mdx";
+import DocsPagesIncludesInstallLinux from "@version/docs/pages/includes/install-linux.mdx";
+import DocsPagesIncludesMachineIdDaemonOrOneshot from "@version/docs/pages/includes/machine-id/daemon-or-oneshot.mdx";
 
 In this guide, you will deploy the Machine & Workload Identity agent, `tbot`, on
 a Google Compute Engine instance and connect it to your Teleport cluster.
@@ -40,9 +47,9 @@ guidance on deploying `tbot` as a workload on Kubernetes.
 
 ## Prerequisites
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx!)
+<DocsPagesIncludesEditionPrereqsTabs />
 
-- (!docs/pages/includes/tctl.mdx!)
+- <DocsPagesIncludesTctl />
 - A GCP service account you wish to grant access to your Teleport cluster that
   is not the GCP compute default service account.
 - A GCP Compute Engine VM that you wish to install `tbot` onto that has been
@@ -57,13 +64,13 @@ Workload Identity on.
 
 Download and install the appropriate Teleport package for your platform:
 
-(!docs/pages/includes/install-linux.mdx!)
+<DocsPagesIncludesInstallLinux />
 
 ## Step 2/5. Create a Bot
 
 **This step is completed on your local machine.**
 
-(!docs/pages/includes/machine-id/create-a-bot.mdx!)
+<DocsPagesIncludesMachineIdCreateABot />
 
 ## Step 3/5. Create a join token
 
@@ -144,7 +151,7 @@ Replace:
   short-lived credentials. Ensure that the user `tbot` is running and has the
   appropriate permissions to create this directory.
 
-(!docs/pages/includes/machine-id/daemon-or-oneshot.mdx!)
+<DocsPagesIncludesMachineIdDaemonOrOneshot />
 
 ## Step 5/5. Testing your `tbot` configuration
 

@@ -10,6 +10,9 @@ tags:
 enterprise: Identity Governance
 page_type: how-to
 ---
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
+import DocsPagesIncludesTctl from "@version/docs/pages/includes/tctl.mdx";
+
 
 Okta has its own permissions system that doesn't directly map into Teleport. This
 includes permissions granted by Okta groups along with the assignment of users to individual
@@ -51,7 +54,7 @@ List will be removed from Teleport on the next sync.
 
 ## Prerequisites
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx edition="Teleport Enterprise"!)
+<DocsPagesIncludesEditionPrereqsTabs edition="Teleport Enterprise" />
 
 - Teleport Identity Governance enabled on your account.
 
@@ -67,7 +70,7 @@ List will be removed from Teleport on the next sync.
 - (Optional) The Okta SCIM integration. You can follow the [guided integration
   flow](./scim-integration.mdx).
 
-- (!docs/pages/includes/tctl.mdx!)
+- <DocsPagesIncludesTctl />
 
 - An Okta organization with admin access.
 

@@ -9,6 +9,14 @@ tags:
  - privileged-access
 enterprise: Identity Governance
 ---
+import DocsPagesIncludesPluginsAccessPluginTroubleshooting from "@version/docs/pages/includes/plugins/access-plugin-troubleshooting.mdx";
+
+
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
+import DocsPagesIncludesTctl from "@version/docs/pages/includes/tctl.mdx";
+import DocsPagesIncludesCreateRoleUsingWeb from "@version/docs/pages/includes/create-role-using-web.mdx";
+
+import DocsPagesIncludesPluginsEnroll from "@version/docs/pages/includes/plugins/enroll.mdx";
 
 With Teleport's Datadog Incident Management integration, engineers can access the
 infrastructure they need to resolve incidents without longstanding admin
@@ -31,7 +39,7 @@ may approve the Access Request automatically.
 
 ## Prerequisites
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx edition="Teleport Enterprise (v17.0.1 or higher)"!)
+<DocsPagesIncludesEditionPrereqsTabs edition="Teleport Enterprise (v17.0.1 or higher)" />
 
 - A Datadog account with the role "Datadog Admin Role". The admin role is required to
   create a Service Account and generate required credentials for the plugin.
@@ -41,7 +49,7 @@ may approve the Access Request automatically.
 
 - Either a Linux host or Kubernetes cluster where you will run the Datadog plugin.
 
-- (!docs/pages/includes/tctl.mdx!)
+- <DocsPagesIncludesTctl />
 
 - Your Teleport user will require the `editor` role or a role that provides permissions
   to create Teleport roles and grant them to users.
@@ -145,7 +153,7 @@ to create a new Application key. Copy the Application key to paste in a later st
 
 At this point, you're now ready to enroll the Datadog Incident Management plugin.
 
-(!docs/pages/includes/plugins/enroll.mdx name="the Datadog Incident Management"!)
+<DocsPagesIncludesPluginsEnroll name="the Datadog Incident Management" />
 
 Provide the API and Application keys generated above. Select the desired API endpoint.
 Then provide the Datadog team handle, that you created earlier, as the fallback recipient.
@@ -253,7 +261,7 @@ spec:
           deny: 1
 ```
 
-(!docs/pages/includes/create-role-using-web.mdx!)
+<DocsPagesIncludesCreateRoleUsingWeb />
 
 ### Trigger an auto-approval
 
@@ -263,7 +271,7 @@ that the Teleport username matches the Datadog on-call user email.
 
 ## Troubleshooting
 
-(!docs/pages/includes/plugins/access-plugin-troubleshooting.mdx!)
+<DocsPagesIncludesPluginsAccessPluginTroubleshooting />
 
 ## Next steps
 

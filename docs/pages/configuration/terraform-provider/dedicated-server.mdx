@@ -7,6 +7,13 @@ tags:
  - how-to
  - zero-trust
 ---
+import DocsPagesIncludesManagementDynamicResourcesTerraformRole from "@version/docs/pages/includes/management/dynamic-resources/terraform-role.mdx";
+
+
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
+import DocsPagesIncludesTctl from "@version/docs/pages/includes/tctl.mdx";
+
+import DocsPagesIncludesMachineIdReloadTbot from "@version/docs/pages/includes/machine-id/reload-tbot.mdx";
 
 This guide demonstrates how to set up the Terraform provider for Teleport on a persistent Linux or macOS server.
 
@@ -28,7 +35,7 @@ Terraform provider. The daemon stores its identity on the disk and refresh the t
 
 ## Prerequisites
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx!)
+<DocsPagesIncludesEditionPrereqsTabs />
 
 - [Terraform >= (=terraform.version=)+](https://learn.hashicorp.com/tutorials/terraform/install-cli)
 
@@ -37,7 +44,7 @@ Terraform provider. The daemon stores its identity on the disk and refresh the t
   # Terraform v(=terraform.version=)
   ```
 
-- (!docs/pages/includes/tctl.mdx!)
+- <DocsPagesIncludesTctl />
 
 - A Linux host that you wish to run the Teleport Terraform provider onto.
 
@@ -56,7 +63,7 @@ network issues), the token cannot be reused. Recreate the bot with `tctl bots in
 
 At this point, `tbot` is installed and configured on the machine that will run Terraform.
 
-(!docs/pages/includes/management/dynamic-resources/terraform-role.mdx!)
+<DocsPagesIncludesManagementDynamicResourcesTerraformRole />
 
 Use the `tctl bots update` command to add the role to the Bot. Replace `example`
 with the name of the Bot you created in the deployment guide.
@@ -89,7 +96,7 @@ services:
     path: /opt/machine-id
 ```
 
-(!docs/pages/includes/machine-id/reload-tbot.mdx!)
+<DocsPagesIncludesMachineIdReloadTbot />
 
 You should now see an `identity` file under `/opt/machine-id`. This contains
 the private key and signed certificates needed by the Terraform provider to

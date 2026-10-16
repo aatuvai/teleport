@@ -9,6 +9,15 @@ tags:
  - google-cloud
 page_type: how-to
 ---
+import DocsPagesIncludesIacClients from "@version/docs/pages/includes/iac-clients.mdx";
+import DocsPagesIncludesProvisionTokenGcpSpec from "@version/docs/pages/includes/provision-token/gcp-spec.mdx";
+import DocsPagesIncludesProvisionTokenGcpSpecHcl from "@version/docs/pages/includes/provision-token/gcp-spec-hcl.mdx";
+import DocsPagesIncludesProvisionTokenGcpSpecKube from "@version/docs/pages/includes/provision-token/gcp-spec-kube.mdx";
+
+
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
+import DocsPagesIncludesInstallLinux from "@version/docs/pages/includes/install-linux.mdx";
+import DocsPagesIncludesStartTeleport from "@version/docs/pages/includes/start-teleport.mdx";
 
 In this guide, you will use the **GCP join method** to configure Teleport
 processes to join your Teleport cluster without sharing any secrets when they
@@ -28,11 +37,11 @@ joining token.
 
 ## Prerequisites
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx!)
+<DocsPagesIncludesEditionPrereqsTabs />
 
 - A GCP VM to host a Teleport service, with a service account assigned to it
   and with the Teleport binary installed.
-- (!docs/pages/includes/iac-clients.mdx!)
+- <DocsPagesIncludesIacClients />
 
 ## Step 1/3. Create the GCP joining token
 
@@ -48,7 +57,7 @@ Create the following `token.yaml` file with a `gcp.allow` rule specifying your G
 project ID(s), service account(s), and location(s) in which your GCP instances
 will run:
 
-(!docs/pages/includes/provision-token/gcp-spec.mdx!)
+<DocsPagesIncludesProvisionTokenGcpSpec />
 
 Run the following command to create the token:
 
@@ -62,14 +71,14 @@ $ tctl create token.yaml
 Add the following resource to your Terraform configuration, replacing values as
 indicated:
 
-(!docs/pages/includes/provision-token/gcp-spec-hcl.mdx!)
+<DocsPagesIncludesProvisionTokenGcpSpecHcl />
 
 </TabItem>
 <TabItem label="Kubernetes">
 
 Add the following Kubernetes resource manifest, replacing values as indicated:
 
-(!docs/pages/includes/provision-token/gcp-spec-kube.mdx!)
+<DocsPagesIncludesProvisionTokenGcpSpecKube />
 
 </TabItem>
 </Tabs>
@@ -78,7 +87,7 @@ Add the following Kubernetes resource manifest, replacing values as indicated:
 
 Install Teleport on your GCP Linux VM.
 
-(!docs/pages/includes/install-linux.mdx!)
+<DocsPagesIncludesInstallLinux />
 
 ## Step 3/3. Configure your services
 
@@ -108,7 +117,7 @@ process should be run directly on a GCP VM.
 
 1. Start the Teleport process on your machine.
 
-   (!docs/pages/includes/start-teleport.mdx!)
+   <DocsPagesIncludesStartTeleport />
 
 1. Once you have started Teleport, confirm that your service is able to connect
    to and join your cluster.

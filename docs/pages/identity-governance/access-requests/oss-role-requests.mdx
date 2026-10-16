@@ -9,6 +9,8 @@ tags:
  - identity-governance
  - privileged-access
 ---
+import DocsPagesIncludesCreateRoleUsingWeb from "@version/docs/pages/includes/create-role-using-web.mdx";
+
 
 Just-in-time Access Requests are a feature of Teleport Enterprise.
 
@@ -56,7 +58,7 @@ Define this role in the file `contractor-role.yaml` and create it with `tctl`:
 $ tctl create contractor-role.yaml
 ```
 
-(!docs/pages/includes/create-role-using-web.mdx!)
+<DocsPagesIncludesCreateRoleUsingWeb />
 
 Use `tctl` to assign this role to a user (`alice` in this example):
 

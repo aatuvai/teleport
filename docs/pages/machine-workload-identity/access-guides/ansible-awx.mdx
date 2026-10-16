@@ -8,6 +8,9 @@ tags:
  - infrastructure-identity
 page_type: how-to
 ---
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
+import DocsPagesIncludesTctl from "@version/docs/pages/includes/tctl.mdx";
+
 
 Ansible AWX, formerly known as Ansible Tower, is an interface on top of Ansible
 that can be used to run and coordinate Ansible workflows. These workflows
@@ -30,7 +33,7 @@ through the Teleport Proxy Service.
 
 ## Prerequisites
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx!)
+<DocsPagesIncludesEditionPrereqsTabs />
 
 - A working Ansible AWX installation (or Ansible Tower, or Ansible Automation
   Platform), running in a Kubernetes cluster you can access.
@@ -45,7 +48,7 @@ through the Teleport Proxy Service.
   Kubernetes with OIDC](../deployment/kubernetes-oidc.mdx) to learn more about
   how to deploy `tbot` on Kubernetes, which is the foundation of the steps
   we'll be taking in this guide.
-- (!docs/pages/includes/tctl.mdx!)
+- <DocsPagesIncludesTctl />
 
 ## Step 1/5. Configure Teleport resources
 

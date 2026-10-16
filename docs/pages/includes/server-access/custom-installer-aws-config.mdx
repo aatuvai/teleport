@@ -1,6 +1,12 @@
+import DocsPagesIncludesServerAccessCustomInstallerAwsDynamic from "!!raw-loader!@version/docs/pages/includes/server-access/custom-installer-aws-dynamic.yaml";
+import DocsPagesIncludesServerAccessCustomInstallerAws from "!!raw-loader!@version/docs/pages/includes/server-access/custom-installer-aws.yaml";
+import DocsPagesIncludesServerAccessCustomInstallerReference from "@version/docs/pages/includes/server-access/custom-installer-reference.mdx";
+
+import DocsPagesIncludesServerAccessCustomInstallerEditing from "@version/docs/pages/includes/server-access/custom-installer-editing.mdx";
+
 {/* this comment is here to make the includes below render */}
 
-(!docs/pages/includes/server-access/custom-installer-editing.mdx!)
+<DocsPagesIncludesServerAccessCustomInstallerEditing />
 
 Multiple `installer` resources can exist and be specified in the
 `aws.install.script_name` section:
@@ -8,16 +14,20 @@ Multiple `installer` resources can exist and be specified in the
 <Tabs>
 <TabItem label="Dynamic configuration (recommended)">
 Edit the Discovery Config to specify a custom installer script:
-```yaml
-(!docs/pages/includes/server-access/custom-installer-aws-dynamic.yaml!)
-```
+<CodeBlock language="yaml">
+
+  {DocsPagesIncludesServerAccessCustomInstallerAwsDynamic}
+
+</CodeBlock>
 </TabItem>
 <TabItem label="Static configuration">
 Edit the `teleport.yaml` configuration to specify a custom installer script:
-```yaml
-(!docs/pages/includes/server-access/custom-installer-aws.yaml!)
-```
+<CodeBlock language="yaml">
+
+  {DocsPagesIncludesServerAccessCustomInstallerAws}
+
+</CodeBlock>
 </TabItem>
 </Tabs>
 
-(!docs/pages/includes/server-access/custom-installer-reference.mdx!)
+<DocsPagesIncludesServerAccessCustomInstallerReference />

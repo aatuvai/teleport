@@ -10,6 +10,12 @@ tags:
 enterprise: Device Trust
 page_type: conceptual
 ---
+import DocsPagesIncludesDeviceTrustPrereqs from "@version/docs/pages/includes/device-trust/prereqs.mdx";
+import DocsPagesIncludesDeviceTrustTroubleshooting from "@version/docs/pages/includes/device-trust/troubleshooting.mdx";
+
+
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
+import DocsPagesIncludesCreateRoleUsingWeb from "@version/docs/pages/includes/create-role-using-web.mdx";
 
 This page describes the configuration options you can use to enforce Teleport
 Device Trust.
@@ -44,9 +50,9 @@ by the `device_trust_mode` authentication setting:
   Kubernetes connections, for human users only (bots are exempt).
 
 ### Prerequisites
-(!docs/pages/includes/edition-prereqs-tabs.mdx edition="Teleport Enterprise"!)
+<DocsPagesIncludesEditionPrereqsTabs edition="Teleport Enterprise" />
 
-(!docs/pages/includes/device-trust/prereqs.mdx!)
+<DocsPagesIncludesDeviceTrustPrereqs />
 
 This guide makes use of the preset `require-trusted-device` role, which does not
 enforce the use of a trusted device for [apps](#web-application-support) or
@@ -99,7 +105,7 @@ Update the role:
 $ tctl create -f device-enforcement.yaml
 ```
 
-(!docs/pages/includes/create-role-using-web.mdx!)
+<DocsPagesIncludesCreateRoleUsingWeb />
 
 ## Cluster-wide trusted device enforcement
 
@@ -290,7 +296,7 @@ ERROR: ssh: rejected: administratively prohibited (lock targeting Device:"(=devi
 
 ## Troubleshooting
 
-(!docs/pages/includes/device-trust/troubleshooting.mdx!)
+<DocsPagesIncludesDeviceTrustTroubleshooting />
 
 ## Next steps
 - [Device Management](./device-management.mdx)

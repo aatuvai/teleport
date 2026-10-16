@@ -7,6 +7,10 @@ tags:
  - zero-trust
  - audit
 ---
+import DocsPagesIncludesPluginsFinishEventHandlerConfig from "@version/docs/pages/includes/plugins/finish-event-handler-config.mdx";
+import DocsPagesIncludesPluginsFinishEventHandlerFields from "@version/docs/pages/includes/plugins/finish-event-handler-fields.mdx";
+import DocsPagesIncludesPluginsStartEventHandler from "@version/docs/pages/includes/plugins/start-event-handler.mdx";
+
 
 Teleport's Event Handler plugin receives audit events from the Teleport Auth
 Service and forwards them to your log management solution, letting you perform
@@ -343,11 +347,11 @@ and run the Event Handler to test your configuration.
 
 Edit the configuration for the Event Handler, depending on your installation method.
 
-(!docs/pages/includes/plugins/finish-event-handler-config.mdx!)
+<DocsPagesIncludesPluginsFinishEventHandlerConfig />
 
 Update the following fields.
 
-(!docs/pages/includes/plugins/finish-event-handler-fields.mdx!)
+<DocsPagesIncludesPluginsFinishEventHandlerFields />
 
 Change `forward.fluentd.url` to the scheme, host and port you configured for
 your Logstash `http` input earlier, `https://localhost:9601`. Change
@@ -356,7 +360,7 @@ your Logstash `http` input earlier, `https://localhost:9601`. Change
 
 ### Start the Event Handler
 
-(!docs/pages/includes/plugins/start-event-handler.mdx!)
+<DocsPagesIncludesPluginsStartEventHandler />
 
 ## Troubleshooting connection issues
 

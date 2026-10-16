@@ -10,6 +10,16 @@ tags:
 enterprise: Enterprise SSO
 page_type: how-to
 ---
+import DocsPagesIncludesSsoNextStepTraits from "@version/docs/pages/includes/sso/next-step-traits.mdx";
+
+
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
+import DocsPagesIncludesTctl from "@version/docs/pages/includes/tctl.mdx";
+import DocsPagesIncludesSsoRoleMapping from "@version/docs/pages/includes/sso/role-mapping.mdx";
+import DocsPagesIncludesSsoLoginerrortroubleshooting from "@version/docs/pages/includes/sso/loginerrortroubleshooting.mdx";
+
+import DocsPagesIncludesSsoHowItWorks from "@version/docs/pages/includes/sso/how-it-works.mdx";
+import DocsPagesIncludesSsoCap from "@version/docs/pages/includes/sso/cap.mdx";
 
 In this guide, you will configure Active Directory Federation Services
 ([ADFS](https://en.wikipedia.org/wiki/Active_Directory_Federation_Services)) to
@@ -22,16 +32,16 @@ allows Teleport administrators to define policies like:
 
 ## How it works
 
-(!docs/pages/includes/sso/how-it-works.mdx idp="ADFS"!)
+<DocsPagesIncludesSsoHowItWorks idp="ADFS" />
 
 ## Prerequisites
 
 - ADFS installation with Admin access and users assigned to at least two groups.
 - Teleport role with access to maintaining `saml` resources.  This is available in the default `editor` role.
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx edition="Teleport Enterprise"!)
+<DocsPagesIncludesEditionPrereqsTabs edition="Teleport Enterprise" />
 
-- (!docs/pages/includes/tctl.mdx!)
+- <DocsPagesIncludesTctl />
 
 ## Step 1/3. Configure ADFS
 
@@ -100,7 +110,7 @@ issue certificates to users.
 
 ### Assign a role mapping
 
-(!docs/pages/includes/sso/role-mapping.mdx fieldType="attribute"!)
+<DocsPagesIncludesSsoRoleMapping fieldType="attribute" />
 
 Make sure that, in your role mapping, each attribute begins with the following
 namespace prefix:
@@ -176,13 +186,13 @@ $ tctl create -f adfs.yaml
 
 ## Step 3/3. Configure authentication preferences
 
-(!docs/pages/includes/sso/cap.mdx type="saml"!)
+<DocsPagesIncludesSsoCap type="saml" />
 
 ## Next steps
 
-(!docs/pages/includes/sso/next-step-traits.mdx!)
+<DocsPagesIncludesSsoNextStepTraits />
 
 ## Troubleshooting
 
-(!docs/pages/includes/sso/loginerrortroubleshooting.mdx!)
+<DocsPagesIncludesSsoLoginerrortroubleshooting />
 

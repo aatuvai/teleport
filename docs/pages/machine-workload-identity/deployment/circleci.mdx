@@ -9,6 +9,11 @@ tags:
  - infrastructure-identity
 page_type: how-to
 ---
+import DocsPagesIncludesMachineIdCreateABot from "@version/docs/pages/includes/machine-id/create-a-bot.mdx";
+
+
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
+import DocsPagesIncludesTctl from "@version/docs/pages/includes/tctl.mdx";
 
 {/* lint disable page-structure remark-lint */}
 
@@ -18,9 +23,9 @@ to run within a CircleCI workflow. The bot will be configured to use the
 
 ## Prerequisites
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx!)
+<DocsPagesIncludesEditionPrereqsTabs />
 
-- (!docs/pages/includes/tctl.mdx!)
+- <DocsPagesIncludesTctl />
 - A CircleCI project connected to a Git repository you can push to.
 
 ## Step 1/4. Configure CircleCI
@@ -74,7 +79,7 @@ with it.
 
 ## Step 2/4. Create a Bot
 
-(!docs/pages/includes/machine-id/create-a-bot.mdx!)
+<DocsPagesIncludesMachineIdCreateABot />
 
 ## Step 3/4. Create the join token for CircleCI
 

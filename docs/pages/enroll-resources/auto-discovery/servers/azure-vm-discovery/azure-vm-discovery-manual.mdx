@@ -9,6 +9,20 @@ tags:
  - infrastructure-identity
  - azure
 ---
+import DocsPagesIncludesAutoDiscoveryAutoDiscoveryLabels from "@version/docs/pages/includes/auto-discovery/auto-discovery-labels.mdx";
+import DocsPagesIncludesAutoDiscoveryAzureVmNextSteps from "@version/docs/pages/includes/auto-discovery/azure-vm-next-steps.mdx";
+
+
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
+import DocsPagesIncludesTctl from "@version/docs/pages/includes/tctl.mdx";
+import DocsPagesIncludesAutoDiscoveryAzureVmConfigureServicePrincipal from "@version/docs/pages/includes/auto-discovery/azure-vm-configure-service-principal.mdx";
+import DocsPagesIncludesServerAccessAzureAssignServicePrincipal from "@version/docs/pages/includes/server-access/azure-assign-service-principal.mdx";
+import DocsPagesIncludesProvisionTokenAzureJoinEnableIdentity from "@version/docs/pages/includes/provision-token/azure-join-enable-identity.mdx";
+import DocsPagesIncludesInstallLinux from "@version/docs/pages/includes/install-linux.mdx";
+import DocsPagesIncludesAutoDiscoveryAzureVmConfigureDiscoveryService from "@version/docs/pages/includes/auto-discovery/azure-vm-configure-discovery-service.mdx";
+import DocsPagesIncludesAutoDiscoveryAzureVmTroubleshooting from "@version/docs/pages/includes/auto-discovery/azure-vm-troubleshooting.mdx";
+
+import DocsPagesIncludesAutoDiscoveryAzureVmAdvancedConfig from "@version/docs/pages/includes/auto-discovery/azure-vm-advanced-config.mdx";
 
 This guide shows you how to set up automatic server discovery for Azure virtual
 machines.
@@ -25,14 +39,14 @@ To discover VMs across multiple subscriptions in a management group, see
 
 ## Prerequisites
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx!)
+<DocsPagesIncludesEditionPrereqsTabs />
 
 - Azure subscription with virtual machines and permissions to create and attach
 managed identities.
 - Azure virtual machines to join the Teleport cluster, running
 Ubuntu/Debian/RHEL if making use of the default Teleport install script. (For
 other Linux distributions, you can install Teleport manually.)
-- (!docs/pages/includes/tctl.mdx!)
+- <DocsPagesIncludesTctl />
 
 ## Step 1/5. Create an Azure invite token
 
@@ -76,7 +90,7 @@ $ tctl create -f token.yaml
 
 The Teleport Discovery Service needs Azure IAM permissions to discover and register Azure virtual machines.
 
-(!docs/pages/includes/auto-discovery/azure-vm-configure-service-principal.mdx!)
+<DocsPagesIncludesAutoDiscoveryAzureVmConfigureServicePrincipal />
 
 ### Create a custom role
 
@@ -148,13 +162,13 @@ and replace the subscription in `assignableScopes` with your own subscription id
 
 ### Create a role assignment for the Teleport Discovery Service principal
 
-(!docs/pages/includes/server-access/azure-assign-service-principal.mdx!)
+<DocsPagesIncludesServerAccessAzureAssignServicePrincipal />
 
 ## Step 3/5. Set up an identity for discovered nodes
 
 Every Azure VM to be discovered must have an identity assigned to it: either system assigned or user assigned managed identity.
 
-(!docs/pages/includes/provision-token/azure-join-enable-identity.mdx!)
+<DocsPagesIncludesProvisionTokenAzureJoinEnableIdentity />
 
 If the VMs to be discovered have no system-managed identity and more than one user-managed identity assigned to them,
 copy the client ID of one of your user-managed identities for Step 5.
@@ -170,11 +184,11 @@ another Teleport service (Auth or Proxy, for example), you can skip this step.
 
 Install Teleport on the virtual machine that will run the Discovery Service:
 
-(!docs/pages/includes/install-linux.mdx!)
+<DocsPagesIncludesInstallLinux />
 
 ## Step 5/5. Configure Teleport to discover Azure instances
 
-(!docs/pages/includes/auto-discovery/azure-vm-configure-discovery-service.mdx!)
+<DocsPagesIncludesAutoDiscoveryAzureVmConfigureDiscoveryService />
 
 <Tabs>
 <TabItem label="Dynamic configuration (recommended)">
@@ -248,11 +262,11 @@ Install Teleport on the virtual machine that will run the Discovery Service:
 
 ## Auto-discovery labels
 
-(!docs/pages/includes/auto-discovery/auto-discovery-labels.mdx!)
+<DocsPagesIncludesAutoDiscoveryAutoDiscoveryLabels />
 
 ## Advanced configuration
 
-(!docs/pages/includes/auto-discovery/azure-vm-advanced-config.mdx!)
+<DocsPagesIncludesAutoDiscoveryAzureVmAdvancedConfig />
 
 ## Troubleshooting
 
@@ -265,8 +279,8 @@ the Teleport Discovery Service.
 Refer to [Azure SDK Authorization](https://docs.microsoft.com/en-us/azure/developer/go/azure-sdk-authorization)
 for more information.
 
-(!docs/pages/includes/auto-discovery/azure-vm-troubleshooting.mdx!)
+<DocsPagesIncludesAutoDiscoveryAzureVmTroubleshooting />
 
 ## Next steps
 
-(!docs/pages/includes/auto-discovery/azure-vm-next-steps.mdx!)
+<DocsPagesIncludesAutoDiscoveryAzureVmNextSteps />

@@ -10,6 +10,26 @@ tags:
 enterprise: Identity Governance
 page_type: how-to
 ---
+import DocsPagesIncludesMachineIdPluginPrerequisites from "@version/docs/pages/includes/machine-id/plugin-prerequisites.mdx";
+import DocsPagesIncludesPluginsRefreshPluginIdentity from "@version/docs/pages/includes/plugins/refresh-plugin-identity.mdx";
+import DocsPagesIncludesPluginsAccessPluginTroubleshooting from "@version/docs/pages/includes/plugins/access-plugin-troubleshooting.mdx";
+
+
+import ExamplesResourcesPluginsTeleportPagerdutyCloud from "!!raw-loader!@version/examples/resources/plugins/teleport-pagerduty-cloud.toml";
+import ExamplesResourcesPluginsTeleportPagerdutyHelmCloud from "!!raw-loader!@version/examples/resources/plugins/teleport-pagerduty-helm-cloud.yaml";
+import ExamplesSystemdPluginsTeleportPagerduty from "!!raw-loader!@version/examples/systemd/plugins/teleport-pagerduty.service";
+
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
+import DocsPagesIncludesTctl from "@version/docs/pages/includes/tctl.mdx";
+import DocsPagesIncludesCreateRoleUsingWeb from "@version/docs/pages/includes/create-role-using-web.mdx";
+import DocsPagesIncludesPluginsInstallAccessRequest from "@version/docs/pages/includes/plugins/install-access-request.mdx";
+import DocsPagesIncludesPluginsConfigTomlTeleport from "@version/docs/pages/includes/plugins/config-toml-teleport.mdx";
+import DocsPagesIncludesPluginsCreateRequest from "@version/docs/pages/includes/plugins/create-request.mdx";
+import DocsPagesIncludesPluginsResolveRequest from "@version/docs/pages/includes/plugins/resolve-request.mdx";
+
+import DocsPagesIncludesPluginsEnroll from "@version/docs/pages/includes/plugins/enroll.mdx";
+import DocsPagesIncludesPluginsTbotIdentity from "@version/docs/pages/includes/plugins/tbot-identity.mdx";
+import DocsPagesIncludesPluginsIdentityExport from "@version/docs/pages/includes/plugins/identity-export.mdx";
 
 With Teleport's PagerDuty integration, engineers can access the infrastructure
 they need to resolve incidents quickly—without longstanding admin permissions
@@ -27,7 +47,7 @@ the on-call team for a service affected by an incident.
 <details>
 <summary>This integration is hosted on Teleport Cloud</summary>
 
-(!docs/pages/includes/plugins/enroll.mdx name="the PagerDuty integration"!)
+<DocsPagesIncludesPluginsEnroll name="the PagerDuty integration" />
 
 </details>
 
@@ -35,9 +55,9 @@ the on-call team for a service affected by an incident.
 
 ## Prerequisites
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx edition="Teleport Enterprise"!)
+<DocsPagesIncludesEditionPrereqsTabs edition="Teleport Enterprise" />
 
-(!docs/pages/includes/machine-id/plugin-prerequisites.mdx!)
+<DocsPagesIncludesMachineIdPluginPrerequisites />
 
 - A PagerDuty account with the "Admin", "Global Admin", or "Account Owner"
   roles. These roles are necessary for generating an API token that can list and
@@ -49,7 +69,7 @@ the on-call team for a service affected by an incident.
 
 - Either a Linux host or Kubernetes cluster where you will run the PagerDuty plugin.
 
-- (!docs/pages/includes/tctl.mdx!)
+- <DocsPagesIncludesTctl />
 
 ## Step 1/8. Create services
 
@@ -144,7 +164,7 @@ role 'editor-reviewer' has been created
 role 'editor-requester' has been created
 ```
 
-(!docs/pages/includes/create-role-using-web.mdx!)
+<DocsPagesIncludesCreateRoleUsingWeb />
 
 ### `demo-role-requester`
 
@@ -375,7 +395,7 @@ Teleport cluster.
 
 ## Step 3/8. Install the Teleport PagerDuty plugin
 
-(!docs/pages/includes/plugins/install-access-request.mdx name="pagerduty"!)
+<DocsPagesIncludesPluginsInstallAccessRequest name="pagerduty" />
 
 ## Step 4/8. Export the access plugin identity
 
@@ -386,10 +406,10 @@ longer-lived identity files with `tctl`:
 
 <Tabs>
 <TabItem label="Machine & Workload Identity">
-(!docs/pages/includes/plugins/tbot-identity.mdx secret="teleport-plugin-pagerduty-identity"!)
+<DocsPagesIncludesPluginsTbotIdentity secret="teleport-plugin-pagerduty-identity" />
 </TabItem>
 <TabItem label="Long-lived identity files">
-(!docs/pages/includes/plugins/identity-export.mdx plugin="pagerduty" secret="teleport-plugin-pagerduty-identity"!)
+<DocsPagesIncludesPluginsIdentityExport plugin="pagerduty" secret="teleport-plugin-pagerduty-identity" />
 </TabItem>
 </Tabs>
 
@@ -458,9 +478,9 @@ below:
 
 The PagerDuty plugin uses this section to connect to your Teleport cluster:
 
-(!docs/pages/includes/plugins/config-toml-teleport.mdx!)
+<DocsPagesIncludesPluginsConfigTomlTeleport />
 
-(!docs/pages/includes/plugins/refresh-plugin-identity.mdx!)
+<DocsPagesIncludesPluginsRefreshPluginIdentity />
 
 ### `[pagerduty]`
 
@@ -488,14 +508,18 @@ The final configuration should resemble the following:
 
 <Tabs>
 <TabItem label="Executable or Docker">
-```yaml
-(!examples/resources/plugins/teleport-pagerduty-cloud.toml!)
-```
+<CodeBlock language="yaml">
+
+  {ExamplesResourcesPluginsTeleportPagerdutyCloud}
+
+</CodeBlock>
 </TabItem>
 <TabItem label="Helm Chart" >
-```yaml
-(!examples/resources/plugins/teleport-pagerduty-helm-cloud.yaml!)
-```
+<CodeBlock language="yaml">
+
+  {ExamplesResourcesPluginsTeleportPagerdutyHelmCloud}
+
+</CodeBlock>
 </TabItem>
 </Tabs>
 
@@ -555,7 +579,7 @@ $ kubectl rollout restart deployment teleport-plugin-pagerduty
 
 As the Teleport user `myuser`, create an Access Request for the `editor` role:
 
-(!docs/pages/includes/plugins/create-request.mdx!)
+<DocsPagesIncludesPluginsCreateRequest />
 
 You should see a log resembling the following on your PagerDuty plugin host:
 
@@ -574,7 +598,7 @@ Request](../../../../img/enterprise/plugins/pagerduty/new-access-req-incident.pn
 
 ### Resolve the request
 
-(!docs/pages/includes/plugins/resolve-request.mdx!)
+<DocsPagesIncludesPluginsResolveRequest />
 
 <Admonition type="warning" title="Auditing Access Requests">
 
@@ -620,9 +644,11 @@ In production, we recommend starting the Teleport plugin daemon via an init
 system like systemd. Here's the recommended Teleport plugin service unit file
 for systemd:
 
-```ini
-(!examples/systemd/plugins/teleport-pagerduty.service!)
-```
+<CodeBlock language="ini">
+
+  {ExamplesSystemdPluginsTeleportPagerduty}
+
+</CodeBlock>
 
 Save this as `teleport-pagerduty.service` in either `/usr/lib/systemd/system/`
 or another [unit file load
@@ -638,7 +664,7 @@ $ sudo systemctl start teleport-pagerduty
 
 ## Troubleshooting
 
-(!docs/pages/includes/plugins/access-plugin-troubleshooting.mdx!)
+<DocsPagesIncludesPluginsAccessPluginTroubleshooting />
 
 ## Next steps
 

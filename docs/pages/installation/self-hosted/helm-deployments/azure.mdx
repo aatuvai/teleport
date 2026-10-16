@@ -7,6 +7,12 @@ tags:
  - platform-wide
  - azure
 ---
+import DocsPagesIncludesKubernetesAccessHelmHelmRepoAdd from "@version/docs/pages/includes/kubernetes-access/helm/helm-repo-add.mdx";
+import DocsPagesIncludesEnterpriseObtainlicense from "@version/docs/pages/includes/enterprise/obtainlicense.mdx";
+
+
+import DocsPagesIncludesCloudCallToAction from "@version/docs/pages/includes/cloud/call-to-action.mdx";
+import DocsPagesIncludesKubernetesAccessHelmTeleportClusterPrereqs from "@version/docs/pages/includes/kubernetes-access/helm/teleport-cluster-prereqs.mdx";
 
 In this guide, we'll go through how to set up a High Availability Teleport
 cluster with multiple replicas in Kubernetes using Teleport Helm charts and
@@ -20,7 +26,7 @@ guide](../../../enroll-resources/kubernetes-access/getting-started.mdx) to conne
 cluster to Teleport.
 </Admonition>
 
-(!docs/pages/includes/cloud/call-to-action.mdx!)
+<DocsPagesIncludesCloudCallToAction />
 
 ## How it works
 
@@ -42,7 +48,7 @@ following resources, which we show you how to create in this guide:
 
 ## Prerequisites
 
-(!docs/pages/includes/kubernetes-access/helm/teleport-cluster-prereqs.mdx!)
+<DocsPagesIncludesKubernetesAccessHelmTeleportClusterPrereqs />
 
 In addition, you will need `azure-cli` 2.51 or later to follow along these
 instructions. Reference the Azure docs on [how to install the Azure
@@ -70,7 +76,7 @@ $ az aks update --resource-group <Var name="aks-rg" /> --name <Var name="aks-nam
 
 ## Step 1/5. Add the Teleport Helm chart repository
 
-(!docs/pages/includes/kubernetes-access/helm/helm-repo-add.mdx!)
+<DocsPagesIncludesKubernetesAccessHelmHelmRepoAdd />
 
 ## Step 2/5. Set up PostgreSQL and Blob Storage
 
@@ -139,7 +145,7 @@ $ az identity federated-credential create --resource-group <Var name="teleport-r
 Before you can install Teleport Enterprise in your Kubernetes cluster, you will need to
 create a secret that contains your Teleport license information.
 
-(!docs/pages/includes/enterprise/obtainlicense.mdx!)
+<DocsPagesIncludesEnterpriseObtainlicense />
 
 Create a secret from your license file. Teleport will automatically discover
 this secret as long as your file is named `license.pem`.

@@ -9,12 +9,26 @@ tags:
  - google-cloud
 page_type: how-to
 ---
+import DocsPagesIncludesDatabaseAccessGcpTroubleshooting from "@version/docs/pages/includes/database-access/gcp-troubleshooting.mdx";
+import DocsPagesIncludesDatabaseAccessGuidesNextSteps from "@version/docs/pages/includes/database-access/guides-next-steps.mdx";
 
-(!docs/pages/includes/database-access/db-introduction.mdx dbType="Cloud Spanner" dbConfigure="with a service account"!)
+
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
+import DocsPagesIncludesTctl from "@version/docs/pages/includes/tctl.mdx";
+import DocsPagesIncludesInstallLinux from "@version/docs/pages/includes/install-linux.mdx";
+import DocsPagesIncludesDatabaseAccessCloudsqlServiceCredentials from "@version/docs/pages/includes/database-access/cloudsql_service_credentials.mdx";
+import DocsPagesIncludesStartTeleport from "@version/docs/pages/includes/start-teleport.mdx";
+import DocsPagesIncludesDatabaseAccessCreateUser from "@version/docs/pages/includes/database-access/create-user.mdx";
+
+import DocsPagesIncludesDatabaseAccessDbIntroduction from "@version/docs/pages/includes/database-access/db-introduction.mdx";
+import DocsPagesIncludesDatabaseAccessHowItWorksIam from "@version/docs/pages/includes/database-access/how-it-works/iam.mdx";
+import DocsPagesIncludesTctlToken from "@version/docs/pages/includes/tctl-token.mdx";
+
+<DocsPagesIncludesDatabaseAccessDbIntroduction dbType="Cloud Spanner" dbConfigure="with a service account" />
 
 ## How it works
 
-(!docs/pages/includes/database-access/how-it-works/iam.mdx db="Spanner" cloud="Google Cloud"!)
+<DocsPagesIncludesDatabaseAccessHowItWorksIam db="Spanner" cloud="Google Cloud" />
 
 <Tabs>
 
@@ -30,13 +44,13 @@ page_type: how-to
 
 ## Prerequisites
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx!)
+<DocsPagesIncludesEditionPrereqsTabs />
 
 - A Google Cloud account
 - A Cloud Spanner instance and database
 - A host to run the Teleport Database Service (for example, a Compute Engine instance) 
   with outbound HTTPS access to `spanner.googleapis.com:443`
-- (!docs/pages/includes/tctl.mdx!)
+- <DocsPagesIncludesTctl />
 
 ## Step 1/6. Create service accounts
 
@@ -180,9 +194,9 @@ bindings:
 
 ## Step 3/6. Install and configure the Teleport Database Service
 
-(!docs/pages/includes/install-linux.mdx!)
+<DocsPagesIncludesInstallLinux />
 
-(!docs/pages/includes/tctl-token.mdx serviceName="Database" tokenType="db" tokenFile="/tmp/token" !)
+<DocsPagesIncludesTctlToken serviceName="Database" tokenType="db" tokenFile="/tmp/token" />
 
 Provide the following information and then generate a configuration file for the
 Teleport Database Service:
@@ -208,11 +222,11 @@ $ sudo teleport db configure create \
 
 ## Step 4/6. Configure GCP credentials
 
-(!docs/pages/includes/database-access/cloudsql_service_credentials.mdx serviceAccount="teleport-db-service"!)
+<DocsPagesIncludesDatabaseAccessCloudsqlServiceCredentials serviceAccount="teleport-db-service" />
 
 ## Step 5/6. Start the Teleport Database Service
 
-(!docs/pages/includes/start-teleport.mdx service="the Teleport Database Service"!)
+<DocsPagesIncludesStartTeleport service="the Teleport Database Service" />
 
 <Checkpoint
   title="Verify database availability"
@@ -244,7 +258,7 @@ In this step, you will create a Teleport user with access to the Spanner
 database, connect using the database user service account, and optionally
 remove stored credentials when you are done.
 
-(!docs/pages/includes/database-access/create-user.mdx!)
+<DocsPagesIncludesDatabaseAccessCreateUser />
 
 Log in to your Teleport cluster as the new user that you just created:
 ```code
@@ -274,11 +288,11 @@ $ tsh db logout
 
 ## Troubleshooting
 
-(!docs/pages/includes/database-access/gcp-troubleshooting.mdx!)
+<DocsPagesIncludesDatabaseAccessGcpTroubleshooting />
 
 ## Next steps
 
-(!docs/pages/includes/database-access/guides-next-steps.mdx!)
+<DocsPagesIncludesDatabaseAccessGuidesNextSteps />
 
 - Learn how to [connect with a GUI client](../../../../connect-your-client/third-party/gui-clients.mdx#cloud-spanner-datagrip).
 - Learn more about [service account authentication](https://cloud.google.com/docs/authentication#service-accounts).

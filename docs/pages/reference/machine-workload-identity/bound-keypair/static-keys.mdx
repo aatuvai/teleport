@@ -6,6 +6,12 @@ tags:
  - how-to
  - infrastructure-identity
 ---
+import DocsPagesIncludesMachineIdCreateABot from "@version/docs/pages/includes/machine-id/create-a-bot.mdx";
+import DocsPagesIncludesMachineIdConfigureServices from "@version/docs/pages/includes/machine-id/configure-services.mdx";
+
+
+import DocsPagesIncludesTctl from "@version/docs/pages/includes/tctl.mdx";
+import DocsPagesIncludesInstallLinux from "@version/docs/pages/includes/install-linux.mdx";
 
 In this guide, you will install Machine and Workload Identity's agent, `tbot`,
 on an arbitrary stateless environment using Bound Keypair static keys. This
@@ -63,7 +69,7 @@ environment.
 
 - A running Teleport cluster version 18.2.0 or above.
 - The `tsh`, `tctl`, and `tbot` clients.
-- (!docs/pages/includes/tctl.mdx!)
+- <DocsPagesIncludesTctl />
 
 ## Step 1/7. Install `tbot`
 
@@ -74,13 +80,13 @@ Workload Identity on.
 
 Download and install the appropriate Teleport package for your platform:
 
-(!docs/pages/includes/install-linux.mdx!)
+<DocsPagesIncludesInstallLinux />
 
 ## Step 2/7. Create a Bot
 
 **This step is completed on your local machine.**
 
-(!docs/pages/includes/machine-id/create-a-bot.mdx!)
+<DocsPagesIncludesMachineIdCreateABot />
 
 ## Step 3/7. Create a keypair and a join token
 
@@ -286,7 +292,7 @@ longer-running jobs, otherwise the certificates issued will expire eventually
 
 ## Step 7/7. Configure services
 
-(!docs/pages/includes/machine-id/configure-services.mdx!)
+<DocsPagesIncludesMachineIdConfigureServices />
 
 ## Next Steps
 

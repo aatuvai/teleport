@@ -1,4 +1,3 @@
-{{ flags="" }}
 Teleport's diagnostic HTTP endpoints are disabled by default. You can enable
 them via:
 
@@ -7,9 +6,11 @@ them via:
     Start a `teleport` instance with the `--diag-addr` flag set to the local
     address where the diagnostic endpoint will listen:
 
-    ```code
-    $ sudo teleport start {{ flags }} --diag-addr=127.0.0.1:3000
-    ```
+    <CodeBlock>
+    {
+     `$ sudo teleport start ${ props.flags ?? "" } --diag-addr=127.0.0.1:3000`
+    }
+    </CodeBlock>
 
     </TabItem>
     <TabItem label="Config file">

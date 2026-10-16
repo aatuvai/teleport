@@ -3,6 +3,8 @@ title: Auto-Update Version Resource Reference
 sidebar_label: Auto-Update Version
 description: Provides a comprehensive list of fields for the Teleport auto-update version resource.
 ---
+import DocsPagesIncludesReferenceResourcesAutoupdateVersion from "@version/docs/pages/includes/reference/resources/autoupdate_version.mdx";
+
 
 The auto-update version resource allows cluster administrators to manage
 versions used for agent and client tools Managed Updates.
@@ -18,7 +20,7 @@ which are currently supported but will be deprecated in a future version.
 This resource is not editable for cloud-managed Teleport Enterprise to ensure that all of
 your clients receive security patches and remain compatible with your cluster.
 
-(!docs/pages/includes/reference/resources/autoupdate_version.mdx!)
+<DocsPagesIncludesReferenceResourcesAutoupdateVersion />
 
 See [Teleport Client Tool Managed Updates](../../../upgrading/client-tools-managed-updates.mdx) and
 [Teleport Agent Managed Updates](../../../upgrading/agent-managed-updates/agent-managed-updates.mdx) for more details.

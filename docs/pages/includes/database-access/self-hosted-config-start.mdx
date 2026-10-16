@@ -1,4 +1,5 @@
-{{ dbName="test" }}
+import DocsPagesIncludesStartTeleport from "@version/docs/pages/includes/start-teleport.mdx";
+
 On the host where you will run the Teleport Database Service, start Teleport
 with the appropriate configuration.
 
@@ -13,16 +14,18 @@ Run the following command to generate a configuration file at
 <Var name="example.teleport.sh" /> to use the host and port of the Teleport Proxy
 Service:
 
-```code
-$ sudo teleport db configure create \
-   -o file \
-   --token=/tmp/token \
-   --proxy=<Var name="example.teleport.sh" />:443 \
-   --name={{ dbName }} \
-   --protocol={{ dbProtocol }} \
-   --uri={{ databaseAddress }} \
-   --labels=env=dev 
-```
+<CodeBlock>
+{
+ `$ sudo teleport db configure create \\
+     -o file \\
+     --token=/tmp/token \\
+     --proxy=<Var name="example.teleport.sh" />:443 \\
+     --name=${ props.dbName ?? "test" } \\
+     --protocol=${ props.dbProtocol } \\
+     --uri=${ props.databaseAddress } \\
+     --labels=env=dev `
+}
+</CodeBlock>
 
 To configure the Teleport Database Service to trust a custom CA:
 
@@ -33,32 +36,36 @@ To configure the Teleport Database Service to trust a custom CA:
    flag. This configures the Teleport Database Service to use the CA certificate
    at `db.ca` to verify traffic from the database:
 
-   ```code
-   $ sudo teleport db configure create \
-      -o file \
-      --token=/tmp/token \
-      --proxy=<Var name="example.teleport.sh" />:443 \
-      --name={{ dbName }} \
-      --protocol={{ dbProtocol }} \
-      --uri={{ databaseAddress }} \
-      --ca-cert-file="/var/lib/teleport/db.ca" \
-      --labels=env=dev
-   ```
+   <CodeBlock>
+   {
+    `$ sudo teleport db configure create \\
+        -o file \\
+        --token=/tmp/token \\
+        --proxy=<Var name="example.teleport.sh" />:443 \\
+        --name=${ props.dbName ?? "test" } \\
+        --protocol=${ props.dbProtocol } \\
+        --uri=${ props.databaseAddress } \\
+        --ca-cert-file="/var/lib/teleport/db.ca" \\
+        --labels=env=dev`
+   }
+   </CodeBlock>
 
 
 If your database servers use certificates that are signed by a public CA such
 as ComodoCA or DigiCert, you can use the `trust-system-cert-pool` option
 without exporting the CA:
-```code
-$ sudo teleport db configure create \
-   -o file \
-   --token=/tmp/token \
-   --proxy=<Var name="example.teleport.sh" />:443 \
-   --name={{ dbName }} \
-   --protocol={{ dbProtocol }} \
-   --uri={{ databaseAddress }} \
-   --trust-system-cert-pool \
-   --labels=env=dev
-```
+<CodeBlock>
+{
+ `$ sudo teleport db configure create \\
+     -o file \\
+     --token=/tmp/token \\
+     --proxy=<Var name="example.teleport.sh" />:443 \\
+     --name=${ props.dbName ?? "test" } \\
+     --protocol=${ props.dbProtocol } \\
+     --uri=${ props.databaseAddress } \\
+     --trust-system-cert-pool \\
+     --labels=env=dev`
+}
+</CodeBlock>
 
-(!docs/pages/includes/start-teleport.mdx service="the Teleport Database Service"!)
+<DocsPagesIncludesStartTeleport service="the Teleport Database Service" />

@@ -7,6 +7,9 @@ tags:
  - platform-wide
  - google-cloud
 ---
+import DocsPagesIncludesTctl from "@version/docs/pages/includes/tctl.mdx";
+import DocsPagesIncludesEnterpriseHsmWarning from "@version/docs/pages/includes/enterprise/hsm-warning.mdx";
+
 
 This guide will show you how to set up your Teleport Cluster to use the Google
 Cloud Key Management Service (KMS) to store and handle the CA private key
@@ -34,10 +37,10 @@ learn more.
 ## Prerequisites
 
 - Teleport Enterprise (self-hosted).
-- (!docs/pages/includes/tctl.mdx!)
+- <DocsPagesIncludesTctl />
 - A Google Cloud account.
 
-(!docs/pages/includes/enterprise/hsm-warning.mdx!)
+<DocsPagesIncludesEnterpriseHsmWarning />
 
 ## Step 1/5. Create a key ring in GCP
 

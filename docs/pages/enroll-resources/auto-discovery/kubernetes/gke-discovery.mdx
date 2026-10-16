@@ -9,6 +9,19 @@ tags:
  - google-cloud
 page_type: how-to
 ---
+import DocsPagesIncludesDiscoveryKubernetesServiceTroubleshooting from "@version/docs/pages/includes/discovery/kubernetes-service-troubleshooting.mdx";
+
+
+import DocsPagesIncludesDiscoverySameHostTip from "@version/docs/pages/includes/discovery/same-host-tip.mdx";
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
+import DocsPagesIncludesTctl from "@version/docs/pages/includes/tctl.mdx";
+import DocsPagesIncludesInstallLinux from "@version/docs/pages/includes/install-linux.mdx";
+import DocsPagesIncludesDiscoveryDiscoveryGroup from "@version/docs/pages/includes/discovery/discovery-group.mdx";
+
+import DocsPagesIncludesKubernetesAccessRbac from "@version/docs/pages/includes/kubernetes-access/rbac.mdx";
+
+import DocsPagesIncludesDiscoveryStepDescription from "@version/docs/pages/includes/discovery/step-description.mdx";
+import DocsPagesIncludesDiscoveryDiscoveryServiceTroubleshooting from "@version/docs/pages/includes/discovery/discovery-service-troubleshooting.mdx";
 
 The Teleport Discovery Service can automatically register your Google Kubernetes
 Engine (GKE) clusters with Teleport. With Teleport Kubernetes Discovery,
@@ -22,13 +35,13 @@ Teleport.
 
 ## How it works
 
-(!docs/pages/includes/discovery/step-description.mdx serviceName="Kubernetes" resourceDesc="cluster" resourceKind="kube_cluster" !)
+<DocsPagesIncludesDiscoveryStepDescription serviceName="Kubernetes" resourceDesc="cluster" resourceKind="kube_cluster" />
 
-(!docs/pages/includes/discovery/same-host-tip.mdx serviceName="Kubernetes" resourceDesc="cluster" !)
+<DocsPagesIncludesDiscoverySameHostTip serviceName="Kubernetes" resourceDesc="cluster" />
 
 ## Prerequisites
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx!)
+<DocsPagesIncludesEditionPrereqsTabs />
 
 - A Google Cloud account with permissions to create GKE clusters, IAM roles, and
   service accounts.
@@ -40,7 +53,7 @@ Teleport.
 - A Linux host where you will run the Teleport Discovery and Kubernetes
   services. You can run this host on any cloud provider or even use a local
   machine.
-- (!docs/pages/includes/tctl.mdx!)
+- <DocsPagesIncludesTctl />
 
 ## Step 1/3. Obtain Google Cloud credentials
 
@@ -286,7 +299,7 @@ detect GKE clusters and the Kubernetes Service to proxy user traffic.
 Install Teleport on the host you are using to run the Kubernetes Service and
 Discovery Service:
 
-(!docs/pages/includes/install-linux.mdx!)
+<DocsPagesIncludesInstallLinux />
 
 ### Create a join token
 
@@ -332,7 +345,7 @@ that will run the appropriate service.
 On the host running the Kubernetes Service and Discovery Service, create a
 Teleport configuration file with the following content at `/etc/teleport.yaml`:
 
-(!docs/pages/includes/discovery/discovery-group.mdx!)
+<DocsPagesIncludesDiscoveryDiscoveryGroup />
 
 ```yaml
 version: v3
@@ -609,7 +622,7 @@ Switched to context CONTEXT_NAME
 
 </details>
 
-(!docs/pages/includes/kubernetes-access/rbac.mdx!)
+<DocsPagesIncludesKubernetesAccessRbac />
 
 ### Access your cluster
 
@@ -660,6 +673,6 @@ will update its state to reflect the available clusters in your account.
 
 ## Troubleshooting
 
-(!docs/pages/includes/discovery/discovery-service-troubleshooting.mdx resourceKind="Kubernetes cluster" tctlResource="kube_cluster" cloud="Google Cloud"!)
+<DocsPagesIncludesDiscoveryDiscoveryServiceTroubleshooting resourceKind="Kubernetes cluster" tctlResource="kube_cluster" cloud="Google Cloud" />
 
-(!docs/pages/includes/discovery/kubernetes-service-troubleshooting.mdx!)
+<DocsPagesIncludesDiscoveryKubernetesServiceTroubleshooting />

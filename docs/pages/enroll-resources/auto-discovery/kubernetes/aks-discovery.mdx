@@ -9,6 +9,17 @@ tags:
  - azure
 page_type: how-to
 ---
+import DocsPagesIncludesDiscoveryKubernetesServiceTroubleshooting from "@version/docs/pages/includes/discovery/kubernetes-service-troubleshooting.mdx";
+
+
+import DocsPagesIncludesDiscoverySameHostTip from "@version/docs/pages/includes/discovery/same-host-tip.mdx";
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
+import DocsPagesIncludesInstallLinux from "@version/docs/pages/includes/install-linux.mdx";
+import DocsPagesIncludesDiscoveryDiscoveryGroup from "@version/docs/pages/includes/discovery/discovery-group.mdx";
+import DocsPagesIncludesStartTeleport from "@version/docs/pages/includes/start-teleport.mdx";
+
+import DocsPagesIncludesDiscoveryStepDescription from "@version/docs/pages/includes/discovery/step-description.mdx";
+import DocsPagesIncludesDiscoveryDiscoveryServiceTroubleshooting from "@version/docs/pages/includes/discovery/discovery-service-troubleshooting.mdx";
 
 AKS Auto-Discovery can automatically
 discover any AKS cluster and enroll it in Teleport if its tags match the
@@ -19,13 +30,13 @@ and deploy a Teleport Agent in your cluster that enables this feature.
 
 ## How it works
 
-(!docs/pages/includes/discovery/step-description.mdx serviceName="Kubernetes" resourceDesc="cluster" resourceKind="kube_cluster" !)
+<DocsPagesIncludesDiscoveryStepDescription serviceName="Kubernetes" resourceDesc="cluster" resourceKind="kube_cluster" />
 
-(!docs/pages/includes/discovery/same-host-tip.mdx serviceName="Kubernetes" resourceDesc="cluster" !)
+<DocsPagesIncludesDiscoverySameHostTip serviceName="Kubernetes" resourceDesc="cluster" />
 
 ## Prerequisites
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx!)
+<DocsPagesIncludesEditionPrereqsTabs />
 
 - An Azure identity with permissions to create and attach AD Groups.
 - One or more AKS clusters running.
@@ -226,7 +237,7 @@ associated with Teleport identity.
 Install Teleport on the host you are using to run the Kubernetes Service and
 Discovery Service:
 
-(!docs/pages/includes/install-linux.mdx!)
+<DocsPagesIncludesInstallLinux />
 
 ### Get a join token
 
@@ -252,7 +263,7 @@ labels configured at `discovery_service.azure.tags` or a subset of them to make
 the Kubernetes Service listen to the dynamic resources created by the Discovery
 Service.
 
-(!docs/pages/includes/discovery/discovery-group.mdx!)
+<DocsPagesIncludesDiscoveryDiscoveryGroup />
 
 ```yaml
 version: v3
@@ -287,10 +298,10 @@ kubernetes_service:
 Once you have added this configuration, start Teleport. AKS clusters matching the tags and regions
 specified in the Azure section will be added to the Teleport cluster automatically.
 
-(!docs/pages/includes/start-teleport.mdx service="the Kubernetes and Discovery Services"!)
+<DocsPagesIncludesStartTeleport service="the Kubernetes and Discovery Services" />
 
 ## Troubleshooting
 
-(!docs/pages/includes/discovery/discovery-service-troubleshooting.mdx resourceKind="Kubernetes cluster" tctlResource="kube_cluster" cloud="Azure"!)
+<DocsPagesIncludesDiscoveryDiscoveryServiceTroubleshooting resourceKind="Kubernetes cluster" tctlResource="kube_cluster" cloud="Azure" />
 
-(!docs/pages/includes/discovery/kubernetes-service-troubleshooting.mdx!)
+<DocsPagesIncludesDiscoveryKubernetesServiceTroubleshooting />

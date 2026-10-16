@@ -9,6 +9,24 @@ tags:
  - aws
 page_type: how-to
 ---
+import DocsPagesIncludesDatabaseAccessAlternativeMethodsJoin from "@version/docs/pages/includes/database-access/alternative-methods-join.mdx";
+
+
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
+import DocsPagesIncludesInstallLinux from "@version/docs/pages/includes/install-linux.mdx";
+import DocsPagesIncludesAwsCredentials from "@version/docs/pages/includes/aws-credentials.mdx";
+import DocsPagesIncludesDiscoveryAwsDbIamPolicyPicker from "@version/docs/pages/includes/discovery/aws-db-iam-policy-picker.mdx";
+import DocsPagesIncludesDiscoveryDiscoveryGroup from "@version/docs/pages/includes/discovery/discovery-group.mdx";
+import DocsPagesIncludesStartTeleport from "@version/docs/pages/includes/start-teleport.mdx";
+import DocsPagesIncludesDiscoveryAwsDbDiscoveryConfigPicker from "@version/docs/pages/includes/discovery/aws-db-discovery-config-picker.mdx";
+import DocsPagesIncludesDatabaseAccessAwsDbIamPolicyPicker from "@version/docs/pages/includes/database-access/aws-db-iam-policy-picker.mdx";
+import DocsPagesIncludesDiscoveryDbLabelWarning from "@version/docs/pages/includes/discovery/db-label-warning.mdx";
+import DocsPagesIncludesDiscoveryDatabaseServiceTroubleshooting from "@version/docs/pages/includes/discovery/database-service-troubleshooting.mdx";
+
+import DocsPagesIncludesDiscoveryStepDescription from "@version/docs/pages/includes/discovery/step-description.mdx";
+import DocsPagesIncludesTctlToken from "@version/docs/pages/includes/tctl-token.mdx";
+import DocsPagesIncludesDiscoveryTctlDiscoveryStatus from "@version/docs/pages/includes/discovery/tctl-discovery-status.mdx";
+import DocsPagesIncludesDiscoveryDiscoveryServiceTroubleshooting from "@version/docs/pages/includes/discovery/discovery-service-troubleshooting.mdx";
 
 Teleport can be configured to discover AWS-hosted databases automatically and
 register them with your Teleport cluster.
@@ -17,7 +35,7 @@ In this guide, you will set up AWS database auto-discovery.
 
 ## How it works
 
-(!docs/pages/includes/discovery/step-description.mdx serviceName="Database" resourceDesc="database" resourceKind="db"!)
+<DocsPagesIncludesDiscoveryStepDescription serviceName="Database" resourceDesc="database" resourceKind="db" />
 
 {/*
 TODO(gavin): include the architecture diagram once we've made one for the
@@ -26,7 +44,7 @@ Discover web UI integration
 
 ## Prerequisites
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx!)
+<DocsPagesIncludesEditionPrereqsTabs />
 
 - An AWS account with permissions to create and attach IAM policies.
 - A host to run the Teleport Discovery Service.
@@ -41,18 +59,18 @@ Teleport Database Service.
 The Database Service needs network connectivity to databases, whereas the
 Discovery Service does not.
 
-(!docs/pages/includes/install-linux.mdx!)
+<DocsPagesIncludesInstallLinux />
 
 ## Step 2/8. Discovery Service IAM permissions
 
-(!docs/pages/includes/aws-credentials.mdx service="the Discovery Service"!)
+<DocsPagesIncludesAwsCredentials service="the Discovery Service" />
 
 ### Grant AWS IAM permissions
 
 Attach the following AWS IAM permissions to the Discovery Service AWS IAM
 role:
 
-(!docs/pages/includes/discovery/aws-db-iam-policy-picker.mdx!)
+<DocsPagesIncludesDiscoveryAwsDbIamPolicyPicker />
 
 ## Step 3/8. Deploy the Discovery Service
 
@@ -88,24 +106,24 @@ We will configure the `discovery_group` <Var name="aws-example"/> dynamically
 in a later step, so that we can control the Discovery Service's
 configuration without restarting the Discovery Service.
 
-(!docs/pages/includes/discovery/discovery-group.mdx!)
+<DocsPagesIncludesDiscoveryDiscoveryGroup />
 
 ### Generate a join token
 
-(!docs/pages/includes/tctl-token.mdx serviceName="Discovery" tokenType="discovery" tokenFile="/tmp/token" !)
+<DocsPagesIncludesTctlToken serviceName="Discovery" tokenType="discovery" tokenFile="/tmp/token" />
 
-(!docs/pages/includes/database-access/alternative-methods-join.mdx!)
+<DocsPagesIncludesDatabaseAccessAlternativeMethodsJoin />
 
 ### Start the Discovery Service
 
-(!docs/pages/includes/start-teleport.mdx service="the Discovery Service"!)
+<DocsPagesIncludesStartTeleport service="the Discovery Service" />
 
 ## Step 4/8. Discovery group config
 
 Create a file <Var name="aws-example-discovery-config.yaml"/> and save it on a
 host where you can use `tctl`.
 
-(!docs/pages/includes/discovery/aws-db-discovery-config-picker.mdx!)
+<DocsPagesIncludesDiscoveryAwsDbDiscoveryConfigPicker />
 
 Create the `discovery_config`:
 
@@ -184,12 +202,12 @@ additional identifying information will not be appended to it.
 
 ## Step 6/8. Database Service IAM permissions
 
-(!docs/pages/includes/aws-credentials.mdx service="the Database Service"!)
+<DocsPagesIncludesAwsCredentials service="the Database Service" />
 
 Create an AWS IAM role for the Database Service and attach the following
 permissions:
 
-(!docs/pages/includes/database-access/aws-db-iam-policy-picker.mdx!)
+<DocsPagesIncludesDatabaseAccessAwsDbIamPolicyPicker />
 
 ## Step 7/8. Deploy the Database Service
 
@@ -259,7 +277,7 @@ In this case, it will match auto-discovered AWS databases in the
 <Var name="us-east-1"/> region
 from any AWS account (`"*"` is a wildcard and it can be used as a label key and/or value).
 
-(!docs/pages/includes/discovery/db-label-warning.mdx!)
+<DocsPagesIncludesDiscoveryDbLabelWarning />
 
 The AWS tags attached to AWS databases are imported as Teleport `db` labels
 in addition to some other identifying metadata.
@@ -269,13 +287,13 @@ for more information about available database labels.
 
 ### Generate a join token
 
-(!docs/pages/includes/tctl-token.mdx serviceName="Database" tokenType="db" tokenFile="/tmp/token" !)
+<DocsPagesIncludesTctlToken serviceName="Database" tokenType="db" tokenFile="/tmp/token" />
 
-(!docs/pages/includes/database-access/alternative-methods-join.mdx!)
+<DocsPagesIncludesDatabaseAccessAlternativeMethodsJoin />
 
 ### Start the Database Service
 
-(!docs/pages/includes/start-teleport.mdx service="the Database Service"!)
+<DocsPagesIncludesStartTeleport service="the Database Service" />
 
 ## Step 8/8. List database servers
 
@@ -313,8 +331,8 @@ for information about database user provisioning and configuration.
 
 ## Troubleshooting
 
-(!docs/pages/includes/discovery/tctl-discovery-status.mdx provider="AWS" cloud="aws" resource="AWS RDS"!)
+<DocsPagesIncludesDiscoveryTctlDiscoveryStatus provider="AWS" cloud="aws" resource="AWS RDS" />
 
-(!docs/pages/includes/discovery/discovery-service-troubleshooting.mdx resourceKind="database" tctlResource="db" cloud="AWS"!)
+<DocsPagesIncludesDiscoveryDiscoveryServiceTroubleshooting resourceKind="database" tctlResource="db" cloud="AWS" />
 
-(!docs/pages/includes/discovery/database-service-troubleshooting.mdx!)
+<DocsPagesIncludesDiscoveryDatabaseServiceTroubleshooting />

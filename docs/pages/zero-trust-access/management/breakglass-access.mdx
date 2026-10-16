@@ -3,6 +3,8 @@ title: Configuring Break-Glass SSH Access for Disaster Recovery
 sidebar_label: Break-Glass Access
 description: Guide to set up break-glass emergency SSH access for critical systems if Teleport becomes unavailable.
 ---
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
+
 
 This guide will walk you through the steps required to configure emergency "break-glass" access for critical agents and servers via OpenSSH
 using Teleport-issued certificates, in the following scenarios:
@@ -41,7 +43,7 @@ than emergency break-glass access when the regular Teleport access path is unava
 - OpenSSH client version 7.4 or above on your local machine.
 - A Linux host with OpenSSH server (`sshd`) version 7.4 or above.
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx!)
+<DocsPagesIncludesEditionPrereqsTabs />
 
 ## Step 1/5. Configure an out-of-band OpenSSH server
 

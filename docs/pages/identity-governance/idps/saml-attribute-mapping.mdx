@@ -10,6 +10,9 @@ tags:
 enterprise: Identity Governance
 page_type: conceptual
 ---
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
+import DocsPagesIncludesTctl from "@version/docs/pages/includes/tctl.mdx";
+
 
 Attribute mapping configures Teleport SAML Identity Provider to assert custom user attributes in SAML response.
 The Teleport SAML IdP supports three configurable fields for attribute mapping:
@@ -45,8 +48,8 @@ This page describes the configuration options available for attribute mapping.
 
 ## Prerequisites
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx edition="Teleport Enterprise"!)
-- (!docs/pages/includes/tctl.mdx!)
+<DocsPagesIncludesEditionPrereqsTabs edition="Teleport Enterprise" />
+- <DocsPagesIncludesTctl />
 - Teleport user with permission to create a service provider resource. The preset `editor` role has this permission.
 - If you're new to SAML, consider reviewing our [SAML Identity Provider
   Reference](../../reference/access-controls/saml-idp.mdx) before proceeding.

@@ -6,6 +6,14 @@ tags:
  - how-to
  - infrastructure-identity
 ---
+import DocsPagesIncludesMachineIdCreateABot from "@version/docs/pages/includes/machine-id/create-a-bot.mdx";
+import DocsPagesIncludesMachineIdMachineIdInitBotData from "@version/docs/pages/includes/machine-id/machine-id-init-bot-data.mdx";
+import DocsPagesIncludesMachineIdConfigureServices from "@version/docs/pages/includes/machine-id/configure-services.mdx";
+
+
+import DocsPagesIncludesTctl from "@version/docs/pages/includes/tctl.mdx";
+import DocsPagesIncludesInstallLinux from "@version/docs/pages/includes/install-linux.mdx";
+import DocsPagesIncludesMachineIdDaemonOrOneshot from "@version/docs/pages/includes/machine-id/daemon-or-oneshot.mdx";
 
 In this guide, you will install Machine & Workload Identity's agent, `tbot`, on
 an arbitrary host using Bound Keypair Joining. This host could be a bare-metal
@@ -68,7 +76,7 @@ method works and how to use it in production.
 
 - A running Teleport cluster version 18.1.0 or above.
 - The `tsh` and `tctl` clients.
-- (!docs/pages/includes/tctl.mdx!)
+- <DocsPagesIncludesTctl />
 - This guide assumes the bot host has mutable persistent storage for internal
   bot data. While it is possible to use Bound Keypair Joining on immutable
   hosts (like CI runs), doing so will reduce security guarantees; see the
@@ -83,13 +91,13 @@ Workload Identity on.
 
 Download and install the appropriate Teleport package for your platform:
 
-(!docs/pages/includes/install-linux.mdx!)
+<DocsPagesIncludesInstallLinux />
 
 ## Step 2/4. Create a Bot
 
 **This step is completed on your local machine.**
 
-(!docs/pages/includes/machine-id/create-a-bot.mdx!)
+<DocsPagesIncludesMachineIdCreateABot />
 
 ## Step 3/4. Create a join token
 
@@ -161,7 +169,7 @@ the `.status.bound_keypair.registration_secret` field.
 
 ### Prepare a storage directory
 
-(!docs/pages/includes/machine-id/machine-id-init-bot-data.mdx!)
+<DocsPagesIncludesMachineIdMachineIdInitBotData />
 
 ### Create a configuration file
 
@@ -188,11 +196,11 @@ Replace the following:
   changed it from `example`.
 - `SECRET` with the registration secret retrieved in the previous step.
 
-(!docs/pages/includes/machine-id/daemon-or-oneshot.mdx!)
+<DocsPagesIncludesMachineIdDaemonOrOneshot />
 
 ## Next step: configure outputs
 
-(!docs/pages/includes/machine-id/configure-services.mdx!)
+<DocsPagesIncludesMachineIdConfigureServices />
 
 ## Alternative: preregistered keys
 

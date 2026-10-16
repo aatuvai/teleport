@@ -9,8 +9,29 @@ tags:
  - aws
 page_type: how-to
 ---
+import DocsPagesIncludesDatabaseAccessAwsAutoDiscoveryPrerequisite from "@version/docs/pages/includes/database-access/aws-auto-discovery-prerequisite.mdx";
+import DocsPagesIncludesDatabaseAccessAlternativeMethodsJoin from "@version/docs/pages/includes/database-access/alternative-methods-join.mdx";
+import DocsPagesIncludesDatabaseAccessGuidesNextSteps from "@version/docs/pages/includes/database-access/guides-next-steps.mdx";
 
-(!docs/pages/includes/database-access/db-introduction.mdx dbType="Amazon ElastiCache Serverless" dbConfigure="with IAM authentication"!)
+
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
+import DocsPagesIncludesTctl from "@version/docs/pages/includes/tctl.mdx";
+import DocsPagesIncludesDatabaseAccessCreateUser from "@version/docs/pages/includes/database-access/create-user.mdx";
+import DocsPagesIncludesInstallLinux from "@version/docs/pages/includes/install-linux.mdx";
+import DocsPagesIncludesAwsCredentials from "@version/docs/pages/includes/aws-credentials.mdx";
+import DocsPagesIncludesDatabaseAccessReferenceAwsIamElasticacheServerlessAccessPolicy from "@version/docs/pages/includes/database-access/reference/aws-iam/elasticache-serverless/access-policy.mdx";
+import DocsPagesIncludesStartTeleport from "@version/docs/pages/includes/start-teleport.mdx";
+import DocsPagesIncludesDatabaseAccessAwsRedisTshDbUserAuth from "@version/docs/pages/includes/database-access/aws-redis-tsh-db-user-auth.mdx";
+import DocsPagesIncludesDatabaseAccessProxyDbTunnel from "@version/docs/pages/includes/database-access/proxy-db-tunnel.mdx";
+import DocsPagesIncludesDatabaseAccessAwsTroubleshooting from "@version/docs/pages/includes/database-access/aws-troubleshooting.mdx";
+
+import DocsPagesIncludesDatabaseAccessDbIntroduction from "@version/docs/pages/includes/database-access/db-introduction.mdx";
+import DocsPagesIncludesDatabaseAccessAutoDiscoveryTip from "@version/docs/pages/includes/database-access/auto-discovery-tip.mdx";
+import DocsPagesIncludesTctlToken from "@version/docs/pages/includes/tctl-token.mdx";
+import DocsPagesIncludesDatabaseAccessCreateIamRoleStepDescription from "@version/docs/pages/includes/database-access/create-iam-role-step-description.mdx";
+import DocsPagesIncludesDatabaseAccessAwsRedisNoAuth from "@version/docs/pages/includes/database-access/aws-redis-no-auth.mdx";
+
+<DocsPagesIncludesDatabaseAccessDbIntroduction dbType="Amazon ElastiCache Serverless" dbConfigure="with IAM authentication" />
 
 ## How it works
 
@@ -26,31 +47,31 @@ The Teleport Database Service connects on user behalf using IAM authentication a
 
 </Tabs>
 
-(!docs/pages/includes/database-access/auto-discovery-tip.mdx dbType="Amazon Elasticache Serverless cache" providerType="AWS"!)
+<DocsPagesIncludesDatabaseAccessAutoDiscoveryTip dbType="Amazon Elasticache Serverless cache" providerType="AWS" />
 
 ## Prerequisites
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx!)
+<DocsPagesIncludesEditionPrereqsTabs />
 
 - AWS account with an ElastiCache Serverless for Redis or Valkey cache.
 - Permissions to create and attach IAM policies.
 - `redis-cli` version `6.2` or newer installed and added to your system's `PATH` environment variable.
 - A host, e.g., an EC2 instance, where you will run the Teleport Database
   Service.
-- (!docs/pages/includes/database-access/aws-auto-discovery-prerequisite.mdx!)
-- (!docs/pages/includes/tctl.mdx!)
+- <DocsPagesIncludesDatabaseAccessAwsAutoDiscoveryPrerequisite />
+- <DocsPagesIncludesTctl />
 
 ## Step 1/6. Create a Teleport user
 
-(!docs/pages/includes/database-access/create-user.mdx!)
+<DocsPagesIncludesDatabaseAccessCreateUser />
 
 ## Step 2/6. Create a Database Service configuration
 
-(!docs/pages/includes/tctl-token.mdx serviceName="Database" tokenType="db" tokenFile="/tmp/token"!)
+<DocsPagesIncludesTctlToken serviceName="Database" tokenType="db" tokenFile="/tmp/token" />
 
-(!docs/pages/includes/database-access/alternative-methods-join.mdx!)
+<DocsPagesIncludesDatabaseAccessAlternativeMethodsJoin />
 
-(!docs/pages/includes/install-linux.mdx!)
+<DocsPagesIncludesInstallLinux />
 
 Create the Database Service configuration:
 ```code
@@ -73,19 +94,19 @@ The command will generate a Database Service configuration and place it at the
 
 ## Step 3/6. Create an IAM role for Teleport
 
-(!docs/pages/includes/database-access/create-iam-role-step-description.mdx accessFor="ElastiCache Serverless caches" !)
+<DocsPagesIncludesDatabaseAccessCreateIamRoleStepDescription accessFor="ElastiCache Serverless caches" />
 
 ### Create an IAM role for Teleport
 
-(!docs/pages/includes/aws-credentials.mdx service="the Database Service"!)
+<DocsPagesIncludesAwsCredentials service="the Database Service" />
 
 ### Grant permissions
 
-(!docs/pages/includes/database-access/reference/aws-iam/elasticache-serverless/access-policy.mdx!)
+<DocsPagesIncludesDatabaseAccessReferenceAwsIamElasticacheServerlessAccessPolicy />
 
 ## Step 4/6. Start the Database Service
 
-(!docs/pages/includes/start-teleport.mdx service="the Database Service"!)
+<DocsPagesIncludesStartTeleport service="the Database Service" />
 
 ## Step 5/6. Configure authentication for ElastiCache users
 
@@ -153,7 +174,7 @@ to satisfy the requirements for IAM authentication:
 
 ![ElastiCache IAM-enabled User](../../../../../img/database-access/guides/redis/redis-aws-iam-user@2x.png)
 
-(!docs/pages/includes/database-access/aws-redis-no-auth.mdx dbType="ElastiCache Serverless"!)
+<DocsPagesIncludesDatabaseAccessAwsRedisNoAuth dbType="ElastiCache Serverless" />
 
 ## Step 6/6. Connect
 
@@ -191,9 +212,9 @@ To retrieve credentials for a database and connect to it:
 $ tsh db connect --db-user=my-database-user my-serverless-cache
 ```
 
-(!docs/pages/includes/database-access/aws-redis-tsh-db-user-auth.mdx!)
+<DocsPagesIncludesDatabaseAccessAwsRedisTshDbUserAuth />
 
-(!docs/pages/includes/database-access/proxy-db-tunnel.mdx db="my-serverless-cache" dbArgs="--db-user=my-database-user"!)
+<DocsPagesIncludesDatabaseAccessProxyDbTunnel db="my-serverless-cache" dbArgs="--db-user=my-database-user" />
 
 To log out of the database and remove credentials:
 
@@ -206,8 +227,8 @@ $ tsh db logout
 
 ## Troubleshooting
 
-(!docs/pages/includes/database-access/aws-troubleshooting.mdx!)
+<DocsPagesIncludesDatabaseAccessAwsTroubleshooting />
 
 ## Next steps
 
-(!docs/pages/includes/database-access/guides-next-steps.mdx!)
+<DocsPagesIncludesDatabaseAccessGuidesNextSteps />

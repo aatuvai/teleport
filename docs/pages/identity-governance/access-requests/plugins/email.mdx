@@ -10,6 +10,28 @@ tags:
 enterprise: Identity Governance
 page_type: how-to
 ---
+import DocsPagesIncludesMachineIdPluginPrerequisites from "@version/docs/pages/includes/machine-id/plugin-prerequisites.mdx";
+import DocsPagesIncludesPluginsRefreshPluginIdentity from "@version/docs/pages/includes/plugins/refresh-plugin-identity.mdx";
+import DocsPagesIncludesPluginsAccessPluginTroubleshooting from "@version/docs/pages/includes/plugins/access-plugin-troubleshooting.mdx";
+
+
+import ExamplesResourcesPluginsTeleportEmailHelm from "!!raw-loader!@version/examples/resources/plugins/teleport-email-helm.yaml";
+import ExamplesSystemdPluginsTeleportEmail from "!!raw-loader!@version/examples/systemd/plugins/teleport-email.service";
+
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
+import DocsPagesIncludesTctl from "@version/docs/pages/includes/tctl.mdx";
+import DocsPagesIncludesPluginsInstallAccessRequest from "@version/docs/pages/includes/plugins/install-access-request.mdx";
+import DocsPagesIncludesPluginsConfigTomlTeleport from "@version/docs/pages/includes/plugins/config-toml-teleport.mdx";
+import DocsPagesIncludesPluginsCreateRequest from "@version/docs/pages/includes/plugins/create-request.mdx";
+import DocsPagesIncludesPluginsResolveRequest from "@version/docs/pages/includes/plugins/resolve-request.mdx";
+
+import DocsPagesIncludesPluginsEditorRequestRbac from "@version/docs/pages/includes/plugins/editor-request-rbac.mdx";
+import DocsPagesIncludesPluginsRbacImpersonate from "@version/docs/pages/includes/plugins/rbac-impersonate.mdx";
+
+import DocsPagesIncludesPluginsEnroll from "@version/docs/pages/includes/plugins/enroll.mdx";
+import DocsPagesIncludesPluginsRbacImpersonateMachineId from "@version/docs/pages/includes/plugins/rbac-impersonate-machine-id.mdx";
+import DocsPagesIncludesPluginsTbotIdentity from "@version/docs/pages/includes/plugins/tbot-identity.mdx";
+import DocsPagesIncludesPluginsIdentityExport from "@version/docs/pages/includes/plugins/identity-export.mdx";
 
 In this guide, you will set up Teleport to send Just-in-Time Access Request
 notifications to users via email. Since all organizations use email for at least
@@ -22,7 +44,7 @@ security best practices without compromising productivity.
 <details>
 <summary>This integration is hosted on Teleport Enterprise (Cloud)</summary>
 
-(!docs/pages/includes/plugins/enroll.mdx name="the Email integration"!)
+<DocsPagesIncludesPluginsEnroll name="the Email integration" />
 
 ![Enroll email plugin](../../../../img/enterprise/plugins/email/enroll-email.png)
 
@@ -60,9 +82,9 @@ the Access Request.
 
 ## Prerequisites
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx edition="Teleport Enterprise"!)
+<DocsPagesIncludesEditionPrereqsTabs edition="Teleport Enterprise" />
 
-(!docs/pages/includes/machine-id/plugin-prerequisites.mdx!)
+<DocsPagesIncludesMachineIdPluginPrerequisites />
 
 - Access to an SMTP service. The Teleport email plugin supports either Mailgun
   or a generic SMTP service that authenticates via username and password.
@@ -77,14 +99,14 @@ regularly.
 
 </Admonition>
 
-- (!docs/pages/includes/tctl.mdx!)
+- <DocsPagesIncludesTctl />
 
 ## Step 1/7. Define RBAC resources
 
 Before you set up the email plugin, you will need to enable Role Access Requests
 in your Teleport cluster.
 
-(!/docs/pages/includes/plugins/editor-request-rbac.mdx!)
+<DocsPagesIncludesPluginsEditorRequestRbac />
 
 ## Step 2/7. Define a Teleport email plugin user
 
@@ -94,10 +116,10 @@ or a regular Teleport user.
 
 <Tabs>
 <TabItem label="Machine & Workload Identity">
-(!docs/pages/includes/plugins/rbac-impersonate-machine-id.mdx!)
+<DocsPagesIncludesPluginsRbacImpersonateMachineId />
 </TabItem>
 <TabItem label="Long-lived identity files">
-(!docs/pages/includes/plugins/rbac-impersonate.mdx!)
+<DocsPagesIncludesPluginsRbacImpersonate />
 </TabItem>
 </Tabs>
 
@@ -110,10 +132,10 @@ longer-lived identity files with `tctl`:
 
 <Tabs>
 <TabItem label="Machine & Workload Identity">
-(!docs/pages/includes/plugins/tbot-identity.mdx secret="teleport-plugin-email-identity"!)
+<DocsPagesIncludesPluginsTbotIdentity secret="teleport-plugin-email-identity" />
 </TabItem>
 <TabItem label="Long-lived identity files">
-(!docs/pages/includes/plugins/identity-export.mdx plugin="email" secret="teleport-plugin-email-identity"!)
+<DocsPagesIncludesPluginsIdentityExport plugin="email" secret="teleport-plugin-email-identity" />
 </TabItem>
 </Tabs>
 
@@ -135,7 +157,7 @@ because the plugin dials out to the Teleport Proxy Service or Teleport Auth Serv
 
 </details>
 
-(!docs/pages/includes/plugins/install-access-request.mdx name="email"!)
+<DocsPagesIncludesPluginsInstallAccessRequest name="email" />
 
 ## Step 5/7. Configure the plugin
 
@@ -162,9 +184,11 @@ The email plugin Helm Chart uses a YAML values file to configure the plugin.
 On your local workstation, create a file called `teleport-email-helm.yaml`
 based on the following example:
 
-```yaml
-(!examples/resources/plugins/teleport-email-helm.yaml!)
-```
+<CodeBlock language="yaml">
+
+  {ExamplesResourcesPluginsTeleportEmailHelm}
+
+</CodeBlock>
 
 </TabItem>
 </Tabs>
@@ -176,9 +200,9 @@ each value below.
 
 ### `[teleport]`
 
-(!docs/pages/includes/plugins/config-toml-teleport.mdx!)
+<DocsPagesIncludesPluginsConfigTomlTeleport />
 
-(!docs/pages/includes/plugins/refresh-plugin-identity.mdx!)
+<DocsPagesIncludesPluginsRefreshPluginIdentity />
 
 ### `[mailgun]` or `[smtp]`
 
@@ -493,14 +517,14 @@ $ kubectl rollout restart deployment teleport-plugin-email
 
 ### Create an Access Request
 
-(!docs/pages/includes/plugins/create-request.mdx!)
+<DocsPagesIncludesPluginsCreateRequest />
 
 The recipients you configured earlier should receive notifications of the
 request by email. 
 
 ### Resolve the request
 
-(!docs/pages/includes/plugins/resolve-request.mdx!)
+<DocsPagesIncludesPluginsResolveRequest />
 
 ## Step 7/7. Set up systemd
 
@@ -511,9 +535,11 @@ In production, we recommend starting the Teleport plugin daemon via an init
 system like systemd. Here's the recommended Teleport plugin service unit file
 for systemd:
 
-```ini
-(!/examples/systemd/plugins/teleport-email.service!)
-```
+<CodeBlock language="ini">
+
+  {ExamplesSystemdPluginsTeleportEmail}
+
+</CodeBlock>
 
 Save this as `teleport-email.service` in either `/usr/lib/systemd/system/` or
 another [unit file load
@@ -529,7 +555,7 @@ $ sudo systemctl start teleport-email
 
 ## Troubleshooting
 
-(!docs/pages/includes/plugins/access-plugin-troubleshooting.mdx!)
+<DocsPagesIncludesPluginsAccessPluginTroubleshooting />
 
 ## Next steps
 

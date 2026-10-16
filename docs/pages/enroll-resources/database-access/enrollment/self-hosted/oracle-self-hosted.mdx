@@ -8,12 +8,30 @@ tags:
  - infrastructure-identity
 page_type: how-to
 ---
+import DocsPagesIncludesDatabaseAccessTctlAuthSign from "@version/docs/pages/includes/database-access/tctl-auth-sign.mdx";
+import DocsPagesIncludesKubernetesAccessHelmHelmRepoAdd from "@version/docs/pages/includes/kubernetes-access/helm/helm-repo-add.mdx";
+import DocsPagesIncludesDatabaseAccessMultipleInstancesTip from "@version/docs/pages/includes/database-access/multiple-instances-tip.mdx";
+import DocsPagesIncludesDatabaseAccessOracleMultihost from "@version/docs/pages/includes/database-access/oracle-multihost.mdx";
+import DocsPagesIncludesDatabaseAccessOracleTroubleshooting from "@version/docs/pages/includes/database-access/oracle-troubleshooting.mdx";
+import DocsPagesIncludesDatabaseAccessGuidesNextSteps from "@version/docs/pages/includes/database-access/guides-next-steps.mdx";
 
-(!docs/pages/includes/database-access/self-hosted-introduction.mdx dbType="Oracle"!)
+
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
+import DocsPagesIncludesDatabaseAccessTtlNote from "@version/docs/pages/includes/database-access/ttl-note.mdx";
+import DocsPagesIncludesInstallLinux from "@version/docs/pages/includes/install-linux.mdx";
+import DocsPagesIncludesDatabaseAccessSelfHostedConfigStart from "@version/docs/pages/includes/database-access/self-hosted-config-start.mdx";
+import DocsPagesIncludesDatabaseAccessSelfHostedDbHelmInstall from "@version/docs/pages/includes/database-access/self-hosted-db-helm-install.mdx";
+import DocsPagesIncludesDatabaseAccessProxyDbTunnel from "@version/docs/pages/includes/database-access/proxy-db-tunnel.mdx";
+
+import DocsPagesIncludesDatabaseAccessSelfHostedIntroduction from "@version/docs/pages/includes/database-access/self-hosted-introduction.mdx";
+import DocsPagesIncludesDatabaseAccessHowItWorksMtls from "@version/docs/pages/includes/database-access/how-it-works/mtls.mdx";
+import DocsPagesIncludesTctlToken from "@version/docs/pages/includes/tctl-token.mdx";
+
+<DocsPagesIncludesDatabaseAccessSelfHostedIntroduction dbType="Oracle" />
 
 ## How it works
 
-(!docs/pages/includes/database-access/how-it-works/mtls.mdx db="Oracle"!)
+<DocsPagesIncludesDatabaseAccessHowItWorksMtls db="Oracle" />
 
 <Tabs>
 <TabItem scope={["enterprise"]} label="Teleport Enterprise">
@@ -27,7 +45,7 @@ page_type: how-to
 
 ## Prerequisites
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx edition="Teleport Enterprise"!)
+<DocsPagesIncludesEditionPrereqsTabs edition="Teleport Enterprise" />
 - Self-hosted Oracle server instance 18c or later.
 - The `sqlcl` [Oracle client](https://www.oracle.com/pl/database/sqldeveloper/technologies/sqlcl/) installed and added to your system's `PATH` environment variable or any GUI client that supports JDBC
   Oracle thin client.
@@ -36,7 +54,7 @@ page_type: how-to
 
 ## Step 1/6. Create a Teleport token and user
 
-(!docs/pages/includes/tctl-token.mdx serviceName="Database" tokenType="db" tokenFile="/tmp/token"!)
+<DocsPagesIncludesTctlToken serviceName="Database" tokenType="db" tokenFile="/tmp/token" />
 
 <Admonition type="tip">
 
@@ -69,7 +87,7 @@ access see [RBAC](../../rbac.mdx) documentation.
 
 ## Step 2/6. Create a certificate/key pair and Teleport Oracle Wallet
 
-(!docs/pages/includes/database-access/tctl-auth-sign.mdx!)
+<DocsPagesIncludesDatabaseAccessTctlAuthSign />
 
 Follow the instructions below to generate TLS credentials for your database.
 
@@ -82,7 +100,7 @@ $ tctl auth sign --format=oracle --host=db.example.com --out=server --ttl=2190h
 In this example, `db.example.com` is the hostname where the Teleport Database
 Service can reach the Oracle server.
 
-(!docs/pages/includes/database-access/ttl-note.mdx!)
+<DocsPagesIncludesDatabaseAccessTtlNote />
 
 If `tctl` finds the Orapki tool in your local environment, the `tctl auth sign --format=oracle --host=db.example.com --out=server --ttl=2190h` command will produce an Oracle Wallet and
 instructions how to configure the Oracle TCPS listener with Teleport Oracle Wallet. Otherwise the `tctl auth sign --format=oracle` command  will produce a `p12` certificate and instructions on how to create an Oracle Wallet on your Oracle Database instance.
@@ -160,22 +178,22 @@ Install and configure Teleport where you will run the Teleport Database Service:
 <Tabs>
 <TabItem label="Linux Server">
 
-(!docs/pages/includes/install-linux.mdx!)
+<DocsPagesIncludesInstallLinux />
 
-(!docs/pages/includes/database-access/self-hosted-config-start.mdx dbName="oracle" dbProtocol="oracle" databaseAddress="db.example.com:2484" dbName="oracle" !)
+<DocsPagesIncludesDatabaseAccessSelfHostedConfigStart dbName="oracle" dbProtocol="oracle" databaseAddress="db.example.com:2484" />
 
 </TabItem>
 <TabItem label="Kubernetes Cluster">
   Teleport provides Helm charts for installing the Teleport Database Service in Kubernetes Clusters.
 
-  (!docs/pages/includes/kubernetes-access/helm/helm-repo-add.mdx!)
+  <DocsPagesIncludesKubernetesAccessHelmHelmRepoAdd />
 
-  (!docs/pages/includes/database-access/self-hosted-db-helm-install.mdx dbName="oracle" dbProtocol="oracle" databaseAddress="db.example.com:2484" !)
+  <DocsPagesIncludesDatabaseAccessSelfHostedDbHelmInstall dbName="oracle" dbProtocol="oracle" databaseAddress="db.example.com:2484" />
 
 </TabItem>
 </Tabs>
 
-(!docs/pages/includes/database-access/multiple-instances-tip.mdx !)
+<DocsPagesIncludesDatabaseAccessMultipleInstancesTip />
 
 ## Step 5/6. (Optional) Configure Teleport to pull audit logs from Oracle Audit Trail
 
@@ -255,7 +273,7 @@ $ tsh db connect --db-user=alice --db-name=XE oracle
 # SQL>
 ```
 
-(!docs/pages/includes/database-access/proxy-db-tunnel.mdx db="oracle" dbArgs="--db-user=alice --db-name=XE"!)
+<DocsPagesIncludesDatabaseAccessProxyDbTunnel db="oracle" dbArgs="--db-user=alice --db-name=XE" />
 
 To log out of the database and remove credentials:
 
@@ -268,15 +286,15 @@ $ tsh db logout
 
 ## (Optional) Configure additional hostnames
 
-(!docs/pages/includes/database-access/oracle-multihost.mdx!)
+<DocsPagesIncludesDatabaseAccessOracleMultihost />
 
 ## Troubleshooting
 
-(!docs/pages/includes/database-access/oracle-troubleshooting.mdx!)
+<DocsPagesIncludesDatabaseAccessOracleTroubleshooting />
 
 ## Next steps
 
-(!docs/pages/includes/database-access/guides-next-steps.mdx!)
+<DocsPagesIncludesDatabaseAccessGuidesNextSteps />
 
 - Learn more about  `sqlnet.ora` and `listener.ora` configuration from the [Parameters for the sqlnet.ora File](https://docs.oracle.com/en/database/oracle/oracle-database/18/netrf/parameters-for-the-sqlnet-ora-file.html#GUID-28040885-6832-4FFC-9258-0EF19FE9A3AC) and [Oracle Net Listener Parameters in the listener.ora File](https://docs.oracle.com/en/database/oracle/oracle-database/18/netrf/Oracle-Net-Listener-parameters-in-listener-ora-file.html#GUID-F9FA0DF5-2FAF-45CA-B6A1-F0166C7BFE54) Oracle documentation.
 - [Oracle Audit Trail](https://docs.oracle.com/en/database/oracle/oracle-database/19/sqlrf/AUDIT-Traditional-Auditing.html#GUID-ADF45B07-547A-4096-8144-50241FA2D8DD)

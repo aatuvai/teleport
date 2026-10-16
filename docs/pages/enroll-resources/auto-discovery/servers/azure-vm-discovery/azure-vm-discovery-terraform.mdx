@@ -9,6 +9,16 @@ tags:
  - infrastructure-identity
  - azure
 ---
+import DocsPagesIncludesAutoDiscoveryAzureVmNextSteps from "@version/docs/pages/includes/auto-discovery/azure-vm-next-steps.mdx";
+
+
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
+import DocsPagesIncludesTctl from "@version/docs/pages/includes/tctl.mdx";
+import DocsPagesIncludesInstallLinux from "@version/docs/pages/includes/install-linux.mdx";
+import DocsPagesIncludesDiscoveryDiscoveryGroup from "@version/docs/pages/includes/discovery/discovery-group.mdx";
+import DocsPagesIncludesStartTeleport from "@version/docs/pages/includes/start-teleport.mdx";
+import DocsPagesIncludesProvisionTokenAzureJoinEnableIdentity from "@version/docs/pages/includes/provision-token/azure-join-enable-identity.mdx";
+import DocsPagesIncludesAutoDiscoveryAzureVmTroubleshooting from "@version/docs/pages/includes/auto-discovery/azure-vm-troubleshooting.mdx";
 
 This guide shows you how to use Terraform to configure Teleport and Azure to
 automatically enroll Azure virtual machines in your Teleport cluster.
@@ -23,7 +33,7 @@ The Teleport Discovery Service queries the Azure API to list virtual machines, m
 
 ## Prerequisites
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx!)
+<DocsPagesIncludesEditionPrereqsTabs />
 
 - Azure virtual machines running a [supported Linux distribution](../../../../installation/single-machine/linux.mdx).
 
@@ -36,7 +46,7 @@ The Teleport Discovery Service queries the Azure API to list virtual machines, m
   # Terraform v(=terraform_modules.teleport_discovery_azure.minimum_terraform_version=)
   ```
 
-- (!docs/pages/includes/tctl.mdx!)
+- <DocsPagesIncludesTctl />
 
 ## Step 1/5. Install Teleport to run the Discovery Service
 
@@ -57,7 +67,7 @@ another Teleport service (Auth or Proxy, for example), then you can skip this st
 
 Install Teleport on a host instance that will run the Discovery Service:
 
-(!docs/pages/includes/install-linux.mdx!)
+<DocsPagesIncludesInstallLinux />
 
 ### Configure the Discovery Service
 
@@ -72,7 +82,7 @@ $ tctl tokens add --type=discovery
 Save the generated token in `/tmp/token` on the host that will run the
 Discovery Service.
 
-(!docs/pages/includes/discovery/discovery-group.mdx!)
+<DocsPagesIncludesDiscoveryDiscoveryGroup />
 
 Assign <Var name="teleport.example.com:443" /> to the host and port of the
 Teleport Proxy Service in your cluster, and <Var name="discovery-group-name" />
@@ -101,13 +111,13 @@ discovery_service:
 
 ### Start Teleport
 
-(!docs/pages/includes/start-teleport.mdx service="the Discovery Service"!)
+<DocsPagesIncludesStartTeleport service="the Discovery Service" />
 
 ## Step 2/5. Set up an identity for discovered VMs
 
 Every Azure VM to be discovered must have an identity assigned to it: either system assigned or user assigned managed identity.
 
-(!docs/pages/includes/provision-token/azure-join-enable-identity.mdx!)
+<DocsPagesIncludesProvisionTokenAzureJoinEnableIdentity />
 
 ## Step 3/5. Use the `teleport-discovery-azure` Terraform module
 
@@ -506,8 +516,8 @@ module "azure_discovery" {
 
 ## Troubleshooting
 
-(!docs/pages/includes/auto-discovery/azure-vm-troubleshooting.mdx!)
+<DocsPagesIncludesAutoDiscoveryAzureVmTroubleshooting />
 
 ## Next steps
 
-(!docs/pages/includes/auto-discovery/azure-vm-next-steps.mdx!)
+<DocsPagesIncludesAutoDiscoveryAzureVmNextSteps />

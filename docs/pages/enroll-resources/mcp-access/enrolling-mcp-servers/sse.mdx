@@ -8,6 +8,12 @@ tags:
 - zero-trust
 page_type: how-to
 ---
+import DocsPagesIncludesMcpAccessTshMcpConfig from "@version/docs/pages/includes/mcp-access/tsh-mcp-config.mdx";
+
+
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
+import DocsPagesIncludesMcpAccessConfigureAppService from "@version/docs/pages/includes/mcp-access/configure-app-service.mdx";
+import DocsPagesIncludesMcpAccessConfigureUserRbac from "@version/docs/pages/includes/mcp-access/configure-user-rbac.mdx";
 
 Teleport can provide secure access to MCP servers with SSE transport.
 
@@ -39,18 +45,18 @@ streamable-HTTP transport instead.
 
 ## Prerequisites
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx edition="Teleport (v18.3.0 or higher)"!)
+<DocsPagesIncludesEditionPrereqsTabs edition="Teleport (v18.3.0 or higher)" />
 - A host, e.g., an EC2 instance, where you will run the Teleport Application
   Service.
 - The endpoint of the SSE MCP server <Var name="MCP endpoint" initial="http://my-sse-server/sse" />.
 
 ## Step 1/3. Configure the Teleport Application Service
 
-(!docs/pages/includes/mcp-access/configure-app-service.mdx extraAppScheme="sse+" !)
+<DocsPagesIncludesMcpAccessConfigureAppService extraAppScheme="sse+" />
 
 ## Step 2/3. Configure your Teleport user
 
-(!docs/pages/includes/mcp-access/configure-user-rbac.mdx!)
+<DocsPagesIncludesMcpAccessConfigureUserRbac />
 
 ## Step 3/3. Connect
 
@@ -69,7 +75,7 @@ Name       Description           Type  Labels
 everything everything MCP server SSE   env=dev
 ```
 
-(!docs/pages/includes/mcp-access/tsh-mcp-config.mdx!)
+<DocsPagesIncludesMcpAccessTshMcpConfig />
 
 ## Next Steps
 

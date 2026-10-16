@@ -8,6 +8,9 @@ tags:
  - how-to
  - zero-trust
 ---
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
+import DocsPagesIncludesTctl from "@version/docs/pages/includes/tctl.mdx";
+
 
 This guide demonstrates how to use the Terraform provider for Teleport in jobs
 running on [env zero].
@@ -37,9 +40,9 @@ authenticate using the `env0` join method.
 
 ## Prerequisites
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx edition="Teleport 18.4.0"!)
+<DocsPagesIncludesEditionPrereqsTabs edition="Teleport 18.4.0" />
 
-- (!docs/pages/includes/tctl.mdx!)
+- <DocsPagesIncludesTctl />
 
 - [Terraform >= (=terraform.version=)+](https://learn.hashicorp.com/tutorials/terraform/install-cli)
 

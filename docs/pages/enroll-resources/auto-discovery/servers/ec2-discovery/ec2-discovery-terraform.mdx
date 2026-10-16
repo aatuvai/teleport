@@ -10,6 +10,16 @@ tags:
  - infrastructure-identity
  - aws
 ---
+import DocsPagesIncludesAutoDiscoveryEc2NextSteps from "@version/docs/pages/includes/auto-discovery/ec2-next-steps.mdx";
+
+
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
+import DocsPagesIncludesTctl from "@version/docs/pages/includes/tctl.mdx";
+import DocsPagesIncludesInstallLinux from "@version/docs/pages/includes/install-linux.mdx";
+import DocsPagesIncludesDiscoveryDiscoveryGroup from "@version/docs/pages/includes/discovery/discovery-group.mdx";
+import DocsPagesIncludesAwsCredentials from "@version/docs/pages/includes/aws-credentials.mdx";
+import DocsPagesIncludesStartTeleport from "@version/docs/pages/includes/start-teleport.mdx";
+import DocsPagesIncludesAutoDiscoveryEc2Troubleshooting from "@version/docs/pages/includes/auto-discovery/ec2-troubleshooting.mdx";
 
 This guide shows you how to use Terraform to configure Teleport and AWS to automatically enroll EC2 instances in your cluster.
 
@@ -22,11 +32,11 @@ For each EC2 instance that it discovers, the Discovery Service uses AWS Systems 
 
 ## Prerequisites
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx!)
+<DocsPagesIncludesEditionPrereqsTabs />
 
 - EC2 instances running Ubuntu/Debian/RHEL/Amazon Linux 2/Amazon Linux 2023 and
 SSM Agent version 3.1 or greater
-- (!docs/pages/includes/tctl.mdx!)
+- <DocsPagesIncludesTctl />
 
 <Admonition type="note">
 
@@ -55,7 +65,7 @@ another Teleport service (Auth or Proxy, for example), then you can skip this st
 
 Install Teleport on a host instance that will run the Discovery Service:
 
-(!docs/pages/includes/install-linux.mdx!)
+<DocsPagesIncludesInstallLinux />
 
 ### Step 2/3. Configure the Discovery Service
 
@@ -70,7 +80,7 @@ $ tctl tokens add --type=discovery
 Save the generated token in `/tmp/token` on the Node (EC2 instance) that will
 run the Discovery Service.
 
-(!docs/pages/includes/discovery/discovery-group.mdx!)
+<DocsPagesIncludesDiscoveryDiscoveryGroup />
 
 Assign <Var name="teleport.example.com:443" /> to the host and port of the Teleport Proxy Service in your cluster,
 and <Var name="discovery-group-name" /> to a name that identifies a group of resources that you will enroll:
@@ -98,9 +108,9 @@ discovery_service:
 
 ### Step 3/3. Start Teleport
 
-(!docs/pages/includes/aws-credentials.mdx service="the Discovery Service"!)
+<DocsPagesIncludesAwsCredentials service="the Discovery Service" />
 
-(!docs/pages/includes/start-teleport.mdx service="the Discovery Service"!)
+<DocsPagesIncludesStartTeleport service="the Discovery Service" />
 
 ## Use the `teleport-discovery-aws` Terraform module
 
@@ -386,8 +396,8 @@ After Terraform finishes applying its plan, the Discovery Service will pick up t
 
 ## Troubleshooting
 
-(!docs/pages/includes/auto-discovery/ec2-troubleshooting.mdx!)
+<DocsPagesIncludesAutoDiscoveryEc2Troubleshooting />
 
 ## Next steps
 
-(!docs/pages/includes/auto-discovery/ec2-next-steps.mdx!)
+<DocsPagesIncludesAutoDiscoveryEc2NextSteps />

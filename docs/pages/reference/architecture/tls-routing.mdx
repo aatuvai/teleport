@@ -5,6 +5,8 @@ tags:
  - conceptual
  - platform-wide
 ---
+import DocsPagesIncludesReferenceCodeBlocksNoCspellTlsRoutingConnUpgradeTestResult from "@version/docs/pages/includes/reference/code-blocks-no-cspell/tls-routing-conn-upgrade-test-result.mdx";
+
 
 In TLS routing mode [Teleport proxy](./proxy.mdx) multiplexes all client
 connections on a single TLS port.
@@ -249,7 +251,7 @@ $ curl --no-alpn -i -H "Connection: Upgrade" -H "Upgrade: websocket" \
 For a successful upgrade, the server should return "101 Switching Protocols"
 with an empty response:
 
-(!docs/pages/includes/reference/code-blocks-no-cspell/tls-routing-conn-upgrade-test-result.mdx!)
+<DocsPagesIncludesReferenceCodeBlocksNoCspellTlsRoutingConnUpgradeTestResult />
 
 ### How can I access Kubernetes clusters without using `tsh proxy kube`?
 

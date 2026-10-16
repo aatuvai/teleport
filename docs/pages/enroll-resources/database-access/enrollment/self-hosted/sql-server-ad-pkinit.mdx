@@ -8,8 +8,20 @@ tags:
  - infrastructure-identity
 page_type: how-to
 ---
+import DocsPagesIncludesDatabaseAccessGuidesNextSteps from "@version/docs/pages/includes/database-access/guides-next-steps.mdx";
 
-(!docs/pages/includes/database-access/db-introduction.mdx dbType="Microsoft SQL Server" dbConfigure="with PKINIT authentication"!)
+
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
+import DocsPagesIncludesTctl from "@version/docs/pages/includes/tctl.mdx";
+import DocsPagesIncludesDatabaseAccessCreateUser from "@version/docs/pages/includes/database-access/create-user.mdx";
+import DocsPagesIncludesInstallLinux from "@version/docs/pages/includes/install-linux.mdx";
+import DocsPagesIncludesStartTeleport from "@version/docs/pages/includes/start-teleport.mdx";
+import DocsPagesIncludesDatabaseAccessSqlServerConnectNote from "@version/docs/pages/includes/database-access/sql-server-connect-note.mdx";
+
+import DocsPagesIncludesDatabaseAccessDbIntroduction from "@version/docs/pages/includes/database-access/db-introduction.mdx";
+import DocsPagesIncludesTctlToken from "@version/docs/pages/includes/tctl-token.mdx";
+
+<DocsPagesIncludesDatabaseAccessDbIntroduction dbType="Microsoft SQL Server" dbConfigure="with PKINIT authentication" />
 
 ## How it works
 
@@ -35,7 +47,7 @@ authentication.
 
 ## Prerequisites
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx!)
+<DocsPagesIncludesEditionPrereqsTabs />
 
 - A SQL Server database with Active Directory authentication enabled.
 
@@ -61,11 +73,11 @@ authentication.
     </TabItem>
   </Tabs>
 
-- (!docs/pages/includes/tctl.mdx!)
+- <DocsPagesIncludesTctl />
 
 ## Step 1/7. Create a Teleport user
 
-(!docs/pages/includes/database-access/create-user.mdx!)
+<DocsPagesIncludesDatabaseAccessCreateUser />
 
 ## Step 2/7. Configure a GPO to allow Teleport connections
 
@@ -223,11 +235,11 @@ from there, you can copy and use it on your database configuration.
 
 ## Step 4/7. Set up the Teleport Database Service
 
-(!docs/pages/includes/tctl-token.mdx serviceName="Database" tokenType="db" tokenFile="/tmp/token"!)
+<DocsPagesIncludesTctlToken serviceName="Database" tokenType="db" tokenFile="/tmp/token" />
 
 Install Teleport on the host where you will run the Teleport Database Service:
 
-(!docs/pages/includes/install-linux.mdx!)
+<DocsPagesIncludesInstallLinux />
 
 Copy the join token to a file on the instance where you will run the Database
 Service, and then use the following configuration, replacing the fields on the
@@ -294,7 +306,7 @@ db_service:
 
 Start the Teleport Database Service in your environment:
 
-(!docs/pages/includes/start-teleport.mdx service="the Database Service"!)
+<DocsPagesIncludesStartTeleport service="the Database Service" />
 
 ## Step 6/7. Create SQL Server AD users
 
@@ -347,7 +359,7 @@ To retrieve credentials for a database and connect to it:
 $ tsh db connect --db-user=teleport sqlserver
 ```
 
-(!docs/pages/includes/database-access/sql-server-connect-note.mdx!)
+<DocsPagesIncludesDatabaseAccessSqlServerConnectNote />
 
 To log out of the database and remove credentials:
 
@@ -418,7 +430,7 @@ skipping TLS verification in production environments.
 
 ## Next steps
 
-(!docs/pages/includes/database-access/guides-next-steps.mdx!)
+<DocsPagesIncludesDatabaseAccessGuidesNextSteps />
 
 ## Further reading
 

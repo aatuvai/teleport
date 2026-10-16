@@ -8,6 +8,9 @@ tags:
  - access-risks
 enterprise: Identity Governance
 ---
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
+import DocsPagesIncludesCreateRoleUsingWeb from "@version/docs/pages/includes/create-role-using-web.mdx";
+
 
 <Admonition type="warning" title="Access Monitoring is being replaced by Identity Security">
 Access Monitoring is deprecated beginning in Teleport 19 and is scheduled for
@@ -45,7 +48,7 @@ or database sessions without MFA) and provides users with recommendations on sug
 Users are able to write their own custom access monitoring queries by querying the audit log.
 
 ## Prerequisites
-(!docs/pages/includes/edition-prereqs-tabs.mdx!)
+<DocsPagesIncludesEditionPrereqsTabs />
 - For self-hosted Teleport the [Amazon Athena Backend](../reference/deployment/backends.mdx) is required.
 
 
@@ -201,7 +204,7 @@ spec:
       - use
 ```
 
-(!docs/pages/includes/create-role-using-web.mdx!)
+<DocsPagesIncludesCreateRoleUsingWeb />
 
 ## Query Editor
 

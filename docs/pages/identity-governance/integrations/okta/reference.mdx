@@ -10,6 +10,8 @@ tags:
 enterprise: Identity Governance
 page_type: conceptual
 ---
+import DocsPagesIncludesOktaImportRule from "@version/docs/pages/includes/okta-import-rule.mdx";
+
 
 This page describes the interfaces and options for configuring the Teleport Okta
 Service, including Okta import rules, Okta assignments, and `tctl` commands. It
@@ -19,7 +21,7 @@ also includes troubleshooting instructions.
 
 Full YAML spec of Okta import rule resources managed by `tctl` resource commands:
 
-(!docs/pages/includes/okta-import-rule.mdx!)
+<DocsPagesIncludesOktaImportRule />
 
 You can create a new `okta_import_rule` resource by running the following commands, which
 assume that you have created a YAML file called `okta-import-rule.yaml` with your configuration:

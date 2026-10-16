@@ -1,8 +1,10 @@
-The {{ serviceName }} Service requires a valid join token to join your Teleport cluster.
-Run the following `tctl` command and save the token output in `{{ tokenFile }}`
-on the server that will run the {{ serviceName }} Service:
+The {props.serviceName} Service requires a valid join token to join your Teleport cluster.
+Run the following `tctl` command and save the token output in `{props.tokenFile}`
+on the server that will run the {props.serviceName} Service:
 
-```code
-$ tctl tokens add --type={{ tokenType }} --format=text
-(=presets.tokens.first=)
-```
+<CodeBlock>
+{
+ `$ tctl tokens add --type=${ props.tokenType } --format=text
+  (=presets.tokens.first=)`
+}
+</CodeBlock>

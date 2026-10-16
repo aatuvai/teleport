@@ -7,6 +7,11 @@ tags:
  - zero-trust
  - infrastructure-identity
 ---
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
+import DocsPagesIncludesTctl from "@version/docs/pages/includes/tctl.mdx";
+import DocsPagesIncludesStartTeleport from "@version/docs/pages/includes/start-teleport.mdx";
+import DocsPagesIncludesCreateRoleUsingWeb from "@version/docs/pages/includes/create-role-using-web.mdx";
+
 
 This guide demonstrates how to configure Teleport to provide secure, audited access
 to Linux desktops running X11 desktop environments.
@@ -30,7 +35,7 @@ Available desktop sessions are discovered from `.desktop` files in
 
 To complete the steps in this guide, verify your environment meets the following requirements:
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx!)
+<DocsPagesIncludesEditionPrereqsTabs />
 
 - A Linux host running an X11-compatible desktop environment with session definitions
   in `/usr/share/xsessions`.
@@ -62,7 +67,7 @@ To complete the steps in this guide, verify your environment meets the following
   $ sudo -i which Xvfb
   ```
 
-- (!docs/pages/includes/tctl.mdx!)
+- <DocsPagesIncludesTctl />
 
 ## Step 1/3. Configure the Linux Desktop Service
 
@@ -145,7 +150,7 @@ To configure the Linux Desktop Service:
    matches the pattern are offered. The `excluded` pattern is applied next and
    removes sessions whose name matches it.
 
-1. (!docs/pages/includes/start-teleport.mdx service="the Teleport Linux Desktop Service"!)
+1. <DocsPagesIncludesStartTeleport service="the Teleport Linux Desktop Service" />
 
 <Checkpoint
   title="Verify the Linux Desktop Service is running"
@@ -221,7 +226,7 @@ To configure a role for Linux desktop access:
    $ tctl create -f linux-desktop-admins.yaml
    ```
 
-   (!docs/pages/includes/create-role-using-web.mdx!)
+   <DocsPagesIncludesCreateRoleUsingWeb />
 
 1. (\!docs/pages/includes/add-role-to-user.mdx role="linux-desktop-admins" \!)
 

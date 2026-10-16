@@ -12,6 +12,19 @@ tags:
 enterprise: Enterprise SSO
 page_type: how-to
 ---
+import DocsPagesIncludesSsoChangeCallback from "@version/docs/pages/includes/sso/change-callback.mdx";
+import DocsPagesIncludesSsoNextStepTraits from "@version/docs/pages/includes/sso/next-step-traits.mdx";
+
+
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
+import DocsPagesIncludesTctl from "@version/docs/pages/includes/tctl.mdx";
+import DocsPagesIncludesSsoRoleMapping from "@version/docs/pages/includes/sso/role-mapping.mdx";
+import DocsPagesIncludesSsoUsernameClaim from "@version/docs/pages/includes/sso/username-claim.mdx";
+
+import DocsPagesIncludesSsoOidcLoginTroubleshooting from "@version/docs/pages/includes/sso/oidc-login-troubleshooting.mdx";
+
+import DocsPagesIncludesSsoHowItWorks from "@version/docs/pages/includes/sso/how-it-works.mdx";
+import DocsPagesIncludesSsoCap from "@version/docs/pages/includes/sso/cap.mdx";
 
 In this guide, you will configure [Google
 Workspace](https://workspace.google.com/) to be a single sign-on (SSO) provider
@@ -24,7 +37,7 @@ you can define policies like the following:
 
 ## How it works
 
-(!docs/pages/includes/sso/how-it-works.mdx idp="Google Workspace"!)
+<DocsPagesIncludesSsoHowItWorks idp="Google Workspace" />
 
 ## Prerequisites
 
@@ -45,9 +58,9 @@ Before you get started, verify the following:
 
 - You have a Teleport cluster, Enterprise edition, and command-line tools.
    
-  (!docs/pages/includes/edition-prereqs-tabs.mdx edition="Teleport Enterprise"!)
+  <DocsPagesIncludesEditionPrereqsTabs edition="Teleport Enterprise" />
 
-- (!docs/pages/includes/tctl.mdx!)
+- <DocsPagesIncludesTctl />
 
 ## Step 1/3. Configure Google Workspace
 
@@ -305,7 +318,7 @@ Workspace and issue certificates to users.
 
 ### Assign a role mapping
 
-(!docs/pages/includes/sso/role-mapping.mdx fieldType="claim"!)
+<DocsPagesIncludesSsoRoleMapping fieldType="claim" />
 
 ### Configure an OIDC connector
 
@@ -467,12 +480,12 @@ credentials for scopes [...]" in audit log messages, change the `client_id` sett
 resource configuration file. For more information about viewing audit logs, see 
 [Troubleshooting](#troubleshooting).
 
-(!docs/pages/includes/sso/username-claim.mdx!)
+<DocsPagesIncludesSsoUsernameClaim />
 
 <details>
 <summary>Changing the callback address</summary>
 
-(!docs/pages/includes/sso/change-callback.mdx!)
+<DocsPagesIncludesSsoChangeCallback />
 
 </details>
 
@@ -508,15 +521,15 @@ automatically in a browser.
 
 ## Step 3/3. Enable default OIDC authentication
 
-(!docs/pages/includes/sso/cap.mdx type="oidc"!)
+<DocsPagesIncludesSsoCap type="oidc" />
 
 ## Next steps
 
-(!docs/pages/includes/sso/next-step-traits.mdx!)
+<DocsPagesIncludesSsoNextStepTraits />
 
 ## Troubleshooting
 
-(!docs/pages/includes/sso/oidc-login-troubleshooting.mdx!)
+<DocsPagesIncludesSsoOidcLoginTroubleshooting />
 
 ## Further reading
 

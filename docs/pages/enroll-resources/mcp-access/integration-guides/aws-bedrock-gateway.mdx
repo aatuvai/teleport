@@ -8,8 +8,15 @@ tags:
 - zero-trust
 page_type: how-to
 ---
+import DocsPagesIncludesMcpAccessIntegrationLimitTools from "@version/docs/pages/includes/mcp-access/integration-limit-tools.mdx";
 
-(!docs/pages/includes/mcp-access/integration-intro.mdx serviceName="Amazon Bedrock AgentCore Gateway" !)
+
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
+
+import DocsPagesIncludesMcpAccessIntegrationIntro from "@version/docs/pages/includes/mcp-access/integration-intro.mdx";
+import DocsPagesIncludesMcpAccessIntegrationTsh from "@version/docs/pages/includes/mcp-access/integration-tsh.mdx";
+
+<DocsPagesIncludesMcpAccessIntegrationIntro serviceName="Amazon Bedrock AgentCore Gateway" />
 
 ## How it works
 
@@ -20,7 +27,7 @@ MCP servers.
 
 ## Prerequisites
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx edition="Teleport (v18.7.0 or higher)" clients="\`tsh\` client"!)
+<DocsPagesIncludesEditionPrereqsTabs edition="Teleport (v18.7.0 or higher)" clients="\\`tsh\\` client" />
 - Ability to configure your Amazon Bedrock AgentCore Gateway
 - An agent running the Teleport Application Service. If you have not yet done
   this, follow the [Getting Started guide](../getting-started.mdx).
@@ -141,7 +148,7 @@ $ terraform apply
 
 </Tabs>
 
-(!docs/pages/includes/mcp-access/integration-limit-tools.mdx!)
+<DocsPagesIncludesMcpAccessIntegrationLimitTools />
 ```yaml
 kind: role
 version: v8
@@ -157,7 +164,7 @@ spec:
       - ^(get|query|list|search|find)_.*$
 ```
 
-(!docs/pages/includes/mcp-access/integration-tsh.mdx service="bedrock" serviceName="Amazon Bedrock AgentCore Gateway" !)
+<DocsPagesIncludesMcpAccessIntegrationTsh service="bedrock" serviceName="Amazon Bedrock AgentCore Gateway" />
 
 ## Next steps
 

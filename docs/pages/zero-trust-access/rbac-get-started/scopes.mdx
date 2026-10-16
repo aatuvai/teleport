@@ -8,6 +8,11 @@ tags:
  - zero-trust
 page_type: conceptual
 ---
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
+import DocsPagesIncludesTctl from "@version/docs/pages/includes/tctl.mdx";
+import DocsPagesIncludesInstallLinux from "@version/docs/pages/includes/install-linux.mdx";
+import DocsPagesIncludesStartTeleport from "@version/docs/pages/includes/start-teleport.mdx";
+
 
 **Scopes** let you divide a Teleport cluster into a hierarchy of isolated
 administrative boundaries. Use scopes when you want to delegate management of
@@ -74,9 +79,9 @@ supported set listed below.
 
 ## Prerequisites
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx!)
+<DocsPagesIncludesEditionPrereqsTabs />
 
-- (!docs/pages/includes/tctl.mdx!)
+- <DocsPagesIncludesTctl />
 - All Teleport instances (Auth Service, Proxy Service, and Agents) must be
   running the same Teleport version, and must have the
   `TELEPORT_UNSTABLE_SCOPES=yes` environment variable set.
@@ -1092,7 +1097,7 @@ Teleport cluster.
 
 ## Prerequisites
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx!)
+<DocsPagesIncludesEditionPrereqsTabs />
 
 - A Linux host where you will install the Teleport Kubernetes Service.
 
@@ -1107,7 +1112,7 @@ Teleport cluster.
   permissions to create namespaces, secrets, service accounts, cluster roles,
   and cluster role bindings in the cluster.
 
-- (!docs/pages/includes/tctl.mdx!)
+- <DocsPagesIncludesTctl />
 
 ## Step 1/3. Set up the Teleport Kubernetes Service
 
@@ -1131,7 +1136,7 @@ Teleport Kubernetes Service.
 
 Install the Teleport Kubernetes Service on your Linux host:
 
-(!docs/pages/includes/install-linux.mdx!)
+<DocsPagesIncludesInstallLinux />
 
 ### Configure the Teleport Kubernetes Service
 
@@ -1207,7 +1212,7 @@ will watch for them.
 
 ### Run the Teleport Kubernetes Service
 
-(!docs/pages/includes/start-teleport.mdx service="the Teleport Kubernetes Service"!)
+<DocsPagesIncludesStartTeleport service="the Teleport Kubernetes Service" />
 
 ## Step 2/3. Authorize your user
 

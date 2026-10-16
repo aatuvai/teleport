@@ -7,6 +7,9 @@ tags:
  - zero-trust
  - resiliency
 ---
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
+import DocsPagesIncludesTctl from "@version/docs/pages/includes/tctl.mdx";
+
 
 <Admonition type="note">
 
@@ -21,7 +24,7 @@ The Teleport SSH Service SELinux module allows SELinux to confine the Teleport S
 
 Before installing the SELinux module, ensure the following requirements are met:
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx!)
+<DocsPagesIncludesEditionPrereqsTabs />
 
   Service SELinux module is officially supported on these platforms only.
 - Root or `sudo` access on the host. The `install-selinux.sh` script must be run
@@ -48,7 +51,7 @@ Before installing the SELinux module, ensure the following requirements are met:
     SELinux enforcement relies on Teleport running under the `teleport_ssh_t` domain, 
     which typically only occurs when Teleport is started by systemd.
 
-(!docs/pages/includes/tctl.mdx!)
+<DocsPagesIncludesTctl />
 
 ## Supported features
 

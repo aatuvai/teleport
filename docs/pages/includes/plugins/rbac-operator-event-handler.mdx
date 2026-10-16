@@ -1,8 +1,9 @@
-{{ plugin="plugin" }}
+import DocsPagesIncludesPluginsEventHandlerOperatorHelmConfig from "@version/docs/pages/includes/plugins/event-handler-operator-helm-config.mdx";
+
 
 ### Configure tbot for the Event Handler plugin
 
-In the generated configuration file `{{ plugin }}-values.yaml`,
+In the generated configuration file `{props.plugin ?? "plugin"}-values.yaml`,
 replace the `teleport` section with the `crd` and `tbot` sections.
 Assign <Var name="operator-namespace" /> to the namespace where the
 Teleport Kubernetes Operator is running in.
@@ -38,7 +39,7 @@ to properly authenticate.
 <Tabs>
 <TabItem label="Same Kubernetes cluster as Teleport cluster">
 
-When running `{{ plugin }}` in the same Kubernetes cluster
+When running `{props.plugin ?? "plugin"}` in the same Kubernetes cluster
 as the Teleport cluster (eg. via the `teleport-cluster` Helm chart),
 we can use the default join token specification: `kubernetes` in_cluster
 join method.
@@ -46,7 +47,7 @@ join method.
 </TabItem>
 <TabItem label="External Teleport cluster">
 
-When running `{{ plugin }}` against an external Teleport cluster not in Kubernetes,
+When running `{props.plugin ?? "plugin"}` against an external Teleport cluster not in Kubernetes,
 you must modify the join token specification using `crd.tokenSpecOverride`. We
 recommend either the `kubernetes` JWKS join method or the `kubernetes` OIDC join method.
 
@@ -94,7 +95,7 @@ Your Helm chart configuration file `teleport-plugin-event-handler-values.yaml` s
 contain settings similar to the following. We will configure the `fluentd` section
 to your log management solution of choice in the following guide.
 
-(!docs/pages/includes/plugins/event-handler-operator-helm-config.mdx!)
+<DocsPagesIncludesPluginsEventHandlerOperatorHelmConfig />
 
 Consult the [Helm chart reference
 guide](../../reference/helm-reference/teleport-plugin-event-handler.mdx)

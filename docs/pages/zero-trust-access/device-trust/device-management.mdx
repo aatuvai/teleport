@@ -8,6 +8,11 @@ tags:
  - resiliency
 enterprise: Device Trust
 ---
+import DocsPagesIncludesDeviceTrustPrereqs from "@version/docs/pages/includes/device-trust/prereqs.mdx";
+import DocsPagesIncludesDeviceTrustTroubleshooting from "@version/docs/pages/includes/device-trust/troubleshooting.mdx";
+
+
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
 
 This guide provides instructions for performing Device Trust management
 operations, such as registering a trusted device, creating a device enrollment
@@ -15,9 +20,9 @@ token, and removing a trusted device.
 
 ## Prerequisites
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx edition="Teleport Enterprise"!)
+<DocsPagesIncludesEditionPrereqsTabs edition="Teleport Enterprise" />
 
-(!docs/pages/includes/device-trust/prereqs.mdx!)
+<DocsPagesIncludesDeviceTrustPrereqs />
 
 ## Register a trusted device
 
@@ -276,7 +281,7 @@ Save and close your editor to apply your changes.
     https://github.com/gravitational/teleport/blob/9bc227823d914122663ea62ad5957e4ccfeba82a/lib/srv/app/connections_handler.go#L801
 */}
 
-(!docs/pages/includes/device-trust/troubleshooting.mdx!)
+<DocsPagesIncludesDeviceTrustTroubleshooting />
 
 ## Next steps
 

@@ -9,8 +9,20 @@ tags:
  - aws
 page_type: how-to
 ---
+import DocsPagesIncludesDatabaseAccessGuidesNextSteps from "@version/docs/pages/includes/database-access/guides-next-steps.mdx";
+import DocsPagesIncludesDatabaseAccessOracleTroubleshooting from "@version/docs/pages/includes/database-access/oracle-troubleshooting.mdx";
 
-(!docs/pages/includes/database-access/db-introduction.mdx dbType="Amazon RDS for Oracle" dbConfigure="with Kerberos authentication"!)
+
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
+import DocsPagesIncludesTctl from "@version/docs/pages/includes/tctl.mdx";
+import DocsPagesIncludesInstallLinux from "@version/docs/pages/includes/install-linux.mdx";
+import DocsPagesIncludesStartTeleport from "@version/docs/pages/includes/start-teleport.mdx";
+import DocsPagesIncludesDatabaseAccessCreateUser from "@version/docs/pages/includes/database-access/create-user.mdx";
+
+import DocsPagesIncludesDatabaseAccessDbIntroduction from "@version/docs/pages/includes/database-access/db-introduction.mdx";
+import DocsPagesIncludesTctlToken from "@version/docs/pages/includes/tctl-token.mdx";
+
+<DocsPagesIncludesDatabaseAccessDbIntroduction dbType="Amazon RDS for Oracle" dbConfigure="with Kerberos authentication" />
 
 ## How it works
 
@@ -23,14 +35,14 @@ Database Service forwards user traffic to the database.
 
 ## Prerequisites
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx edition="Teleport (v17.4.0 or higher)"!)
+<DocsPagesIncludesEditionPrereqsTabs edition="Teleport (v17.4.0 or higher)" />
 
 - An Amazon RDS for Oracle database instance.
 - An AWS Directory Service Managed Microsoft AD.
 - A Linux node joined to the same Active Directory domain as the database. This
   guide will walk you through the joining steps if you don't have one.
 - Oracle client. The default option is [SQLcl](https://www.oracle.com/database/sqldeveloper/technologies/sqlcl/download/), but alternative clients are discussed below.
-- (!docs/pages/includes/tctl.mdx!)
+- <DocsPagesIncludesTctl />
 
 ## Step 1/9. Prepare the Oracle RDS Instance
 
@@ -257,9 +269,9 @@ KVNO Principal
 
 ## Step 5/9. Set up the Teleport Database Service
 
-(!docs/pages/includes/tctl-token.mdx serviceName="Database" tokenType="db" tokenFile="/tmp/token"!)
+<DocsPagesIncludesTctlToken serviceName="Database" tokenType="db" tokenFile="/tmp/token" />
 
-(!docs/pages/includes/install-linux.mdx!)
+<DocsPagesIncludesInstallLinux />
 
 <Admonition type="note">
   Teleport Database Service must run on a Linux server joined to the same
@@ -292,11 +304,11 @@ Provide Active Directory parameters:
 
 ## Step 6/9. Start the Database Service
 
-(!docs/pages/includes/start-teleport.mdx service="the Teleport Database Service"!)
+<DocsPagesIncludesStartTeleport service="the Teleport Database Service" />
 
 ## Step 7/9. Create a Teleport user
 
-(!docs/pages/includes/database-access/create-user.mdx!)
+<DocsPagesIncludesDatabaseAccessCreateUser />
 
 ## Step 8/9. (Optional) Configure Teleport to pull audit logs from Oracle Audit Trail
 
@@ -396,11 +408,11 @@ This method also enables use of various graphical clients, as explained in [Orac
 
 ## Next steps
 
-(!docs/pages/includes/database-access/guides-next-steps.mdx!)
+<DocsPagesIncludesDatabaseAccessGuidesNextSteps />
 
 ## Troubleshooting
 
-(!docs/pages/includes/database-access/oracle-troubleshooting.mdx!)
+<DocsPagesIncludesDatabaseAccessOracleTroubleshooting />
 
 ### Username not recognized
 

@@ -8,6 +8,13 @@ tags:
  - privileged-access
 page_type: how-to
 ---
+import DocsPagesIncludesKubernetesAccessHelmHelmRepoAdd from "@version/docs/pages/includes/kubernetes-access/helm/helm-repo-add.mdx";
+
+
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
+import DocsPagesIncludesTctl from "@version/docs/pages/includes/tctl.mdx";
+import DocsPagesIncludesCreateRoleUsingWeb from "@version/docs/pages/includes/create-role-using-web.mdx";
+import DocsPagesIncludesAddRoleToUser from "@version/docs/pages/includes/add-role-to-user.mdx";
 
 The Teleport Kubernetes Service is a proxy that sits between Kubernetes users
 and one or more Kubernetes clusters.
@@ -26,9 +33,9 @@ user via their roles.
 
 ## Prerequisites
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx!)
+<DocsPagesIncludesEditionPrereqsTabs />
 
-- (!docs/pages/includes/tctl.mdx!)
+- <DocsPagesIncludesTctl />
 
 To run the local demo environment, ensure that you have the following tools
 installed on your workstation:
@@ -215,7 +222,7 @@ manage access to them, install the Teleport Kubernetes Service in your demo
 cluster so you can get more control into the resources that Kubernetes users can
 access.
 
-(!docs/pages/includes/kubernetes-access/helm/helm-repo-add.mdx!)
+<DocsPagesIncludesKubernetesAccessHelmHelmRepoAdd />
 
 Request a token that the Kubernetes Service will use to join your Teleport
 cluster:
@@ -365,9 +372,9 @@ following command:
 $ tctl create kube-access.yaml
 ```
 
-(!docs/pages/includes/create-role-using-web.mdx!)
+<DocsPagesIncludesCreateRoleUsingWeb />
 
-(!docs/pages/includes/add-role-to-user.mdx role="kube-access"!)
+<DocsPagesIncludesAddRoleToUser role="kube-access" />
 
 ## Step 3/3. Access resources
 

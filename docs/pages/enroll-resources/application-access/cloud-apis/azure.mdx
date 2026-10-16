@@ -10,8 +10,20 @@ tags:
  - azure
 page_type: how-to
 ---
+import DocsPagesIncludesApplicationAccessAzureIntro from "@version/docs/pages/includes/application-access/azure-intro.mdx";
 
-(!docs/pages/includes/application-access/azure-intro.mdx!)
+
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
+import DocsPagesIncludesTctl from "@version/docs/pages/includes/tctl.mdx";
+import DocsPagesIncludesApplicationAccessAppServiceJoinToken from "@version/docs/pages/includes/application-access/app-service-join-token.mdx";
+import DocsPagesIncludesInstallLinux from "@version/docs/pages/includes/install-linux.mdx";
+import DocsPagesIncludesStartTeleport from "@version/docs/pages/includes/start-teleport.mdx";
+import DocsPagesIncludesApplicationAccessAzureTeleportRole from "@version/docs/pages/includes/application-access/azure-teleport-role.mdx";
+import DocsPagesIncludesApplicationAccessAzureTsh from "@version/docs/pages/includes/application-access/azure-tsh.mdx";
+
+import DocsPagesIncludesApplicationAccessAzureHowItWorks from "@version/docs/pages/includes/application-access/azure-how-it-works.mdx";
+
+<DocsPagesIncludesApplicationAccessAzureIntro />
 
 In this guide, you will:
 
@@ -21,7 +33,7 @@ In this guide, you will:
 
 ## How it works
 
-(!docs/pages/includes/application-access/azure-how-it-works.mdx deployment="on an Azure VM" credential="managed identities"!)
+<DocsPagesIncludesApplicationAccessAzureHowItWorks deployment="on an Azure VM" credential="managed identities" />
 
 Alternatively, you can use the [Teleport SAML IdP](../../../identity-governance/idps/usage/saml-microsoft-entra-external-id.mdx)-based
 integration to manage access to Azure Portal and CLI applications.  In this
@@ -34,7 +46,7 @@ the Azure portal.
 
 ## Prerequisites
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx!)
+<DocsPagesIncludesEditionPrereqsTabs />
 
 - The `az` CLI tool installed on your workstation. Teleport's `tsh` client uses
   the `az` binary to execute commands. See the [Azure
@@ -69,7 +81,7 @@ the Azure portal.
 
   </Admonition>
 
-- (!docs/pages/includes/tctl.mdx!)
+- <DocsPagesIncludesTctl />
 
 ## Step 1/4. Grant an identity to your VM
 
@@ -175,14 +187,14 @@ identity](../../../../img/application-access/azure/verify-id.png)
 In this step, you will run the Teleport Application Service on the Azure VM you
 assigned the `teleport-azure` identity to. 
 
-(!docs/pages/includes/application-access/app-service-join-token.mdx!)
+<DocsPagesIncludesApplicationAccessAppServiceJoinToken />
 
 ### Install the Teleport Application Service
 
 Run the following commands on the host where you will install the Teleport
 Application Service:
 
-(!docs/pages/includes/install-linux.mdx!)
+<DocsPagesIncludesInstallLinux />
 
 ### Configure the Teleport Application Service
 
@@ -224,15 +236,15 @@ Application Service host.
 
 ### Run the Teleport Application Service
 
-(!docs/pages/includes/start-teleport.mdx service="the Teleport Application Service"!)
+<DocsPagesIncludesStartTeleport service="the Teleport Application Service" />
 
 ## Step 3/4. Enable your user to access Azure CLIs
 
-(!docs/pages/includes/application-access/azure-teleport-role.mdx!)
+<DocsPagesIncludesApplicationAccessAzureTeleportRole />
 
 ## Step 4/4. Use Azure CLIs with Teleport
 
-(!docs/pages/includes/application-access/azure-tsh.mdx!)
+<DocsPagesIncludesApplicationAccessAzureTsh />
 
 ## Next steps
 

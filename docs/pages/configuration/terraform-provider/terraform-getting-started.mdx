@@ -7,6 +7,20 @@ tags:
  - how-to
  - zero-trust
 ---
+import ExamplesTerraformStarterAgentInstallationToken from "!!raw-loader!@version/examples/terraform-starter/agent-installation/token.tf";
+import ExamplesTerraformStarterAgentInstallationUserdata from "!!raw-loader!@version/examples/terraform-starter/agent-installation/userdata";
+import ExamplesTerraformStarterAwsEc2Instance from "!!raw-loader!@version/examples/terraform-starter/aws/ec2-instance.tf";
+import ExamplesTerraformStarterGcpGcpInstance from "!!raw-loader!@version/examples/terraform-starter/gcp/gcp-instance.tf";
+import ExamplesTerraformStarterAzureAzureInstance from "!!raw-loader!@version/examples/terraform-starter/azure/azure-instance.tf";
+import ExamplesTerraformStarterEnvRoleEnvRole from "!!raw-loader!@version/examples/terraform-starter/env_role/env_role.tf";
+import ExamplesTerraformStarterEnvRoleReviewer from "!!raw-loader!@version/examples/terraform-starter/env_role/reviewer.tf";
+import ExamplesTerraformStarterOidcOidcConnector from "!!raw-loader!@version/examples/terraform-starter/oidc/oidc_connector.tf";
+import ExamplesTerraformStarterSamlSaml from "!!raw-loader!@version/examples/terraform-starter/saml/saml.tf";
+import ExamplesTerraformStarterOidcInputs from "!!raw-loader!@version/examples/terraform-starter/oidc/inputs.tf";
+import ExamplesTerraformStarterSamlInputs from "!!raw-loader!@version/examples/terraform-starter/saml/inputs.tf";
+import ExamplesTerraformStarterOidcAuthPref from "!!raw-loader!@version/examples/terraform-starter/oidc/auth_pref.tf";
+import ExamplesTerraformStarterSamlAuthPref from "!!raw-loader!@version/examples/terraform-starter/saml/auth_pref.tf";
+
 
 This guide provides an example of a Terraform module that manages Teleport
 resources in production. The guide helps you to understand the Teleport
@@ -877,9 +891,11 @@ Teleport Agent. Each Agent joins the cluster using a token. We create each token
 using the `teleport_provision_token` Terraform resource, specifying the token's
 value with a `random_string` resource:
 
-```hcl
-(!examples/terraform-starter/agent-installation/token.tf!)
-```
+<CodeBlock language="hcl">
+
+  {ExamplesTerraformStarterAgentInstallationToken}
+
+</CodeBlock>
 
 When we apply the `teleport_provision_token` resources, the Teleport Terraform
 provider creates them on the Teleport Auth Service backend. 
@@ -889,9 +905,11 @@ provider creates them on the Teleport Auth Service backend.
 Each Teleport Agent deployed by the `terraform-starter` module loads a user
 data script that creates a Teleport configuration file for the Agent: 
 
-```text
-(!examples/terraform-starter/agent-installation/userdata!)
-```
+<CodeBlock language="text">
+
+  {ExamplesTerraformStarterAgentInstallationUserdata}
+
+</CodeBlock>
 
 The configuration adds the `role: agent-pool` label to the Teleport SSH Service
 on each instance. This makes it easier to access hosts in the Agent pool later.
@@ -913,9 +931,11 @@ deploy a virtual machine instance on your cloud provider:
 and uses it to launch EC2 instances that run Teleport Agents with the
 `teleport_provision_token` resource:
 
-```hcl
-(!examples/terraform-starter/aws/ec2-instance.tf!)
-```
+<CodeBlock language="hcl">
+
+  {ExamplesTerraformStarterAwsEc2Instance}
+
+</CodeBlock>
 
 </TabItem>
 <TabItem label="Google Cloud">
@@ -923,9 +943,11 @@ and uses it to launch EC2 instances that run Teleport Agents with the
 `gcp-instance.tf` declares Google Compute Engine instances that use the
 `teleport_provision_token` to run Teleport Agents:
 
-```hcl
-(!examples/terraform-starter/gcp/gcp-instance.tf!)
-```
+<CodeBlock language="hcl">
+
+  {ExamplesTerraformStarterGcpGcpInstance}
+
+</CodeBlock>
 
 </TabItem>
 <TabItem label="Azure">
@@ -938,9 +960,11 @@ Note that while Azure VM instances require a user account, this module declares
 a temporary one to pass validation, but uses Teleport to enable access to the
 instances:
 
-```hcl
-(!examples/terraform-starter/azure/azure-instance.tf!)
-```
+<CodeBlock language="hcl">
+
+  {ExamplesTerraformStarterAzureAzureInstance}
+
+</CodeBlock>
 
 </TabItem>
 </Tabs>
@@ -950,9 +974,11 @@ instances:
 The `env_role` child module creates Teleport roles with the ability to access
 Teleport-protected resources with the `env` label:
 
-```hcl
-(!examples/terraform-starter/env_role/env_role.tf!)
-```
+<CodeBlock language="hcl">
+
+  {ExamplesTerraformStarterEnvRoleEnvRole}
+
+</CodeBlock>
 
 The role hardcodes an `allow` rule with the ability to access applications,
 databases, Linux servers, Kubernetes clusters, and Windows desktops with the
@@ -974,9 +1000,11 @@ If `var.request_roles` in the `env_access` role is nonempty, the `env_role`
 module creates a role that can review those roles. This is a separate role to
 make permissions more composable:
 
-```hcl
-(!examples/terraform-starter/env_role/reviewer.tf!)
-```
+<CodeBlock language="hcl">
+
+  {ExamplesTerraformStarterEnvRoleReviewer}
+
+</CodeBlock>
 
 As with the `env_access` role, there is an output to print the name of the
 `env_access_reviewer` role to create a dependency relationship with the
@@ -991,15 +1019,19 @@ connectors configure role mappings based on user-provided values:
 <Tabs>
 <TabItem label="OIDC">
 
-```hcl
-(!examples/terraform-starter/oidc/oidc_connector.tf!)
-```
+<CodeBlock language="hcl">
+
+  {ExamplesTerraformStarterOidcOidcConnector}
+
+</CodeBlock>
 </TabItem>
 <TabItem label="SAML">
 
-```hcl
-(!examples/terraform-starter/saml/saml.tf!)
-```
+<CodeBlock language="hcl">
+
+  {ExamplesTerraformStarterSamlSaml}
+
+</CodeBlock>
 
 </TabItem>
 </Tabs>
@@ -1011,15 +1043,19 @@ modules:
 <Tabs>
 <TabItem label="OIDC">
 
-```hcl
-(!examples/terraform-starter/oidc/inputs.tf!)
-```
+<CodeBlock language="hcl">
+
+  {ExamplesTerraformStarterOidcInputs}
+
+</CodeBlock>
 </TabItem>
 <TabItem label="SAML">
 
-```hcl
-(!examples/terraform-starter/saml/inputs.tf!)
-```
+<CodeBlock language="hcl">
+
+  {ExamplesTerraformStarterSamlInputs}
+
+</CodeBlock>
 </TabItem>
 </Tabs>
 
@@ -1031,15 +1067,19 @@ troubleshoot the single sign-on provider.
 <Tabs>
 <TabItem label="OIDC">
 
-```hcl
-(!examples/terraform-starter/oidc/auth_pref.tf!)
-```
+<CodeBlock language="hcl">
+
+  {ExamplesTerraformStarterOidcAuthPref}
+
+</CodeBlock>
 </TabItem>
 <TabItem label="SAML">
 
-```hcl
-(!examples/terraform-starter/saml/auth_pref.tf!)
-```
+<CodeBlock language="hcl">
+
+  {ExamplesTerraformStarterSamlAuthPref}
+
+</CodeBlock>
 </TabItem>
 </Tabs>
 

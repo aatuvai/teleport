@@ -1,3 +1,6 @@
+import DocsPagesIncludesCreateRoleUsingWeb from "@version/docs/pages/includes/create-role-using-web.mdx";
+import DocsPagesIncludesAddRoleToUser from "@version/docs/pages/includes/add-role-to-user.mdx";
+
 To authenticate to a Kubernetes cluster via Teleport, your Teleport user's roles
 must allow access as at least one Kubernetes user or group.
 
@@ -57,9 +60,9 @@ must allow access as at least one Kubernetes user or group.
    $ tctl create -f kube-access.yaml
    ```
 
-   (!docs/pages/includes/create-role-using-web.mdx!)
+   <DocsPagesIncludesCreateRoleUsingWeb />
 
-1. (!docs/pages/includes/add-role-to-user.mdx role="kube-access"!)
+1. <DocsPagesIncludesAddRoleToUser role="kube-access" />
 
 1. Configure the `viewers` group in your Kubernetes cluster to have the built-in
    `view` ClusterRole. When your Teleport user assumes the `kube-access` role

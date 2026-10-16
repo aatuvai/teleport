@@ -9,12 +9,27 @@ tags:
  - aws
 page_type: how-to
 ---
+import DocsPagesIncludesDatabaseAccessAlternativeMethodsJoin from "@version/docs/pages/includes/database-access/alternative-methods-join.mdx";
+import DocsPagesIncludesDatabaseAccessGuidesNextSteps from "@version/docs/pages/includes/database-access/guides-next-steps.mdx";
 
-(!docs/pages/includes/database-access/db-introduction.mdx dbType="Amazon Keyspaces (Apache Cassandra)" dbConfigure="with IAM authentication"!)
+
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
+import DocsPagesIncludesTctl from "@version/docs/pages/includes/tctl.mdx";
+import DocsPagesIncludesInstallLinux from "@version/docs/pages/includes/install-linux.mdx";
+import DocsPagesIncludesAwsCredentials from "@version/docs/pages/includes/aws-credentials.mdx";
+import DocsPagesIncludesStartTeleport from "@version/docs/pages/includes/start-teleport.mdx";
+import DocsPagesIncludesDatabaseAccessCreateUser from "@version/docs/pages/includes/database-access/create-user.mdx";
+import DocsPagesIncludesDatabaseAccessProxyDbTunnel from "@version/docs/pages/includes/database-access/proxy-db-tunnel.mdx";
+
+import DocsPagesIncludesDatabaseAccessDbIntroduction from "@version/docs/pages/includes/database-access/db-introduction.mdx";
+import DocsPagesIncludesDatabaseAccessHowItWorksIam from "@version/docs/pages/includes/database-access/how-it-works/iam.mdx";
+import DocsPagesIncludesTctlToken from "@version/docs/pages/includes/tctl-token.mdx";
+
+<DocsPagesIncludesDatabaseAccessDbIntroduction dbType="Amazon Keyspaces (Apache Cassandra)" dbConfigure="with IAM authentication" />
 
 ## How it works
 
-(!docs/pages/includes/database-access/how-it-works/iam.mdx db="Amazon Keyspaces" cloud="AWS"!)
+<DocsPagesIncludesDatabaseAccessHowItWorksIam db="Amazon Keyspaces" cloud="AWS" />
 
 <Tabs>
 <TabItem scope={["oss", "enterprise"]} label="Self-Hosted">
@@ -28,7 +43,7 @@ page_type: how-to
 
 ## Prerequisites
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx!)
+<DocsPagesIncludesEditionPrereqsTabs />
 
 - AWS Account with Amazon Keyspaces database and permissions to create and attach IAM policies
 - The `cqlsh` Cassandra client installed and added to your system's `PATH` environment variable.
@@ -36,15 +51,15 @@ page_type: how-to
 - An IAM principal for the Teleport Database Service. We assume that this is
   either an IAM role called `TeleportDatabaseServiceRole` or an IAM user called
   `TeleportDatabaseServiceUser`.
-- (!docs/pages/includes/tctl.mdx!)
+- <DocsPagesIncludesTctl />
 
 ## Step 1/5. Set up the Teleport Database Service
 
-(!docs/pages/includes/tctl-token.mdx serviceName="Database" tokenType="db" tokenFile="/tmp/token"!)
+<DocsPagesIncludesTctlToken serviceName="Database" tokenType="db" tokenFile="/tmp/token" />
 
-(!docs/pages/includes/database-access/alternative-methods-join.mdx!)
+<DocsPagesIncludesDatabaseAccessAlternativeMethodsJoin />
 
-(!docs/pages/includes/install-linux.mdx!)
+<DocsPagesIncludesInstallLinux />
 
 <Tabs>
 <TabItem scope={["oss", "enterprise"]} label="Self-Hosted">
@@ -86,13 +101,13 @@ $ sudo teleport db configure create \
 
 </Tabs>
 
-(!docs/pages/includes/aws-credentials.mdx service="the Teleport Database Service"!)
+<DocsPagesIncludesAwsCredentials service="the Teleport Database Service" />
 
-(!docs/pages/includes/start-teleport.mdx service="the Teleport Database Service"!)
+<DocsPagesIncludesStartTeleport service="the Teleport Database Service" />
 
 ## Step 2/5. Create a Teleport user
 
-(!docs/pages/includes/database-access/create-user.mdx!)
+<DocsPagesIncludesDatabaseAccessCreateUser />
 
 ## Step 3/5. Create an Amazon Keyspaces role
 
@@ -265,7 +280,7 @@ $ tsh db connect --db-user=KeyspacesReader keyspaces
 # KeyspacesReader@cqlsh>
 ```
 
-(!docs/pages/includes/database-access/proxy-db-tunnel.mdx db="keyspaces" dbArgs="--db-user=KeyspacesReader"!)
+<DocsPagesIncludesDatabaseAccessProxyDbTunnel db="keyspaces" dbArgs="--db-user=KeyspacesReader" />
 
 To log out of the database and remove credentials:
 
@@ -283,5 +298,5 @@ $ tsh db logout
 
 ## Next steps
 
-(!docs/pages/includes/database-access/guides-next-steps.mdx!)
+<DocsPagesIncludesDatabaseAccessGuidesNextSteps />
 

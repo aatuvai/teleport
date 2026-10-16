@@ -8,8 +8,16 @@ tags:
 - zero-trust
 page_type: how-to
 ---
+import DocsPagesIncludesMcpAccessIntegrationLimitTools from "@version/docs/pages/includes/mcp-access/integration-limit-tools.mdx";
 
-(!docs/pages/includes/mcp-access/integration-intro.mdx serviceName="Notion" !)
+
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
+import DocsPagesIncludesMcpAccessIntegrationTeleportApp from "@version/docs/pages/includes/mcp-access/integration-teleport-app.mdx";
+
+import DocsPagesIncludesMcpAccessIntegrationIntro from "@version/docs/pages/includes/mcp-access/integration-intro.mdx";
+import DocsPagesIncludesMcpAccessIntegrationTsh from "@version/docs/pages/includes/mcp-access/integration-tsh.mdx";
+
+<DocsPagesIncludesMcpAccessIntegrationIntro serviceName="Notion" />
 
 ## How it works
 
@@ -21,7 +29,7 @@ granted to the integration.
 
 ## Prerequisites
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx edition="Teleport (v18.3.0 or higher)" clients="\`tsh\` client"!)
+<DocsPagesIncludesEditionPrereqsTabs edition="Teleport (v18.3.0 or higher)" clients="\\`tsh\\` client" />
 
 - Access to your Notion workspace and sufficient privileges to manage integrations.
 
@@ -76,9 +84,9 @@ value is acceptable.
 
 ## Step 2/2. Connect via Teleport
 
-(!docs/pages/includes/mcp-access/integration-teleport-app.mdx service="notion" serviceName="Notion" port="8000" !)
+<DocsPagesIncludesMcpAccessIntegrationTeleportApp service="notion" serviceName="Notion" port="8000" />
 
-(!docs/pages/includes/mcp-access/integration-limit-tools.mdx!)
+<DocsPagesIncludesMcpAccessIntegrationLimitTools />
 ```yaml
 kind: role
 version: v8
@@ -96,7 +104,7 @@ spec:
       - API-post-search
 ```
 
-(!docs/pages/includes/mcp-access/integration-tsh.mdx service="notion" serviceName="Notion" !)
+<DocsPagesIncludesMcpAccessIntegrationTsh service="notion" serviceName="Notion" />
 
 ![Notion Claude](../../../../img/mcp-access/notion-claude.png)
 

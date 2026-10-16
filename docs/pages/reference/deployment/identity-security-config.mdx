@@ -6,6 +6,8 @@ keywords: [config, file, reference, yaml, etc]
 tags:
  - identity-security
 ---
+import DocsPagesIncludesConfigReferenceIdentitySecurity from "!!raw-loader!@version/docs/pages/includes/config-reference/identity-security.yaml";
+
 
 Teleport Identity Security uses the YAML file format for configuration. A full configuration
 reference file is shown below. This provides comments and all available options
@@ -31,9 +33,11 @@ format to demonstrate proper use of indentation.
 
 These settings apply the Teleport Identity Security process.
 
-```yaml
-(!docs/pages/includes/config-reference/identity-security.yaml!)
-```
+<CodeBlock language="yaml">
+
+  {DocsPagesIncludesConfigReferenceIdentitySecurity}
+
+</CodeBlock>
 
 ## Further reading
 

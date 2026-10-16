@@ -10,6 +10,21 @@ tags:
  - infrastructure-identity
  - aws
 ---
+import DocsPagesIncludesAutoDiscoveryEc2InviteToken from "@version/docs/pages/includes/auto-discovery/ec2-invite-token.mdx";
+import DocsPagesIncludesAutoDiscoveryAutoDiscoveryLabels from "@version/docs/pages/includes/auto-discovery/auto-discovery-labels.mdx";
+import DocsPagesIncludesAutoDiscoveryEc2NextSteps from "@version/docs/pages/includes/auto-discovery/ec2-next-steps.mdx";
+
+
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
+import DocsPagesIncludesTctl from "@version/docs/pages/includes/tctl.mdx";
+import DocsPagesIncludesInstallLinux from "@version/docs/pages/includes/install-linux.mdx";
+import DocsPagesIncludesAutoDiscoveryEc2Config from "@version/docs/pages/includes/auto-discovery/ec2-config.mdx";
+import DocsPagesIncludesAwsCredentials from "@version/docs/pages/includes/aws-credentials.mdx";
+import DocsPagesIncludesStartTeleport from "@version/docs/pages/includes/start-teleport.mdx";
+import DocsPagesIncludesAutoDiscoveryEc2CrossAccountToken from "@version/docs/pages/includes/auto-discovery/ec2-cross-account-token.mdx";
+import DocsPagesIncludesAutoDiscoveryEc2CrossAccountConfig from "@version/docs/pages/includes/auto-discovery/ec2-cross-account-config.mdx";
+import DocsPagesIncludesAutoDiscoveryAwsEc2AdvancedConfig from "@version/docs/pages/includes/auto-discovery/aws-ec2-advanced-config.mdx";
+import DocsPagesIncludesAutoDiscoveryEc2Troubleshooting from "@version/docs/pages/includes/auto-discovery/ec2-troubleshooting.mdx";
 
 This guide shows you how to configure Teleport to automatically enroll EC2
 instances in your cluster, with permissions configured by Teleport.
@@ -30,7 +45,7 @@ If you manage multiple AWS accounts in an AWS Organization, see [Organization-le
 
 ## Prerequisites
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx!)
+<DocsPagesIncludesEditionPrereqsTabs />
 
 - AWS account with EC2 instances and permissions to create and attach IAM
 policies.
@@ -41,7 +56,7 @@ policies.
 - An EC2 instance to run the Teleport Discovery Service. This instance must have
   an instance profile. In this guide, we assume the instance role is called
   `TeleportDiscoveryService`.
-- (!docs/pages/includes/tctl.mdx!)
+- <DocsPagesIncludesTctl />
 
 All EC2 instances that are to be added to the Teleport cluster by the Discovery
 Service must include the `AmazonSSMManagedInstanceCore` IAM policy in order to
@@ -51,7 +66,7 @@ documentation](https://docs.aws.amazon.com/aws-managed-policy/latest/reference/A
 
 ## Step 1/6. Create an EC2 invite token
 
-(!docs/pages/includes/auto-discovery/ec2-invite-token.mdx!)
+<DocsPagesIncludesAutoDiscoveryEc2InviteToken />
 
 ## Step 2/6. Configure IAM policies
 
@@ -108,11 +123,11 @@ another Teleport service (Auth or Proxy, for example), you can skip this step.
 
 Install Teleport on the EC2 instance that will run the Discovery Service:
 
-(!docs/pages/includes/install-linux.mdx!)
+<DocsPagesIncludesInstallLinux />
 
 ## Step 4/6. Configure Teleport to discover EC2 instances
 
-(!docs/pages/includes/auto-discovery/ec2-config.mdx!)
+<DocsPagesIncludesAutoDiscoveryEc2Config />
 
 ## Step 5/6. Bootstrap the Discovery Service AWS configuration
 
@@ -150,9 +165,9 @@ Confirm? [y/N]: y
 
 ## Step 6/6. Start Teleport
 
-(!docs/pages/includes/aws-credentials.mdx service="the Discovery Service"!)
+<DocsPagesIncludesAwsCredentials service="the Discovery Service" />
 
-(!docs/pages/includes/start-teleport.mdx service="the Discovery Service"!)
+<DocsPagesIncludesStartTeleport service="the Discovery Service" />
 
 Once you have started the Discovery Service, EC2 instances matching the tags you
 specified earlier will begin to be added to the Teleport cluster automatically.
@@ -167,7 +182,7 @@ to discover instances from.
 
 ### Step 1/5. Update EC2 invite token
 
-(!docs/pages/includes/auto-discovery/ec2-cross-account-token.mdx!)
+<DocsPagesIncludesAutoDiscoveryEc2CrossAccountToken />
 
 ### Step 2/5. Configure IAM permissions
 
@@ -233,7 +248,7 @@ to the Discovery Service's role, adding the <Var name="new role ARN" />:
 
 ### Step 3/5. Update Teleport configuration
 
-(!docs/pages/includes/auto-discovery/ec2-cross-account-config.mdx!)
+<DocsPagesIncludesAutoDiscoveryEc2CrossAccountConfig />
 
 ### Step 4/5. Bootstrap the Discovery Service AWS configuration
 
@@ -259,16 +274,16 @@ and view its logs with `journalctl -fu teleport`.
 
 ## Auto-discovery labels
 
-(!docs/pages/includes/auto-discovery/auto-discovery-labels.mdx!)
+<DocsPagesIncludesAutoDiscoveryAutoDiscoveryLabels />
 
 ## Advanced configuration
 
-(!docs/pages/includes/auto-discovery/aws-ec2-advanced-config.mdx!)
+<DocsPagesIncludesAutoDiscoveryAwsEc2AdvancedConfig />
 
 ## Troubleshooting
 
-(!docs/pages/includes/auto-discovery/ec2-troubleshooting.mdx!)
+<DocsPagesIncludesAutoDiscoveryEc2Troubleshooting />
 
 ## Next steps
 
-(!docs/pages/includes/auto-discovery/ec2-next-steps.mdx!)
+<DocsPagesIncludesAutoDiscoveryEc2NextSteps />

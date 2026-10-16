@@ -7,6 +7,10 @@ tags:
  - how-to
  - platform-wide
 ---
+import DocsPagesIncludesUninstallTeleportBinaries from "@version/docs/pages/includes/uninstall-teleport-binaries.mdx";
+import DocsPagesIncludesUninstallTeleportConnectWindows from "@version/docs/pages/includes/uninstall-teleport-connect-windows.mdx";
+import DocsPagesIncludesUninstallWindowsAuth from "@version/docs/pages/includes/uninstall-windows-auth.mdx";
+
 
 This guide explains how to uninstall Teleport completely including binaries, configurations and data.
 
@@ -182,7 +186,7 @@ Then, follow the instructions for your Linux distribution:
 
   Then, remove the Teleport binaries from the machine:
 
-  (!docs/pages/includes/uninstall-teleport-binaries.mdx!)
+  <DocsPagesIncludesUninstallTeleportBinaries />
 
   </TabItem>
 </Tabs>
@@ -196,7 +200,7 @@ Then, follow the instructions for your Linux distribution:
 
   Remove the Teleport binaries and links to Teleport software from the machine:
 
-  (!docs/pages/includes/uninstall-teleport-binaries.mdx!)
+  <DocsPagesIncludesUninstallTeleportBinaries />
 
   <Admonition type="note" title="Uninstall macOS client tools">
 
@@ -223,9 +227,9 @@ Then, follow the instructions for your Linux distribution:
   $ del C:\Path\To\tctl.exe
   $ del C:\Path\To\tbot.exe
   ```
-(!docs/pages/includes/uninstall-teleport-connect-windows.mdx!)
+<DocsPagesIncludesUninstallTeleportConnectWindows />
 
-(!docs/pages/includes/uninstall-windows-auth.mdx!)
+<DocsPagesIncludesUninstallWindowsAuth />
 
 ## Step 3/3. Remove Teleport data and configuration files
 
@@ -349,4 +353,4 @@ E: Sub-process /usr/bin/dpkg returned an error code (1)
 This error can be resolved by running the following commands to remove any previously-installed versions of the binaries,
 and then re-running the package installation using your original command.
 
-(!docs/pages/includes/uninstall-teleport-binaries.mdx!)
+<DocsPagesIncludesUninstallTeleportBinaries />

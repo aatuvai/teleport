@@ -7,6 +7,11 @@ tags:
  - zero-trust
  - privileged-access
 ---
+import DocsPagesIncludesRoleSpec from "@version/docs/pages/includes/role-spec.mdx";
+import DocsPagesIncludesPresetRolesTable from "@version/docs/pages/includes/preset-roles-table.mdx";
+
+
+import DocsPagesIncludesBackupWarning from "@version/docs/pages/includes/backup-warning.mdx";
 
 This guide shows you how to use Teleport roles to manage role-based access
 controls (RBAC) in your Teleport cluster.
@@ -39,13 +44,13 @@ $ tsh login --user=myuser --proxy=example.teleport.sh
 $ tctl get roles
 ```
 
-(!docs/pages/includes/backup-warning.mdx!)
+<DocsPagesIncludesBackupWarning />
 
 ## Example role specification
 
 Here is a full role specification:
 
-(!docs/pages/includes/role-spec.mdx!)
+<DocsPagesIncludesRoleSpec />
 
 ## Role options
 
@@ -86,7 +91,7 @@ user:
 
 Teleport provides several preset roles:
 
-(!docs/pages/includes/preset-roles-table.mdx!)
+<DocsPagesIncludesPresetRolesTable />
 
 ### Role versions
 

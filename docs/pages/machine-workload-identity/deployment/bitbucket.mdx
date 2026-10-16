@@ -8,6 +8,11 @@ tags:
  - infrastructure-identity
 page_type: how-to
 ---
+import DocsPagesIncludesMachineIdCreateABot from "@version/docs/pages/includes/machine-id/create-a-bot.mdx";
+
+
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
+import DocsPagesIncludesTctl from "@version/docs/pages/includes/tctl.mdx";
 
 In this guide, you will configure Machine & Workload Identity's agent, `tbot`,
 to run within a Bitbucket Pipelines workflow. The bot will be configured to use
@@ -27,9 +32,9 @@ match, the authentication attempt will succeed.
 
 ## Prerequisites
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx!)
+<DocsPagesIncludesEditionPrereqsTabs />
 
-- (!docs/pages/includes/tctl.mdx!)
+- <DocsPagesIncludesTctl />
 - A Bitbucket repository you can push to.
 
 ## Step 1/4. Determine Bitbucket configuration
@@ -47,7 +52,7 @@ From this page, note the following values:
 
 ## Step 2/4. Create a Bot
 
-(!docs/pages/includes/machine-id/create-a-bot.mdx!)
+<DocsPagesIncludesMachineIdCreateABot />
 
 ## Step 3/4. Create the join token for Bitbucket Pipelines
 

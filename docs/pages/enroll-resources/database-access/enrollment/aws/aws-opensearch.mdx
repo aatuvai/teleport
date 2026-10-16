@@ -9,8 +9,21 @@ tags:
  - aws
 page_type: how-to
 ---
+import DocsPagesIncludesDatabaseAccessAlternativeMethodsJoin from "@version/docs/pages/includes/database-access/alternative-methods-join.mdx";
 
-(!docs/pages/includes/database-access/db-introduction.mdx dbType="Amazon OpenSearch" dbConfigure="via REST API with IAM Authentication"!)
+
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
+import DocsPagesIncludesTctl from "@version/docs/pages/includes/tctl.mdx";
+import DocsPagesIncludesCreateRoleUsingWeb from "@version/docs/pages/includes/create-role-using-web.mdx";
+import DocsPagesIncludesAddRoleToUser from "@version/docs/pages/includes/add-role-to-user.mdx";
+import DocsPagesIncludesInstallLinux from "@version/docs/pages/includes/install-linux.mdx";
+import DocsPagesIncludesStartTeleport from "@version/docs/pages/includes/start-teleport.mdx";
+
+import DocsPagesIncludesDatabaseAccessDbIntroduction from "@version/docs/pages/includes/database-access/db-introduction.mdx";
+import DocsPagesIncludesDatabaseAccessAutoDiscoveryTip from "@version/docs/pages/includes/database-access/auto-discovery-tip.mdx";
+import DocsPagesIncludesTctlToken from "@version/docs/pages/includes/tctl-token.mdx";
+
+<DocsPagesIncludesDatabaseAccessDbIntroduction dbType="Amazon OpenSearch" dbConfigure="via REST API with IAM Authentication" />
 
 ## How it works
 
@@ -32,7 +45,7 @@ requests with AWS credentials, and forwards them to the OpenSearch API.
 
 </Tabs>
 
-(!docs/pages/includes/database-access/auto-discovery-tip.mdx dbType="OpenSearch database" providerType="AWS"!)
+<DocsPagesIncludesDatabaseAccessAutoDiscoveryTip dbType="OpenSearch database" providerType="AWS" />
 
 ## Prerequisites
 
@@ -43,12 +56,12 @@ requests with AWS credentials, and forwards them to the OpenSearch API.
 - [opensearchsql](https://github.com/opensearch-project/sql-cli)  Command Line
   Interface (CLI) tool installed in `$PATH`.
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx!)
+<DocsPagesIncludesEditionPrereqsTabs />
 
 - A host, e.g., an EC2 instance, where you will run the Teleport Database Service.
   This guide assumes an EC2 instance when creating and applying IAM roles, and
   must be adjusted accordingly for custom configurations.
-- (!docs/pages/includes/tctl.mdx!)
+- <DocsPagesIncludesTctl />
 
 This guide provides an example configuration of IAM access roles as a model,
 and uses an EC2 instance to serve the Teleport Database Service. The level of
@@ -169,9 +182,9 @@ Create the new role:
 $ tctl create -f aws-opensearch-access.yaml
 ```
 
-(!docs/pages/includes/create-role-using-web.mdx!)
+<DocsPagesIncludesCreateRoleUsingWeb />
 
-(!docs/pages/includes/add-role-to-user.mdx role="aws-opensearch-access"!)
+<DocsPagesIncludesAddRoleToUser role="aws-opensearch-access" />
 
 ## Step 3/4. Install the Teleport Database Service
 
@@ -190,15 +203,15 @@ the correct STS endpoint.
 
 ### Generate a token
 
-(!docs/pages/includes/database-access/alternative-methods-join.mdx!)
+<DocsPagesIncludesDatabaseAccessAlternativeMethodsJoin />
 
-(!docs/pages/includes/tctl-token.mdx serviceName="Database" tokenType="db" tokenFile="/tmp/token"!)
+<DocsPagesIncludesTctlToken serviceName="Database" tokenType="db" tokenFile="/tmp/token" />
 
 Use the token provided by the output of this command in the next step.
 
 ### Install and start Teleport
 
-(!docs/pages/includes/install-linux.mdx!)
+<DocsPagesIncludesInstallLinux />
 
 On the host where you will run the Teleport Database Service, start Teleport
 with the appropriate configuration.
@@ -226,7 +239,7 @@ $ sudo teleport db configure create \
    --labels=env=dev
 ```
 
-(!docs/pages/includes/start-teleport.mdx service="the Teleport Database Service"!)
+<DocsPagesIncludesStartTeleport service="the Teleport Database Service" />
 
 ## Step 4/4. Connect
 

@@ -7,12 +7,19 @@ tags:
  - how-to
  - platform-wide
 ---
+import DocsPagesIncludesKubernetesAccessHelmHelmRepoAdd from "@version/docs/pages/includes/kubernetes-access/helm/helm-repo-add.mdx";
+import DocsPagesIncludesEnterpriseObtainlicense from "@version/docs/pages/includes/enterprise/obtainlicense.mdx";
+
+
+import DocsPagesIncludesCloudCallToAction from "@version/docs/pages/includes/cloud/call-to-action.mdx";
+import DocsPagesIncludesKubernetesAccessHelmTeleportClusterPrereqs from "@version/docs/pages/includes/kubernetes-access/helm/teleport-cluster-prereqs.mdx";
+import DocsPagesIncludesKubernetesAccessHelmKubernetesExternaladdress from "@version/docs/pages/includes/kubernetes-access/helm/kubernetes-externaladdress.mdx";
 
 In this guide, we'll explain how to set up a Teleport cluster in Kubernetes
 with custom [`teleport.yaml`](../../../reference/deployment/config.mdx) config file elements
 using Teleport Helm charts.
 
-(!docs/pages/includes/cloud/call-to-action.mdx!)
+<DocsPagesIncludesCloudCallToAction />
 
 This setup can be useful when you already have an existing Teleport cluster and would
 like to start running it in Kubernetes, or when migrating your setup from a legacy
@@ -34,11 +41,11 @@ not included in your custom configurations.
 
 ## Prerequisites
 
-(!docs/pages/includes/kubernetes-access/helm/teleport-cluster-prereqs.mdx!)
+<DocsPagesIncludesKubernetesAccessHelmTeleportClusterPrereqs />
 
 ## Step 1/3. Add the Teleport Helm chart repository
 
-(!docs/pages/includes/kubernetes-access/helm/helm-repo-add.mdx!)
+<DocsPagesIncludesKubernetesAccessHelmHelmRepoAdd />
 
 ## Step 2/3. Setting up a Teleport cluster with Helm using a custom config
 
@@ -135,7 +142,7 @@ If you are running a self-hosted Teleport Enterprise cluster, you  will need to
 create a secret that contains your Teleport license information before you can
 install Teleport.
 
-1. (!docs/pages/includes//enterprise/obtainlicense.mdx!)
+1. <DocsPagesIncludesEnterpriseObtainlicense />
 1. Create a secret from your license file. Teleport will automatically discover
 this secret as long as your file is named `license.pem`.
 
@@ -243,7 +250,7 @@ If you didn't set up DNS for your hostname earlier, remember to replace
 `teleport.example.com` with the external IP or hostname of the Kubernetes load
 balancer.
 
-(!docs/pages/includes/kubernetes-access/helm/kubernetes-externaladdress.mdx!)
+<DocsPagesIncludesKubernetesAccessHelmKubernetesExternaladdress />
 
 You should modify your command accordingly and replace `teleport.example.com` with
 either the IP or hostname depending on which you have available. You may need

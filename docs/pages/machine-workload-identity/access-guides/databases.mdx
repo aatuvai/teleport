@@ -8,6 +8,15 @@ tags:
  - infrastructure-identity
 page_type: how-to
 ---
+import DocsPagesIncludesMachineIdPostgresqlPostgresql from "!!raw-loader!@version/docs/pages/includes/machine-id/postgresql/postgresql.go";
+import DocsPagesIncludesMachineIdMongodbMongodb from "!!raw-loader!@version/docs/pages/includes/machine-id/mongodb/mongodb.go";
+
+
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
+import DocsPagesIncludesTctl from "@version/docs/pages/includes/tctl.mdx";
+import DocsPagesIncludesCreateRoleUsingWeb from "@version/docs/pages/includes/create-role-using-web.mdx";
+
+import DocsPagesIncludesMachineIdReloadTbot from "@version/docs/pages/includes/machine-id/reload-tbot.mdx";
 
 {/* lint disable page-structure remark-lint */}
 
@@ -21,14 +30,14 @@ used to access a database configured in Teleport.
 
 ## Prerequisites
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx!)
+<DocsPagesIncludesEditionPrereqsTabs />
 
 - If you have not already put your database behind the Teleport Database Service,
   follow the [database access getting started guide](../../enroll-resources/database-access/getting-started.mdx).
   The Teleport Database Service supports databases like PostgreSQL, MongoDB,
   Redis, and much more. See our [database access
   guides](../../enroll-resources/database-access/guides/guides.mdx) for a complete list.
-- (!docs/pages/includes/tctl.mdx!)
+- <DocsPagesIncludesTctl />
 - The `tsh` binary must be installed on the machine that will access the
   database. Depending on how `tbot` was installed, this may already be
   installed. If it is not, see [Installation](../../installation/single-machine/single-machine.mdx) for
@@ -75,7 +84,7 @@ Replace:
 
 Use `tctl create -f ./role.yaml` to create the role.
 
-(!docs/pages/includes/create-role-using-web.mdx!)
+<DocsPagesIncludesCreateRoleUsingWeb />
 
 Now, use `tctl bots update` to add the role to the Bot. Replace `example`
 with the name of the Bot you created in the deployment guide and `example-role`
@@ -152,7 +161,7 @@ services:
   # format: mongo
 ```
 
-(!docs/pages/includes/machine-id/reload-tbot.mdx resource="the database"!)
+<DocsPagesIncludesMachineIdReloadTbot resource="the database" />
 
 ## Step 3/4. Configure the local database access proxy
 
@@ -253,14 +262,18 @@ configure your client to use the local proxy with the credentials.
 
   <Tabs>
     <TabItem label="Self-Hosted PostgreSQL">
-    ```go
-    (!docs/pages/includes/machine-id/postgresql/postgresql.go!)
-    ```
+    <CodeBlock language="go">
+    
+      {DocsPagesIncludesMachineIdPostgresqlPostgresql}
+    
+    </CodeBlock>
     </TabItem>
     <TabItem label="Self-Hosted MongoDB">
-    ```go
-    (!docs/pages/includes/machine-id/mongodb/mongodb.go!)
-    ```
+    <CodeBlock language="go">
+    
+      {DocsPagesIncludesMachineIdMongodbMongodb}
+    
+    </CodeBlock>
     </TabItem>
   </Tabs>
 

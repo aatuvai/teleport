@@ -8,6 +8,12 @@ tags:
  - platform-wide
 page_type: conceptual
 ---
+import DocsPagesIncludesConnectYourClientConnectMyComputerPrerequisites from "@version/docs/pages/includes/connect-your-client/connect-my-computer-prerequisites.mdx";
+import DocsPagesIncludesTeleportConnectTelemetry from "@version/docs/pages/includes/teleport-connect-telemetry.mdx";
+import DocsPagesIncludesUninstallTeleportConnectWindows from "@version/docs/pages/includes/uninstall-teleport-connect-windows.mdx";
+
+
+import DocsPagesIncludesConnectYourClientLaunchConnectWithFlagsMacos from "@version/docs/pages/includes/connect-your-client/launch-connect-with-flags-macos.mdx";
 
 Teleport Connect provides easy and secure access to SSH servers, databases,
 applications, MCP servers, Windows desktops, and Kubernetes clusters.
@@ -439,7 +445,7 @@ the lifecycle of the agent.
 
 ### Prerequisites
 
-(!docs/pages/includes/connect-your-client/connect-my-computer-prerequisites.mdx!)
+<DocsPagesIncludesConnectYourClientConnectMyComputerPrerequisites />
 {/* The permission to read and update users is needed during setup but not for regular usage,
 that's why it's not listed in the partial. */}
 - Permissions to read and update user objects in the backend (verbs `read` and `update` for [the
@@ -528,7 +534,7 @@ tab choose "Open agent logs directory".
 
 The icon is visible only if your setup satisfies the following requirements:
 
-(!docs/pages/includes/connect-your-client/connect-my-computer-prerequisites.mdx!)
+<DocsPagesIncludesConnectYourClientConnectMyComputerPrerequisites />
 
 #### The Connect My Computer tab says that the agent is running, but the computer is not visible in the cluster
 
@@ -743,7 +749,7 @@ Below is a list of environment variables supported by Teleport Connect for SSH c
 
 ## Telemetry
 
-(!docs/pages/includes/teleport-connect-telemetry.mdx!)
+<DocsPagesIncludesTeleportConnectTelemetry />
 
 ### Disabling telemetry
 
@@ -809,7 +815,7 @@ The app version can be found in the app menu under Teleport Connect -> About Tel
 
 To get more detailed logs, run Teleport Connect with the `--connect-debug` flag:
 
-(!docs/pages/includes/connect-your-client/launch-connect-with-flags-macos.mdx flags="--connect-debug"!)
+<DocsPagesIncludesConnectYourClientLaunchConnectWithFlagsMacos flags="--connect-debug" />
 </TabItem>
 <TabItem label="Linux">
 Be sure to attach logs, which can be found by pressing `Alt` to access the app menu, then Help ->
@@ -867,7 +873,7 @@ using this mode in production.
 To launch the app in insecure mode, open a terminal first. From there you can launch the app in one
 of two ways:
 
-(!docs/pages/includes/connect-your-client/launch-connect-with-flags-macos.mdx flags="--insecure"!)
+<DocsPagesIncludesConnectYourClientLaunchConnectWithFlagsMacos flags="--insecure" />
 
 </TabItem>
 <TabItem label="Linux">
@@ -916,7 +922,7 @@ $ rm -rf ~/.tsh
 </TabItem>
 <TabItem label="Windows">
 
-(!docs/pages/includes/uninstall-teleport-connect-windows.mdx!)
+<DocsPagesIncludesUninstallTeleportConnectWindows />
 
 To remove the local user data directory which holds app configuration, state, and logs:
 

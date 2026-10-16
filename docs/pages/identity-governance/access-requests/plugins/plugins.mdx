@@ -11,6 +11,10 @@ tags:
  - privileged-access
 enterprise: Identity Governance
 ---
+import DocsPagesIncludesAccessRequestIntegrations from "@version/docs/pages/includes/access-request-integrations.mdx";
+
+
+import DocsPagesIncludesPluginsEnroll from "@version/docs/pages/includes/plugins/enroll.mdx";
 
 Teleport Just-in-Time Access Requests allow users to receive temporary elevated
 privileges by seeking consent from one or more reviewers, depending on your
@@ -26,7 +30,7 @@ interact with a third-party API (e.g., the Slack or PagerDuty APIs).
 
 ## Enrolling Access Request plugins in Teleport Cloud
 
-(!docs/pages/includes/plugins/enroll.mdx name="Access Request plugins"!)
+<DocsPagesIncludesPluginsEnroll name="Access Request plugins" />
 
 The following Access Request plugins are hosted on Teleport Cloud:
 
@@ -61,7 +65,7 @@ requests to their third-party APIs.
 Learn how to deploy and configure a plugin for your organization's communication
 workflows by reading our setup guides:
 
-(!docs/pages/includes/access-request-integrations.mdx!)
+<DocsPagesIncludesAccessRequestIntegrations />
 
 To read more about the architecture of an Access Request plugin, and start
 writing your own, read our [Access Request plugin development

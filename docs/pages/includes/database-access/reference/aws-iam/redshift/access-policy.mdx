@@ -1,32 +1,36 @@
+import DocsPagesIncludesDatabaseAccessReferenceMetadataFetchingPermissionsNote from "@version/docs/pages/includes/database-access/reference/metadata-fetching-permissions-note.mdx";
+
 Assign <Var name="aws-account-id"/> to your AWS account ID:
 
-```json
+<CodeBlock>
 {
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-            "Sid": "RedshiftConnectAsDBUser",
-            "Effect": "Allow",
-            "Action": "redshift:GetClusterCredentials",
-            "Resource": "*"
-        },
-        {
-            "Sid": "RedshiftConnectAsIAMRole",
-            "Effect": "Allow",
-            "Action": "sts:AssumeRole",
-            "Resource": [
-                "arn:aws:iam::<Var name="aws-account-id"/>:role/{{ dbUserRole }}"
-            ]
-        },
-        {
-            "Sid": "RedshiftFetchMetadata",
-            "Effect": "Allow",
-            "Action": "redshift:DescribeClusters",
-            "Resource": "*"
-        }
-    ]
+ `{
+      "Version": "2012-10-17",
+      "Statement": [
+          {
+              "Sid": "RedshiftConnectAsDBUser",
+              "Effect": "Allow",
+              "Action": "redshift:GetClusterCredentials",
+              "Resource": "*"
+          },
+          {
+              "Sid": "RedshiftConnectAsIAMRole",
+              "Effect": "Allow",
+              "Action": "sts:AssumeRole",
+              "Resource": [
+                  "arn:aws:iam::<Var name="aws-account-id"/>:role/${ props.dbUserRole }"
+              ]
+          },
+          {
+              "Sid": "RedshiftFetchMetadata",
+              "Effect": "Allow",
+              "Action": "redshift:DescribeClusters",
+              "Resource": "*"
+          }
+      ]
+  }`
 }
-```
+</CodeBlock>
 
 | Statement | Purpose |
 | --------- | ------- |
@@ -55,4 +59,4 @@ If an IAM role names the Database Service's identity as a trusted principal,
 and both identities are in the same AWS account, then the
 `RedshiftConnectAsIAMRole` statement can also be omitted.
 
-(!docs/pages/includes/database-access/reference/metadata-fetching-permissions-note.mdx sid="RedshiftFetchMetadata"!)
+<DocsPagesIncludesDatabaseAccessReferenceMetadataFetchingPermissionsNote sid="RedshiftFetchMetadata" />

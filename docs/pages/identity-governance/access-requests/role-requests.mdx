@@ -10,6 +10,11 @@ tags:
  - privileged-access
 enterprise: Identity Governance
 ---
+import DocsPagesIncludesAccessRequestIntegrations from "@version/docs/pages/includes/access-request-integrations.mdx";
+
+
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
+import DocsPagesIncludesTctl from "@version/docs/pages/includes/tctl.mdx";
 
 Teleport's Just-in-time Access Requests allow users to request access to
 additional roles in order to elevate their privileges. Requests can be escalated
@@ -17,9 +22,9 @@ via ChatOps or anywhere else via our flexible Authorization Workflow API.
 
 ## Prerequisites
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx edition="Teleport Enterprise"!)
+<DocsPagesIncludesEditionPrereqsTabs edition="Teleport Enterprise" />
 
-- (!docs/pages/includes/tctl.mdx!)
+- <DocsPagesIncludesTctl />
 
 ## RBAC Setup
 
@@ -205,7 +210,7 @@ spec:
 With Teleport's Access Request plugins, users can manage Access Requests from
 within your organization's existing messaging and project management solutions.
 
-(!docs/pages/includes/access-request-integrations.mdx!)
+<DocsPagesIncludesAccessRequestIntegrations />
 
 ### Learn how to configure Access Requests
 

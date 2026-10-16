@@ -8,6 +8,9 @@ tags:
 enterprise: Hardware key support
 page_type: how-to
 ---
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
+import DocsPagesIncludesTctl from "@version/docs/pages/includes/tctl.mdx";
+
 
 In this guide, you will configure Teleport authentication using hardware-based
 private keys.
@@ -75,7 +78,7 @@ like `tctl edit`. With touch required, hardware key support provides better secu
 
 ## Prerequisites
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx edition="Teleport Enterprise"!)
+<DocsPagesIncludesEditionPrereqsTabs edition="Teleport Enterprise" />
 
 - A series 5+ YubiKey
 
@@ -89,7 +92,7 @@ like `tctl edit`. With touch required, hardware key support provides better secu
     - If you run into problems on Windows, try the official [YubiKey Smart Card Minidriver](https://www.yubico.com/support/download/smart-card-drivers-tools/).
   - On Linux distributions, make sure the system smart card service (pcscd, typically provided by the pcsc-lite package) is installed and up to date.
     - pcsc-lite version 2.4.1+ is recommended for maximum compatibility. If 2.4.1+ is not available, ensure at least version 1.8.24+ is installed, since some distro-provided versions can cause hardware key compatibility issues.
-- (!docs/pages/includes/tctl.mdx!)
+- <DocsPagesIncludesTctl />
 
 ## Step 1/2. Enforce hardware key support
 

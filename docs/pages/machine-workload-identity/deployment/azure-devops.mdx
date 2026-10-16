@@ -9,6 +9,11 @@ tags:
  - azure
 page_type: how-to
 ---
+import DocsPagesIncludesMachineIdCreateABot from "@version/docs/pages/includes/machine-id/create-a-bot.mdx";
+
+
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
+import DocsPagesIncludesTctl from "@version/docs/pages/includes/tctl.mdx";
 
 In this guide, you will configure Machine & Workload Identity's agent, `tbot`,
 to run within a Azure DevOps pipeline run. The bot will be configured to use
@@ -33,9 +38,9 @@ control.
 
 ## Prerequisites
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx edition="Teleport (v17.5.1 or higher)"!)
+<DocsPagesIncludesEditionPrereqsTabs edition="Teleport (v17.5.1 or higher)" />
 
-- (!docs/pages/includes/tctl.mdx!)
+- <DocsPagesIncludesTctl />
 
 ## Step 1/4. Determine your Azure DevOps organization ID
 
@@ -73,7 +78,7 @@ Record this organization ID as you will need it later: <Var name="organization-i
 
 ## Step 2/4. Create a Bot
 
-(!docs/pages/includes/machine-id/create-a-bot.mdx!)
+<DocsPagesIncludesMachineIdCreateABot />
 
 ## Step 3/4. Create a join token
 

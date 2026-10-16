@@ -11,6 +11,9 @@ tags:
  - infrastructure-identity
  - infrastructure-as-code
 ---
+import DocsPagesIncludesPluginsConfigureEventHandler from "@version/docs/pages/includes/plugins/configure-event-handler.mdx";
+import DocsPagesIncludesPluginsRbacOperatorEventHandler from "@version/docs/pages/includes/plugins/rbac-operator-event-handler.mdx";
+
 
 In this guide, we will set up the Teleport Event Handler plugin with credentials
 to authenticate to the Teleport cluster and access the events API.
@@ -84,7 +87,7 @@ Generate a configuration file with placeholder values for the Teleport Event
 Handler plugin. Later in this guide, we will edit the configuration file for
 your environment.
 
-(!docs/pages/includes/plugins/configure-event-handler.mdx forwarder="fluentd.fluentd.svc.cluster.local" binary="docker run -v $(pwd):/opt/teleport-plugin -w /opt/teleport-plugin public.ecr.aws/gravitational/teleport-plugin-event-handler:(=teleport.version=)"!)
+<DocsPagesIncludesPluginsConfigureEventHandler forwarder="fluentd.fluentd.svc.cluster.local" binary="docker run -v $(pwd):/opt/teleport-plugin -w /opt/teleport-plugin public.ecr.aws/gravitational/teleport-plugin-event-handler:(=teleport.version=)" />
 
 In order to export audit events, you'll need to have the root certificate and the
 client credentials available as a secret. Use the following command to create
@@ -110,7 +113,7 @@ The plugin generates several setup files:
 If you have an existing Fluentd setup with TLS, issue a client certificate and
 key from the same certificate authority for the Teleport Event Handler to use.
 
-(!docs/pages/includes/plugins/rbac-operator-event-handler.mdx plugin="teleport-plugin-event-handler"!)
+<DocsPagesIncludesPluginsRbacOperatorEventHandler plugin="teleport-plugin-event-handler" />
 
 ## Next steps
 

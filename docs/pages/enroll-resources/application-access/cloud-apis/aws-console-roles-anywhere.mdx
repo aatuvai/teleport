@@ -9,6 +9,9 @@ tags:
  - aws
 page_type: how-to
 ---
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
+import DocsPagesIncludesTctl from "@version/docs/pages/includes/tctl.mdx";
+
 
 Teleport integrates with AWS IAM Roles Anywhere to provide AWS Console and CLI access.
 This allows you to take advantage of Teleport role-based access controls, just-in-time Access Requests,
@@ -47,9 +50,9 @@ For CLI and SDK-based access, use `tsh` to obtain AWS credentials.
 
 ## Prerequisites
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx!)
+<DocsPagesIncludesEditionPrereqsTabs />
 
-- (!docs/pages/includes/tctl.mdx!)
+- <DocsPagesIncludesTctl />
 - Permissions in AWS to:
   - Create IAM Roles Anywhere trust anchors
   - Create IAM Roles Anywhere profiles

@@ -15,6 +15,11 @@ page_type: how-to
 skills:
   - teleport-session-review
 ---
+import DocsPagesIncludesTctl from "@version/docs/pages/includes/tctl.mdx";
+import DocsPagesIncludesCreateRoleUsingWeb from "@version/docs/pages/includes/create-role-using-web.mdx";
+import DocsPagesIncludesAddRoleToUser from "@version/docs/pages/includes/add-role-to-user.mdx";
+import DocsPagesIncludesAwsCredentials from "@version/docs/pages/includes/aws-credentials.mdx";
+
 
 Teleport Identity Security allows you to generate and view session recording
 summaries for shell and database sessions. This allows you to see at a glance
@@ -109,7 +114,7 @@ Session Recording Summary Player and Timeline
 </TabItem>
 </Tabs>
 
-(!docs/pages/includes/tctl.mdx!)
+<DocsPagesIncludesTctl />
 
 <Admonition type="tip" title="Teleport Enterprise Cloud Quick Start">
 Teleport Enterprise Cloud tenants include a pre-provisioned inference model
@@ -159,9 +164,9 @@ access to all necessary resources. To create a new role:
    $ tctl create -f summarizer-admin.yaml
    ```
 
-   (!docs/pages/includes/create-role-using-web.mdx!)
+   <DocsPagesIncludesCreateRoleUsingWeb />
 
-1. (!docs/pages/includes/add-role-to-user.mdx role="summarizer-admin"!)
+1. <DocsPagesIncludesAddRoleToUser role="summarizer-admin" />
 
 ## Step 2/4: Configure the inference model
 
@@ -301,7 +306,7 @@ actual model configuration on the Teleport side.
 The Teleport Auth Service must be able to read AWS credentials in order to
 authenticate to Amazon Bedrock.
 
-(!docs/pages/includes/aws-credentials.mdx service="the Teleport Auth Service"!)
+<DocsPagesIncludesAwsCredentials service="the Teleport Auth Service" />
 
 In case of invoking a model directly, attach the following AWS IAM policy (not
 to be confused with Teleport inference policy) to the IAM role that is used by
@@ -510,7 +515,7 @@ access to all recordings. To create a new role:
    $ tctl create -f summary-auditor.yaml
    ```
 
-1. (!docs/pages/includes/add-role-to-user.mdx role="summary-auditor"!)
+1. <DocsPagesIncludesAddRoleToUser role="summary-auditor" />
 
 ## Next steps
 

@@ -1,28 +1,30 @@
 Assign <Var name="aws-account-id"/> to your AWS account ID:
 
-```json
+<CodeBlock>
 {
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-            "Sid": "DynamoDBConnectAsIAMRole",
-            "Effect": "Allow",
-            "Action": "sts:AssumeRole",
-            "Resource": [
-                "arn:aws:iam::<Var name="aws-account-id"/>:role/{{ dbUserRole }}"
-            ]
-        },
-        {
-            "Sid": "DynamoDBSessionTagging",
-            "Effect": "Allow",
-            "Action": "sts:TagSession",
-            "Resource": [
-                "*"
-            ]
-        }
-    ]
+ `{
+      "Version": "2012-10-17",
+      "Statement": [
+          {
+              "Sid": "DynamoDBConnectAsIAMRole",
+              "Effect": "Allow",
+              "Action": "sts:AssumeRole",
+              "Resource": [
+                  "arn:aws:iam::<Var name="aws-account-id"/>:role/${ props.dbUserRole }"
+              ]
+          },
+          {
+              "Sid": "DynamoDBSessionTagging",
+              "Effect": "Allow",
+              "Action": "sts:TagSession",
+              "Resource": [
+                  "*"
+              ]
+          }
+      ]
+  }`
 }
-```
+</CodeBlock>
 
 | Statement | Purpose |
 | --------- | ------- |

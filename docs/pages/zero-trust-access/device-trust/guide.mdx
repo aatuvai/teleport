@@ -10,10 +10,16 @@ tags:
 enterprise: Device Trust
 page_type: how-to
 ---
+import DocsPagesIncludesDeviceTrustPrereqs from "@version/docs/pages/includes/device-trust/prereqs.mdx";
+import DocsPagesIncludesDeviceTrustTroubleshooting from "@version/docs/pages/includes/device-trust/troubleshooting.mdx";
+
+
+import DocsPagesIncludesDeviceTrustSupportNotice from "@version/docs/pages/includes/device-trust/support-notice.mdx";
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
 
 {/* lint disable page-structure remark-lint */}
 
-(!docs/pages/includes/device-trust/support-notice.mdx!)
+<DocsPagesIncludesDeviceTrustSupportNotice />
 
 Device Trust requires two of the following steps to have been configured:
 
@@ -26,9 +32,9 @@ protected with Teleport.
 
 ## Prerequisites
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx edition="Teleport Enterprise"!)
+<DocsPagesIncludesEditionPrereqsTabs edition="Teleport Enterprise" />
 
-(!docs/pages/includes/device-trust/prereqs.mdx!)
+<DocsPagesIncludesDeviceTrustPrereqs />
 
 - User with `editor` role.
   ```code
@@ -152,7 +158,7 @@ Device Trust enforcement.
 
 ## Troubleshooting
 
-(!docs/pages/includes/device-trust/troubleshooting.mdx!)
+<DocsPagesIncludesDeviceTrustTroubleshooting />
 
 ## Next steps
 

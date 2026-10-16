@@ -1,7 +1,6 @@
-{{ appType="application" }}
 
 Teleport sends a JWT token signed with Teleport's authority with each request
-to a target {{ appType }} in a `Teleport-Jwt-Assertion` header.
+to a target {props.appType ?? "application"} in a `Teleport-Jwt-Assertion` header.
 
 You can use the JWT token to get information about the authenticated Teleport
 user, its roles, and its traits. This allows you to:

@@ -7,6 +7,9 @@ tags:
  - zero-trust
  - infrastructure-identity
 ---
+import DocsPagesIncludesBackupWarning from "@version/docs/pages/includes/backup-warning.mdx";
+import DocsPagesIncludesHelmReferenceZzGeneratedTeleportRelay from "@version/docs/pages/includes/helm-reference/zz_generated.teleport-relay.mdx";
+
 
 The `teleport-relay` Helm chart is used to deploy a Teleport Relay Service group in a Kubernetes cluster, to provide connectivity between clients and resources without involving the Teleport control plane in the network path.
 
@@ -25,7 +28,7 @@ If you want to provide access to resources like Databases, Applications or Kuber
 
 </Admonition>
 
-(!docs/pages/includes/backup-warning.mdx!)
+<DocsPagesIncludesBackupWarning />
 
 ## What the chart deploys
 
@@ -42,4 +45,4 @@ The `teleport-relay` chart deploys the following Kubernetes resources:
 
 ## Reference
 
-(!docs/pages/includes/helm-reference/zz_generated.teleport-relay.mdx!)
+<DocsPagesIncludesHelmReferenceZzGeneratedTeleportRelay />

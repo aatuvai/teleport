@@ -1,28 +1,30 @@
 Assign <Var name="aws-account-id"/> to your AWS account ID:
 
-```json
+<CodeBlock>
 {
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-            "Sid": "OpenSearchCheckDomainURL",
-            "Effect": "Allow",
-            "Action": "es:DescribeDomains",
-            "Resource": [
-                "*"
-            ]
-        },
-        {
-            "Sid": "OpenSearchConnectAsIAMRole",
-            "Effect": "Allow",
-            "Action": "sts:AssumeRole",
-            "Resource": [
-                "arn:aws:iam::<Var name="aws-account-id"/>:role/{{ dbUserRole }}"
-            ]
-        }
-    ]
+ `{
+      "Version": "2012-10-17",
+      "Statement": [
+          {
+              "Sid": "OpenSearchCheckDomainURL",
+              "Effect": "Allow",
+              "Action": "es:DescribeDomains",
+              "Resource": [
+                  "*"
+              ]
+          },
+          {
+              "Sid": "OpenSearchConnectAsIAMRole",
+              "Effect": "Allow",
+              "Action": "sts:AssumeRole",
+              "Resource": [
+                  "arn:aws:iam::<Var name="aws-account-id"/>:role/${ props.dbUserRole }"
+              ]
+          }
+      ]
+  }`
 }
-```
+</CodeBlock>
 
 | Statement | Purpose |
 | --------- | ------- |

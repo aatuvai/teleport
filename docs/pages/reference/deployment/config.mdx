@@ -7,6 +7,19 @@ tags:
  - reference
  - platform-wide
 ---
+import DocsPagesIncludesConfigReferenceInstanceWide from "!!raw-loader!@version/docs/pages/includes/config-reference/instance-wide.yaml";
+import DocsPagesIncludesConfigReferenceProxyService from "!!raw-loader!@version/docs/pages/includes/config-reference/proxy-service.yaml";
+import DocsPagesIncludesConfigReferenceAuthService from "!!raw-loader!@version/docs/pages/includes/config-reference/auth-service.yaml";
+import DocsPagesIncludesConfigReferenceSshService from "!!raw-loader!@version/docs/pages/includes/config-reference/ssh-service.yaml";
+import DocsPagesIncludesConfigReferenceKubernetesConfig from "!!raw-loader!@version/docs/pages/includes/config-reference/kubernetes-config.yaml";
+import DocsPagesIncludesConfigReferenceAppService from "!!raw-loader!@version/docs/pages/includes/config-reference/app-service.yaml";
+import DocsPagesIncludesConfigReferenceDatabaseConfig from "!!raw-loader!@version/docs/pages/includes/config-reference/database-config.yaml";
+import DocsPagesIncludesDiscoveryDiscoveryConfig from "!!raw-loader!@version/docs/pages/includes/discovery/discovery-config.yaml";
+import DocsPagesIncludesConfigReferenceDesktopConfig from "!!raw-loader!@version/docs/pages/includes/config-reference/desktop-config.yaml";
+import DocsPagesIncludesConfigReferenceJamfService from "!!raw-loader!@version/docs/pages/includes/config-reference/jamf-service.yaml";
+import DocsPagesIncludesConfigReferenceRelayService from "!!raw-loader!@version/docs/pages/includes/config-reference/relay-service.yaml";
+import DocsPagesIncludesConfigReferenceDebugService from "!!raw-loader!@version/docs/pages/includes/config-reference/debug-service.yaml";
+
 
 Teleport uses the YAML file format for configuration. A full configuration
 reference file is shown below. This provides comments and all available options
@@ -97,9 +110,11 @@ Choose a Teleport service to view the application configuration options:
 
 These settings apply to any `teleport` instance:
 
-```yaml
-(!docs/pages/includes/config-reference/instance-wide.yaml!)
-```
+<CodeBlock language="yaml">
+
+  {DocsPagesIncludesConfigReferenceInstanceWide}
+
+</CodeBlock>
 
 Further reading:
 - [Joining Services to a
@@ -120,9 +135,11 @@ Teleport Enterprise Cloud manages the Proxy Service for you, so you do not need
 to specify these configuration settings.
 </Admonition>
 
-```yaml
-(!docs/pages/includes/config-reference/proxy-service.yaml!)
-```
+<CodeBlock language="yaml">
+
+  {DocsPagesIncludesConfigReferenceProxyService}
+
+</CodeBlock>
 
 ### Auth Service
 
@@ -133,9 +150,11 @@ Teleport Enterprise Cloud manages the Auth Service for you, so you do not need
 to specify these configuration settings.
 </Admonition>
 
-```yaml
-(!docs/pages/includes/config-reference/auth-service.yaml!)
-```
+<CodeBlock language="yaml">
+
+  {DocsPagesIncludesConfigReferenceAuthService}
+
+</CodeBlock>
 
 Further reading:
 - [Storage Backends](backends.mdx) reference: instructions on configuring DynamoDB, S3, etcd, and other highly available
@@ -158,9 +177,11 @@ Further reading:
 
 These settings apply to the Teleport SSH Service:
 
-```yaml
-(!docs/pages/includes/config-reference/ssh-service.yaml!)
-```
+<CodeBlock language="yaml">
+
+  {DocsPagesIncludesConfigReferenceSshService}
+
+</CodeBlock>
 
 Further reading:
 - [Enhanced Session
@@ -173,25 +194,31 @@ Further reading:
 
 These settings apply to the Teleport Kubernetes Service:
 
-```yaml
-(!docs/pages/includes/config-reference/kubernetes-config.yaml!)
-```
+<CodeBlock language="yaml">
+
+  {DocsPagesIncludesConfigReferenceKubernetesConfig}
+
+</CodeBlock>
 
 ### Application Service
 
 These settings apply to the Teleport Application Service:
 
-```yaml
-(!docs/pages/includes/config-reference/app-service.yaml!)
-```
+<CodeBlock language="yaml">
+
+  {DocsPagesIncludesConfigReferenceAppService}
+
+</CodeBlock>
 
 ### Database Service
 
 These settings apply to the Teleport Database Service:
 
-```yaml
-(!docs/pages/includes/config-reference/database-config.yaml!)
-```
+<CodeBlock language="yaml">
+
+  {DocsPagesIncludesConfigReferenceDatabaseConfig}
+
+</CodeBlock>
 
 ### Discovery Service
 
@@ -203,25 +230,31 @@ The Discovery Service loads all the Discovery Configs that have the same `discov
 
 These settings apply to the Teleport Discovery Service:
 
-```yaml
-(!docs/pages/includes/discovery/discovery-config.yaml!)
-```
+<CodeBlock language="yaml">
+
+  {DocsPagesIncludesDiscoveryDiscoveryConfig}
+
+</CodeBlock>
 
 ### Windows Desktop Service
 
 These settings apply to the Windows Desktop Service:
 
-```yaml
-(!docs/pages/includes/config-reference/desktop-config.yaml!)
-```
+<CodeBlock language="yaml">
+
+  {DocsPagesIncludesConfigReferenceDesktopConfig}
+
+</CodeBlock>
 
 ### Jamf Service
 
 These settings apply to the Jamf Service:
 
-```yaml
-(!docs/pages/includes/config-reference/jamf-service.yaml!)
-```
+<CodeBlock language="yaml">
+
+  {DocsPagesIncludesConfigReferenceJamfService}
+
+</CodeBlock>
 
 ### Relay Service
 
@@ -229,17 +262,21 @@ The Relay Service is available in Teleport v18.3.0 and later.
 
 These settings apply to the Relay Service:
 
-```yaml
-(!docs/pages/includes/config-reference/relay-service.yaml!)
-```
+<CodeBlock language="yaml">
+
+  {DocsPagesIncludesConfigReferenceRelayService}
+
+</CodeBlock>
 
 ### Debug Service
 
 These settings apply to the Debug Service
 
-```yaml
-(!docs/pages/includes/config-reference/debug-service.yaml!)
-```
+<CodeBlock language="yaml">
+
+  {DocsPagesIncludesConfigReferenceDebugService}
+
+</CodeBlock>
 
 ## Configuration versions
 

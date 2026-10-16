@@ -1,17 +1,18 @@
-{{ scheme="" query="" }}
-Modify the Teleport Database Service to trust your {{ db }} CA, assigning
+Modify the Teleport Database Service to trust your {props.db} CA, assigning
 <Var name='/path/to/your/ca.crt' /> to the path to your CA certificate:
 
-  ```yaml
-    databases:
-    - name: "example-{{ protocol }}"
-      protocol: "{{ protocol }}"
-      uri: "{{ scheme }}{{ protocol }}.example.com:{{ port }}{{ query }}"
-      static_labels:
-        "env": "example"
-      tls:
-        ca_cert_file: "<Var name='/path/to/your/ca.crt' />"
-  ```
+  <CodeBlock>
+  {
+   `  databases:
+      - name: "example-${ props.protocol }"
+        protocol: "${ props.protocol }"
+        uri: "${ props.scheme ?? "" }${ props.protocol }.example.com:${ props.port }${ props.query ?? "" }"
+        static_labels:
+          "env": "example"
+        tls:
+          ca_cert_file: "<Var name='/path/to/your/ca.crt' />"`
+  }
+  </CodeBlock>
 
 Now the Teleport Database Service will trust certificates presented by your
-{{ db }}.
+{props.db}.

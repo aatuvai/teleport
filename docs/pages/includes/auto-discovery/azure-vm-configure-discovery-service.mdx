@@ -1,3 +1,5 @@
+import DocsPagesIncludesDiscoveryDiscoveryGroup from "@version/docs/pages/includes/discovery/discovery-group.mdx";
+
 If you are running the Discovery Service on its own host, the service requires a
 valid join token to connect to the cluster. Generate one by running the
 following command:
@@ -9,7 +11,7 @@ $ tctl tokens add --type=discovery
 Save the generated token in `/tmp/token` on the virtual machine that will run
 the Discovery Service.
 
-(!docs/pages/includes/discovery/discovery-group.mdx!)
+<DocsPagesIncludesDiscoveryDiscoveryGroup />
 
 Assign <Var name="teleport.example.com:443" /> to the host and port of the Teleport Proxy Service in your cluster,
 and <Var name="azure-prod" /> to a name that identifies a group of resources that you will enroll:

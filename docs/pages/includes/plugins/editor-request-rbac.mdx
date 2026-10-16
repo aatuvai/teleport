@@ -1,3 +1,6 @@
+import DocsPagesIncludesCreateRoleUsingWeb from "@version/docs/pages/includes/create-role-using-web.mdx";
+import DocsPagesIncludesAddRoleToUser from "@version/docs/pages/includes/add-role-to-user.mdx";
+
 For the purpose of this guide, we will define an `editor-requester` role, which
 can request the built-in `editor` role, and an `editor-reviewer` role that can
 review requests for the `editor` role. 
@@ -35,12 +38,12 @@ role 'editor-reviewer' has been created
 role 'editor-requester' has been created
 ```
 
-(!docs/pages/includes/create-role-using-web.mdx!)
+<DocsPagesIncludesCreateRoleUsingWeb />
 
 Allow yourself to review requests by users with the `editor-requester` role by
 assigning yourself the `editor-reviewer` role. 
 
-(!docs/pages/includes/add-role-to-user.mdx role="editor-reviewer"!)
+<DocsPagesIncludesAddRoleToUser role="editor-reviewer" />
 
 Create a user called `myuser` who has the `editor-requester` role. This user
 cannot edit your cluster configuration unless they request the `editor` role:

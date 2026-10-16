@@ -8,8 +8,17 @@ tags:
 - zero-trust
 page_type: how-to
 ---
+import DocsPagesIncludesMcpAccessIntegrationLimitTools from "@version/docs/pages/includes/mcp-access/integration-limit-tools.mdx";
 
-(!docs/pages/includes/mcp-access/integration-intro.mdx serviceName="Grafana" !)
+
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
+import DocsPagesIncludesApplicationAccessJwtGrafanaConfig from "@version/docs/pages/includes/application-access/jwt-grafana-config.mdx";
+import DocsPagesIncludesMcpAccessIntegrationTeleportAppRewrite from "@version/docs/pages/includes/mcp-access/integration-teleport-app-rewrite.mdx";
+
+import DocsPagesIncludesMcpAccessIntegrationIntro from "@version/docs/pages/includes/mcp-access/integration-intro.mdx";
+import DocsPagesIncludesMcpAccessIntegrationTsh from "@version/docs/pages/includes/mcp-access/integration-tsh.mdx";
+
+<DocsPagesIncludesMcpAccessIntegrationIntro serviceName="Grafana" />
 
 ## How it works
 
@@ -21,7 +30,7 @@ mapped by [JWT authentication](https://grafana.com/docs/grafana/latest/setup-gra
 
 ## Prerequisites
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx edition="Teleport (v18.3.0 or higher)" clients="\`tsh\` client"!)
+<DocsPagesIncludesEditionPrereqsTabs edition="Teleport (v18.3.0 or higher)" clients="\\`tsh\\` client" />
 
 - A host to run the MCP server that is reachable by the Teleport Application Service.
 
@@ -33,7 +42,7 @@ mapped by [JWT authentication](https://grafana.com/docs/grafana/latest/setup-gra
 
 - A Grafana instance configured for JWT authentication with Teleport.
 
-  (!docs/pages/includes/application-access/jwt-grafana-config.mdx!)
+  <DocsPagesIncludesApplicationAccessJwtGrafanaConfig />
 
 ## Step 1/2. Run the Grafana MCP server
 
@@ -68,14 +77,14 @@ The Grafana MCP Server now exposes a streamable-HTTP endpoint at `http://<Var na
 
 ## Step 2/2. Connect via Teleport
 
-(!docs/pages/includes/mcp-access/integration-teleport-app-rewrite.mdx service="grafana" serviceName="Grafana" port="8000" headerName="X-Grafana-API-Key" headerValue="&#123;&#123;internal.jwt&#125;&#125;" !)
+<DocsPagesIncludesMcpAccessIntegrationTeleportAppRewrite service="grafana" serviceName="Grafana" port="8000" headerName="X-Grafana-API-Key" headerValue="&#123;&#123;internal.jwt&#125;&#125;" />
 
 The header rewrite configuration above will replace the `{{internal.jwt}}`
 template variable with a Teleport-signed JWT token in each request. The Grafana
 MCP server will use this token as a bearer token in "Authorization" header when
 connecting to Grafana.
 
-(!docs/pages/includes/mcp-access/integration-limit-tools.mdx!)
+<DocsPagesIncludesMcpAccessIntegrationLimitTools />
 ```yaml
 kind: role
 version: v8
@@ -90,7 +99,7 @@ spec:
       - ^(get|query|list|search|find)_.*$
 ```
 
-(!docs/pages/includes/mcp-access/integration-tsh.mdx service="grafana" serviceName="Grafana" !)
+<DocsPagesIncludesMcpAccessIntegrationTsh service="grafana" serviceName="Grafana" />
 
 ![Grafana Claude](../../../../img/mcp-access/grafana-claude.png)
 

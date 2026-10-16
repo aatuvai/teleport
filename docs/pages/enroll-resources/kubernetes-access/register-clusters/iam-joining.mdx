@@ -7,6 +7,14 @@ tags:
  - infrastructure-identity
 page_type: how-to
 ---
+import DocsPagesIncludesHelm from "@version/docs/pages/includes/helm.mdx";
+import DocsPagesIncludesKubernetesAccessHelmHelmRepoAdd from "@version/docs/pages/includes/kubernetes-access/helm/helm-repo-add.mdx";
+
+
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
+import DocsPagesIncludesTctl from "@version/docs/pages/includes/tctl.mdx";
+
+import DocsPagesIncludesKubernetesAccessRbac from "@version/docs/pages/includes/kubernetes-access/rbac.mdx";
 
 In this guide, you will register a Kubernetes cluster with Teleport by using a
 Teleport Agent's IAM identity to automatically join the Teleport cluster.
@@ -23,7 +31,7 @@ to automatically join the cluster on subsequent restarts.
 
 ## Prerequisites
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx!)
+<DocsPagesIncludesEditionPrereqsTabs />
 
 - A Kubernetes cluster version >=
   v(=kubernetes.major_version=).(=kubernetes.minor_version=).0
@@ -31,9 +39,9 @@ to automatically join the cluster on subsequent restarts.
 - Helm >= (=helm.version=)
 - AWS CLI >= `2.10.3` or `1.27.81`
 
-(!docs/pages/includes/helm.mdx!)
+<DocsPagesIncludesHelm />
 
-- (!docs/pages/includes/tctl.mdx!)
+- <DocsPagesIncludesTctl />
 
 ## Step 1/3. Create a Kubernetes service account with an IAM identity
 
@@ -244,7 +252,7 @@ Run `tctl create token.yaml` to create the token.
 
 ## Step 3/3. Deploy the Teleport Kubernetes Service
 
-(!docs/pages/includes/kubernetes-access/helm/helm-repo-add.mdx!)
+<DocsPagesIncludesKubernetesAccessHelmHelmRepoAdd />
 
 Switch `kubectl` to the Kubernetes cluster and run:
 
@@ -303,7 +311,7 @@ For both cases, please refer to the section below.
 <details>
 <summary>Not seeing Kubernetes clusters?</summary>
 
-(!docs/pages/includes/kubernetes-access/rbac.mdx!)
+<DocsPagesIncludesKubernetesAccessRbac />
 
 </details>
 

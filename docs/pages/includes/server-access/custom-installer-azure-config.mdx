@@ -1,6 +1,12 @@
+import DocsPagesIncludesServerAccessCustomInstallerAzureDynamic from "!!raw-loader!@version/docs/pages/includes/server-access/custom-installer-azure-dynamic.yaml";
+import DocsPagesIncludesServerAccessCustomInstallerAzure from "!!raw-loader!@version/docs/pages/includes/server-access/custom-installer-azure.yaml";
+import DocsPagesIncludesServerAccessCustomInstallerReference from "@version/docs/pages/includes/server-access/custom-installer-reference.mdx";
+
+import DocsPagesIncludesServerAccessCustomInstallerEditing from "@version/docs/pages/includes/server-access/custom-installer-editing.mdx";
+
 {/* this comment is here to make the includes below render */}
 
-(!docs/pages/includes/server-access/custom-installer-editing.mdx!)
+<DocsPagesIncludesServerAccessCustomInstallerEditing />
 
 Multiple `installer` resources can exist and be specified in the
 `azure.install.script_name` section:
@@ -8,16 +14,20 @@ Multiple `installer` resources can exist and be specified in the
 <Tabs>
 <TabItem label="Dynamic configuration (recommended)">
 Edit the Discovery Config to specify a custom installer script:
-```yaml
-(!docs/pages/includes/server-access/custom-installer-azure-dynamic.yaml!)
-```
+<CodeBlock language="yaml">
+
+  {DocsPagesIncludesServerAccessCustomInstallerAzureDynamic}
+
+</CodeBlock>
 </TabItem>
 <TabItem label="Static configuration">
 Edit the `teleport.yaml` configuration to specify a custom installer script:
-```yaml
-(!docs/pages/includes/server-access/custom-installer-azure.yaml!)
-```
+<CodeBlock language="yaml">
+
+  {DocsPagesIncludesServerAccessCustomInstallerAzure}
+
+</CodeBlock>
 </TabItem>
 </Tabs>
 
-(!docs/pages/includes/server-access/custom-installer-reference.mdx!)
+<DocsPagesIncludesServerAccessCustomInstallerReference />

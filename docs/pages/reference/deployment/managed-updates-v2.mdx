@@ -6,6 +6,11 @@ tags:
  - reference
  - platform-wide
 ---
+import DocsPagesIncludesReferenceResourcesAutoupdateConfig from "@version/docs/pages/includes/reference/resources/autoupdate_config.mdx";
+import DocsPagesIncludesReferenceResourcesAutoupdateVersion from "@version/docs/pages/includes/reference/resources/autoupdate_version.mdx";
+import DocsPagesIncludesReferenceResourcesAutoupdateAgentRollout from "@version/docs/pages/includes/reference/resources/autoupdate_agent_rollout.mdx";
+import DocsPagesIncludesReferenceResourcesAutoupdateAgentReport from "@version/docs/pages/includes/reference/resources/autoupdate_agent_report.mdx";
+
 
 This document provides detailed reference information about the Managed Updates v2 resources.
 See also:
@@ -24,7 +29,7 @@ Managed Updates are configured via two user-facing resources:
 
 This describes how and when updates are applied. Configuration changes take effect during the next rollout.
 
-(!docs/pages/includes/reference/resources/autoupdate_config.mdx!)
+<DocsPagesIncludesReferenceResourcesAutoupdateConfig />
 
 #### `autoupdate_version`
 
@@ -36,7 +41,7 @@ This resource is not editable for cloud-managed Teleport Enterprise to ensure th
 your clients receive security patches and remain compatible with your cluster.
 </Admonition>
 
-(!docs/pages/includes/reference/resources/autoupdate_version.mdx!)
+<DocsPagesIncludesReferenceResourcesAutoupdateVersion />
 
 ### System resources
 
@@ -52,7 +57,7 @@ and the agent update will be marked as failed.
 `autoupdate_agent_rollout` describes the rollout of the version across agent groups.
 A single rollout is active at a time. Each Auth Service updates the rollout every minute.
 
-(!docs/pages/includes/reference/resources/autoupdate_agent_rollout.mdx!)
+<DocsPagesIncludesReferenceResourcesAutoupdateAgentRollout />
 
 #### `autoupdate_agent_report`
 
@@ -72,7 +77,7 @@ reports, and 3 minutes to appear in the rollout:
 - 1 minute for the next report to be generated
 - 1 minute for the next `autoupdate_agent_rollout` update
 
-(!docs/pages/includes/reference/resources/autoupdate_agent_report.mdx!)
+<DocsPagesIncludesReferenceResourcesAutoupdateAgentReport />
 
 Reports can be individually seen using `tctl get autoupdate_agent_reports`.
 To aggregate every report into a single one, run `tctl autoupdate agents report`.

@@ -9,6 +9,15 @@ tags:
  - aws
 page_type: how-to
 ---
+import DocsPagesIncludesApplicationAccessAwsDatabaseAccessConsole from "@version/docs/pages/includes/application-access/aws-database-access-console.mdx";
+import DocsPagesIncludesApplicationAccessAwsDatabaseAccessCli from "@version/docs/pages/includes/application-access/aws-database-access-cli.mdx";
+
+
+import DocsPagesIncludesApplicationAccessAwsDatabasePrerequisites from "@version/docs/pages/includes/application-access/aws-database-prerequisites.mdx";
+import DocsPagesIncludesApplicationAccessAwsDatabaseCreateIamRole from "@version/docs/pages/includes/application-access/aws-database-create-iam-role.mdx";
+import DocsPagesIncludesApplicationAccessAwsDatabaseRoleMapping from "@version/docs/pages/includes/application-access/aws-database-role-mapping.mdx";
+import DocsPagesIncludesApplicationAccessAwsDatabaseStartAppService from "@version/docs/pages/includes/application-access/aws-database-start-app-service.mdx";
+import DocsPagesIncludesApplicationAccessAwsDatabaseAgentPermission from "@version/docs/pages/includes/application-access/aws-database-agent-permission.mdx";
 
 You can configure the Teleport Application Service to enable secure access to
 Amazon DynamoDB.
@@ -51,11 +60,11 @@ database resources must be configured for each region with DynamoDB databases.
 
 ## Prerequisites
 
-(!docs/pages/includes/application-access/aws-database-prerequisites.mdx database="DynamoDB" !)
+<DocsPagesIncludesApplicationAccessAwsDatabasePrerequisites database="DynamoDB" />
 
 ## Step 1/5. Create an IAM role for DynamoDB access
 
-(!docs/pages/includes/application-access/aws-database-create-iam-role.mdx database="DynamoDB" iam-role="ExampleTeleportDynamoDBRole" managed-policy="AmazonDynamoDBFullAccess" !)
+<DocsPagesIncludesApplicationAccessAwsDatabaseCreateIamRole database="DynamoDB" iamRole="ExampleTeleportDynamoDBRole" managedPolicy="AmazonDynamoDBFullAccess" />
 
 <Admonition type="note" title="Apply least-privilege permissions">
 `AmazonDynamoDBFullAccess` may provide too much access for your intentions. To
@@ -66,15 +75,15 @@ Resources](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/acce
 
 ## Step 2/5. Configure the Teleport IAM role mapping
 
-(!docs/pages/includes/application-access/aws-database-role-mapping.mdx role="aws-dynamodb-access" iam-role="ExampleTeleportDynamoDBRole"!)
+<DocsPagesIncludesApplicationAccessAwsDatabaseRoleMapping role="aws-dynamodb-access" iamRole="ExampleTeleportDynamoDBRole" />
 
 ## Step 3/5. Install the Teleport Application Service
 
-(!docs/pages/includes/application-access/aws-database-start-app-service.mdx!)
+<DocsPagesIncludesApplicationAccessAwsDatabaseStartAppService />
 
 ## Step 4/5. Give Teleport permissions to assume roles
 
-(!docs/pages/includes/application-access/aws-database-agent-permission.mdx!)
+<DocsPagesIncludesApplicationAccessAwsDatabaseAgentPermission />
 
 ## Step 5/5. Connect
 
@@ -83,12 +92,12 @@ connecting to your DynamoDB database.
 
 ### Using AWS Management Console
 
-(!docs/pages/includes/application-access/aws-database-access-console.mdx iam-role="ExampleTeleportDynamoDBRole" !)
+<DocsPagesIncludesApplicationAccessAwsDatabaseAccessConsole iamRole="ExampleTeleportDynamoDBRole" />
 
 ### Using AWS CLI
 
 {/* vale 3rd-party-products.aws-vs-amazon = NO */}
-(!docs/pages/includes/application-access/aws-database-access-cli.mdx iam-role="ExampleTeleportDynamoDBRole" tsh-example="tsh aws dynamodb list-tables"!)
+<DocsPagesIncludesApplicationAccessAwsDatabaseAccessCli iamRole="ExampleTeleportDynamoDBRole" tshExample="tsh aws dynamodb list-tables" />
 {/* vale 3rd-party-products.aws-vs-amazon = YES */}
 
 ### Using other DynamoDB applications

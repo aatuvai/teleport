@@ -8,6 +8,11 @@ tags:
  - infrastructure-identity
 page_type: how-to
 ---
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
+import DocsPagesIncludesTctl from "@version/docs/pages/includes/tctl.mdx";
+import DocsPagesIncludesCreateRoleUsingWeb from "@version/docs/pages/includes/create-role-using-web.mdx";
+import DocsPagesIncludesAddRoleToUser from "@version/docs/pages/includes/add-role-to-user.mdx";
+
 
 In this guide, you will configure the OpenSSH server `sshd` to join a Teleport
 cluster. Existing fleets of OpenSSH servers can be configured to accept SSH
@@ -58,12 +63,12 @@ Below are some key details from the RFD:
   $ ssh -V
   ```
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx!)
+<DocsPagesIncludesEditionPrereqsTabs />
 
 - A Linux host with the OpenSSH server `sshd` version 7.4 or above installed,
   but not Teleport. The SSH port on this host must be open to traffic from the
   Teleport Proxy Service host.
-- (!docs/pages/includes/tctl.mdx!)
+- <DocsPagesIncludesTctl />
 
 ## Step 1/5. Add a node resource to your Teleport cluster
 
@@ -176,9 +181,9 @@ $ tctl create host-certifier.yaml
 # role 'host-certifier' has been created
 ```
 
-(!docs/pages/includes/create-role-using-web.mdx!)
+<DocsPagesIncludesCreateRoleUsingWeb />
 
-(!docs/pages/includes/add-role-to-user.mdx role="host-certifier"!)
+<DocsPagesIncludesAddRoleToUser role="host-certifier" />
 
 You will now have the required permissions to export a host key for your `sshd`
 host.

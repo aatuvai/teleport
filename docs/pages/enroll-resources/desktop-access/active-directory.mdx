@@ -9,6 +9,13 @@ tags:
  - infrastructure-identity
 page_type: how-to
 ---
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
+import DocsPagesIncludesTctl from "@version/docs/pages/includes/tctl.mdx";
+import DocsPagesIncludesDesktopAccessWindowsCaNote from "@version/docs/pages/includes/desktop-access/windows-ca-note.mdx";
+import DocsPagesIncludesInstallLinux from "@version/docs/pages/includes/install-linux.mdx";
+import DocsPagesIncludesStartTeleport from "@version/docs/pages/includes/start-teleport.mdx";
+import DocsPagesIncludesAddRoleToUser from "@version/docs/pages/includes/add-role-to-user.mdx";
+
 
 In this guide, you will connect an Active Directory domain to your Teleport
 cluster and log in to a Windows desktop from the connected domain.
@@ -22,7 +29,7 @@ Service for Microsoft Entra ID.
 
 To complete the steps in this guide, verify your environment meets the following requirements:
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx!)
+<DocsPagesIncludesEditionPrereqsTabs />
 
 - A Linux server to run the Teleport Windows Desktop Service.
   You can use an existing server that runs the Teleport Agent for other resources.
@@ -31,7 +38,7 @@ To complete the steps in this guide, verify your environment meets the following
   Certificate Services or a non-Microsoft certification authority (CA) to issue LDAPS
   certificates.
 - Administrative access to a domain controller.
-- (!docs/pages/includes/tctl.mdx!)
+- <DocsPagesIncludesTctl />
 
 ## Option 1: Automated configuration
 
@@ -257,7 +264,7 @@ To export the Teleport CA certificate:
    You can download a bundle containing all certificates by appending
    `&format=zip` to the URL.
 
-   (!docs/pages/includes/desktop-access/windows-ca-note.mdx!)
+   <DocsPagesIncludesDesktopAccessWindowsCaNote />
 
 1. Take note of the path to the file you just downloaded for use in a later step.
 
@@ -611,7 +618,7 @@ To configure Teleport to protect access to Windows desktops:
 
 1. Install Teleport on the Linux host that will run the Teleport Windows Desktop Service:
 
-   (!docs/pages/includes/install-linux.mdx!)
+   <DocsPagesIncludesInstallLinux />
 
 1. Sign in to your Teleport cluster from your administrative workstation.
 
@@ -703,7 +710,7 @@ To configure Teleport to protect access to Windows desktops:
    ```
    </details>
 
-1. (!docs/pages/includes/start-teleport.mdx service="the Teleport Desktop Service"!)
+1. <DocsPagesIncludesStartTeleport service="the Teleport Desktop Service" />
 
 <Checkpoint
   title="Verify the Windows Desktop Service is running"
@@ -764,7 +771,7 @@ To create a role for accessing Windows desktops:
    $ tctl create -f windows-desktop-admins.yaml
    ```
 
-1. (!docs/pages/includes/add-role-to-user.mdx role="windows-desktop-admins"!)
+1. <DocsPagesIncludesAddRoleToUser role="windows-desktop-admins" />
 
    Now that you have a Linux host running the Windows Desktop Service and
    a role that allows Teleport users to connect to Windows computers, you can

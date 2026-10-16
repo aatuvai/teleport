@@ -9,6 +9,18 @@ tags:
  - aws
 page_type: how-to
 ---
+import DocsPagesIncludesKubernetesAccessHelmHelmRepoAdd from "@version/docs/pages/includes/kubernetes-access/helm/helm-repo-add.mdx";
+
+
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
+import DocsPagesIncludesTctl from "@version/docs/pages/includes/tctl.mdx";
+import DocsPagesIncludesCreateRoleUsingWeb from "@version/docs/pages/includes/create-role-using-web.mdx";
+import DocsPagesIncludesAddRoleToUser from "@version/docs/pages/includes/add-role-to-user.mdx";
+import DocsPagesIncludesInstallLinux from "@version/docs/pages/includes/install-linux.mdx";
+import DocsPagesIncludesAwsCredentials from "@version/docs/pages/includes/aws-credentials.mdx";
+import DocsPagesIncludesStartTeleport from "@version/docs/pages/includes/start-teleport.mdx";
+
+import DocsPagesIncludesAwsNoCredentialProvider from "@version/docs/pages/includes/aws-no-credential-provider.mdx";
 
 <Admonition type="tip">
 If you're using AWS IAM Roles Anywhere, see the [corresponding guide](aws-console-roles-anywhere.mdx) that provides
@@ -38,9 +50,9 @@ authorized, forwards the user's requests to AWS.
 
 ## Prerequisites
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx!)
+<DocsPagesIncludesEditionPrereqsTabs />
 
-- (!docs/pages/includes/tctl.mdx!)
+- <DocsPagesIncludesTctl />
 
 - An AWS EC2 instance or Elastic Kubernetes Service (EKS) cluster where you will
   run the Teleport Application Service. EC2 instances must be running a Linux
@@ -377,9 +389,9 @@ In this step, you will define a Teleport role that confers access to the
    $ tctl create aws-ro-access.yaml
    ```
 
-   (!docs/pages/includes/create-role-using-web.mdx!)
+   <DocsPagesIncludesCreateRoleUsingWeb />
 
-1. (!docs/pages/includes/add-role-to-user.mdx role="aws-ro-access"!)
+1. <DocsPagesIncludesAddRoleToUser role="aws-ro-access" />
 
 ## Step 3/4. Set up the Teleport Application Service
 
@@ -412,7 +424,7 @@ $ echo <Var name="join-token" /> | sudo tee /tmp/token
 Run the following commands on the host where you will install the Teleport
 Application Service:
 
-(!docs/pages/includes/install-linux.mdx!)
+<DocsPagesIncludesInstallLinux />
 
 ### Configure the Teleport Application Service
 
@@ -478,7 +490,7 @@ Application Service:
        uri: "https://console.aws.amazon.com/ec2/v2/home"
    ```
 
-1. (!docs/pages/includes/kubernetes-access/helm/helm-repo-add.mdx!)
+1. <DocsPagesIncludesKubernetesAccessHelmHelmRepoAdd />
 
 1. Install the Helm chart for Teleport Agent services, `teleport-kube-agent`:
 
@@ -551,8 +563,8 @@ AWS roles in these accounts.
 If you deployed the Teleport Application Service on Kubernetes, it will have
 already started, and you can skip to [Step 4](#step-44-access-aws-resources).
 
-1. (!docs/pages/includes/aws-credentials.mdx service="the Application Service"!)
-1. (!docs/pages/includes/start-teleport.mdx service="the Application Service"!)
+1. <DocsPagesIncludesAwsCredentials service="the Application Service" />
+1. <DocsPagesIncludesStartTeleport service="the Application Service" />
 
 <Admonition type="warning" title="non-standard AWS regions">
 For non-standard AWS regions such as AWS GovCloud (US) regions and AWS China
@@ -823,7 +835,7 @@ limited to an hour.
 In such cases, it is recommended to deploy the Application Service on an EC2
 instance and attach an IAM role to it.
 
-(!docs/pages/includes/aws-no-credential-provider.mdx service="Application"!)
+<DocsPagesIncludesAwsNoCredentialProvider service="Application" />
 
 ### Missing X-Forwarded-Host HTTP header
 

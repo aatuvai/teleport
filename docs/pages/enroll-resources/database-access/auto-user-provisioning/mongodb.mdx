@@ -8,10 +8,19 @@ tags:
  - infrastructure-identity
 page_type: how-to
 ---
+import DocsPagesIncludesDatabaseAccessAutoUserProvisioningIntro from "@version/docs/pages/includes/database-access/auto-user-provisioning/intro.mdx";
+import DocsPagesIncludesDatabaseAccessAutoUserProvisioningDbUsersIgnored from "@version/docs/pages/includes/database-access/auto-user-provisioning/db_users_ignored.mdx";
+import DocsPagesIncludesDatabaseAccessAutoUserProvisioningModes from "@version/docs/pages/includes/database-access/auto-user-provisioning/modes.mdx";
+import DocsPagesIncludesDatabaseAccessAutoUserProvisioningTroubleshootingRemoteUsername from "@version/docs/pages/includes/database-access/auto-user-provisioning/troubleshooting-remote-username.mdx";
+
+
+import DocsPagesIncludesDatabaseAccessAutoUserProvisioningConnect from "@version/docs/pages/includes/database-access/auto-user-provisioning/connect.mdx";
+
+import DocsPagesIncludesDatabaseAccessAutoUserProvisioningDbDefinitionSelfHosted from "@version/docs/pages/includes/database-access/auto-user-provisioning/db-definition-self-hosted.mdx";
 
 {/* lint disable page-structure remark-lint */}
 
-(!docs/pages/includes/database-access/auto-user-provisioning/intro.mdx!)
+<DocsPagesIncludesDatabaseAccessAutoUserProvisioningIntro />
 
 ## Prerequisites
 
@@ -87,7 +96,7 @@ db.getSiblingDB("$external").runCommand({
 })
 ```
 
-(!docs/pages/includes/database-access/auto-user-provisioning/db-definition-self-hosted.mdx protocol="mongodb" uri="localhost:27017"!)
+<DocsPagesIncludesDatabaseAccessAutoUserProvisioningDbDefinitionSelfHosted protocol="mongodb" uri="localhost:27017" />
 
 
 ## Step 2/3. Configure a Teleport role
@@ -125,9 +134,9 @@ Apply your change:
 $ tctl create -f db-user-creator.yaml
 ```
 
-(!docs/pages/includes/database-access/auto-user-provisioning/db_users_ignored.mdx!)
+<DocsPagesIncludesDatabaseAccessAutoUserProvisioningDbUsersIgnored />
 
-(!docs/pages/includes/database-access/auto-user-provisioning/modes.mdx!)
+<DocsPagesIncludesDatabaseAccessAutoUserProvisioningModes />
 
 Users created within the database will:
 
@@ -138,13 +147,13 @@ Users created within the database will:
 
 ## Step 3/3. Connect to the database
 
-(!docs/pages/includes/database-access/auto-user-provisioning/connect.mdx gui="MongoDB Compass" selectRoles="myCustomRole@db2"!)
+<DocsPagesIncludesDatabaseAccessAutoUserProvisioningConnect gui="MongoDB Compass" selectRoles="myCustomRole@db2" />
 
 ## Troubleshooting
 
 ### Use your mapped remote username error
 
-(!docs/pages/includes/database-access/auto-user-provisioning/troubleshooting-remote-username.mdx!)
+<DocsPagesIncludesDatabaseAccessAutoUserProvisioningTroubleshootingRemoteUsername />
 
 ## Next steps
 - Learn more about MongoDB [built-in roles](https://www.mongodb.com/docs/manual/reference/built-in-roles/) and [User-Defined Roles](https://www.mongodb.com/docs/manual/core/security-user-defined-roles/).

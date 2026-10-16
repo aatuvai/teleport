@@ -7,6 +7,12 @@ tags:
  - infrastructure-identity
 page_type: how-to
 ---
+import DocsPagesIncludesConnectYourClientTshGit from "@version/docs/pages/includes/connect-your-client/tsh-git.mdx";
+
+
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
+import DocsPagesIncludesTctl from "@version/docs/pages/includes/tctl.mdx";
+import DocsPagesIncludesAddRoleToUser from "@version/docs/pages/includes/add-role-to-user.mdx";
 
 Teleport can proxy Git commands and use short-lived SSH certificates to
 authenticate GitHub organizations.
@@ -42,7 +48,7 @@ continue to access GitHub through their browsers.
 
 ## Prerequisites
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx edition="Teleport Enterprise (v17.2 or higher)"!)
+<DocsPagesIncludesEditionPrereqsTabs edition="Teleport Enterprise (v17.2 or higher)" />
 - Access to GitHub Enterprise Cloud and permissions to modify GitHub's SSH
   certificate authorities and configure OAuth applications.
   <Admonition type="info" title="GitHub Enterprise compatibility">
@@ -50,7 +56,7 @@ continue to access GitHub through their browsers.
   supported for **GitHub Enterprise Cloud**. Support for **GitHub Enterprise
   Server (self-hosted)** is not available as of the current release.
   </Admonition>
-- (!docs/pages/includes/tctl.mdx!)
+- <DocsPagesIncludesTctl />
 - Git locally installed
 
 ## Step 1/4. Configure a GitHub OAuth application
@@ -149,11 +155,11 @@ spec:
 version: v7
 ```
 
-(!docs/pages/includes/add-role-to-user.mdx role="github-access"!)
+<DocsPagesIncludesAddRoleToUser role="github-access" />
 
 ## Step 4/4. Connect
 
-(!docs/pages/includes/connect-your-client/tsh-git.mdx!)
+<DocsPagesIncludesConnectYourClientTshGit />
 
 ## Further reading
 - [Creating a GitHub OAuth app](https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/creating-an-oauth-app)

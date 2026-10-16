@@ -7,6 +7,12 @@ tags:
  - platform-wide
  - how-to
 ---
+import DocsPagesIncludesTokenTypes from "@version/docs/pages/includes/token-types.mdx";
+
+
+import DocsPagesIncludesTctl from "@version/docs/pages/includes/tctl.mdx";
+import DocsPagesIncludesCreateRoleUsingWeb from "@version/docs/pages/includes/create-role-using-web.mdx";
+import DocsPagesIncludesAddRoleToUser from "@version/docs/pages/includes/add-role-to-user.mdx";
 
 Teleport can provide secure, unified access to your Kubernetes clusters. This
 guide will show you how to deploy Teleport Kubernetes agent on a Kubernetes cluster using Helm
@@ -23,7 +29,7 @@ This guide leverages ArgoCD's native Helm support to deploy the Teleport Agent u
 ## Prerequisites
 
 - An existing Kubernetes cluster you wish to provide access to via Teleport.
-- (!docs/pages/includes/tctl.mdx!)
+- <DocsPagesIncludesTctl />
 - An existing ArgoCD instance (version 2.10 or greater) that can deploy to the
   above Kubernetes cluster.
 - The `tsh` client tool v(=teleport.version=)+ installed on your workstation.
@@ -41,7 +47,7 @@ $ tctl tokens add --type=kube,app --ttl=5m
 
 You can specify the following token types:
 
-(!docs/pages/includes/token-types.mdx!)
+<DocsPagesIncludesTokenTypes />
 
 See the `teleport-kube-agent` [chart
 reference](../../reference/helm-reference/teleport-kube-agent.mdx#roles) for the
@@ -141,9 +147,9 @@ will impersonate the `viewers` group when proxying requests from those users.
    $ tctl create -f kube-access.yaml
    ```
 
-   (!docs/pages/includes/create-role-using-web.mdx!)
+   <DocsPagesIncludesCreateRoleUsingWeb />
 
-1. (!docs/pages/includes/add-role-to-user.mdx role="kube-access"!)
+1. <DocsPagesIncludesAddRoleToUser role="kube-access" />
 
 While you have authorized the `kube-access` role to access Kubernetes clusters
 as a member of the `viewers` group, this group does not yet have permissions

@@ -9,8 +9,25 @@ tags:
  - azure
 page_type: how-to
 ---
+import DocsPagesIncludesDatabaseAccessAzureTroubleshooting from "@version/docs/pages/includes/database-access/azure-troubleshooting.mdx";
+import DocsPagesIncludesDatabaseAccessPsqlSslSyscallError from "@version/docs/pages/includes/database-access/psql-ssl-syscall-error.mdx";
+import DocsPagesIncludesDatabaseAccessGuidesNextSteps from "@version/docs/pages/includes/database-access/guides-next-steps.mdx";
 
-(!docs/pages/includes/database-access/db-introduction.mdx dbType="Azure PostgreSQL or MySQL" dbConfigure="with Microsoft Entra ID-based authentication"!)
+
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
+import DocsPagesIncludesTctl from "@version/docs/pages/includes/tctl.mdx";
+import DocsPagesIncludesDatabaseAccessAzureConfigureServicePrincipal from "@version/docs/pages/includes/database-access/azure-configure-service-principal.mdx";
+import DocsPagesIncludesDatabaseAccessAzureAssignServicePrincipal from "@version/docs/pages/includes/database-access/azure-assign-service-principal.mdx";
+import DocsPagesIncludesInstallLinux from "@version/docs/pages/includes/install-linux.mdx";
+import DocsPagesIncludesCreateRoleUsingWeb from "@version/docs/pages/includes/create-role-using-web.mdx";
+import DocsPagesIncludesStartTeleport from "@version/docs/pages/includes/start-teleport.mdx";
+import DocsPagesIncludesDatabaseAccessPgMysqlConnect from "@version/docs/pages/includes/database-access/pg-mysql-connect.mdx";
+import DocsPagesIncludesDatabaseAccessPgCancelRequestLimitation from "@version/docs/pages/includes/database-access/pg-cancel-request-limitation.mdx";
+
+import DocsPagesIncludesDatabaseAccessDbIntroduction from "@version/docs/pages/includes/database-access/db-introduction.mdx";
+import DocsPagesIncludesTctlToken from "@version/docs/pages/includes/tctl-token.mdx";
+
+<DocsPagesIncludesDatabaseAccessDbIntroduction dbType="Azure PostgreSQL or MySQL" dbConfigure="with Microsoft Entra ID-based authentication" />
 
 ## How it works
 
@@ -31,13 +48,13 @@ database.
 
 ## Prerequisites
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx!)
+<DocsPagesIncludesEditionPrereqsTabs />
 
 - Deployed Azure Database for PostgreSQL or MySQL server.
 - Microsoft Entra ID administrative privileges.
 - A host, e.g., an Azure VM instance, where you will run the Teleport Database
   Service.
-- (!docs/pages/includes/tctl.mdx!)
+- <DocsPagesIncludesTctl />
 
 
 ## Step 1/5. Configure Azure service principal
@@ -45,7 +62,7 @@ database.
 To authenticate with PostgreSQL or MySQL databases, Teleport Database Service
 needs to obtain access tokens from Microsoft Entra ID.
 
-(!docs/pages/includes/database-access/azure-configure-service-principal.mdx!)
+<DocsPagesIncludesDatabaseAccessAzureConfigureServicePrincipal />
 
 ## Step 2/5. Configure IAM permissions for Teleport
 
@@ -106,7 +123,7 @@ and replace the subscription in "assignableScopes" with your own subscription id
 
 ### Create a role assignment for the Teleport Database Service principal
 
-(!docs/pages/includes/database-access/azure-assign-service-principal.mdx!)
+<DocsPagesIncludesDatabaseAccessAzureAssignServicePrincipal />
 
 ## Step 3/5. Create Azure database users
 
@@ -249,11 +266,11 @@ You can create multiple database users identified by the same service principal.
 
 ## Step 4/5. Install the Teleport Database Service
 
-(!docs/pages/includes/tctl-token.mdx serviceName="Database" tokenType="db" tokenFile="/tmp/token"!)
+<DocsPagesIncludesTctlToken serviceName="Database" tokenType="db" tokenFile="/tmp/token" />
 
 Install Teleport on the host where you will run the Teleport Database Service:
 
-(!docs/pages/includes/install-linux.mdx!)
+<DocsPagesIncludesInstallLinux />
 
 Create the Database Service configuration.
 
@@ -363,13 +380,13 @@ $ tctl create -f azure-database-role.yaml
 role 'azure-database-access' has been created
 ```
 
-(!docs/pages/includes/create-role-using-web.mdx!)
+<DocsPagesIncludesCreateRoleUsingWeb />
 
 (\!docs/pages/includes/add-role-to-user.mdx role="azure-database-access" \!)
 
 ### Start Teleport Database Service
 
-(!docs/pages/includes/start-teleport.mdx service="the Teleport Database Service"!)
+<DocsPagesIncludesStartTeleport service="the Teleport Database Service" />
 
 <Admonition
   type="tip"
@@ -411,7 +428,7 @@ $ tsh db ls
 
 </Tabs>
 
-(!docs/pages/includes/database-access/pg-mysql-connect.mdx dbUser="teleport" dbService="azure-db"!)
+<DocsPagesIncludesDatabaseAccessPgMysqlConnect dbUser="teleport" dbService="azure-db" />
 
 To log out of the database and remove credentials:
 
@@ -421,13 +438,13 @@ $ tsh db logout azure-db
 
 ## Troubleshooting
 
-(!docs/pages/includes/database-access/azure-troubleshooting.mdx!)
+<DocsPagesIncludesDatabaseAccessAzureTroubleshooting />
 
-(!docs/pages/includes/database-access/pg-cancel-request-limitation.mdx!)
+<DocsPagesIncludesDatabaseAccessPgCancelRequestLimitation />
 
-(!docs/pages/includes/database-access/psql-ssl-syscall-error.mdx!)
+<DocsPagesIncludesDatabaseAccessPsqlSslSyscallError />
 
 ## Next steps
 
-(!docs/pages/includes/database-access/guides-next-steps.mdx!)
+<DocsPagesIncludesDatabaseAccessGuidesNextSteps />
 

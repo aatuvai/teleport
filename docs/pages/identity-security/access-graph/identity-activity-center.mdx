@@ -10,13 +10,19 @@ tags:
 enterprise: Identity Security
 page_type: how-to
 ---
+import DocsPagesIncludesPolicyIdentityActivityCenter from "@version/docs/pages/includes/policy/identity-activity-center.mdx";
+
+
+import ExamplesIdentityActivityCenterVariables from "!!raw-loader!@version/examples/identity-activity-center/variables.tf";
+import ExamplesIdentityActivityCenterIdentityActivityCenter from "!!raw-loader!@version/examples/identity-activity-center/identity_activity_center.tf";
+import ExamplesIdentityActivityCenterPolicy from "!!raw-loader!@version/examples/identity-activity-center/policy.tf";
 
 In this guide, you will set up the infrastructure required
 to enable the Identity Activity Center in Teleport's Identity Security product.
 Identity Activity Center allows you to centralize audit logs and access paths from various sources
 for enhanced visibility and management.
 
-(!docs/pages/includes/policy/identity-activity-center.mdx!)
+<DocsPagesIncludesPolicyIdentityActivityCenter />
 
 Identity Activity Center is a feature of [Teleport Identity Security](https://goteleport.com/platform/identity-security/)
 product that is only available to Teleport Enterprise customers.
@@ -101,9 +107,11 @@ Execute the following Terraform script to create the required infrastructure.
 
 `variables.tf` file includes the description of the required Terraform variables.
 
-```hcl
-(!examples/identity-activity-center/variables.tf!)
-```
+<CodeBlock language="hcl">
+
+  {ExamplesIdentityActivityCenterVariables}
+
+</CodeBlock>
 
 ### `identity_activity_center.tf`
 
@@ -111,9 +119,11 @@ Execute the following Terraform script to create the required infrastructure.
 that Terraform will create and manage. This includes AWS KMS keys, AWS S3 Buckets
 for transient and long-term storage, and AWS Glue table and database.
 
-```hcl
-(!examples/identity-activity-center/identity_activity_center.tf!)
-```
+<CodeBlock language="hcl">
+
+  {ExamplesIdentityActivityCenterIdentityActivityCenter}
+
+</CodeBlock>
 
 ### `policy.tf`
 
@@ -123,9 +133,11 @@ enabling it to access the resources and execute queries. If using an EC2 instanc
 for Identity Security, attach the policy to the instance role. If using ECS or EKS,
 attach the policy to the task or pod role.
 
-```hcl
-(!examples/identity-activity-center/policy.tf!)
-```
+<CodeBlock language="hcl">
+
+  {ExamplesIdentityActivityCenterPolicy}
+
+</CodeBlock>
 
 The Terraform script will output two variables:
 

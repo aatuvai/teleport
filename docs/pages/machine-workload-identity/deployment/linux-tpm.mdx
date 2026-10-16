@@ -9,6 +9,14 @@ tags:
 enterprise: The TPM join method
 page_type: how-to
 ---
+import DocsPagesIncludesMachineIdCreateABot from "@version/docs/pages/includes/machine-id/create-a-bot.mdx";
+import DocsPagesIncludesMachineIdDaemon from "@version/docs/pages/includes/machine-id/daemon.mdx";
+
+
+import DocsPagesIncludesTpmJoiningBackground from "@version/docs/pages/includes/tpm-joining-background.mdx";
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
+import DocsPagesIncludesTctl from "@version/docs/pages/includes/tctl.mdx";
+import DocsPagesIncludesInstallLinux from "@version/docs/pages/includes/install-linux.mdx";
 
 In this guide, you will deploy Machine & Workload Identity's agent, `tbot`, on a
 Linux host, and use the secure identity of the onboard TPM 2.0 chip for
@@ -19,13 +27,13 @@ installed on the cluster's Auth Service.
 
 ## How it works
 
-(!docs/pages/includes/tpm-joining-background.mdx!)
+<DocsPagesIncludesTpmJoiningBackground />
 
 ## Prerequisites
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx!)
+<DocsPagesIncludesEditionPrereqsTabs />
 
-- (!docs/pages/includes/tctl.mdx!)
+- <DocsPagesIncludesTctl />
 - A Linux host that you wish to install `tbot` onto with a TPM2.0
   installed.
 - A Linux user on that host that you wish `tbot` to run as. In the guide,
@@ -40,7 +48,7 @@ First, `tbot` needs to be installed on the VM that you wish to use Machine
 
 Download the appropriate Teleport package for your platform:
 
-(!docs/pages/includes/install-linux.mdx!)
+<DocsPagesIncludesInstallLinux />
 
 ### Granting `tbot` access to the TPM device
 
@@ -55,7 +63,7 @@ https://github.com/tpm2-software/tpm2-tss/blob/ede63dd1ac1f0a46029d457304edcac21
 
 ## Step 2/4. Create a Bot
 
-(!docs/pages/includes/machine-id/create-a-bot.mdx!)
+<DocsPagesIncludesMachineIdCreateABot />
 
 ## Step 3/4. Create a `tpm` join token
 
@@ -198,7 +206,7 @@ $ sudo chown teleport:teleport /var/lib/teleport/bot
 
 ### Create a systemd service
 
-(!docs/pages/includes/machine-id/daemon.mdx!)
+<DocsPagesIncludesMachineIdDaemon />
 
 ## Next steps
 

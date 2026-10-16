@@ -8,6 +8,18 @@ tags:
  - infrastructure-identity
 page_type: how-to
 ---
+import DocsPagesIncludesDatabaseAccessAutoUserProvisioningConfigureAdmin from "@version/docs/pages/includes/database-access/auto-user-provisioning/configure-admin.mdx";
+import DocsPagesIncludesDatabaseAccessAutoUserProvisioningMysqlDefaultDatabaseNote from "@version/docs/pages/includes/database-access/auto-user-provisioning/mysql-default-database-note.mdx";
+import DocsPagesIncludesDatabaseAccessAutoUserProvisioningUsernameConflict from "@version/docs/pages/includes/database-access/auto-user-provisioning/username-conflict.mdx";
+import DocsPagesIncludesDatabaseAccessAutoUserProvisioningTroubleshootingRemoteUsername from "@version/docs/pages/includes/database-access/auto-user-provisioning/troubleshooting-remote-username.mdx";
+
+
+import DocsPagesIncludesDatabaseAccessAutoUserProvisioningCommonTeleportRole from "@version/docs/pages/includes/database-access/auto-user-provisioning/common-teleport-role.mdx";
+import DocsPagesIncludesDatabaseAccessAutoUserProvisioningConnect from "@version/docs/pages/includes/database-access/auto-user-provisioning/connect.mdx";
+import DocsPagesIncludesDatabaseAccessDbAccessWebuiAd from "@version/docs/pages/includes/database-access/db-access-webui-ad.mdx";
+
+import DocsPagesIncludesDatabaseAccessAutoUserProvisioningDbDefinitionDefaultDbname from "@version/docs/pages/includes/database-access/auto-user-provisioning/db-definition-default-dbname.mdx";
+import DocsPagesIncludesDatabaseAccessAutoUserProvisioningUsernameHash from "@version/docs/pages/includes/database-access/auto-user-provisioning/username-hash.mdx";
 
 Teleport can automatically create an account in your MySQL database when a
 Teleport user connects to the database, removing the need for creating
@@ -45,7 +57,7 @@ stripping its privileges.
 
 ## Step 1/3. Configure database admin
 
-(!docs/pages/includes/database-access/auto-user-provisioning/configure-admin.mdx!)
+<DocsPagesIncludesDatabaseAccessAutoUserProvisioningConfigureAdmin />
 
 Teleport uses the same authentication mechanism when connecting as an admin user
 as for regular user connections: X.509 for self-hosted databases and AWS IAM
@@ -71,7 +83,7 @@ CREATE DATABASE IF NOT EXISTS `teleport`;
 GRANT ALTER ROUTINE, CREATE ROUTINE, EXECUTE ON `teleport`.* TO 'teleport-admin' ;
 ```
 
-(!docs/pages/includes/database-access/auto-user-provisioning/mysql-default-database-note.mdx!)
+<DocsPagesIncludesDatabaseAccessAutoUserProvisioningMysqlDefaultDatabaseNote />
 
 </TabItem>
 
@@ -86,7 +98,7 @@ CREATE DATABASE IF NOT EXISTS `teleport`;
 GRANT ALTER ROUTINE, CREATE ROUTINE, EXECUTE ON `teleport`.* TO 'teleport-admin' ;
 ```
 
-(!docs/pages/includes/database-access/auto-user-provisioning/mysql-default-database-note.mdx!)
+<DocsPagesIncludesDatabaseAccessAutoUserProvisioningMysqlDefaultDatabaseNote />
 
 </TabItem>
 </Tabs>
@@ -94,11 +106,11 @@ GRANT ALTER ROUTINE, CREATE ROUTINE, EXECUTE ON `teleport`.* TO 'teleport-admin'
 Users created by Teleport will be assigned the `teleport-auto-user` role in the
 database, which will be created automatically if it doesn't exist.
 
-(!docs/pages/includes/database-access/auto-user-provisioning/db-definition-default-dbname.mdx protocol="mysql" uri="localhost:3306" !)
+<DocsPagesIncludesDatabaseAccessAutoUserProvisioningDbDefinitionDefaultDbname protocol="mysql" uri="localhost:3306" />
 
 ## Step 2/3. Configure a Teleport role
 
-(!docs/pages/includes/database-access/auto-user-provisioning/common-teleport-role.mdx!)
+<DocsPagesIncludesDatabaseAccessAutoUserProvisioningCommonTeleportRole />
 
 Users created within the database will:
 
@@ -106,7 +118,7 @@ Users created within the database will:
 - Be assigned all roles from the Teleport user's role set that match the database.
   The role names must be valid and exist in the database.
 
-(!docs/pages/includes/database-access/auto-user-provisioning/username-hash.mdx database="MySQL" limit="32" !)
+<DocsPagesIncludesDatabaseAccessAutoUserProvisioningUsernameHash database="MySQL" limit="32" />
 
 <details>
 <summary>Tracking the name mapping</summary>
@@ -128,13 +140,13 @@ database queries in the Teleport Audit Logs, when the Teleport username is over
 32 characters.
 </details>
 
-(!docs/pages/includes/database-access/auto-user-provisioning/username-conflict.mdx!)
+<DocsPagesIncludesDatabaseAccessAutoUserProvisioningUsernameConflict />
 
 ## Step 3/3. Connect to the database
 
-(!docs/pages/includes/database-access/auto-user-provisioning/connect.mdx gui="MySQL Workbench"!)
+<DocsPagesIncludesDatabaseAccessAutoUserProvisioningConnect gui="MySQL Workbench" />
 
-(!docs/pages/includes/database-access/db-access-webui-ad.mdx dbType="MySQL"!)
+<DocsPagesIncludesDatabaseAccessDbAccessWebuiAd dbType="MySQL" />
 
 ## Troubleshooting
 
@@ -164,7 +176,7 @@ endpoints. Please use auto-user provisioning on the primary endpoints.
 
 ### Use your mapped remote username error
 
-(!docs/pages/includes/database-access/auto-user-provisioning/troubleshooting-remote-username.mdx!)
+<DocsPagesIncludesDatabaseAccessAutoUserProvisioningTroubleshootingRemoteUsername />
 
 ## Next steps
 

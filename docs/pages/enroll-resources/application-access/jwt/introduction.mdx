@@ -8,15 +8,21 @@ tags:
  - infrastructure-identity
 page_type: conceptual
 ---
+import DocsPagesIncludesApplicationAccessJwtInject from "@version/docs/pages/includes/application-access/jwt-inject.mdx";
+import DocsPagesIncludesApplicationAccessJwtValidate from "@version/docs/pages/includes/application-access/jwt-validate.mdx";
+
+
+import DocsPagesIncludesApplicationAccessJwtIntro from "@version/docs/pages/includes/application-access/jwt-intro.mdx";
+import DocsPagesIncludesApplicationAccessJwtConfigureClaims from "@version/docs/pages/includes/application-access/jwt-configure-claims.mdx";
 
 This page describes how Teleport supports JSON Web Token authentication with
 protected applications.
 
-(!docs/pages/includes/application-access/jwt-intro.mdx!)
+<DocsPagesIncludesApplicationAccessJwtIntro />
 
 ## Inject JWT
 
-(!docs/pages/includes/application-access/jwt-inject.mdx!)
+<DocsPagesIncludesApplicationAccessJwtInject />
 
 For example:
 
@@ -31,7 +37,7 @@ For example:
 
 ## Validate JWT
 
-(!docs/pages/includes/application-access/jwt-validate.mdx!)
+<DocsPagesIncludesApplicationAccessJwtValidate />
 
 See the example Go program used to validate Teleport's JWT tokens on our
 [GitHub](https://github.com/gravitational/teleport/blob/v(=teleport.version=)/examples/jwt/verify-jwt.go).
@@ -47,4 +53,4 @@ The following guides are currently available showing how to configure it:
 
 ## Troubleshooting
 
-(!docs/pages/includes/application-access/jwt-configure-claims.mdx!)
+<DocsPagesIncludesApplicationAccessJwtConfigureClaims />

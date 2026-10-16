@@ -8,6 +8,13 @@ tags:
  - infrastructure-identity
 page_type: how-to
 ---
+import DocsPagesIncludesMachineIdMachineIdInitBotData from "@version/docs/pages/includes/machine-id/machine-id-init-bot-data.mdx";
+import DocsPagesIncludesMachineIdDaemon from "@version/docs/pages/includes/machine-id/daemon.mdx";
+
+
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
+import DocsPagesIncludesTctl from "@version/docs/pages/includes/tctl.mdx";
+import DocsPagesIncludesInstallLinux from "@version/docs/pages/includes/install-linux.mdx";
 
 In this guide, you will deploy the Machine & Workload Identity agent, `tbot`, on
 a Linux host.
@@ -25,9 +32,9 @@ about Bound Keypair Joining][bkp].
 
 ## Prerequisites
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx!)
+<DocsPagesIncludesEditionPrereqsTabs />
 
-- (!docs/pages/includes/tctl.mdx!)
+- <DocsPagesIncludesTctl />
 - A Linux host that you wish to install `tbot` onto.
 - A Linux user on that host that you wish `tbot` to run as. In the guide, we
   will use `teleport` for this.
@@ -41,7 +48,7 @@ Workload Identity on.
 
 Install Teleport as appropriate for your platform:
 
-(!docs/pages/includes/install-linux.mdx!)
+<DocsPagesIncludesInstallLinux />
 
 ## Step 2/3. Create a bot user
 
@@ -94,11 +101,11 @@ If the initial join fails (for example, due to a network or TLS error), the secr
 
 ### Prepare the storage directory
 
-(!docs/pages/includes/machine-id/machine-id-init-bot-data.mdx!)
+<DocsPagesIncludesMachineIdMachineIdInitBotData />
 
 ### Create a systemd service
 
-(!docs/pages/includes/machine-id/daemon.mdx!)
+<DocsPagesIncludesMachineIdDaemon />
 
 ## Next steps
 

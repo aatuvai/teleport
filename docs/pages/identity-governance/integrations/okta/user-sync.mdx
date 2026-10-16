@@ -10,6 +10,9 @@ tags:
 enterprise: Identity Governance
 page_type: how-to
 ---
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
+import DocsPagesIncludesTctl from "@version/docs/pages/includes/tctl.mdx";
+
 
 Okta user sync imports Okta users as Teleport users via a continuous
 reconciliation loop. User sync works in tandem with the Teleport [SCIM
@@ -29,7 +32,7 @@ enrollment flow.
 
 ## Prerequisites
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx edition="Teleport Enterprise (v17.3.0 or higher)"!)
+<DocsPagesIncludesEditionPrereqsTabs edition="Teleport Enterprise (v17.3.0 or higher)" />
 
 - An Okta authentication connector. 
 
@@ -41,7 +44,7 @@ enrollment flow.
 - (Optional) The Okta SCIM integration. To set up the SCIM integration, you can
   follow the [guided integration flow](./scim-integration.mdx).
 
-- (!docs/pages/includes/tctl.mdx!)
+- <DocsPagesIncludesTctl />
 
 - An Okta organization with admin access.
 

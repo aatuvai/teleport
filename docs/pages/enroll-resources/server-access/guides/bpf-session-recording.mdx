@@ -9,6 +9,11 @@ tags:
  - infrastructure-identity
 page_type: how-to
 ---
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
+import DocsPagesIncludesTctl from "@version/docs/pages/includes/tctl.mdx";
+import DocsPagesIncludesInstallLinux from "@version/docs/pages/includes/install-linux.mdx";
+import DocsPagesIncludesStartTeleport from "@version/docs/pages/includes/start-teleport.mdx";
+
 
 {/* lint disable page-structure remark-lint */}
 
@@ -62,7 +67,7 @@ library preloading, and environment variables may not be captured in session rec
 
 ## Prerequisites
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx!)
+<DocsPagesIncludesEditionPrereqsTabs />
 
 - At least one host that you will use to run the Teleport Node Service. The host
   must run Linux kernel 5.8 (or above).
@@ -98,7 +103,7 @@ Teleport supports enhanced session recording with BPF on `amd64` and `arm64` arc
 | Amazon Linux            | 2 and 2023     | 5.10+          |
 | RHEL/CentOS             | 7+             | 5.8+           |
 
-- (!docs/pages/includes/tctl.mdx!)
+- <DocsPagesIncludesTctl />
 
 ## Step 1/2. Configure a Teleport Node
 
@@ -107,7 +112,7 @@ Teleport supports enhanced session recording with BPF on `amd64` and `arm64` arc
 On the host where you will run your Teleport Node, follow the instructions for
 your environment to install Teleport.
 
-(!docs/pages/includes/install-linux.mdx!)
+<DocsPagesIncludesInstallLinux />
 
 ### Generate a token
 
@@ -170,7 +175,7 @@ ssh_service:
 
 ### Start Teleport on your Node
 
-(!docs/pages/includes/start-teleport.mdx service="the Teleport SSH Service"!)
+<DocsPagesIncludesStartTeleport service="the Teleport SSH Service" />
 
 ## Step 2/2. Inspect the audit log
 

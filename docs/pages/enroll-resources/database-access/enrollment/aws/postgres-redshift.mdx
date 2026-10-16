@@ -10,12 +10,36 @@ tags:
  - aws
 page_type: how-to
 ---
+import DocsPagesIncludesDatabaseAccessAlternativeMethodsJoin from "@version/docs/pages/includes/database-access/alternative-methods-join.mdx";
+import DocsPagesIncludesDatabaseAccessPsqlSslSyscallError from "@version/docs/pages/includes/database-access/psql-ssl-syscall-error.mdx";
+import DocsPagesIncludesDatabaseAccessGuidesNextSteps from "@version/docs/pages/includes/database-access/guides-next-steps.mdx";
 
-(!docs/pages/includes/database-access/db-introduction.mdx dbType="Amazon Redshift" dbConfigure="with IAM authentication"!)
+
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
+import DocsPagesIncludesTctl from "@version/docs/pages/includes/tctl.mdx";
+import DocsPagesIncludesDatabaseAccessCreateUser from "@version/docs/pages/includes/database-access/create-user.mdx";
+import DocsPagesIncludesInstallLinux from "@version/docs/pages/includes/install-linux.mdx";
+import DocsPagesIncludesAwsCredentials from "@version/docs/pages/includes/aws-credentials.mdx";
+import DocsPagesIncludesDatabaseAccessReferenceAwsIamRedshiftAccessPolicy from "@version/docs/pages/includes/database-access/reference/aws-iam/redshift/access-policy.mdx";
+import DocsPagesIncludesStartTeleport from "@version/docs/pages/includes/start-teleport.mdx";
+import DocsPagesIncludesDatabaseAccessProxyDbTunnel from "@version/docs/pages/includes/database-access/proxy-db-tunnel.mdx";
+import DocsPagesIncludesDatabaseAccessDbAccessWebuiAd from "@version/docs/pages/includes/database-access/db-access-webui-ad.mdx";
+import DocsPagesIncludesDatabaseAccessAwsTroubleshooting from "@version/docs/pages/includes/database-access/aws-troubleshooting.mdx";
+import DocsPagesIncludesDatabaseAccessAwsTroubleshootingMaxPolicySize from "@version/docs/pages/includes/database-access/aws-troubleshooting-max-policy-size.mdx";
+import DocsPagesIncludesDatabaseAccessPgCancelRequestLimitation from "@version/docs/pages/includes/database-access/pg-cancel-request-limitation.mdx";
+
+import DocsPagesIncludesDatabaseAccessDbIntroduction from "@version/docs/pages/includes/database-access/db-introduction.mdx";
+import DocsPagesIncludesDatabaseAccessHowItWorksIam from "@version/docs/pages/includes/database-access/how-it-works/iam.mdx";
+import DocsPagesIncludesDatabaseAccessAutoDiscoveryTip from "@version/docs/pages/includes/database-access/auto-discovery-tip.mdx";
+import DocsPagesIncludesTctlToken from "@version/docs/pages/includes/tctl-token.mdx";
+import DocsPagesIncludesDatabaseAccessCreateIamRoleStepDescription from "@version/docs/pages/includes/database-access/create-iam-role-step-description.mdx";
+import DocsPagesIncludesDatabaseAccessReferenceAwsIamRedshiftRoleAsUserPolicy from "@version/docs/pages/includes/database-access/reference/aws-iam/redshift/role-as-user-policy.mdx";
+
+<DocsPagesIncludesDatabaseAccessDbIntroduction dbType="Amazon Redshift" dbConfigure="with IAM authentication" />
 
 ## How it works
 
-(!docs/pages/includes/database-access/how-it-works/iam.mdx db="Amazon Redshift" cloud="AWS"!)
+<DocsPagesIncludesDatabaseAccessHowItWorksIam db="Amazon Redshift" cloud="AWS" />
 
 <Tabs>
 <TabItem scope={["oss", "enterprise"]} label="Self-Hosted">
@@ -27,30 +51,30 @@ page_type: how-to
 
 </Tabs>
 
-(!docs/pages/includes/database-access/auto-discovery-tip.mdx dbType="Amazon Redshift cluster" providerType="AWS"!)
+<DocsPagesIncludesDatabaseAccessAutoDiscoveryTip dbType="Amazon Redshift cluster" providerType="AWS" />
 
 ## Prerequisites
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx!)
+<DocsPagesIncludesEditionPrereqsTabs />
 
 - AWS account with a Redshift cluster and permissions to create and attach IAM
   policies.
 - Command-line client `psql` installed and added to your system's `PATH` environment variable.
 - A host, e.g., an EC2 instance, where you will run the Teleport Database
   Service.
-- (!docs/pages/includes/tctl.mdx!)
+- <DocsPagesIncludesTctl />
 
 ## Step 1/5. Create a Teleport user
 
-(!docs/pages/includes/database-access/create-user.mdx!)
+<DocsPagesIncludesDatabaseAccessCreateUser />
 
 ## Step 2/5. Create a Database Service configuration
 
-(!docs/pages/includes/tctl-token.mdx serviceName="Database" tokenType="db" tokenFile="/tmp/token"!)
+<DocsPagesIncludesTctlToken serviceName="Database" tokenType="db" tokenFile="/tmp/token" />
 
-(!docs/pages/includes/database-access/alternative-methods-join.mdx!)
+<DocsPagesIncludesDatabaseAccessAlternativeMethodsJoin />
 
-(!docs/pages/includes/install-linux.mdx!)
+<DocsPagesIncludesInstallLinux />
 
 On the node that is running the Database Service, create a configuration file.
 Assign `CLUSTER_URI` to the domain name and port of the cluster:
@@ -90,21 +114,21 @@ Redshift cluster and place it at the `/etc/teleport.yaml` location.
 
 ## Step 3/5. Configure IAM permissions for the Database Service
 
-(!docs/pages/includes/database-access/create-iam-role-step-description.mdx accessFor="Redshift databases" !)
+<DocsPagesIncludesDatabaseAccessCreateIamRoleStepDescription accessFor="Redshift databases" />
 
 ### Create an IAM role for Teleport
 
-(!docs/pages/includes/aws-credentials.mdx service="the Database Service"!)
+<DocsPagesIncludesAwsCredentials service="the Database Service" />
 
 ### Grant permissions
 
 Attach the following AWS IAM permissions to the Database Service IAM role:
 
-(!docs/pages/includes/database-access/reference/aws-iam/redshift/access-policy.mdx dbUserRole="redshift-user-role" !)
+<DocsPagesIncludesDatabaseAccessReferenceAwsIamRedshiftAccessPolicy dbUserRole="redshift-user-role" />
 
 ## Step 4/5. Start the Database Service
 
-(!docs/pages/includes/start-teleport.mdx service="the Database Service"!)
+<DocsPagesIncludesStartTeleport service="the Database Service" />
 
 The Database Service will proxy the Amazon Redshift cluster with the ID you
 specified earlier. Keep in mind that AWS IAM changes may not propagate
@@ -157,9 +181,9 @@ $ tsh db connect --db-user=alice --db-name=dev my-redshift
   tokens for Redshift databases. Users must exist in the database.
 </Admonition>
 
-(!docs/pages/includes/database-access/proxy-db-tunnel.mdx db="my-redshift" dbArgs="--db-user=alice --db-name=dev"!)
+<DocsPagesIncludesDatabaseAccessProxyDbTunnel db="my-redshift" dbArgs="--db-user=alice --db-name=dev" />
 
-(!docs/pages/includes/database-access/db-access-webui-ad.mdx dbType="PostgreSQL"!)
+<DocsPagesIncludesDatabaseAccessDbAccessWebuiAd dbType="PostgreSQL" />
 
 To log out of the database and remove credentials:
 
@@ -186,21 +210,21 @@ and automatically creates that user if it doesn't already exist. If you use this
 method, you must first create an AWS IAM role that grants access to the Redshift
 database.
 
-(!docs/pages/includes/database-access/reference/aws-iam/redshift/role-as-user-policy.mdx dbUserRole="redshift-user-role"!)
+<DocsPagesIncludesDatabaseAccessReferenceAwsIamRedshiftRoleAsUserPolicy dbUserRole="redshift-user-role" />
 
 ## Troubleshooting
 
-(!docs/pages/includes/database-access/aws-troubleshooting.mdx!)
+<DocsPagesIncludesDatabaseAccessAwsTroubleshooting />
 
-(!docs/pages/includes/database-access/aws-troubleshooting-max-policy-size.mdx!)
+<DocsPagesIncludesDatabaseAccessAwsTroubleshootingMaxPolicySize />
 
-(!docs/pages/includes/database-access/pg-cancel-request-limitation.mdx PIDQuery="SELECT pid,starttime,duration,trim(user_name) AS user,trim(query) AS query FROM stv_recents WHERE status = 'Running';"!)
+<DocsPagesIncludesDatabaseAccessPgCancelRequestLimitation PIDQuery="SELECT pid,starttime,duration,trim(user_name) AS user,trim(query) AS query FROM stv_recents WHERE status = 'Running';" />
 
-(!docs/pages/includes/database-access/psql-ssl-syscall-error.mdx!)
+<DocsPagesIncludesDatabaseAccessPsqlSslSyscallError />
 
 ## Next steps
 
 - Learn more about [using IAM authentication to generate database user
   credentials](https://docs.aws.amazon.com/redshift/latest/mgmt/generating-user-credentials.html) for Amazon Redshift.
 
-(!docs/pages/includes/database-access/guides-next-steps.mdx!)
+<DocsPagesIncludesDatabaseAccessGuidesNextSteps />

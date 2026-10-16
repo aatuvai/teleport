@@ -10,6 +10,13 @@ tags:
  - resiliency
 enterprise: Device Trust
 ---
+import DocsPagesIncludesDeviceTrustPrereqs from "@version/docs/pages/includes/device-trust/prereqs.mdx";
+
+
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
+import DocsPagesIncludesStartTeleport from "@version/docs/pages/includes/start-teleport.mdx";
+
+import DocsPagesIncludesPluginsEnroll from "@version/docs/pages/includes/plugins/enroll.mdx";
 
 The Device Trust Jamf Pro integration lets you automatically sync your Jamf Pro
 device inventory into Teleport. It supports macOS computers and iOS & iPadOS
@@ -33,15 +40,15 @@ and behavior.
 <details>
 <summary>This integration is hosted on Teleport Cloud</summary>
 
-(!docs/pages/includes/plugins/enroll.mdx name="the Jamf Pro integration"!)
+<DocsPagesIncludesPluginsEnroll name="the Jamf Pro integration" />
 
 </details>
 
 ## Prerequisites
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx edition="Teleport Enterprise"!)
+<DocsPagesIncludesEditionPrereqsTabs edition="Teleport Enterprise" />
 
-(!docs/pages/includes/device-trust/prereqs.mdx!)
+<DocsPagesIncludesDeviceTrustPrereqs />
 
 ## Step 1/4. Create Jamf API credentials
 
@@ -176,7 +183,7 @@ On the Jamf service host, write the token to a file called `/tmp/token`.
 
 Using the token created above, start the service:
 
-(!docs/pages/includes/start-teleport.mdx!)
+<DocsPagesIncludesStartTeleport />
 
 The initial sync should happen in a few minutes. You can confirm from the Teleport service logs:
 

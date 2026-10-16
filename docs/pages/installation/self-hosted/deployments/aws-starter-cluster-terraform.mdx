@@ -8,6 +8,12 @@ tags:
  - platform-wide
  - aws
 ---
+import DocsPagesIncludesEnterpriseObtainlicense from "@version/docs/pages/includes/enterprise/obtainlicense.mdx";
+import DocsPagesIncludesAwsQuotas from "@version/docs/pages/includes/aws-quotas.mdx";
+
+
+import DocsPagesIncludesCloudCallToAction from "@version/docs/pages/includes/cloud/call-to-action.mdx";
+import DocsPagesIncludesTeleportAmis from "@version/docs/pages/includes/teleport-amis.mdx";
 
 This guide is designed to accompany our [reference starter-cluster Terraform code](https://github.com/gravitational/teleport/tree/branch/v(=teleport.major_version=)/examples/aws/terraform/starter-cluster#teleport-terraform-aws-ami-simple-example)
 and describe how to manage the resulting Teleport deployment.
@@ -26,7 +32,7 @@ It also optionally deploys the following components when ACM is enabled:
 
 More details are [provided below](#reference-deployment-defaults).
 
-(!docs/pages/includes/cloud/call-to-action.mdx!)
+<DocsPagesIncludesCloudCallToAction />
 
 ## Prerequisites
 
@@ -195,7 +201,7 @@ cluster from scratch, so choose carefully. A good example might be something lik
 $ export TF_VAR_ami_name="teleport-ent-(=teleport.version=)-x86_64"
 ```
 
-(!docs/pages/includes/teleport-amis.mdx!)
+<DocsPagesIncludesTeleportAmis />
 
 ### key_name
 
@@ -209,7 +215,7 @@ EC2 instances. Do not use a keypair that you do not have access to.
 
 ### license_path
 
-(!docs/pages/includes//enterprise/obtainlicense.mdx!)
+<DocsPagesIncludesEnterpriseObtainlicense />
 
 ```code
 $ export TF_VAR_license_path="/home/user/license.pem"
@@ -733,4 +739,4 @@ To add new nodes/EC2 servers that you can "SSH into" you'll need to:
 
 ### AWS quotas
 
-(!docs/pages/includes/aws-quotas.mdx!)
+<DocsPagesIncludesAwsQuotas />

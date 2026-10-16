@@ -8,6 +8,9 @@ tags:
  - infrastructure-identity
 page_type: how-to
 ---
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
+import DocsPagesIncludesTctl from "@version/docs/pages/includes/tctl.mdx";
+
 
 Teleport's Workload Identity issues flexible short-lived identities intended
 for workloads. It is compatible with the industry-standard SPIFFE specification
@@ -23,9 +26,9 @@ receive SPIFFE SVID-compatible workload identity credentials.
 
 ## Prerequisites
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx!)
+<DocsPagesIncludesEditionPrereqsTabs />
 
-- (!docs/pages/includes/tctl.mdx!)
+- <DocsPagesIncludesTctl />
 - `tbot` must already be installed and configured on the host where the
   workloads which need to access Teleport Workload Identity will run. For more
   information, see the [deployment guides](../deployment/deployment.mdx).

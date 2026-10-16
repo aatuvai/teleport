@@ -9,6 +9,8 @@ tags:
 enterprise: Identity Security
 page_type: how-to
 ---
+import DocsPagesIncludesKubernetesAccessHelmHelmRepoAdd from "@version/docs/pages/includes/kubernetes-access/helm/helm-repo-add.mdx";
+
 
 Using Teleport Identity Security with Access Graph on a self-hosted Teleport cluster requires
 setting up the Access Graph, a dedicated service which uses PostgreSQL 
@@ -60,7 +62,7 @@ chart.
 
 ## Step 1/4. Add the Teleport Helm chart repository
 
-(!docs/pages/includes/kubernetes-access/helm/helm-repo-add.mdx!)
+<DocsPagesIncludesKubernetesAccessHelmHelmRepoAdd />
 
 ## Step 2/4. Set up Access Graph
 

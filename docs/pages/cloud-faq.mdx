@@ -5,6 +5,10 @@ tags:
  - faq
  - platform-wide
 ---
+import DocsPagesIncludesSoc2 from "@version/docs/pages/includes/soc2.mdx";
+import DocsPagesIncludesEntVsCommunityFaq from "@version/docs/pages/includes/ent-vs-community-faq.mdx";
+import DocsPagesIncludesCloudSla from "@version/docs/pages/includes/cloud/sla.mdx";
+
 
 This page provides answers to frequently asked questions about Teleport
 Enterprise (Cloud). For a list of frequently asked questions about Teleport in
@@ -37,7 +41,7 @@ related information on the [Teleport Trust Portal](https://trust.goteleport.com)
 
 ### Does your SOC 2 report include Teleport Enterprise Cloud?
 
-(!docs/pages/includes/soc2.mdx!)
+<DocsPagesIncludesSoc2 />
 
 ### How do you store passwords?
 
@@ -84,7 +88,7 @@ There is no need to open any ports on your infrastructure for inbound traffic.
 If you plan on connecting more than 10,000 nodes or agents, please contact your account executive or customer support to ensure your tenant is properly scaled.
 
 ### Should we use Enterprise or Teleport Community Edition for connecting resources to our Teleport cluster?
-(!docs/pages/includes/ent-vs-community-faq.mdx!)
+<DocsPagesIncludesEntVsCommunityFaq />
 
 ### Are dynamic node tokens available?
 
@@ -291,7 +295,7 @@ Yes. Large organizations leverage Teleport Enterprise Cloud to manage the vast n
 
 ### What is the Cloud SLA?
 
-(!docs/pages/includes/cloud/sla.mdx!)
+<DocsPagesIncludesCloudSla />
 
 ### Is there a status page available?
 

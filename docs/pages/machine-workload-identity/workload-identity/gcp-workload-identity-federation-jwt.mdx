@@ -9,6 +9,12 @@ tags:
  - google-cloud
 page_type: how-to
 ---
+import DocsPagesIncludesMachineIdReloadTbot from "@version/docs/pages/includes/machine-id/reload-tbot.mdx";
+
+
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
+import DocsPagesIncludesTctl from "@version/docs/pages/includes/tctl.mdx";
+import DocsPagesIncludesCreateRoleUsingWeb from "@version/docs/pages/includes/create-role-using-web.mdx";
 
 Teleport Workload Identity issues flexible short-lived identities in JWT format.
 GCP Workload Identity Federation allows you to use these JWTs to authenticate to
@@ -39,9 +45,9 @@ GCP APIs in a few ways:
 
 ## Prerequisites
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx!)
+<DocsPagesIncludesEditionPrereqsTabs />
 
-- (!docs/pages/includes/tctl.mdx!)
+- <DocsPagesIncludesTctl />
 - `tbot` must already be installed and configured on the host where the
 workloads which need to access Teleport Workload Identity will run. For more
 information, see the [deployment guides](../deployment/deployment.mdx).
@@ -295,7 +301,7 @@ Apply this role to your Teleport cluster using `tctl`:
 $ tctl create -f role.yaml
 ```
 
-(!docs/pages/includes/create-role-using-web.mdx!)
+<DocsPagesIncludesCreateRoleUsingWeb />
 
 You now need to assign this role to the bot:
 
@@ -341,7 +347,7 @@ Replace:
 - `example-workload-identity` with the name of the Workload Identity you have
   created.
 
-(!docs/pages/includes/machine-id/reload-tbot.mdx!)
+<DocsPagesIncludesMachineIdReloadTbot />
 
 You should see a file created at `/opt/workload-identity/jwt_svid` containing
 the JWT.

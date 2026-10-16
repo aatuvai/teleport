@@ -7,6 +7,9 @@ tags:
  - zero-trust
  - infrastructure-identity
 ---
+import DocsPagesIncludesBackupWarning from "@version/docs/pages/includes/backup-warning.mdx";
+import DocsPagesIncludesHelmReferenceZzGeneratedTeleportKubeAgent from "@version/docs/pages/includes/helm-reference/zz_generated.teleport-kube-agent.mdx";
+
 
 The `teleport-kube-agent` Helm chart is used to configure a Teleport Agent that
 runs in a remote Kubernetes cluster to provide access to resources in your
@@ -17,7 +20,7 @@ GitHub](https://github.com/gravitational/teleport/tree/branch/v(=teleport.major_
 
 This reference details available values for the `teleport-kube-agent` chart.
 
-(!docs/pages/includes/backup-warning.mdx!)
+<DocsPagesIncludesBackupWarning />
 
 ## What the chart deploys
 
@@ -58,4 +61,4 @@ The `teleport-kube-agent` chart deploys the following Kubernetes resources:
 | `Role`                | The release name, suffixed by `-psp`                                     | Enforces security requirements for pods deployed by `teleport-kube-agent`.                                                                                                                                                                                                                              | `podSecurityPolicy.enabled` is `true` and the Kubernetes cluster version is < 1.23.                               |
 | `RoleBinding`         | The release name, suffixed by `-psp`                                     | Enforces security requirements for pods deployed by `teleport-kube-agent`.                                                                                                                                                                                                                              | `podSecurityPolicy.enabled` is `true` and the Kubernetes cluster version is < 1.23.                               |
 
-(!docs/pages/includes/helm-reference/zz_generated.teleport-kube-agent.mdx!)
+<DocsPagesIncludesHelmReferenceZzGeneratedTeleportKubeAgent />

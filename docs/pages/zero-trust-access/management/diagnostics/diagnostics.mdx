@@ -6,6 +6,11 @@ tags:
  - how-to
  - platform-wide
 ---
+import DocsPagesIncludesMetrics from "@version/docs/pages/includes/metrics.mdx";
+
+
+import DocsPagesIncludesDiagnosticsDiagAddrPrereqsTabs from "@version/docs/pages/includes/diagnostics/diag-addr-prereqs-tabs.mdx";
+import DocsPagesIncludesDiagnosticsTeleportDebugConfig from "@version/docs/pages/includes/diagnostics/teleport-debug-config.mdx";
 
 Teleport provides health checking mechanisms in order to verify that it is healthy and ready to serve traffic.
 Metrics, tracing, and profiling provide in-depth data, tracking cluster performance and responsiveness.
@@ -14,7 +19,7 @@ Metrics, tracing, and profiling provide in-depth data, tracking cluster performa
 
 How to monitor the health of a Teleport instance.
 
-(!docs/pages/includes/diagnostics/diag-addr-prereqs-tabs.mdx!)
+<DocsPagesIncludesDiagnosticsDiagAddrPrereqsTabs />
 
 Now you can collect monitoring information from several endpoints. These can be used by things like
 Kubernetes probes to monitor the health of a Teleport process.
@@ -73,7 +78,7 @@ collect from your Teleport cluster.
 
 ## Enabling metrics
 
-(!docs/pages/includes/diagnostics/diag-addr-prereqs-tabs.mdx!)
+<DocsPagesIncludesDiagnosticsDiagAddrPrereqsTabs />
 
 This will enable the `http://127.0.0.1:3000/metrics` endpoint, which serves the
 metrics that Teleport tracks. It is compatible with [Prometheus](https://prometheus.io/) collectors.
@@ -86,7 +91,7 @@ The following metrics are available:
 
 </Admonition>
 
-(!docs/pages/includes/metrics.mdx!)
+<DocsPagesIncludesMetrics />
 
 
 ## Distributed tracing
@@ -199,7 +204,7 @@ $ teleport debug profile trace,mutex > pprof.tar.gz
 $ teleport debug profile -s 20 trace > pprof.tar.gz
 ```
 
-(!docs/pages/includes/diagnostics/teleport-debug-config.mdx!)
+<DocsPagesIncludesDiagnosticsTeleportDebugConfig />
 
 If you're running Teleport on a Kubernetes cluster you can directly collect
 profiles to a local directory without an interactive session:
@@ -226,7 +231,7 @@ $ go tool trace trace.pprof
 
 The profiling endpoint is only enabled if the `--debug` flag is supplied.
 
-(!docs/pages/includes/diagnostics/diag-addr-prereqs-tabs.mdx flags="--debug" !)
+<DocsPagesIncludesDiagnosticsDiagAddrPrereqsTabs flags="--debug" />
 
 ### Collecting profiles
 

@@ -8,6 +8,15 @@ tags:
  - infrastructure-identity
 page_type: how-to
 ---
+import DocsPagesIncludesIacClients from "@version/docs/pages/includes/iac-clients.mdx";
+import DocsPagesIncludesProvisionTokenOracleSpec from "@version/docs/pages/includes/provision-token/oracle-spec.mdx";
+import DocsPagesIncludesProvisionTokenOracleSpecHcl from "@version/docs/pages/includes/provision-token/oracle-spec-hcl.mdx";
+import DocsPagesIncludesProvisionTokenOracleSpecKube from "@version/docs/pages/includes/provision-token/oracle-spec-kube.mdx";
+
+
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
+import DocsPagesIncludesInstallLinux from "@version/docs/pages/includes/install-linux.mdx";
+import DocsPagesIncludesStartTeleport from "@version/docs/pages/includes/start-teleport.mdx";
 
 In this guide, you will use the **Oracle join method** to configure
 Teleport processes to join your Teleport cluster without sharing any secrets
@@ -33,10 +42,10 @@ self-authentication request to the OCI API for the Auth Service to execute.
 
 ## Prerequisites
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx edition="Teleport (v17.3.0 or higher)"!)
+<DocsPagesIncludesEditionPrereqsTabs edition="Teleport (v17.3.0 or higher)" />
 
 - An OCI Compute instance to host a Teleport service.
-- (!docs/pages/includes/iac-clients.mdx!)
+- <DocsPagesIncludesIacClients />
 
 ## Step 1/3. Create the Oracle joining token
 
@@ -54,7 +63,7 @@ Compute instances will run.
 In Teleport v18.4.0 or higher you can also specify exact compute instance OCIDs
 that will be allowed.
 
-(!docs/pages/includes/provision-token/oracle-spec.mdx!)
+<DocsPagesIncludesProvisionTokenOracleSpec />
 
 Run the following command to create the token:
 
@@ -68,14 +77,14 @@ $ tctl create token.yaml
 Add the following resource to your Terraform configuration, replacing values as
 indicated:
 
-(!docs/pages/includes/provision-token/oracle-spec-hcl.mdx!)
+<DocsPagesIncludesProvisionTokenOracleSpecHcl />
 
 </TabItem>
 <TabItem label="Kubernetes">
 
 Add the following Kubernetes resource manifest, replacing values as indicated:
 
-(!docs/pages/includes/provision-token/oracle-spec-kube.mdx!)
+<DocsPagesIncludesProvisionTokenOracleSpecKube />
 
 </TabItem>
 </Tabs>
@@ -136,7 +145,7 @@ process should be run directly on an OCI Compute instance.
 
 1. Install Teleport on your OCI Compute instance.
 
-   (!docs/pages/includes/install-linux.mdx!)
+   <DocsPagesIncludesInstallLinux />
 
 1. Configure your Teleport process with a custom `teleport.yaml` file. Use the
    `join_params` section with `token_name` matching your token created in Step 1
@@ -160,7 +169,7 @@ process should be run directly on an OCI Compute instance.
 
 1. Start the Teleport process on your machine:
 
-   (!docs/pages/includes/start-teleport.mdx!)
+   <DocsPagesIncludesStartTeleport />
 
 1. Once you have started Teleport, confirm that your service is able to connect
    to and join your cluster.

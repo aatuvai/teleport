@@ -7,6 +7,11 @@ tags:
  - how-to
  - zero-trust
 ---
+import DocsPagesIncludesKubernetesAccessHelmHelmRepoAdd from "@version/docs/pages/includes/kubernetes-access/helm/helm-repo-add.mdx";
+
+
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
+import DocsPagesIncludesDiagnosticsKubernetesOperatorTroubleshooting from "@version/docs/pages/includes/diagnostics/kubernetes-operator-troubleshooting.mdx";
 
 This guide explains how to run the Teleport Kubernetes Operator against any remote Teleport cluster.
 If your Teleport cluster is deployed using the `teleport-cluster` Helm chart, you might want to follow
@@ -30,7 +35,7 @@ You can then deploy the Operator by installing the `teleport-operator` chart.
 
 ## Prerequisites
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx!)
+<DocsPagesIncludesEditionPrereqsTabs />
 
 - a Kubernetes cluster. You must be able to create/read Namespace, ServiceAccount,
   Deployment, Secret, Role, RoleBinding and CustomResourceDefinition resources.
@@ -124,7 +129,7 @@ $ tctl bots add operator --token operator-bot --roles operator
 
 At this point, you can configure and run the operator:
 
-(!docs/pages/includes/kubernetes-access/helm/helm-repo-add.mdx!)
+<DocsPagesIncludesKubernetesAccessHelmHelmRepoAdd />
 
 1. Recover the version of your Teleport cluster
    ```code
@@ -158,4 +163,4 @@ Helm Chart parameters are documented in the [`teleport-operator` Helm chart refe
 
 ## Troubleshooting
 
-(!docs/pages/includes/diagnostics/kubernetes-operator-troubleshooting.mdx!)
+<DocsPagesIncludesDiagnosticsKubernetesOperatorTroubleshooting />
