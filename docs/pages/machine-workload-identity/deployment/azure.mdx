@@ -9,6 +9,13 @@ tags:
  - azure
 page_type: how-to
 ---
+import DocsPagesIncludesMachineIdCreateABot from "@version/docs/pages/includes/machine-id/create-a-bot.mdx";
+
+
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
+import DocsPagesIncludesTctl from "@version/docs/pages/includes/tctl.mdx";
+import DocsPagesIncludesInstallLinux from "@version/docs/pages/includes/install-linux.mdx";
+import DocsPagesIncludesMachineIdDaemonOrOneshot from "@version/docs/pages/includes/machine-id/daemon-or-oneshot.mdx";
 
 In this guide, you will install Machine & Workload Identity's agent, `tbot`, on
 an Azure VM. The bot will be configured to use the `azure` delegated joining
@@ -29,9 +36,9 @@ occur without the use of a long-lived secret.
 
 ## Prerequisites
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx!)
+<DocsPagesIncludesEditionPrereqsTabs />
 
-- (!docs/pages/includes/tctl.mdx!)
+- <DocsPagesIncludesTctl />
 - An Azure managed identity with a role granting the
   `Microsoft.Compute/virtualMachines/read` permission. You will need to know
   the UID of this identity.
@@ -47,13 +54,13 @@ Workload Identity on.
 
 Download and install the appropriate Teleport package for your platform:
 
-(!docs/pages/includes/install-linux.mdx!)
+<DocsPagesIncludesInstallLinux />
 
 ## Step 2/4. Create a Bot
 
 **This step is completed on your local machine.**
 
-(!docs/pages/includes/machine-id/create-a-bot.mdx!)
+<DocsPagesIncludesMachineIdCreateABot />
 
 ## Step 3/4. Create a join token
 
@@ -124,7 +131,7 @@ Replace:
   identity that has been assigned to the VM.
 - `example-bot` with the name of the token you created in the third step.
 
-(!docs/pages/includes/machine-id/daemon-or-oneshot.mdx!)
+<DocsPagesIncludesMachineIdDaemonOrOneshot />
 
 ## Next steps
 

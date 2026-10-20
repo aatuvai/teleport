@@ -8,6 +8,8 @@ tags:
  - aws
 page_type: how-to
 ---
+import DocsPagesIncludesSelfHostedHelmDns from "@version/docs/pages/includes/self-hosted-helm-dns.mdx";
+
 
 In case of an outage in your cloud provider region, you need to ensure that you
 can restore your Teleport cluster to working order. In this guide, you will
@@ -240,7 +242,7 @@ have a low TTL, e.g., one minute. We expect that DNS resolvers in your users'
 networks honor the TTLs of DNS records to prevent issues with propagating
 records.
 
-(!docs/pages/includes/self-hosted-helm-dns.mdx!)
+<DocsPagesIncludesSelfHostedHelmDns />
 
 ## Guidance  
 

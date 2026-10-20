@@ -10,6 +10,29 @@ tags:
 enterprise: Identity Governance
 page_type: how-to
 ---
+import DocsPagesIncludesMachineIdPluginPrerequisites from "@version/docs/pages/includes/machine-id/plugin-prerequisites.mdx";
+import DocsPagesIncludesPluginsRefreshPluginIdentity from "@version/docs/pages/includes/plugins/refresh-plugin-identity.mdx";
+import DocsPagesIncludesPluginsAccessPluginTroubleshooting from "@version/docs/pages/includes/plugins/access-plugin-troubleshooting.mdx";
+
+
+import ExamplesResourcesPluginsTeleportSlack from "!!raw-loader!@version/examples/resources/plugins/teleport-slack.toml";
+import ExamplesResourcesPluginsTeleportSlackHelm from "!!raw-loader!@version/examples/resources/plugins/teleport-slack-helm.yaml";
+import ExamplesSystemdPluginsTeleportSlack from "!!raw-loader!@version/examples/systemd/plugins/teleport-slack.service";
+
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
+import DocsPagesIncludesTctl from "@version/docs/pages/includes/tctl.mdx";
+import DocsPagesIncludesPluginsInstallAccessRequest from "@version/docs/pages/includes/plugins/install-access-request.mdx";
+import DocsPagesIncludesPluginsConfigTomlTeleport from "@version/docs/pages/includes/plugins/config-toml-teleport.mdx";
+import DocsPagesIncludesPluginsCreateRequest from "@version/docs/pages/includes/plugins/create-request.mdx";
+import DocsPagesIncludesPluginsResolveRequest from "@version/docs/pages/includes/plugins/resolve-request.mdx";
+
+import DocsPagesIncludesPluginsEditorRequestRbac from "@version/docs/pages/includes/plugins/editor-request-rbac.mdx";
+import DocsPagesIncludesPluginsRbacImpersonate from "@version/docs/pages/includes/plugins/rbac-impersonate.mdx";
+
+import DocsPagesIncludesPluginsEnroll from "@version/docs/pages/includes/plugins/enroll.mdx";
+import DocsPagesIncludesPluginsRbacImpersonateMachineId from "@version/docs/pages/includes/plugins/rbac-impersonate-machine-id.mdx";
+import DocsPagesIncludesPluginsTbotIdentity from "@version/docs/pages/includes/plugins/tbot-identity.mdx";
+import DocsPagesIncludesPluginsIdentityExport from "@version/docs/pages/includes/plugins/identity-export.mdx";
 
 import SlackVideoMp4 from "@version/docs/img/enterprise/plugins/slack/slack.mp4"
 import SlackVideoWebm from "@version/docs/img/enterprise/plugins/slack/slack.webm"
@@ -25,7 +48,7 @@ by relying on Slack authentication and bypassing Teleport authentication.
 <details>
 <summary>This integration is hosted on Teleport Cloud</summary>
 
-(!docs/pages/includes/plugins/enroll.mdx name="the Slack integration"!)
+<DocsPagesIncludesPluginsEnroll name="the Slack integration" />
 
 </details>
 
@@ -56,9 +79,9 @@ Here is an example of sending an Access Request via Teleport's Slack plugin:
 
 ## Prerequisites
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx edition="Teleport Enterprise"!)
+<DocsPagesIncludesEditionPrereqsTabs edition="Teleport Enterprise" />
 
-(!docs/pages/includes/machine-id/plugin-prerequisites.mdx!)
+<DocsPagesIncludesMachineIdPluginPrerequisites />
 
 - Slack admin privileges to create an app and install it to your workspace. Your
   Slack profile must have the "Workspace Owner" or "Workspace Admin" banner
@@ -141,14 +164,14 @@ Here is an example of sending an Access Request via Teleport's Slack plugin:
 
   </details>
 
-(!docs/pages/includes/tctl.mdx!)
+<DocsPagesIncludesTctl />
 
 ## Step 1/7. Define RBAC resources
 
 Before you set up the Slack plugin, you will need to enable Role Access Requests
 in your Teleport cluster.
 
-(!/docs/pages/includes/plugins/editor-request-rbac.mdx!)
+<DocsPagesIncludesPluginsEditorRequestRbac />
 
 ## Step 2/7. Define a Teleport Slack plugin user
 
@@ -158,10 +181,10 @@ or a regular Teleport user.
 
 <Tabs>
 <TabItem label="Machine & Workload Identity">
-(!docs/pages/includes/plugins/rbac-impersonate-machine-id.mdx!)
+<DocsPagesIncludesPluginsRbacImpersonateMachineId />
 </TabItem>
 <TabItem label="Long-lived identity files">
-(!docs/pages/includes/plugins/rbac-impersonate.mdx!)
+<DocsPagesIncludesPluginsRbacImpersonate />
 </TabItem>
 </Tabs>
 
@@ -174,16 +197,16 @@ longer-lived identity files with `tctl`:
 
 <Tabs>
 <TabItem label="Machine & Workload Identity">
-(!docs/pages/includes/plugins/tbot-identity.mdx secret="teleport-plugin-slack-identity"!)
+<DocsPagesIncludesPluginsTbotIdentity secret="teleport-plugin-slack-identity" />
 </TabItem>
 <TabItem label="Long-lived identity files">
-(!docs/pages/includes/plugins/identity-export.mdx plugin="slack" secret="teleport-plugin-slack-identity"!)
+<DocsPagesIncludesPluginsIdentityExport plugin="slack" secret="teleport-plugin-slack-identity" />
 </TabItem>
 </Tabs>
 
 ## Step 4/7. Install the Teleport Slack plugin
 
-(!docs/pages/includes/plugins/install-access-request.mdx name="slack"!)
+<DocsPagesIncludesPluginsInstallAccessRequest name="slack" />
 
 ## Step 5/7. Configure the Teleport Slack plugin
 
@@ -207,18 +230,22 @@ $ teleport-slack configure | sudo tee /etc/teleport-slack.toml > /dev/null
 
 This should result in a configuration file like the one below:
 
-```toml
-(!examples/resources/plugins/teleport-slack.toml!)
-```
+<CodeBlock language="toml">
+
+  {ExamplesResourcesPluginsTeleportSlack}
+
+</CodeBlock>
 </TabItem>
 <TabItem label="Helm Chart">
 The Slack Helm Chart uses a YAML values file to configure the plugin.
 On your local workstation, create a file called `teleport-slack-helm.yaml`
 based on the following example:
 
-```toml
-(!examples/resources/plugins/teleport-slack-helm.yaml!)
-```
+<CodeBlock language="toml">
+
+  {ExamplesResourcesPluginsTeleportSlackHelm}
+
+</CodeBlock>
 
 </TabItem>
 </Tabs>
@@ -231,9 +258,9 @@ Open the configuration file created for the Teleport Slack plugin and update the
 
 The Slack plugin uses this section to connect to your Teleport cluster:
 
-(!docs/pages/includes/plugins/config-toml-teleport.mdx!)
+<DocsPagesIncludesPluginsConfigTomlTeleport />
 
-(!docs/pages/includes/plugins/refresh-plugin-identity.mdx!)
+<DocsPagesIncludesPluginsRefreshPluginIdentity />
 
 **`[slack]`**
 
@@ -395,7 +422,7 @@ following steps.
 
 ### Create an Access Request
 
-(!docs/pages/includes/plugins/create-request.mdx!)
+<DocsPagesIncludesPluginsCreateRequest />
 
 The user you configured earlier to review the request should receive a direct
 message from "Teleport" in Slack allowing them to visit a link in the Teleport
@@ -403,7 +430,7 @@ Web UI and either approve or deny the request.
 
 ### Resolve the request
 
-(!docs/pages/includes/plugins/resolve-request.mdx!)
+<DocsPagesIncludesPluginsResolveRequest />
 
 Once the request is resolved, the Slack bot will add an emoji reaction of ✅ or
 ❌ to the Slack message for the Access Request, depending on whether the request
@@ -431,9 +458,11 @@ In production, we recommend starting the Teleport plugin daemon via an init
 system like systemd.  Here's the recommended Teleport plugin service unit file
 for systemd:
 
-```ini
-(!examples/systemd/plugins/teleport-slack.service!)
-```
+<CodeBlock language="ini">
+
+  {ExamplesSystemdPluginsTeleportSlack}
+
+</CodeBlock>
 
 Save this as `teleport-slack.service` in either `/usr/lib/systemd/system/` or
 another [unit file load
@@ -449,7 +478,7 @@ $ sudo systemctl start teleport-slack
 
 ## Troubleshooting
 
-(!docs/pages/includes/plugins/access-plugin-troubleshooting.mdx!)
+<DocsPagesIncludesPluginsAccessPluginTroubleshooting />
 
 ## Next steps
 

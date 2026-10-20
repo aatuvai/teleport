@@ -9,7 +9,11 @@ tags:
  - aws
 page_type: how-to
 ---
+import DocsPagesIncludesDatabaseAccessDbIntroduction from "@version/docs/pages/includes/database-access/db-introduction.mdx";
 
-(!docs/pages/includes/database-access/db-introduction.mdx dbType="Amazon RDS proxy for PostgreSQL" dbConfigure="with IAM authentication"!)
 
-(!docs/pages/includes/database-access/rds-proxy.mdx protocol="postgres"!)
+import DocsPagesIncludesDatabaseAccessRdsProxy from "@version/docs/pages/includes/database-access/rds-proxy.mdx";
+
+<DocsPagesIncludesDatabaseAccessDbIntroduction dbType="Amazon RDS proxy for PostgreSQL" dbConfigure="with IAM authentication" />
+
+<DocsPagesIncludesDatabaseAccessRdsProxy protocol="postgres" />

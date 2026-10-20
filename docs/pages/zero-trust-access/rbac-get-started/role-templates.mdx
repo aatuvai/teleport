@@ -8,6 +8,10 @@ tags:
  - zero-trust
  - privileged-access
 ---
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
+import DocsPagesIncludesTctl from "@version/docs/pages/includes/tctl.mdx";
+import DocsPagesIncludesCreateRoleUsingWeb from "@version/docs/pages/includes/create-role-using-web.mdx";
+
 
 As organizations grow, infrastructure teams have to figure out how to define
 access control policies that don't require manual configuration every time
@@ -24,9 +28,9 @@ other policies.
 
 ## Prerequisites
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx!)
+<DocsPagesIncludesEditionPrereqsTabs />
 
-- (!docs/pages/includes/tctl.mdx!)
+- <DocsPagesIncludesTctl />
 
 ## Local users
 
@@ -84,7 +88,7 @@ $ tctl users add alice --roles=alice
 $ tctl users add bob --roles=bob
 ```
 
-(!docs/pages/includes/create-role-using-web.mdx!)
+<DocsPagesIncludesCreateRoleUsingWeb />
 
 Having one role per user is not going to scale well. Because the roles
 are so similar, we can assign variables to each user, and use just one role template

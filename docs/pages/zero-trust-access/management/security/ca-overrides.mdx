@@ -7,6 +7,8 @@ tags:
  - resiliency
 enterprise: Certificate Authority Overrides
 ---
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
+
 
 Certificate Authority Overrides let a cluster administrator override a
 self-signed Teleport CA certificate with a certificate signed by an external
@@ -55,7 +57,7 @@ The `cert_authority_override` resource targets a CA with the following fields:
 
 ## Prerequisites
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx edition="Teleport Enterprise (v18.9.0 or higher)"!)
+<DocsPagesIncludesEditionPrereqsTabs edition="Teleport Enterprise (v18.9.0 or higher)" />
 
 - A Teleport user with a role that has access to the `cert_authority_override`
   resource. The preset `editor` role does not have this access. To grant it, add

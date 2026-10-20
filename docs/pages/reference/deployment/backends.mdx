@@ -5,6 +5,14 @@ tags:
  - conceptual
  - platform-wide
 ---
+import DocsPagesIncludesCloudCallToAction from "@version/docs/pages/includes/cloud/call-to-action.mdx";
+import DocsPagesIncludesAwsCredentials from "@version/docs/pages/includes/aws-credentials.mdx";
+import DocsPagesIncludesS3IamPolicy from "@version/docs/pages/includes/s3-iam-policy.mdx";
+import DocsPagesIncludesDynamodbIamPolicy from "@version/docs/pages/includes/dynamodb-iam-policy.mdx";
+
+
+import ExamplesAthenaVariables from "!!raw-loader!@version/examples/athena/variables.tf";
+import ExamplesAthenaAthena from "!!raw-loader!@version/examples/athena/athena.tf";
 
 A Teleport cluster stores different types of data in different locations. By
 default everything is stored in a local directory on the Auth Service host.
@@ -41,7 +49,7 @@ If High Availability cannot be provided by the infrastructure (perhaps you're
 running Teleport on a bare metal cluster), you can still configure Teleport to
 run in a highly available fashion.
 
-(!docs/pages/includes/cloud/call-to-action.mdx!)
+<DocsPagesIncludesCloudCallToAction />
 
 ## Auth Service State
 
@@ -729,7 +737,7 @@ solution in a non-production environment before deploying to production.
 The Teleport Auth Service must be able to read AWS credentials in order to
 authenticate to S3.
 
-(!docs/pages/includes/aws-credentials.mdx service="the Teleport Auth Service"!)
+<DocsPagesIncludesAwsCredentials service="the Teleport Auth Service" />
 
 ### Configuring the S3 backend
 
@@ -796,7 +804,7 @@ allow.
 
 ### S3 IAM policy
 
-(!docs/pages/includes/s3-iam-policy.mdx!)
+<DocsPagesIncludesS3IamPolicy />
 
 ### S3 Server Side Encryption
 
@@ -977,7 +985,7 @@ Teleport supports single-region DynamoDB tables for storage. Using a global tabl
 The Teleport Auth Service must be able to read AWS credentials in order to
 authenticate to DynamoDB.
 
-(!docs/pages/includes/aws-credentials.mdx service="the Teleport Auth Service"!)
+<DocsPagesIncludesAwsCredentials service="the Teleport Auth Service" />
 
 The IAM role that the Teleport Auth Service authenticates as must have the
 policies specified in the next section.
@@ -987,7 +995,7 @@ policies specified in the next section.
 Make sure that the IAM role assigned to Teleport is configured with sufficient
 access to DynamoDB.
 
-(!docs/pages/includes/dynamodb-iam-policy.mdx!)
+<DocsPagesIncludesDynamodbIamPolicy />
 
 ### Configuring the DynamoDB backend
 
@@ -1129,10 +1137,14 @@ the following Terraform script:
 
 <details>
 <summary>Terraform script"</summary>
-```
-(!examples/athena/variables.tf!)
-(!examples/athena/athena.tf!)
-```
+<CodeBlock>
+
+  {ExamplesAthenaVariables}
+
+
+  {ExamplesAthenaAthena}
+
+</CodeBlock>
 </details>
 
 ### Configuring the Athena audit log backend
@@ -1191,7 +1203,7 @@ The following parameters are optional:
 The Teleport Auth Service must be able to read AWS credentials in order to
 authenticate to Athena.
 
-(!docs/pages/includes/aws-credentials.mdx service="the Teleport Auth Service"!)
+<DocsPagesIncludesAwsCredentials service="the Teleport Auth Service" />
 
 The IAM role that the Teleport Auth Service authenticates as must have the
 policies specified in the next section.

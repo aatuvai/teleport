@@ -8,6 +8,14 @@ tags:
  - infrastructure-identity
 page_type: how-to
 ---
+import DocsPagesIncludesApplicationAccessJwtConfigureClaims from "@version/docs/pages/includes/application-access/jwt-configure-claims.mdx";
+
+
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
+import DocsPagesIncludesTctl from "@version/docs/pages/includes/tctl.mdx";
+import DocsPagesIncludesInstallLinux from "@version/docs/pages/includes/install-linux.mdx";
+import DocsPagesIncludesStartTeleport from "@version/docs/pages/includes/start-teleport.mdx";
+import DocsPagesIncludesCreateRoleUsingWeb from "@version/docs/pages/includes/create-role-using-web.mdx";
 
 This guide shows you how to enroll a web application with your Teleport cluster
 in order to set up role-based access controls, audit logging, and other Teleport
@@ -39,7 +47,7 @@ authority.
 
 ## Prerequisites
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx!)
+<DocsPagesIncludesEditionPrereqsTabs />
 
 - A web application that you want to protect with Teleport. The web application
   should be running in a private network. In this guide, we assume that the web
@@ -48,7 +56,7 @@ authority.
 - A Linux server where you will run the Teleport Application Service. Your
   network must enable the server to connect to your web application.
 
-- (!docs/pages/includes/tctl.mdx!)
+- <DocsPagesIncludesTctl />
 
 - **If you are self-hosting Teleport**, one of the following DNS records, which
   allow users and API clients to reach Teleport-protected applications:
@@ -111,7 +119,7 @@ join the cluster.
 Follow the instructions below on the host where you will install the Teleport
 Application Service:
 
-(!docs/pages/includes/install-linux.mdx!)
+<DocsPagesIncludesInstallLinux />
 
 ### Configure the Teleport Application Service
 
@@ -155,7 +163,7 @@ Application Service:
 
 ### Run the Teleport Application Service
 
-(!docs/pages/includes/start-teleport.mdx service="the Teleport Application Service"!)
+<DocsPagesIncludesStartTeleport service="the Teleport Application Service" />
 
 <Checkpoint
   title="Verify the Application Service is running"
@@ -210,7 +218,7 @@ Application Service:
    $ tctl users add --roles=demo-app-access appuser
    ```
 
-   (!docs/pages/includes/create-role-using-web.mdx!)
+   <DocsPagesIncludesCreateRoleUsingWeb />
 
    When `appuser` attempts to access the application you enrolled earlier
    through the Teleport Web UI, the Teleport Proxy Service forwards the
@@ -468,7 +476,7 @@ Controls Reference](../../../reference/access-controls/roles.mdx).
 
 ### Configuring the JWT token
 
-(!docs/pages/includes/application-access/jwt-configure-claims.mdx!)
+<DocsPagesIncludesApplicationAccessJwtConfigureClaims />
 
 ### Backends-for-Frontends support
 

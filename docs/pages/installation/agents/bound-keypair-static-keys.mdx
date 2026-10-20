@@ -7,6 +7,14 @@ tags:
  - zero-trust
  - infrastructure-identity
 ---
+import DocsPagesIncludesProvisionTokenBoundKeypairSpec from "@version/docs/pages/includes/provision-token/bound-keypair-spec.mdx";
+import DocsPagesIncludesProvisionTokenBoundKeypairSpecHcl from "@version/docs/pages/includes/provision-token/bound-keypair-spec-hcl.mdx";
+import DocsPagesIncludesProvisionTokenBoundKeypairSpecKube from "@version/docs/pages/includes/provision-token/bound-keypair-spec-kube.mdx";
+
+
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
+import DocsPagesIncludesInstallLinux from "@version/docs/pages/includes/install-linux.mdx";
+import DocsPagesIncludesStartTeleport from "@version/docs/pages/includes/start-teleport.mdx";
 
 This guide explains how to use the **Bound Keypair join method** to configure
 Teleport processes to join your Teleport cluster.
@@ -63,7 +71,7 @@ For more information on agent joining limitations, see the
 
 ## Prerequisites
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx edition="Teleport (v18.8.0 or higher)" clients="\`tsh\`, \`tctl\`, and \`tbot\` clients"!)
+<DocsPagesIncludesEditionPrereqsTabs edition="Teleport (v18.8.0 or higher)" clients="\\`tsh\\`, \\`tctl\\`, and \\`tbot\\` clients" />
 
 - A Linux host, either bare-metal or a VM with persistent storage
 
@@ -71,7 +79,7 @@ For more information on agent joining limitations, see the
 
 Install Teleport on your Linux VM or bare-metal host.
 
-(!docs/pages/includes/install-linux.mdx!)
+<DocsPagesIncludesInstallLinux />
 
 ## Step 2/5. Generate a static key
 
@@ -116,7 +124,7 @@ the following changes:
 - Set `spec.bound_keypair.recovery.mode` to `insecure`, required for static key
   joining.
 
-(!docs/pages/includes/provision-token/bound-keypair-spec.mdx!)
+<DocsPagesIncludesProvisionTokenBoundKeypairSpec />
 
 When finished customizing the token, run the following command to create it:
 
@@ -136,7 +144,7 @@ Refer to the template below and make the following changes:
 - Set `spec.bound_keypair.recovery.mode` to `insecure`, required for static key
   joining.
 
-(!docs/pages/includes/provision-token/bound-keypair-spec-hcl.mdx!)
+<DocsPagesIncludesProvisionTokenBoundKeypairSpecHcl />
 
 </TabItem>
 <TabItem label="Kubernetes">
@@ -150,7 +158,7 @@ following changes:
 - Set `spec.bound_keypair.recovery.mode` to `insecure`, required for static key
   joining.
 
-(!docs/pages/includes/provision-token/bound-keypair-spec-kube.mdx!)
+<DocsPagesIncludesProvisionTokenBoundKeypairSpecKube />
 
 When finished customizing the token, run the following command to create it:
 
@@ -194,7 +202,7 @@ in Step 2.
 
 ## Step 5/5. Launch your Teleport process
 
-(!docs/pages/includes/start-teleport.mdx!)
+<DocsPagesIncludesStartTeleport />
 
 Once you have started Teleport, confirm that your service is able to connect to
 and join your cluster.

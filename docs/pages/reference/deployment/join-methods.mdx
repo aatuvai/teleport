@@ -7,6 +7,29 @@ tags:
  - reference
  - zero-trust
 ---
+import DocsPagesIncludesProvisionTokenEphemeralSpec from "@version/docs/pages/includes/provision-token/ephemeral-spec.mdx";
+import DocsPagesIncludesProvisionTokenBoundKeypairSpec from "@version/docs/pages/includes/provision-token/bound-keypair-spec.mdx";
+import DocsPagesIncludesProvisionTokenIamSpec from "@version/docs/pages/includes/provision-token/iam-spec.mdx";
+import DocsPagesIncludesProvisionTokenEc2Spec from "@version/docs/pages/includes/provision-token/ec2-spec.mdx";
+import DocsPagesIncludesProvisionTokenAzureSpec from "@version/docs/pages/includes/provision-token/azure-spec.mdx";
+import DocsPagesIncludesProvisionTokenAzureDevopsSpec from "@version/docs/pages/includes/provision-token/azure-devops-spec.mdx";
+import DocsPagesIncludesProvisionTokenEnv0Spec from "@version/docs/pages/includes/provision-token/env0-spec.mdx";
+import DocsPagesIncludesProvisionTokenGcpSpec from "@version/docs/pages/includes/provision-token/gcp-spec.mdx";
+import DocsPagesIncludesProvisionTokenGenericOidcSpec from "@version/docs/pages/includes/provision-token/generic-oidc-spec.mdx";
+import DocsPagesIncludesProvisionTokenGithubSpec from "@version/docs/pages/includes/provision-token/github-spec.mdx";
+import DocsPagesIncludesProvisionTokenCircleciSpec from "@version/docs/pages/includes/provision-token/circleci-spec.mdx";
+import DocsPagesIncludesProvisionTokenGitlabSpec from "@version/docs/pages/includes/provision-token/gitlab-spec.mdx";
+import DocsPagesIncludesProvisionTokenKubernetesInClusterSpec from "@version/docs/pages/includes/provision-token/kubernetes-in-cluster-spec.mdx";
+import DocsPagesIncludesProvisionTokenKubernetesJwksSpec from "@version/docs/pages/includes/provision-token/kubernetes-jwks-spec.mdx";
+import DocsPagesIncludesProvisionTokenKubernetesOidcSpec from "@version/docs/pages/includes/provision-token/kubernetes-oidc-spec.mdx";
+import DocsPagesIncludesProvisionTokenTpmSpec from "@version/docs/pages/includes/provision-token/tpm-spec.mdx";
+import DocsPagesIncludesProvisionTokenTerraformSpec from "@version/docs/pages/includes/provision-token/terraform-spec.mdx";
+import DocsPagesIncludesProvisionTokenSpaceliftSpec from "@version/docs/pages/includes/provision-token/spacelift-spec.mdx";
+import DocsPagesIncludesProvisionTokenBitbucketSpec from "@version/docs/pages/includes/provision-token/bitbucket-spec.mdx";
+import DocsPagesIncludesProvisionTokenOracleSpec from "@version/docs/pages/includes/provision-token/oracle-spec.mdx";
+
+
+import DocsPagesIncludesTpmJoiningBackground from "@version/docs/pages/includes/tpm-joining-background.mdx";
 
 This guide explains the core concepts behind the Teleport joining process,
 references all supported join methods and classifies them based on their
@@ -264,7 +287,7 @@ $ tctl tokens add --type discovery,app --ttl 15m
 
 Or as Teleport resources:
 
-(!docs/pages/includes/provision-token/ephemeral-spec.mdx!)
+<DocsPagesIncludesProvisionTokenEphemeralSpec />
 
 When a Machine & Workload Identity Bot uses an ephemeral join token, the token is deleted.
 
@@ -297,7 +320,7 @@ certificates. Note that Bound Keypair for agents is subject to
 [certain limitations](../machine-workload-identity/bound-keypair/admin-guide.mdx#limitations-of-bound-keypair-joining-for-teleport-agents)
 that should be acknowledged before use.
 
-(!docs/pages/includes/provision-token/bound-keypair-spec.mdx!)
+<DocsPagesIncludesProvisionTokenBoundKeypairSpec />
 
 <Admonition type="note" title="See Also">
 - [Deploying Machine & Workload Identity with Bound Keypair joining](../machine-workload-identity/bound-keypair/getting-started.mdx)
@@ -312,7 +335,7 @@ IAM role with no attached policies is sufficient. No IAM credentials are require
 
 This is the recommended method to join workload running on AWS.
 
-(!docs/pages/includes/provision-token/iam-spec.mdx!)
+<DocsPagesIncludesProvisionTokenIamSpec />
 
 <Admonition type="note" title="See Also">
 - [Joining Services via AWS IAM Role](../../installation/agents/aws-iam.mdx).
@@ -337,7 +360,7 @@ method](#aws-iam-role-iam) or [ephemeral secret tokens](#ephemeral-tokens).
 
 </Admonition>
 
-(!docs/pages/includes/provision-token/ec2-spec.mdx!)
+<DocsPagesIncludesProvisionTokenEc2Spec />
 
 <Admonition type="note" title="See Also">
 [Joining Services via AWS EC2 Identity Document](../../installation/agents/aws-ec2.mdx).
@@ -348,7 +371,7 @@ method](#aws-iam-role-iam) or [ephemeral secret tokens](#ephemeral-tokens).
 The Azure join method is available to any Teleport process running in an
 Azure Virtual Machine.
 
-(!docs/pages/includes/provision-token/azure-spec.mdx!)
+<DocsPagesIncludesProvisionTokenAzureSpec />
 
 <Admonition type="note" title="See Also">
 - [Joining Services via Azure Managed Identity](../../installation/agents/azure.mdx).
@@ -363,7 +386,7 @@ pipeline. This join method is typically used with
 to access Teleport-protected resources in Azure DevOps pipelines without the
 use of long-lived secrets.
 
-(!docs/pages/includes/provision-token/azure-devops-spec.mdx!)
+<DocsPagesIncludesProvisionTokenAzureDevopsSpec />
 
 <Admonition type="note" title="See Also">
 - [Deploying Machine & Workload Identity on Azure DevOps](../../machine-workload-identity/deployment/azure-devops.mdx)
@@ -382,7 +405,7 @@ instead.
 
 The `env0` join method requires Teleport v18.4.0 or later.
 
-(!docs/pages/includes/provision-token/env0-spec.mdx!)
+<DocsPagesIncludesProvisionTokenEnv0Spec />
 
 <Admonition type="note" title="See Also">
 - [Run the Teleport Terraform Provider on Env0](../../configuration/terraform-provider/env0.mdx)
@@ -396,7 +419,7 @@ The VM must have a
 assigned to it (the default service account is fine). No IAM roles are required
 on the Teleport process joining the cluster.
 
-(!docs/pages/includes/provision-token/gcp-spec.mdx!)
+<DocsPagesIncludesProvisionTokenGcpSpec />
 
 <Admonition type="note" title="See Also">
 - How to [Join Services with GCP](../../installation/agents/gcp.mdx).
@@ -419,7 +442,7 @@ and secure.
 
 The `generic_oidc` join method requires Teleport v18.11.0 or later.
 
-(!docs/pages/includes/provision-token/generic-oidc-spec.mdx!)
+<DocsPagesIncludesProvisionTokenGenericOidcSpec />
 
 <Admonition type="note" title="See Also">
 - [Deploying Machine & Workload Identity on arbitrary OIDC providers](../../machine-workload-identity/deployment/generic-oidc.mdx)
@@ -433,7 +456,7 @@ Actions runners as well as GitHub Enterprise Server. This join method is
 typically used with [Machine & Workload Identity](../../machine-workload-identity/introduction.mdx) to access
 Teleport-protected resources in GitHub Actions pipelines.
 
-(!docs/pages/includes/provision-token/github-spec.mdx!)
+<DocsPagesIncludesProvisionTokenGithubSpec />
 
 <Admonition type="note" title="See Also">
 - [Deploying Machine & Workload Identity on GitHub Actions](../../machine-workload-identity/deployment/github-actions.mdx)
@@ -461,7 +484,7 @@ their source repository:
 This join method is typically used with [Machine & Workload Identity](../../machine-workload-identity/introduction.mdx)
 to access Teleport-protected resources in Circle CI pipelines.
 
-(!docs/pages/includes/provision-token/circleci-spec.mdx!)
+<DocsPagesIncludesProvisionTokenCircleciSpec />
 
 <Admonition type="note" title="See Also">
 - [Deploying Machine & Workload Identity on Circle CI](../../machine-workload-identity/deployment/circleci.mdx)
@@ -475,7 +498,7 @@ instances. **The minimum supported GitLab version is 15.7**.
 This join method is typically used with [Machine & Workload Identity](../../machine-workload-identity/introduction.mdx)
 to access Teleport-protected resources in Gitlab CI pipelines.
 
-(!docs/pages/includes/provision-token/gitlab-spec.mdx!)
+<DocsPagesIncludesProvisionTokenGitlabSpec />
 
 <Admonition type="note" title="See Also">
 - [Deploying Machine & Workload Identity on GitLab CI](../../machine-workload-identity/deployment/gitlab.mdx)
@@ -501,7 +524,7 @@ clusters in Kubernetes.
 This method should be preferred when available as tokens are revoked as soon as
 the pod enters the `Terminated` state.
 
-(!docs/pages/includes/provision-token/kubernetes-in-cluster-spec.mdx!)
+<DocsPagesIncludesProvisionTokenKubernetesInClusterSpec />
 
 <Admonition type="note" title="See Also">
 - [Joining Services via Kubernetes ServiceAccount Token](../../installation/agents/kubernetes.mdx)
@@ -516,7 +539,7 @@ This join method works by exporting the public Kubernetes signing keys and using
 them to validate Kubernetes SA token signatures. The signature validation can be
 performed by an Auth Service without access to the Kubernetes.
 
-(!docs/pages/includes/provision-token/kubernetes-jwks-spec.mdx!)
+<DocsPagesIncludesProvisionTokenKubernetesJwksSpec />
 
 <Admonition type="warning">
 After rotating the Kubernetes CA, you must update the Kubernetes JWKS tokens
@@ -549,7 +572,7 @@ To use Kubernetes OIDC joining, your Teleport cluster must be running at least
 version 18.1.5.
 </Admonition>
 
-(!docs/pages/includes/provision-token/kubernetes-oidc-spec.mdx!)
+<DocsPagesIncludesProvisionTokenKubernetesOidcSpec />
 
 <Admonition type="note" title="See Also">
 - [Deploying Machine & Workload Identity on Kubernetes with OIDC](../../machine-workload-identity/deployment/kubernetes-oidc.mdx)
@@ -557,9 +580,9 @@ version 18.1.5.
 
 ### Trusted Platform Module: `tpm`
 
-(!docs/pages/includes/tpm-joining-background.mdx!)
+<DocsPagesIncludesTpmJoiningBackground />
 
-(!docs/pages/includes/provision-token/tpm-spec.mdx!)
+<DocsPagesIncludesProvisionTokenTpmSpec />
 
 <Admonition type="note" title="See Also">
 - [Deploying Machine & Workload Identity on Linux: TPM](../../machine-workload-identity/deployment/linux-tpm.mdx)
@@ -577,7 +600,7 @@ instead.
 Support for self-hosted Terraform Enterprise requires Teleport Enterprise.
 </Admonition>
 
-(!docs/pages/includes/provision-token/terraform-spec.mdx!)
+<DocsPagesIncludesProvisionTokenTerraformSpec />
 
 <Admonition type="note" title="See Also">
 - [Run the Teleport Terraform Provider on Terraform Cloud](../../configuration/terraform-provider/terraform-cloud.mdx)
@@ -589,7 +612,7 @@ This join method is used to authenticate using Spacelift. It is typically used
 by the Teleport Terraform provider on Spacelift (including self-hosted
 deployments).
 
-(!docs/pages/includes/provision-token/spacelift-spec.mdx!)
+<DocsPagesIncludesProvisionTokenSpaceliftSpec />
 
 <Admonition type="note" title="See Also">
     - [Run the Teleport Terraform Provider on Spacelift](../../configuration/terraform-provider/spacelift.mdx)
@@ -602,7 +625,7 @@ Connect, and is typically used to allow either Machine & Workload Identity's
 `tbot` or the Teleport Terraform provider to authenticate to Teleport without
 use of shared secrets.
 
-(!docs/pages/includes/provision-token/bitbucket-spec.mdx!)
+<DocsPagesIncludesProvisionTokenBitbucketSpec />
 
 <Admonition type="note" title="See Also">
 - [Deploying Machine & Workload Identity on Bitbucket Pipelines](../../machine-workload-identity/deployment/bitbucket.mdx)
@@ -613,7 +636,7 @@ use of shared secrets.
 The Oracle join method is available to any Teleport process running on an Oracle
 Cloud Compute instance.
 
-(!docs/pages/includes/provision-token/oracle-spec.mdx!)
+<DocsPagesIncludesProvisionTokenOracleSpec />
 
 <Admonition type="note" title="See Also">
 - How to [Join Services with Oracle Cloud](../../installation/agents/oracle.mdx).

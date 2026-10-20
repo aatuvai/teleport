@@ -1,7 +1,11 @@
-{/* this comment is here to make the include below render */}
-(!docs/pages/includes/discovery/tctl-discovery-status.mdx provider="AWS" cloud="aws" resource="AWS EC2"!)
+import DocsPagesIncludesAutoDiscoveryTctlDiscoveryNodesAws from "@version/docs/pages/includes/auto-discovery/tctl-discovery-nodes-aws.mdx";
 
-(!docs/pages/includes/auto-discovery/tctl-discovery-nodes-aws.mdx!)
+import DocsPagesIncludesDiscoveryTctlDiscoveryStatus from "@version/docs/pages/includes/discovery/tctl-discovery-status.mdx";
+
+{/* this comment is here to make the include below render */}
+<DocsPagesIncludesDiscoveryTctlDiscoveryStatus provider="AWS" cloud="aws" resource="AWS EC2" />
+
+<DocsPagesIncludesAutoDiscoveryTctlDiscoveryNodesAws />
 
 If Installs are showing failed or instances are failing to appear check the
 Command history in AWS Systems Manager -> Node Management -> Run Command.

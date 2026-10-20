@@ -1,5 +1,5 @@
-The Teleport Database Service authenticates to your self-hosted {{ db }}
-database using mutual TLS. {{ db }} trusts the Teleport certificate authority
+The Teleport Database Service authenticates to your self-hosted {props.db}
+database using mutual TLS. {props.db} trusts the Teleport certificate authority
 for database clients, and presents a certificate signed by either the Teleport
 database CA or a custom CA. When a user initiates a database session, the
 Teleport Database Service presents a certificate signed by Teleport. The

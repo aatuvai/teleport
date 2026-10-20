@@ -7,6 +7,10 @@ tags:
  - platform-wide
  - google-cloud
 ---
+import DocsPagesIncludesEnterpriseObtainlicense from "@version/docs/pages/includes/enterprise/obtainlicense.mdx";
+
+
+import DocsPagesIncludesCloudCallToAction from "@version/docs/pages/includes/cloud/call-to-action.mdx";
 
 We've created this guide to give customers an overview of how to deploy a
 self-hosted Teleport cluster on [Google Cloud](https://cloud.google.com/gcp/)
@@ -18,7 +22,7 @@ We have split this guide into:
 - [GCP Teleport Introduction](#gcp-teleport-introduction)
 - [GCP Quickstart](#gcp-quickstart)
 
-(!docs/pages/includes/cloud/call-to-action.mdx!)
+<DocsPagesIncludesCloudCallToAction />
 
 ## GCP Teleport Introduction
 
@@ -295,7 +299,7 @@ ssh_service:
   enabled: false
 ```
 
-(!docs/pages/includes/enterprise/obtainlicense.mdx!)
+<DocsPagesIncludesEnterpriseObtainlicense />
 
 Save your license file on the Auth Service instances at the path,
 `/var/lib/teleport/license.pem`.

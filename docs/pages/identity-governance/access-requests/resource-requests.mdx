@@ -11,6 +11,10 @@ tags:
 enterprise: Identity Governance
 page_type: how-to
 ---
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
+import DocsPagesIncludesTctl from "@version/docs/pages/includes/tctl.mdx";
+import DocsPagesIncludesAddRoleToUser from "@version/docs/pages/includes/add-role-to-user.mdx";
+
 
 With Teleport Resource Access Requests, users can request access to specific
 resources without needing to know anything about the roles or RBAC controls used
@@ -36,9 +40,9 @@ access, and request access to a resource.
 
 ## Prerequisites
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx edition="Teleport Enterprise"!)
+<DocsPagesIncludesEditionPrereqsTabs edition="Teleport Enterprise" />
 
-- (!docs/pages/includes/tctl.mdx!)
+- <DocsPagesIncludesTctl />
 
 ## Resource Constraints
 
@@ -108,7 +112,7 @@ user named `bob`.
 
 1. Assign the `requester` role to a user named `alice`:
 
-   (!docs/pages/includes/add-role-to-user.mdx role="requester" user="\`alice\`"!)
+   <DocsPagesIncludesAddRoleToUser role="requester" user="\\`alice\\`" />
 
 1. Repeat these steps to assign the `reviewer` role to a user named `bob`.
 

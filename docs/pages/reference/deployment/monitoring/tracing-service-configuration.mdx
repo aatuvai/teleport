@@ -5,15 +5,21 @@ tags:
  - reference
  - platform-wide
 ---
+import DocsPagesIncludesDiagnosticsTracingConfig from "!!raw-loader!@version/docs/pages/includes/diagnostics/tracing-config.yaml";
+
 
 This guide lays out the configuration fields that are related to distributed
 tracing in Teleport. You can find these fields in the Teleport configuration
 file, which is `teleport.yaml` by default:
 
-```yaml
-# Main service responsible for Distributed Tracing.
-#
-# You must enable the Tracing Service once per teleport.yaml for all
-# agents that you wish to capture traces from,
-(!docs/pages/includes/diagnostics/tracing-config.yaml!)
-```
+<CodeBlock language="yaml">
+{`
+  # Main service responsible for Distributed Tracing.
+  #
+  # You must enable the Tracing Service once per teleport.yaml for all
+  # agents that you wish to capture traces from,`
+}
+
+  {DocsPagesIncludesDiagnosticsTracingConfig}
+
+</CodeBlock>

@@ -8,6 +8,11 @@ tags:
  - infrastructure-identity
 page_type: how-to
 ---
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
+import DocsPagesIncludesTctl from "@version/docs/pages/includes/tctl.mdx";
+import DocsPagesIncludesInstallLinux from "@version/docs/pages/includes/install-linux.mdx";
+import DocsPagesIncludesStartTeleport from "@version/docs/pages/includes/start-teleport.mdx";
+
 
 Teleport can provide access to any TCP-based application. This allows users to
 connect to applications which Teleport doesn't natively support such as SMTP
@@ -31,9 +36,9 @@ Proxy Service.
 
 ## Prerequisites
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx!)
+<DocsPagesIncludesEditionPrereqsTabs />
 
-- (!docs/pages/includes/tctl.mdx!)
+- <DocsPagesIncludesTctl />
 - TCP application to connect to. In this guide we'll use a PostgreSQL running
   in Docker as an example. You can also use any TCP-based application you may
   already have.
@@ -90,7 +95,7 @@ will run.
 Now, install Teleport on the Application Service node. It must be able to reach
 both your Teleport Proxy and the TCP application it's going to proxy.
 
-(!docs/pages/includes/install-linux.mdx!)
+<DocsPagesIncludesInstallLinux />
 
 Create the Application Service configuration file `/etc/teleport.yaml` with
 the following contents:
@@ -116,7 +121,7 @@ app_service:
 Note that the URI scheme must be `tcp://` in order for Teleport to recognize
 this as a TCP application.
 
-(!docs/pages/includes/start-teleport.mdx!)
+<DocsPagesIncludesStartTeleport />
 
 ## Step 3/4. Start app proxy
 

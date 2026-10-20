@@ -9,6 +9,13 @@ tags:
  - aws
 page_type: how-to
 ---
+import DocsPagesIncludesMachineIdCreateABot from "@version/docs/pages/includes/machine-id/create-a-bot.mdx";
+
+
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
+import DocsPagesIncludesTctl from "@version/docs/pages/includes/tctl.mdx";
+import DocsPagesIncludesInstallLinux from "@version/docs/pages/includes/install-linux.mdx";
+import DocsPagesIncludesMachineIdDaemonOrOneshot from "@version/docs/pages/includes/machine-id/daemon-or-oneshot.mdx";
 
 This guide shows you how to deploy Machine & Workload Identity's agent, `tbot`,
 on an AWS EC2 instance and connect it to your Teleport cluster.
@@ -33,9 +40,9 @@ guidance on deploying `tbot` as a workload on Kubernetes.
 
 ## Prerequisites
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx!)
+<DocsPagesIncludesEditionPrereqsTabs />
 
-- (!docs/pages/includes/tctl.mdx!)
+- <DocsPagesIncludesTctl />
 - An AWS IAM role that you wish to grant access to your Teleport cluster. This
   role must be granted `sts:GetCallerIdentity`. In this guide, this role will
   be named `teleport-bot-role`.
@@ -51,13 +58,13 @@ Workload Identity on.
 
 Download and install the appropriate Teleport package for your platform:
 
-(!docs/pages/includes/install-linux.mdx!)
+<DocsPagesIncludesInstallLinux />
 
 ## Step 2/4. Create a Bot
 
 **This step is completed on your local machine.**
 
-(!docs/pages/includes/machine-id/create-a-bot.mdx!)
+<DocsPagesIncludesMachineIdCreateABot />
 
 ## Step 3/4. Create a join token
 
@@ -124,7 +131,7 @@ Replace:
   Auth Service. Prefer using the address of a Teleport Proxy Service instance.
 - `example-bot` with the name of the token you created in the third step.
 
-(!docs/pages/includes/machine-id/daemon-or-oneshot.mdx!)
+<DocsPagesIncludesMachineIdDaemonOrOneshot />
 
 ## Next steps
 

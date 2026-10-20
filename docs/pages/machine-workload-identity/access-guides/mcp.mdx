@@ -9,6 +9,12 @@ tags:
  - mcp
 page_type: how-to
 ---
+import DocsPagesIncludesMachineIdReloadTbot from "@version/docs/pages/includes/machine-id/reload-tbot.mdx";
+
+
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
+import DocsPagesIncludesTctl from "@version/docs/pages/includes/tctl.mdx";
+import DocsPagesIncludesCreateRoleUsingWeb from "@version/docs/pages/includes/create-role-using-web.mdx";
 
 Teleport protects and controls access to Model Context Protocol (MCP) servers.
 Machine & Workload Identity (MWI) can then be used to grant machines and
@@ -36,11 +42,11 @@ MCP client to access the MCP server through the Teleport Proxy.
 
 ## Prerequisites
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx!)
+<DocsPagesIncludesEditionPrereqsTabs />
 
 - If you have not already connected your MCP server to Teleport, follow
 the [MCP Getting Started guide](../../enroll-resources/mcp-access/getting-started.mdx).
-- (!docs/pages/includes/tctl.mdx!)
+- <DocsPagesIncludesTctl />
 - `tbot` and `tsh` must already be installed and configured on the machine that
 will access MCP servers. For more information, see the
 [deployment guides](../deployment/deployment.mdx).
@@ -76,7 +82,7 @@ the `app_labels` to match the labels of your MCP server, and modify the
 
 Use `tctl create -f ./role.yaml` to create the role.
 
-(!docs/pages/includes/create-role-using-web.mdx!)
+<DocsPagesIncludesCreateRoleUsingWeb />
 
 Now, use `tctl bots update` to add the role to the Bot. Replace `example`
 with the name of the Bot you created in the deployment guide and `example-role`
@@ -111,7 +117,7 @@ services:
 
 Ensure that you replace `/opt/machine-id` with the directory you have chosen.
 
-(!docs/pages/includes/machine-id/reload-tbot.mdx resource="your credentials"!)
+<DocsPagesIncludesMachineIdReloadTbot resource="your credentials" />
 
 ## Step 3/3. Connect your MCP client
 

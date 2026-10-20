@@ -1,3 +1,8 @@
+import DocsPagesIncludesAwsNoCredentialProvider from "@version/docs/pages/includes/aws-no-credential-provider.mdx";
+
+import DocsPagesIncludesDatabaseAccessConnectionTimeoutTroubleshooting from "@version/docs/pages/includes/database-access/connection-timeout-troubleshooting.mdx";
+import DocsPagesIncludesDatabaseAccessIamRoleTrustRelationship from "@version/docs/pages/includes/database-access/iam_role_trust_relationship.mdx";
+
 ### Certificate error
 
 If your `tsh db connect` error includes the following text, you likely have an RDS or DocumentDB database created before July 28, 2020, which presents an X.509 certificate that is incompatible with Teleport:
@@ -8,11 +13,11 @@ x509: certificate relies on legacy Common Name field, use SANs instead
 
 AWS provides instructions to rotate your [SSL/TLS certificate](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/UsingWithRDS.SSL-certificate-rotation.html).
 
-(!docs/pages/includes/aws-no-credential-provider.mdx service="Database"!)
+<DocsPagesIncludesAwsNoCredentialProvider service="Database" />
 
 ### Timeout errors
 
-(!docs/pages/includes/database-access/connection-timeout-troubleshooting.mdx!)
+<DocsPagesIncludesDatabaseAccessConnectionTimeoutTroubleshooting />
 
 ### Not authorized to perform `sts:AssumeRole`
 
@@ -42,7 +47,7 @@ AccessDenied: User: arn:aws:sts::111111111111:assumed-role/teleport-db-service-r
 <details>
 <summary>how to properly configure the trust relationship?</summary>
 
-(!docs/pages/includes/database-access/iam_role_trust_relationship.mdx role1="teleport-db-service-role" role2="db-user-role" !)
+<DocsPagesIncludesDatabaseAccessIamRoleTrustRelationship role1="teleport-db-service-role" role2="db-user-role" />
 
 </details>
 

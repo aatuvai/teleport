@@ -9,6 +9,13 @@ tags:
  - infrastructure-identity
 page_type: how-to
 ---
+import DocsPagesIncludesPermissionWarning from "@version/docs/pages/includes/permission-warning.mdx";
+
+
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
+import DocsPagesIncludesTctl from "@version/docs/pages/includes/tctl.mdx";
+import DocsPagesIncludesInstallLinux from "@version/docs/pages/includes/install-linux.mdx";
+import DocsPagesIncludesStartTeleport from "@version/docs/pages/includes/start-teleport.mdx";
 
 You can protect a server with Teleport by running the Teleport SSH Service on
 the server and enrolling it in your Teleport cluster. 
@@ -56,13 +63,13 @@ architecture-beta
 
 ## Prerequisites
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx!)
+<DocsPagesIncludesEditionPrereqsTabs />
 
 - One host running a Linux environment (such as Amazon Linux, Ubuntu, CentOS Stream, or
   Debian). This will serve as a Teleport Node.
-- (!docs/pages/includes/tctl.mdx!)
+- <DocsPagesIncludesTctl />
 
-(!docs/pages/includes/permission-warning.mdx!)
+<DocsPagesIncludesPermissionWarning />
 
 ## Step 1/4. Install Teleport on your Linux host
 
@@ -75,7 +82,7 @@ architecture-beta
 1. On the host where you will run the Teleport SSH Service, follow the instructions
    for your environment to install Teleport.
 
-   (!docs/pages/includes/install-linux.mdx!)
+   <DocsPagesIncludesInstallLinux />
 
    Next, we'll create a **join token** so you can start the Teleport SSH Service
    and add it to your cluster.
@@ -146,7 +153,7 @@ The `teleport node configure` command above placed a configuration file at
 `/etc/teleport.yaml`. The last step is to start Teleport, pointing it at this
 configuration:
 
-(!docs/pages/includes/start-teleport.mdx service="the Teleport SSH Service"!)
+<DocsPagesIncludesStartTeleport service="the Teleport SSH Service" />
 
 ### Access the Web UI
 

@@ -1,4 +1,5 @@
-{{ dbName="test" }}
+import DocsPagesIncludesStartTeleport from "@version/docs/pages/includes/start-teleport.mdx";
+
 On the host where you will run the Teleport Database Service, start Teleport
 with the appropriate configuration.
 
@@ -13,32 +14,36 @@ Generate a configuration file at `/etc/teleport.yaml` for the Database Service:
 <Tabs>
 <TabItem scope={["oss", "enterprise"]} label="Teleport Enterprise/Enterprise Cloud">
 
-```code
-$ sudo teleport db configure create \
-   -o file \
-   --token=/tmp/token \
-   --proxy=teleport.example.com:443 \
-   --name={{ dbName }} \
-   --protocol={{ dbProtocol }} \
-   --uri={{ databaseAddress }} \
-   --labels=env=dev 
-```
+<CodeBlock>
+{
+ `$ sudo teleport db configure create \\
+     -o file \\
+     --token=/tmp/token \\
+     --proxy=teleport.example.com:443 \\
+     --name=${ props.dbName ?? "test" } \\
+     --protocol=${ props.dbProtocol } \\
+     --uri=${ props.databaseAddress } \\
+     --labels=env=dev `
+}
+</CodeBlock>
 
 </TabItem>
 <TabItem scope={["cloud","team"]} label="Teleport Community Edition">
 
-```code
-$ sudo teleport db configure create \
-   -o file \
-   --token=/tmp/token \
-   --proxy=mytenant.teleport.sh:443 \
-   --name={{ dbName }} \
-   --protocol={{ dbProtocol }} \
-   --uri={{ databaseAddress }} \
-   --labels=env=dev
-```
+<CodeBlock>
+{
+ `$ sudo teleport db configure create \\
+     -o file \\
+     --token=/tmp/token \\
+     --proxy=mytenant.teleport.sh:443 \\
+     --name=${ props.dbName ?? "test" } \\
+     --protocol=${ props.dbProtocol } \\
+     --uri=${ props.databaseAddress } \\
+     --labels=env=dev`
+}
+</CodeBlock>
 
 </TabItem>
 </Tabs>
 
-(!docs/pages/includes/start-teleport.mdx service="the Teleport Database Service"!)
+<DocsPagesIncludesStartTeleport service="the Teleport Database Service" />

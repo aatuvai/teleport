@@ -8,6 +8,11 @@ tags:
  - infrastructure-identity
 page_type: how-to
 ---
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
+import DocsPagesIncludesTctl from "@version/docs/pages/includes/tctl.mdx";
+import DocsPagesIncludesInstallLinux from "@version/docs/pages/includes/install-linux.mdx";
+import DocsPagesIncludesStartTeleport from "@version/docs/pages/includes/start-teleport.mdx";
+
 
 Teleport allows you to add arbitrary key-value pairs to applications, servers,
 databases, and other resources in your cluster. You can use labels to do
@@ -46,19 +51,19 @@ but filter and limit access to the servers based on their AWS region.
 
 ## Prerequisites
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx!)
+<DocsPagesIncludesEditionPrereqsTabs />
 
 - A Linux host where you will run a Teleport Agent. This guide shows you how to
   apply labels to an instance of the Teleport SSH Service. You can use the
   technique shown in the guide to label any Teleport-protected resource.
 
-(!docs/pages/includes/tctl.mdx!)
+<DocsPagesIncludesTctl />
 
 ## Step 1/2. Install Teleport
 
 1. Select a Linux server where you will run a Teleport Agent.
 
-1. (!docs/pages/includes/install-linux.mdx!)
+1. <DocsPagesIncludesInstallLinux />
 
 1. Generate an invitation token for the host.
 
@@ -141,7 +146,7 @@ where you installed the Teleport Agent.
 
 1. Start Teleport on the Linux host:
 
-   (!docs/pages/includes/start-teleport.mdx!)
+   <DocsPagesIncludesStartTeleport />
 
 1. Verify that you have added the label by running the following command
 on your local computer.

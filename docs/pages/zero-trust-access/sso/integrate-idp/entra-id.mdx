@@ -11,6 +11,19 @@ tags:
 enterprise: Enterprise SSO
 page_type: how-to
 ---
+import DocsPagesIncludesSsoIdpInitiated from "@version/docs/pages/includes/sso/idp-initiated.mdx";
+import DocsPagesIncludesSsoSamlSlo from "@version/docs/pages/includes/sso/saml-slo.mdx";
+import DocsPagesIncludesSsoEntraidGraphPermission from "@version/docs/pages/includes/sso/entraid-graph-permission.mdx";
+import DocsPagesIncludesSsoNextStepTraits from "@version/docs/pages/includes/sso/next-step-traits.mdx";
+
+
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
+import DocsPagesIncludesTctl from "@version/docs/pages/includes/tctl.mdx";
+import DocsPagesIncludesSsoLoginerrortroubleshooting from "@version/docs/pages/includes/sso/loginerrortroubleshooting.mdx";
+
+import DocsPagesIncludesSsoHowItWorks from "@version/docs/pages/includes/sso/how-it-works.mdx";
+import DocsPagesIncludesSsoEntraidGroupsProvider from "@version/docs/pages/includes/sso/entraid-groups-provider.mdx";
+import DocsPagesIncludesSsoCap from "@version/docs/pages/includes/sso/cap.mdx";
 
 {/* vale 3rd-party-products.former-names = NO */}
 
@@ -33,7 +46,7 @@ An OIDC-based Entra ID IdP configuration version is available in this [guide](en
 
 ## How it works
 
-(!docs/pages/includes/sso/how-it-works.mdx idp="Microsoft Entra ID"!)
+<DocsPagesIncludesSsoHowItWorks idp="Microsoft Entra ID" />
 
 ## Prerequisites
 
@@ -47,9 +60,9 @@ Before you get started, you'll need:
 - A Teleport role with access to maintaining `saml` resources. This is available
   in the default `editor` role.
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx edition="Teleport Enterprise"!)
+<DocsPagesIncludesEditionPrereqsTabs edition="Teleport Enterprise" />
 
-- (!docs/pages/includes/tctl.mdx!)
+- <DocsPagesIncludesTctl />
 
 ## Step 1/3. Configure Microsoft Entra ID
 
@@ -227,9 +240,9 @@ version: v2
 
 ```
 
-(!docs/pages/includes/sso/idp-initiated.mdx!)
+<DocsPagesIncludesSsoIdpInitiated />
 
-(!docs/pages/includes/sso/saml-slo.mdx!)
+<DocsPagesIncludesSsoSamlSlo />
 
 ### Test the connector
 
@@ -317,7 +330,7 @@ For the same app registration created in Step 1:
 
 #### Grant Microsoft Graph API permission
 
-(!docs/pages/includes/sso/entraid-graph-permission.mdx!)
+<DocsPagesIncludesSsoEntraidGraphPermission />
 
 Should a user's group membership exceed 150 groups, Teleport will follow through
 the groups link attribute issued by Entra ID and fetch user's group details using the
@@ -326,13 +339,13 @@ Microsoft Graph API.
 <details>
 <summary>Customize how Teleport follows the groups overage claim</summary>
 
-(!docs/pages/includes/sso/entraid-groups-provider.mdx type="saml"!)
+<DocsPagesIncludesSsoEntraidGroupsProvider type="saml" />
 </details>
 
 
 ## Step 3/3. Configure authentication preferences
 
-(!docs/pages/includes/sso/cap.mdx type="saml"!)
+<DocsPagesIncludesSsoCap type="saml" />
 
 ## Token encryption (Optional)
 
@@ -508,7 +521,7 @@ refine your configuration to better suit your organization.
 
 ### Integrate IdP traits in Teleport roles
 
-(!docs/pages/includes/sso/next-step-traits.mdx!)
+<DocsPagesIncludesSsoNextStepTraits />
 
 ### Refer to Microsoft Entra ID traits in Teleport roles
 
@@ -542,7 +555,7 @@ the attribute.
 
 ## Troubleshooting
 
-(!docs/pages/includes/sso/loginerrortroubleshooting.mdx!)
+<DocsPagesIncludesSsoLoginerrortroubleshooting />
 
 <Checkpoint
   title="Verify SSO login works"

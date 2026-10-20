@@ -4,56 +4,68 @@
 Access Request Plugins are available as `amd64` and `arm64` Linux binaries for downloading.
 Replace `ARCH` with your required version.
 
-```code
-$ curl -L -O https://cdn.teleport.dev/teleport-access-{{ name }}-v(=teleport.plugin.version=)-linux-<Var name="ARCH" />-bin.tar.gz
-$ tar -xzf teleport-access-{{ name }}-v(=teleport.plugin.version=)-linux-<Var name="ARCH" />-bin.tar.gz
-$ cd teleport-access-{{ name }}
-$ sudo ./install
-```
+<CodeBlock>
+{
+ `$ curl -L -O https://cdn.teleport.dev/teleport-access-${ props.name }-v(=teleport.plugin.version=)-linux-<Var name="ARCH" />-bin.tar.gz
+  $ tar -xzf teleport-access-${ props.name }-v(=teleport.plugin.version=)-linux-<Var name="ARCH" />-bin.tar.gz
+  $ cd teleport-access-${ props.name }
+  $ sudo ./install`
+}
+</CodeBlock>
 
 Make sure the binary is installed:
 
-```code
-$ teleport-{{ name }} version
-teleport-{{ name }} v(=teleport.plugin.version=) git:teleport-{{ name }}-v(=teleport.plugin.version=)-fffffffff go(=teleport.golang=)
-```
+<CodeBlock>
+{
+ `$ teleport-${ props.name } version
+  teleport-${ props.name } v(=teleport.plugin.version=) git:teleport-${ props.name }-v(=teleport.plugin.version=)-fffffffff go(=teleport.golang=)`
+}
+</CodeBlock>
 
 </TabItem>
 <TabItem label="Docker Image">
 
-```code
-$ docker pull public.ecr.aws/gravitational/teleport-plugin-{{ name }}:(=teleport.plugin.version=)
-```
+<CodeBlock>
+{
+ `$ docker pull public.ecr.aws/gravitational/teleport-plugin-${ props.name }:(=teleport.plugin.version=)`
+}
+</CodeBlock>
 
 Make sure the plugin is installed by running the following command:
 
-```code
-$ docker run public.ecr.aws/gravitational/teleport-plugin-{{ name }}:(=teleport.plugin.version=) version
-teleport-{{ name }} v(=teleport.plugin.version=) (=teleport.golang=)
-```
+<CodeBlock>
+{
+ `$ docker run public.ecr.aws/gravitational/teleport-plugin-${ props.name }:(=teleport.plugin.version=) version
+  teleport-${ props.name } v(=teleport.plugin.version=) (=teleport.golang=)`
+}
+</CodeBlock>
 
-For a list of available tags, visit [Amazon ECR Public Gallery](https://gallery.ecr.aws/gravitational/teleport-plugin-{{ name }}).
+For a list of available tags, visit [Amazon ECR Public Gallery](https://gallery.ecr.aws/gravitational/teleport-plugin-{props.name}).
 
 </TabItem>
 <TabItem label="From Source">
 To install from source you need `git` and `go` installed. If you do not have Go
 installed, visit the Go [downloads page](https://go.dev/dl/).
 
-```code
-$ git clone https://github.com/gravitational/teleport -b branch/v(=teleport.major_version=)
-$ cd teleport/integrations/access/{{ name }}
-$ git checkout v(=teleport.plugin.version=)
-$ make build/teleport-{{ name }}
-```
+<CodeBlock>
+{
+ `$ git clone https://github.com/gravitational/teleport -b branch/v(=teleport.major_version=)
+  $ cd teleport/integrations/access/${ props.name }
+  $ git checkout v(=teleport.plugin.version=)
+  $ make build/teleport-${ props.name }`
+}
+</CodeBlock>
 
-Move the `teleport-{{ name }}` binary into your PATH.
+Move the `teleport-{props.name}` binary into your PATH.
 
 Make sure the binary is installed:
 
-```code
-$ teleport-{{ name }} version
-teleport-{{ name }} v(=teleport.plugin.version=) git:teleport-{{ name }}-v(=teleport.plugin.version=)-fffffffff go(=teleport.golang=)
-```
+<CodeBlock>
+{
+ `$ teleport-${ props.name } version
+  teleport-${ props.name } v(=teleport.plugin.version=) git:teleport-${ props.name }-v(=teleport.plugin.version=)-fffffffff go(=teleport.golang=)`
+}
+</CodeBlock>
 
 </TabItem>
 <TabItem label="Helm Chart">

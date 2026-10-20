@@ -7,6 +7,8 @@ tags:
  - infrastructure-identity
 page_type: how-to
 ---
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
+
 
 JetBrain's IDEs, like PyCharm, GoLand, and IntelliJ, allow browsing, copying, and editing files on a remote server
 using the SFTP protocol. You can integrate Teleport with your IDE so you can copy files to and from a remote
@@ -24,7 +26,7 @@ Teleport-issued OpenSSH certificate.
 
 ## Prerequisites
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx clients="\`tsh\` client"!)
+<DocsPagesIncludesEditionPrereqsTabs clients="\\`tsh\\` client" />
 
 - JetBrains IDE like PyCharm, IntelliJ, GoLand etc. See [Products](https://www.jetbrains.com/products/#type=ide) for a full list of JetBrains IDEs.
 - One or more Teleport SSH Service instances. If you have not yet done this,

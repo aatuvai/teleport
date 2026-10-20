@@ -9,6 +9,15 @@ tags:
  - infrastructure-identity
 page_type: how-to
 ---
+import DocsPagesIncludesPermissionWarning from "@version/docs/pages/includes/permission-warning.mdx";
+import DocsPagesIncludesKubernetesAccessHelmHelmRepoAdd from "@version/docs/pages/includes/kubernetes-access/helm/helm-repo-add.mdx";
+
+
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
+import DocsPagesIncludesTctl from "@version/docs/pages/includes/tctl.mdx";
+import DocsPagesIncludesDnsAppAccess from "@version/docs/pages/includes/dns-app-access.mdx";
+import DocsPagesIncludesInstallLinux from "@version/docs/pages/includes/install-linux.mdx";
+import DocsPagesIncludesStartTeleport from "@version/docs/pages/includes/start-teleport.mdx";
 
 In this guide, you will configure secure access to an application through
 Teleport. The tutorial uses Grafana as a sample application because it's
@@ -45,15 +54,15 @@ Teleport-protected application.
 
 For this tutorial, verify your environment meets the following requirements:
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx!)
+<DocsPagesIncludesEditionPrereqsTabs />
 
-- (!docs/pages/includes/tctl.mdx!)
+- <DocsPagesIncludesTctl />
 - A host where you will run the Teleport Application Service.
 - A Docker container or Kubernetes cluster to launch Grafana.
 
 ### Subdomains and applications
 
-(!docs/pages/includes/dns-app-access.mdx!)
+<DocsPagesIncludesDnsAppAccess />
 
 ### Rights and permissions
 
@@ -65,7 +74,7 @@ The permissions used in this tutorial are intended for demonstration purposes.
 Before running Teleport in a production environment, you should verify that you're 
 following best practices to avoid security incidents.
 
-(!docs/pages/includes/permission-warning.mdx!)
+<DocsPagesIncludesPermissionWarning />
 
 ## Step 1/5. Generate a token
 
@@ -149,7 +158,7 @@ for your environment.
 
 To install on Linux:
 
-1. (!docs/pages/includes/install-linux.mdx!)
+1. <DocsPagesIncludesInstallLinux />
 
 1. Create the configuration file for Grafana at `/etc/teleport.yaml`
 with a command similar to the following:
@@ -171,11 +180,11 @@ Service host where you saved the invitation token that you generated earlier.
    - Change the `--app-name` and `--app-uri` command-line options if you're configuring 
 access to a different web application.
 
-(!docs/pages/includes/start-teleport.mdx service="the Teleport Application Service"!)
+<DocsPagesIncludesStartTeleport service="the Teleport Application Service" />
 </TabItem>
 <TabItem label="Kubernetes cluster">
 
-(!docs/pages/includes/kubernetes-access/helm/helm-repo-add.mdx!)
+<DocsPagesIncludesKubernetesAccessHelmHelmRepoAdd />
 
 Install the `teleport-kube-agent` Helm chart into your Kubernetes cluster to proxy Grafana
 with a command similar to the following:

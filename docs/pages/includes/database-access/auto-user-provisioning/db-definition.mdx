@@ -1,16 +1,18 @@
 Next, configure the database admin user in the Teleport database configuration:
 
-```yaml
-kind: db
-version: v3
-metadata:
-  name: example
-spec:
-  protocol: "{{ protocol }}"
-  uri: "{{ uri }}"
-  admin_user:
-    name: "teleport-admin"
-```
+<CodeBlock>
+{
+ `kind: db
+  version: v3
+  metadata:
+    name: example
+  spec:
+    protocol: "${ props.protocol }"
+    uri: "${ props.uri }"
+    admin_user:
+      name: "teleport-admin"`
+}
+</CodeBlock>
 
 This example assumes that you have configured the database as a dynamic
 resource. If you have configured your database using a static Teleport Database

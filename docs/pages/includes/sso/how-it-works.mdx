@@ -1,8 +1,7 @@
-{{ idp="your SSO provider" }}
 
-You can register your Teleport cluster as an application with {{ idp }}, then
+You can register your Teleport cluster as an application with {props.idp ?? "your SSO provider"}, then
 create an **authentication connector** resource that provides Teleport with
-information about your application. When a user signs in to Teleport, {{ idp }}
+information about your application. When a user signs in to Teleport, {props.idp ?? "your SSO provider"}
 executes its own authentication flow, then sends an HTTP request to your
 Teleport cluster to indicate that authentication has completed.
 
@@ -13,6 +12,6 @@ temporary user on the Auth Service backend.
 
 Teleport roles are encoded in the user's certificates. To assign Teleport roles
 to the user, the Auth Service inspects the **role mapping** within the
-authentication connector, which associates user data on {{ idp }} with the names
+authentication connector, which associates user data on {props.idp ?? "your SSO provider"} with the names
 of one or more Teleport roles.
 

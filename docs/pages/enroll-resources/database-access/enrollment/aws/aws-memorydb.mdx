@@ -9,12 +9,34 @@ tags:
  - aws
 page_type: how-to
 ---
+import DocsPagesIncludesDatabaseAccessAwsAutoDiscoveryPrerequisite from "@version/docs/pages/includes/database-access/aws-auto-discovery-prerequisite.mdx";
+import DocsPagesIncludesDatabaseAccessAlternativeMethodsJoin from "@version/docs/pages/includes/database-access/alternative-methods-join.mdx";
+import DocsPagesIncludesDatabaseAccessReferenceAwsIamMemorydbAccessPolicy from "@version/docs/pages/includes/database-access/reference/aws-iam/memorydb/access-policy.mdx";
+import DocsPagesIncludesDatabaseAccessGuidesNextSteps from "@version/docs/pages/includes/database-access/guides-next-steps.mdx";
 
-(!docs/pages/includes/database-access/db-introduction.mdx dbType="Amazon MemoryDB for Redis and Valkey" dbConfigure="with IAM authentication"!)
+
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
+import DocsPagesIncludesTctl from "@version/docs/pages/includes/tctl.mdx";
+import DocsPagesIncludesDatabaseAccessCreateUser from "@version/docs/pages/includes/database-access/create-user.mdx";
+import DocsPagesIncludesInstallLinux from "@version/docs/pages/includes/install-linux.mdx";
+import DocsPagesIncludesAwsCredentials from "@version/docs/pages/includes/aws-credentials.mdx";
+import DocsPagesIncludesStartTeleport from "@version/docs/pages/includes/start-teleport.mdx";
+import DocsPagesIncludesDatabaseAccessAwsRedisTshDbUserAuth from "@version/docs/pages/includes/database-access/aws-redis-tsh-db-user-auth.mdx";
+import DocsPagesIncludesDatabaseAccessProxyDbTunnel from "@version/docs/pages/includes/database-access/proxy-db-tunnel.mdx";
+import DocsPagesIncludesDatabaseAccessAwsTroubleshooting from "@version/docs/pages/includes/database-access/aws-troubleshooting.mdx";
+
+import DocsPagesIncludesDatabaseAccessDbIntroduction from "@version/docs/pages/includes/database-access/db-introduction.mdx";
+import DocsPagesIncludesDatabaseAccessAwsRedisHowItWorks from "@version/docs/pages/includes/database-access/aws-redis-how-it-works.mdx";
+import DocsPagesIncludesDatabaseAccessAutoDiscoveryTip from "@version/docs/pages/includes/database-access/auto-discovery-tip.mdx";
+import DocsPagesIncludesTctlToken from "@version/docs/pages/includes/tctl-token.mdx";
+import DocsPagesIncludesDatabaseAccessCreateIamRoleStepDescription from "@version/docs/pages/includes/database-access/create-iam-role-step-description.mdx";
+import DocsPagesIncludesDatabaseAccessAwsRedisNoAuth from "@version/docs/pages/includes/database-access/aws-redis-no-auth.mdx";
+
+<DocsPagesIncludesDatabaseAccessDbIntroduction dbType="Amazon MemoryDB for Redis and Valkey" dbConfigure="with IAM authentication" />
 
 ## How it works
 
-(!docs/pages/includes/database-access/aws-redis-how-it-works.mdx dbType="Amazon MemoryDB"!)
+<DocsPagesIncludesDatabaseAccessAwsRedisHowItWorks dbType="Amazon MemoryDB" />
 
 <Tabs>
 <TabItem scope={["oss", "enterprise"]} label="Self-Hosted">
@@ -26,11 +48,11 @@ page_type: how-to
 
 </Tabs>
 
-(!docs/pages/includes/database-access/auto-discovery-tip.mdx dbType="Amazon MemoryDB" providerType="AWS"!)
+<DocsPagesIncludesDatabaseAccessAutoDiscoveryTip dbType="Amazon MemoryDB" providerType="AWS" />
 
 ## Prerequisites
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx!)
+<DocsPagesIncludesEditionPrereqsTabs />
 
 - AWS account with an MemoryDB for Redis or Valkey cluster.
   **In-transit encryption via (TLS) must be enabled**.
@@ -40,20 +62,20 @@ page_type: how-to
   Service.
 - [ACL](https://docs.aws.amazon.com/memorydb/latest/devguide/clusters.acls.html) enabled for your
   MemoryDB cluster.
-- (!docs/pages/includes/database-access/aws-auto-discovery-prerequisite.mdx!)
-- (!docs/pages/includes/tctl.mdx!)
+- <DocsPagesIncludesDatabaseAccessAwsAutoDiscoveryPrerequisite />
+- <DocsPagesIncludesTctl />
 
 ## Step 1/6. Create a Teleport user
 
-(!docs/pages/includes/database-access/create-user.mdx!)
+<DocsPagesIncludesDatabaseAccessCreateUser />
 
 ## Step 2/6. Create a Database Service configuration
 
-(!docs/pages/includes/tctl-token.mdx serviceName="Database" tokenType="db" tokenFile="/tmp/token"!)
+<DocsPagesIncludesTctlToken serviceName="Database" tokenType="db" tokenFile="/tmp/token" />
 
-(!docs/pages/includes/database-access/alternative-methods-join.mdx!)
+<DocsPagesIncludesDatabaseAccessAlternativeMethodsJoin />
 
-(!docs/pages/includes/install-linux.mdx!)
+<DocsPagesIncludesInstallLinux />
 
 Create the Database Service configuration:
 ```code
@@ -76,19 +98,19 @@ The command will generate a Database Service configuration and place it at the
 
 ## Step 3/6. Create an IAM role for Teleport
 
-(!docs/pages/includes/database-access/create-iam-role-step-description.mdx accessFor="MemoryDB databases" !)
+<DocsPagesIncludesDatabaseAccessCreateIamRoleStepDescription accessFor="MemoryDB databases" />
 
 ### Create an IAM role for Teleport
 
-(!docs/pages/includes/aws-credentials.mdx service="the Database Service"!)
+<DocsPagesIncludesAwsCredentials service="the Database Service" />
 
 ### Grant permissions
 
-(!docs/pages/includes/database-access/reference/aws-iam/memorydb/access-policy.mdx!)
+<DocsPagesIncludesDatabaseAccessReferenceAwsIamMemorydbAccessPolicy />
 
 ## Step 4/6. Start the Database Service
 
-(!docs/pages/includes/start-teleport.mdx service="the Database Service"!)
+<DocsPagesIncludesStartTeleport service="the Database Service" />
 
 ## Step 5/6. Configure authentication for MemoryDB users
 
@@ -154,7 +176,7 @@ some time (up to 20 minutes) to discover this user once the tag is added.
 </TabItem>
 </Tabs>
 
-(!docs/pages/includes/database-access/aws-redis-no-auth.mdx dbType="MemoryDB"!)
+<DocsPagesIncludesDatabaseAccessAwsRedisNoAuth dbType="MemoryDB" />
 
 ## Step 6/6. Connect
 
@@ -192,9 +214,9 @@ To retrieve credentials for a database and connect to it:
 $ tsh db connect --db-user=my-database-user my-memorydb
 ```
 
-(!docs/pages/includes/database-access/aws-redis-tsh-db-user-auth.mdx!)
+<DocsPagesIncludesDatabaseAccessAwsRedisTshDbUserAuth />
 
-(!docs/pages/includes/database-access/proxy-db-tunnel.mdx db="my-memorydb" dbArgs="--db-user=my-database-user"!)
+<DocsPagesIncludesDatabaseAccessProxyDbTunnel db="my-memorydb" dbArgs="--db-user=my-database-user" />
 
 To log out of the database and remove credentials:
 
@@ -207,9 +229,9 @@ $ tsh db logout
 
 ## Troubleshooting
 
-(!docs/pages/includes/database-access/aws-troubleshooting.mdx!)
+<DocsPagesIncludesDatabaseAccessAwsTroubleshooting />
 
 ## Next steps
 
-(!docs/pages/includes/database-access/guides-next-steps.mdx!)
+<DocsPagesIncludesDatabaseAccessGuidesNextSteps />
 

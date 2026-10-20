@@ -7,6 +7,10 @@ tags:
  - zero-trust
  - infrastructure-identity
 ---
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
+import DocsPagesIncludesTctl from "@version/docs/pages/includes/tctl.mdx";
+import DocsPagesIncludesCreateRoleUsingWeb from "@version/docs/pages/includes/create-role-using-web.mdx";
+
 
 Teleport's SSH Service can automatically create local Unix users on a server,
 and can grant those users temporary sudo permissions. These are two distinct
@@ -53,7 +57,7 @@ In this guide, you will:
 
 ## Prerequisites
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx!)
+<DocsPagesIncludesEditionPrereqsTabs />
 
 - A running Linux server registered with Teleport. See the [getting started
   guide](../getting-started.mdx) for how to add a server to your Teleport
@@ -67,7 +71,7 @@ In this guide, you will:
   - `groupadd`
   - `getent`
   - `visudo`
-- (!docs/pages/includes/tctl.mdx!)
+- <DocsPagesIncludesTctl />
 
 ## Automatic host users
 
@@ -228,7 +232,7 @@ $ tctl create -f auto-users.yaml
 # role 'auto-users' has been created
 ```
 
-(!docs/pages/includes/create-role-using-web.mdx!)
+<DocsPagesIncludesCreateRoleUsingWeb />
 
 #### Create a Teleport user
 

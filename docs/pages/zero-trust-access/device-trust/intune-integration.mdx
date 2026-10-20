@@ -12,6 +12,10 @@ tags:
 enterprise: Device Trust
 page_type: how-to
 ---
+import DocsPagesIncludesDeviceTrustPrereqs from "@version/docs/pages/includes/device-trust/prereqs.mdx";
+
+
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
 
 The Device Trust Microsoft Intune integration lets you automatically sync your
 managed devices from Intune into Teleport, including macOS, Windows, Linux, iOS,
@@ -37,9 +41,9 @@ Teleport Web UI. Running it as a standalone service is not currently supported.
 
 ## Prerequisites
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx edition="Teleport Enterprise"!)
+<DocsPagesIncludesEditionPrereqsTabs edition="Teleport Enterprise" />
 
-(!docs/pages/includes/device-trust/prereqs.mdx!)
+<DocsPagesIncludesDeviceTrustPrereqs />
 - Access to Microsoft Entra ID with Global Administrator or Application Administrator permissions.
 - An active Microsoft Intune subscription with managed devices.
 

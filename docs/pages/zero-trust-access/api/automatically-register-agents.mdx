@@ -7,6 +7,10 @@ tags:
  - zero-trust
  - infrastructure-identity
 ---
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
+import DocsPagesIncludesCreateRoleUsingWeb from "@version/docs/pages/includes/create-role-using-web.mdx";
+import DocsPagesIncludesAddRoleToUser from "@version/docs/pages/includes/add-role-to-user.mdx";
+
 
 You can use Teleport's API to automatically register resources in your
 infrastructure with your Teleport cluster.
@@ -45,7 +49,7 @@ connect it to your production Teleport cluster.**  Use a demo cluster instead.
 
 ## Prerequisites
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx!)
+<DocsPagesIncludesEditionPrereqsTabs />
 
 - Docker installed on your workstation. [Get Started With
   Docker](https://www.docker.com/get-started).
@@ -128,7 +132,7 @@ role 'register-apps' has been created
 user "register-apps" has been created
 ```
 
-(!docs/pages/includes/create-role-using-web.mdx!)
+<DocsPagesIncludesCreateRoleUsingWeb />
 
 ### Enable impersonation of the client application
 
@@ -165,7 +169,7 @@ $ tctl create -f register-apps-impersonator.yaml
 role 'register-apps-impersonator' has been created
 ```
 
-(!docs/pages/includes/add-role-to-user.mdx role="register-apps-impersonator"!)
+<DocsPagesIncludesAddRoleToUser role="register-apps-impersonator" />
 
 You will now be able to generate signed certificates for the `register-apps`
 role and user.

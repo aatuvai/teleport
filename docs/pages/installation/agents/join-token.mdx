@@ -7,6 +7,15 @@ tags:
  - zero-trust
  - infrastructure-identity
 ---
+import DocsPagesIncludesIacClients from "@version/docs/pages/includes/iac-clients.mdx";
+import DocsPagesIncludesTokenTypes from "@version/docs/pages/includes/token-types.mdx";
+import DocsPagesIncludesProvisionTokenTokenSpecHcl from "@version/docs/pages/includes/provision-token/token-spec-hcl.mdx";
+import DocsPagesIncludesProvisionTokenTokenSpecKube from "@version/docs/pages/includes/provision-token/token-spec-kube.mdx";
+
+
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
+import DocsPagesIncludesInstallLinux from "@version/docs/pages/includes/install-linux.mdx";
+import DocsPagesIncludesStartTeleport from "@version/docs/pages/includes/start-teleport.mdx";
 
 {/* lint disable page-structure remark-lint */}
 
@@ -19,7 +28,7 @@ relationship with the Teleport cluster.
 
 ## Prerequisites
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx!)
+<DocsPagesIncludesEditionPrereqsTabs />
 
 - A Linux server that you will use to host your Teleport process, e.g., a
   virtual machine or Docker container with an image based on a Linux
@@ -52,7 +61,7 @@ relationship with the Teleport cluster.
 
   </Admonition>
 
-- (!docs/pages/includes/iac-clients.mdx!)
+- <DocsPagesIncludesIacClients />
 
   If you're managing Teleport resources with the Teleport Kubernetes operator,
   this guide assumes that your resource manifests are placed together in a Helm
@@ -62,7 +71,7 @@ relationship with the Teleport cluster.
 
 Install Teleport on your Linux host.
 
-(!docs/pages/includes/install-linux.mdx!)
+<DocsPagesIncludesInstallLinux />
 
 ## Step 2/3. Join your Teleport process to the cluster
 
@@ -118,7 +127,7 @@ the `tctl tokens add` output.
 
 Here are all the values we support for `--type` flag when creating a join token:
 
-(!docs/pages/includes/token-types.mdx!)
+<DocsPagesIncludesTokenTypes />
 
 </details>
 
@@ -142,14 +151,14 @@ Token                            Type Labels Expiry Time (UTC)
 Add the following resource to your Terraform configuration, replacing values as
 indicated:
 
-(!docs/pages/includes/provision-token/token-spec-hcl.mdx!)
+<DocsPagesIncludesProvisionTokenTokenSpecHcl />
 
 </TabItem>
 <TabItem label="Kubernetes">
 
 Add the following Kubernetes resource manifest, replacing values as indicated:
 
-(!docs/pages/includes/provision-token/token-spec-kube.mdx!)
+<DocsPagesIncludesProvisionTokenTokenSpecKube />
 
 </TabItem>
 </Tabs>
@@ -279,7 +288,7 @@ $ sudo sed -i 's|  ca_pin: ""|  ca_pin: "<Var name="ca-pin"> />"|' /etc/teleport
 
 </details>
 
-(!docs/pages/includes/start-teleport.mdx!)
+<DocsPagesIncludesStartTeleport />
 
 <details>
 <summary>Using a local Docker container?</summary>

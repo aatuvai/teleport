@@ -9,13 +9,22 @@ tags:
  - infrastructure-identity
  - aws
 ---
+import DocsPagesIncludesDiscoveryKubernetesServiceTroubleshooting from "@version/docs/pages/includes/discovery/kubernetes-service-troubleshooting.mdx";
+
+
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
+import DocsPagesIncludesTctl from "@version/docs/pages/includes/tctl.mdx";
+
+import DocsPagesIncludesDiscoveryStepDescription from "@version/docs/pages/includes/discovery/step-description.mdx";
+import DocsPagesIncludesDiscoveryTctlDiscoveryStatus from "@version/docs/pages/includes/discovery/tctl-discovery-status.mdx";
+import DocsPagesIncludesDiscoveryDiscoveryServiceTroubleshooting from "@version/docs/pages/includes/discovery/discovery-service-troubleshooting.mdx";
 
 This guide shows you how to use Terraform to configure Teleport and AWS to
 automatically enroll EKS clusters in your Teleport cluster.
 
 ## How it works
 
-(!docs/pages/includes/discovery/step-description.mdx serviceName="Kubernetes" resourceDesc="cluster" resourceKind="kube_cluster" !)
+<DocsPagesIncludesDiscoveryStepDescription serviceName="Kubernetes" resourceDesc="cluster" resourceKind="kube_cluster" />
 
 The [teleport-discovery-aws](../../../../reference/infrastructure-as-code/terraform-modules/teleport-discovery-aws/teleport-discovery-aws.mdx)
 Terraform module creates the AWS IAM resources and the Teleport integration,
@@ -26,7 +35,7 @@ cluster so the Kubernetes Service can forward traffic to it.
 
 ## Prerequisites
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx!)
+<DocsPagesIncludesEditionPrereqsTabs />
 
 - An AWS account with IAM permissions to create roles, policies, and an OIDC
   provider. See the next step for the full permissions Terraform needs.
@@ -43,7 +52,7 @@ cluster so the Kubernetes Service can forward traffic to it.
   Kubernetes Service. See the [manual guide](eks-discovery-manual.mdx) for
   service setup.
 
-- (!docs/pages/includes/tctl.mdx!)
+- <DocsPagesIncludesTctl />
 
 ## Use the `teleport-discovery-aws` Terraform module
 
@@ -350,11 +359,11 @@ in the newly-configured regions.
 
 ## Troubleshooting
 
-(!docs/pages/includes/discovery/tctl-discovery-status.mdx provider="AWS" cloud="aws" resource="AWS EKS"!)
+<DocsPagesIncludesDiscoveryTctlDiscoveryStatus provider="AWS" cloud="aws" resource="AWS EKS" />
 
-(!docs/pages/includes/discovery/discovery-service-troubleshooting.mdx resourceKind="Kubernetes cluster" tctlResource="kube_cluster" cloud="AWS"!)
+<DocsPagesIncludesDiscoveryDiscoveryServiceTroubleshooting resourceKind="Kubernetes cluster" tctlResource="kube_cluster" cloud="AWS" />
 
-(!docs/pages/includes/discovery/kubernetes-service-troubleshooting.mdx!)
+<DocsPagesIncludesDiscoveryKubernetesServiceTroubleshooting />
 
 ## Next steps
 

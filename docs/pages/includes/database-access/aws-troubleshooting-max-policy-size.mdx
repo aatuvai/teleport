@@ -1,3 +1,5 @@
+import DocsPagesIncludesDiscoveryDiscoveryGroup from "@version/docs/pages/includes/discovery/discovery-group.mdx";
+
 ### Maximum policy size exceeded errors
 
 Due to [IAM and STS character
@@ -25,7 +27,7 @@ You can reduce the policy size by separating them into multiple IAM roles. Use
   You can specify `assume_role_arn` in the AWS matchers of Discovery Service's
   configuration:
 
-  (!docs/pages/includes/discovery/discovery-group.mdx!)
+  <DocsPagesIncludesDiscoveryDiscoveryGroup />
 
   ```yaml
   discovery_service:

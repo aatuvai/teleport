@@ -30,9 +30,11 @@ arn:aws:redshift-serverless:{Region}:{AccountID}:workgroup/{WorkgroupID}
 Teleport users can connect as the IAM role by specifying the role name as a
 database user, e.g.
 
-```code
-$ tsh db connect redshift-serverless-example-db --db-user={{ dbUserRole }}
-```
+<CodeBlock>
+{
+ `$ tsh db connect redshift-serverless-example-db --db-user=${ props.dbUserRole }`
+}
+</CodeBlock>
 
 See
 [Identity and access management in Amazon Redshift Serverless](https://docs.aws.amazon.com/redshift/latest/mgmt/serverless-iam.html)

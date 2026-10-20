@@ -7,9 +7,9 @@ role selector:
 
 ![IAM role selector](../../../img/application-access/guides/aws-database-select-iam-role.png)
 
-Click on the role `{{ iam-role }}` and you will get redirected to the AWS
+Click on the role `{props.iamRole}` and you will get redirected to the AWS
 Management Console, signed in with the selected role.
 
 In the console's top-right corner, you should see that you're logged in through
 federated login and the name of your assumed IAM role is
-`{{ iam-role }}/<teleport-username>` where the session name is your Teleport username.
+`{props.iamRole}/<teleport-username>` where the session name is your Teleport username.

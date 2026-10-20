@@ -8,6 +8,18 @@ tags:
  - infrastructure-identity
 page_type: how-to
 ---
+import DocsPagesIncludesKubernetesAccessHelmHelmRepoAdd from "@version/docs/pages/includes/kubernetes-access/helm/helm-repo-add.mdx";
+import DocsPagesIncludesDatabaseAccessMultipleInstancesTip from "@version/docs/pages/includes/database-access/multiple-instances-tip.mdx";
+import DocsPagesIncludesDatabaseAccessGuidesNextSteps from "@version/docs/pages/includes/database-access/guides-next-steps.mdx";
+
+
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
+import DocsPagesIncludesDatabaseAccessCreateUser from "@version/docs/pages/includes/database-access/create-user.mdx";
+import DocsPagesIncludesDatabaseAccessTctlAuthSign3Files from "@version/docs/pages/includes/database-access/tctl-auth-sign-3-files.mdx";
+import DocsPagesIncludesInstallLinux from "@version/docs/pages/includes/install-linux.mdx";
+import DocsPagesIncludesStartTeleport from "@version/docs/pages/includes/start-teleport.mdx";
+
+import DocsPagesIncludesTctlToken from "@version/docs/pages/includes/tctl-token.mdx";
 
 The Teleport Clickhouse integration allows you to enroll ClickHouse databases
 with Teleport.
@@ -42,7 +54,7 @@ include audit logs for database query activity.
 
 ## Prerequisites
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx!)
+<DocsPagesIncludesEditionPrereqsTabs />
 
 - Either a Linux host or Kubernetes cluster where you will run the Teleport Database Service.
 
@@ -64,13 +76,13 @@ choose:
 
 ## Step 1/5. Create a Teleport token and user
 
-(!docs/pages/includes/tctl-token.mdx serviceName="Database" tokenType="db" tokenFile="/tmp/token"!)
+<DocsPagesIncludesTctlToken serviceName="Database" tokenType="db" tokenFile="/tmp/token" />
 
-(!docs/pages/includes/database-access/create-user.mdx!)
+<DocsPagesIncludesDatabaseAccessCreateUser />
 
 ## Step 2/5. Create a certificate/key pair
 
-(!docs/pages/includes/database-access/tctl-auth-sign-3-files.mdx dbname="Clickhouse" !)
+<DocsPagesIncludesDatabaseAccessTctlAuthSign3Files dbname="Clickhouse" />
 
 ## Step 3/5. Configure ClickHouse
 
@@ -110,7 +122,7 @@ ClickHouse protocol:
 <Tabs>
 <TabItem label="Linux Server">
 
-(!docs/pages/includes/install-linux.mdx!)
+<DocsPagesIncludesInstallLinux />
 
 <Admonition type="note">
 The step below will overwrite an existing configuration file, so if
@@ -167,7 +179,7 @@ To configure the Teleport Database Service to trust a custom CA:
       --labels=env=dev
    ```
 
-(!docs/pages/includes/start-teleport.mdx service="the Teleport Database Service"!)
+<DocsPagesIncludesStartTeleport service="the Teleport Database Service" />
 
 </TabItem>
 <TabItem label="Kubernetes Cluster">
@@ -175,7 +187,7 @@ To configure the Teleport Database Service to trust a custom CA:
 Teleport provides Helm charts for installing the Teleport Database Service in
 Kubernetes Clusters.
 
-(!docs/pages/includes/kubernetes-access/helm/helm-repo-add.mdx!)
+<DocsPagesIncludesKubernetesAccessHelmHelmRepoAdd />
 
 {/* Inlining docs/pages/includes/database-access/self-hosted-db-helm-install.mdx
 so we can use the Var component for the protocol*/}
@@ -261,7 +273,7 @@ teleport-kube-agent-0   1/1     Running   0          32s
 </TabItem>
 </Tabs>
 
-(!docs/pages/includes/database-access/multiple-instances-tip.mdx !)
+<DocsPagesIncludesDatabaseAccessMultipleInstancesTip />
 
 ## Step 5/5. Connect
 
@@ -362,4 +374,4 @@ $ tsh db logout
 
 ## Next steps
 
-(!docs/pages/includes/database-access/guides-next-steps.mdx!)
+<DocsPagesIncludesDatabaseAccessGuidesNextSteps />

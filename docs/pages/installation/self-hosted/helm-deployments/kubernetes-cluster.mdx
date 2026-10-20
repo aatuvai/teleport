@@ -6,6 +6,14 @@ tags:
  - how-to
  - platform-wide
 ---
+import DocsPagesIncludesKubernetesAccessHelmK8s from "@version/docs/pages/includes/kubernetes-access/helm-k8s.mdx";
+import DocsPagesIncludesKubernetesAccessHelmHelmRepoAdd from "@version/docs/pages/includes/kubernetes-access/helm/helm-repo-add.mdx";
+import DocsPagesIncludesEnterpriseObtainlicense from "@version/docs/pages/includes/enterprise/obtainlicense.mdx";
+import DocsPagesIncludesKubernetesAccessMemberRole from "@version/docs/pages/includes/kubernetes-access/member-role.mdx";
+
+
+import DocsPagesIncludesCloudCallToAction from "@version/docs/pages/includes/cloud/call-to-action.mdx";
+import DocsPagesIncludesSelfHostedHelmDns from "@version/docs/pages/includes/self-hosted-helm-dns.mdx";
 
 Teleport can provide secure, unified access to your Kubernetes clusters. This
 guide will show you how to deploy Teleport on a Kubernetes cluster using Helm.
@@ -23,7 +31,7 @@ Kubernetes cluster. [Follow our
 guide](../../../enroll-resources/kubernetes-access/getting-started.mdx) to connect your Kubernetes
 cluster to Teleport.
 
-(!docs/pages/includes/cloud/call-to-action.mdx!)
+<DocsPagesIncludesCloudCallToAction />
 
 ## Prerequisites
 
@@ -101,7 +109,7 @@ cluster to Teleport.
 - The `tsh` client tool installed on your workstation.  You can download this
   from our [installation page](../../../installation/single-machine/single-machine.mdx).
 
-(!docs/pages/includes/kubernetes-access/helm-k8s.mdx!)
+<DocsPagesIncludesKubernetesAccessHelmK8s />
 
 <Admonition type="warning">
 
@@ -128,7 +136,7 @@ To deploy the Teleport Auth Service and Proxy Service on your Kubernetes
 cluster, follow the instructions below to install the `teleport-cluster` Helm
 chart.
 
-1. (!docs/pages/includes/kubernetes-access/helm/helm-repo-add.mdx!)
+1. <DocsPagesIncludesKubernetesAccessHelmHelmRepoAdd />
 
 1. Create a namespace for Teleport and configure its Pod Security Admission,
    which enforces security standards on pods in the namespace:
@@ -174,7 +182,7 @@ chart.
      </TabItem>
      <TabItem label="Enterprise" scope={["enterprise"]}>
    
-       (!docs/pages/includes/enterprise/obtainlicense.mdx!)
+       <DocsPagesIncludesEnterpriseObtainlicense />
    
        Ensure that your license is saved to your terminal's working directory at
        the path `license.pem`.
@@ -264,7 +272,7 @@ Here are some troubleshooting tips:
 In this section, you will enable users and services to connect to your cluster
 by creating DNS records that point to the address of your Proxy Service.
 
-(!docs/pages/includes/self-hosted-helm-dns.mdx!)
+<DocsPagesIncludesSelfHostedHelmDns />
 
 <Checkpoint
   title="Verify DNS and TLS are configured"
@@ -305,7 +313,7 @@ In this section, we will  create a local user who has access to Kubernetes group
 
 1. Paste the following role specification into a file called `member.yaml`:
 
-   (!docs/pages/includes/kubernetes-access/member-role.mdx!)
+   <DocsPagesIncludesKubernetesAccessMemberRole />
 
 1. Create the role:
 

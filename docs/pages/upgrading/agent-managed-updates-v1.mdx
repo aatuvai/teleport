@@ -6,6 +6,13 @@ tags:
  - platform-wide
 page_type: how-to
 ---
+import DocsPagesIncludesClusterMaintenanceConfigSpec from "@version/docs/pages/includes/cluster-maintenance-config-spec.mdx";
+
+
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
+import DocsPagesIncludesTctl from "@version/docs/pages/includes/tctl.mdx";
+import DocsPagesIncludesCreateRoleUsingWeb from "@version/docs/pages/includes/create-role-using-web.mdx";
+import DocsPagesIncludesAddRoleToUser from "@version/docs/pages/includes/add-role-to-user.mdx";
 
 In this guide, you will enable Managed Updates for Agents v1, which is a legacy
 system that may be removed in future versions of Teleport. For Managed Updates
@@ -75,9 +82,9 @@ regular maintenance window.
   which describes the sequence in which to upgrade components in your cluster.
 - Teleport Agents that are not yet enrolled in Managed Updates.
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx edition="Teleport Enterprise"!)
+<DocsPagesIncludesEditionPrereqsTabs edition="Teleport Enterprise" />
 
-- (!docs/pages/includes/tctl.mdx!)
+- <DocsPagesIncludesTctl />
 
 ## Step 1/4. Enable Managed Agent Updates
 
@@ -118,17 +125,17 @@ Teleport cluster that agents use to determine when to check for upgrades.
    $ tctl create cmc-editor.yaml
    ```
 
-   (!docs/pages/includes/create-role-using-web.mdx!)
+   <DocsPagesIncludesCreateRoleUsingWeb />
 
 1. Add the role to your Teleport user:
 
-   (!docs/pages/includes/add-role-to-user.mdx role="cmc-editor"!)
+   <DocsPagesIncludesAddRoleToUser role="cmc-editor" />
 
 1. Create a cluster maintenance config in a file called `cmc.yaml`. The
    following example allows maintenance on Monday, Wednesday and Friday between
    02:00 and 03:00 UTC:
 
-   (!docs/pages/includes/cluster-maintenance-config-spec.mdx!)
+   <DocsPagesIncludesClusterMaintenanceConfigSpec />
 
 1. Apply the manifest using `tctl`:
 

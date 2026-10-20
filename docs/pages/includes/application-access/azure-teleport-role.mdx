@@ -1,3 +1,6 @@
+import DocsPagesIncludesCreateRoleUsingWeb from "@version/docs/pages/includes/create-role-using-web.mdx";
+import DocsPagesIncludesAddRoleToUser from "@version/docs/pages/includes/add-role-to-user.mdx";
+
 The next step is to authorize your Teleport user to assume an Azure identity and
 execute Azure CLI commands via Teleport. You will protect access to this
 identity using Teleport's RBAC system, where a user's roles determine which
@@ -73,7 +76,7 @@ Create the role:
 $ tctl create -f azure-cli-access.yaml
 ```
 
-(!docs/pages/includes/create-role-using-web.mdx!)
+<DocsPagesIncludesCreateRoleUsingWeb />
 
 </TabItem>
 <TabItem label="SAML/OIDC Connectors">
@@ -112,7 +115,7 @@ Create the role:
 $ tctl create -f azure-cli-access.yaml
 ```
 
-(!docs/pages/includes/create-role-using-web.mdx!)
+<DocsPagesIncludesCreateRoleUsingWeb />
 
 </TabItem>
 </Tabs>
@@ -151,7 +154,7 @@ Create the role:
 $ tctl create -f azure-cli-access.yaml
 ```
 
-(!docs/pages/includes/create-role-using-web.mdx!)
+<DocsPagesIncludesCreateRoleUsingWeb />
 
 <details>
 <summary>Denying access to Azure identities</summary>
@@ -190,4 +193,4 @@ evaluating a user's roles.
 
 </details>
 
-(!docs/pages/includes/add-role-to-user.mdx role="azure-cli-access"!)
+<DocsPagesIncludesAddRoleToUser role="azure-cli-access" />

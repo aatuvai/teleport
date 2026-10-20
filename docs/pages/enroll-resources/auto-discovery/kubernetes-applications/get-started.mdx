@@ -8,6 +8,11 @@ tags:
  - infrastructure-identity
 page_type: how-to
 ---
+import DocsPagesIncludesHelm from "@version/docs/pages/includes/helm.mdx";
+
+
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
+import DocsPagesIncludesTctl from "@version/docs/pages/includes/tctl.mdx";
 
 Teleport can automatically detect applications running in your Kubernetes
 clusters and register them with your Teleport cluster. In this setup, users with
@@ -27,16 +32,16 @@ and proxies applications based the dynamically generated configuration.
 
 ## Prerequisites
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx!)
+<DocsPagesIncludesEditionPrereqsTabs />
 
 - A Kubernetes cluster version >=
   v(=kubernetes.major_version=).(=kubernetes.minor_version=).0
 
 - Helm >= (=helm.version=)
 
-  (!docs/pages/includes/helm.mdx!)
+  <DocsPagesIncludesHelm />
 
-- (!docs/pages/includes/tctl.mdx!)
+- <DocsPagesIncludesTctl />
 
 ## Step 1/2. Create a join token
 

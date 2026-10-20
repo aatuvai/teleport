@@ -1,5 +1,4 @@
-{{ role="myrole" user="your Teleport user" }}
-Assign the `{{ role }}` role to {{ user }}. The commands to run depend on how
+Assign the `{props.role ?? "myrole"}` role to {props.user ?? "your Teleport user"}. The commands to run depend on how
 you authenticate to Teleport, that is, whether you have a local Teleport user, a
 single sign-on authentication connector, or a non-interactive user:
 
@@ -14,10 +13,12 @@ single sign-on authentication connector, or a non-interactive user:
 
 1. Edit your local user to add the new role:
 
-   ```code
-   $ tctl users update $(tsh status -f json | jq -r '.active.username') \
-     --set-roles "${ROLES?},{{ role }}"
-   ```
+   <CodeBlock>
+   {
+    `$ tctl users update $(tsh status -f json | jq -r '.active.username') \\
+       --set-roles "\${ROLES?},${ props.role ?? "myrole" }"`
+   }
+   </CodeBlock>
 
 1. Sign out of the Teleport cluster and sign in again to assume the new role.
 
@@ -30,7 +31,7 @@ single sign-on authentication connector, or a non-interactive user:
    $ tctl edit github/github
    ```
 
-1. Edit the `github` connector, adding `{{ role }}` to the `teams_to_roles` section. 
+1. Edit the `github` connector, adding `{props.role ?? "myrole"}` to the `teams_to_roles` section. 
    
    The team you should map to this role depends on how you have designed your 
    organization's role-based access controls (RBAC). However, the team must include your user account and
@@ -38,14 +39,16 @@ single sign-on authentication connector, or a non-interactive user:
 
    Here is an example:
    
-   ```diff
-     teams_to_roles:
-       - organization: octocats
-         team: admins
-         roles:
-           - access
-   +       - {{ role }}
-   ```
+   <CodeBlock>
+   {
+    `  teams_to_roles:
+         - organization: octocats
+           team: admins
+           roles:
+             - access
+     +       - ${ props.role ?? "myrole" }`
+   }
+   </CodeBlock>
 
 1. Apply your changes by saving and closing the file in your editor.
    
@@ -64,7 +67,7 @@ single sign-on authentication connector, or a non-interactive user:
    to the `saml.yaml` file. Because this key contains a sensitive value, you should remove the 
    saml.yaml file immediately after updating the resource.
 
-1. Edit `saml.yaml`, adding `{{ role }}` to the `attributes_to_roles` section. 
+1. Edit `saml.yaml`, adding `{props.role ?? "myrole"}` to the `attributes_to_roles` section. 
    
    The attribute you should map to this role depends on how you have designed your 
    organization's role-based access controls (RBAC). However, the group must include your 
@@ -72,14 +75,16 @@ single sign-on authentication connector, or a non-interactive user:
    
    Here is an example:
    
-   ```diff
-     attributes_to_roles:
-       - name: "groups"
-         value: "my-group"
-         roles:
-           - access
-   +       - {{ role }}
-   ```
+   <CodeBlock>
+   {
+    `  attributes_to_roles:
+         - name: "groups"
+           value: "my-group"
+           roles:
+             - access
+     +       - ${ props.role ?? "myrole" }`
+   }
+   </CodeBlock>
 
 1. Apply your changes:
 
@@ -102,7 +107,7 @@ single sign-on authentication connector, or a non-interactive user:
    to the `oidc.yaml` file. Because this key contains a sensitive value, you should remove the 
    oidc.yaml file immediately after updating the resource.
 
-1. Edit `oidc.yaml`, adding `{{ role }}` to the `claims_to_roles` section. 
+1. Edit `oidc.yaml`, adding `{props.role ?? "myrole"}` to the `claims_to_roles` section. 
 
    The claim you should map to this role depends on how you have designed your organization's 
    role-based access controls (RBAC). However, the group must include your user account and
@@ -110,14 +115,16 @@ single sign-on authentication connector, or a non-interactive user:
 
    Here is an example:
 
-   ```diff
-     claims_to_roles:
-       - name: "groups"
-         value: "my-group"
-         roles:
-           - access
-   +       - {{ role }}
-   ```
+   <CodeBlock>
+   {
+    `  claims_to_roles:
+         - name: "groups"
+           value: "my-group"
+           roles:
+             - access
+     +       - ${ props.role ?? "myrole" }`
+   }
+   </CodeBlock>
 
 1. Apply your changes:
 
@@ -138,9 +145,11 @@ If you are using Machine ID to issue identity files to your user:
 1. Add the new role to your bot. Assign <Var name="mybot" /> to the name of the
    Machine ID bot that issues your certificate:
 
-   ```code
-   $ tctl bots update <Var name="mybot" /> --add-roles {{ role }}
-   ```
+   <CodeBlock>
+   {
+    `$ tctl bots update <Var name="mybot" /> --add-roles ${ props.role ?? "myrole" }`
+   }
+   </CodeBlock>
 
 1. Force `tbot` to regenerate the certificate:
 
@@ -163,10 +172,12 @@ Otherwise, update your user and regenerate your identity file:
 
 1. Edit your local user to add the new role:
 
-   ```code
-   $ tctl users update <Var name="username" /> \
-     --set-roles "${ROLES?},{{ role }}"
-   ```
+   <CodeBlock>
+   {
+    `$ tctl users update <Var name="username" /> \\
+       --set-roles "\${ROLES?},${ props.role ?? "myrole" }"`
+   }
+   </CodeBlock>
 
 1. Regenerate the identity file. Make sure <Var name="path/to/identity/file" />
    corresponds to the correct output path:

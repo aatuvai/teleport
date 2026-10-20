@@ -8,6 +8,11 @@ tags:
 enterprise: Identity Governance
 page_type: how-to
 ---
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
+import DocsPagesIncludesTctl from "@version/docs/pages/includes/tctl.mdx";
+import DocsPagesIncludesCreateRoleUsingWeb from "@version/docs/pages/includes/create-role-using-web.mdx";
+import DocsPagesIncludesAddRoleToUser from "@version/docs/pages/includes/add-role-to-user.mdx";
+
 
 System administrators can disable a compromised user or Teleport Agent—or
 prevent access during cluster maintenance—by placing a lock
@@ -44,9 +49,9 @@ to prevent various operations, e.g., preventing access from a locked user.
 
 ## Prerequisites
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx!)
+<DocsPagesIncludesEditionPrereqsTabs />
 
-- (!docs/pages/includes/tctl.mdx!)
+- <DocsPagesIncludesTctl />
 
 - Your user must have permissions to manage Teleport lock resources. The preset
   `editor` role has these permissions, though we recommend defining more
@@ -79,9 +84,9 @@ to prevent various operations, e.g., preventing access from a locked user.
        # role 'locksmith' has been created
        ```
     
-       (!docs/pages/includes/create-role-using-web.mdx!)
+       <DocsPagesIncludesCreateRoleUsingWeb />
     
-    1. (!docs/pages/includes/add-role-to-user.mdx role="locksmith"!)
+    1. <DocsPagesIncludesAddRoleToUser role="locksmith" />
 
   </details>
 

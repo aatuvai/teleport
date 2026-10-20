@@ -8,6 +8,15 @@ tags:
  - infrastructure-identity
 page_type: how-to
 ---
+import DocsPagesIncludesTlsRoutingNote from "@version/docs/pages/includes/tls-routing-note.mdx";
+import DocsPagesIncludesNodeLogins from "@version/docs/pages/includes/node-logins.mdx";
+
+
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
+import DocsPagesIncludesTctl from "@version/docs/pages/includes/tctl.mdx";
+import DocsPagesIncludesCreateRoleUsingWeb from "@version/docs/pages/includes/create-role-using-web.mdx";
+
+import DocsPagesIncludesMachineIdReloadTbot from "@version/docs/pages/includes/machine-id/reload-tbot.mdx";
 
 {/* lint disable page-structure remark-lint */}
 
@@ -29,7 +38,7 @@ Platform, consider reading our [dedicated guide](./ansible-awx.mdx).
 
 You will need the following tools to use Teleport with Ansible.
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx!)
+<DocsPagesIncludesEditionPrereqsTabs />
 
 - `ssh` OpenSSH tool
 
@@ -48,9 +57,9 @@ You will need the following tools to use Teleport with Ansible.
   In particular, you will be using the `/opt/machine-id/ssh_config` file in your
   Ansible configuration to define how Ansible should connect to Teleport Nodes.
 
-- (!docs/pages/includes/tctl.mdx!)
+- <DocsPagesIncludesTctl />
 
-(!docs/pages/includes/tls-routing-note.mdx!)
+<DocsPagesIncludesTlsRoutingNote />
 
 ## Step 1/4. Configure RBAC
 
@@ -89,7 +98,7 @@ least privilege and reduces damage that exfiltrated credentials can do.
 
 Use `tctl create -f ./role.yaml` to create the role.
 
-(!docs/pages/includes/create-role-using-web.mdx!)
+<DocsPagesIncludesCreateRoleUsingWeb />
 
 Now, use `tctl bots update` to add the role to the Bot. Replace `example`
 with the name of the Bot you created in the deployment guide and `example-role`
@@ -124,7 +133,7 @@ services:
     path: /opt/machine-id
 ```
 
-(!docs/pages/includes/machine-id/reload-tbot.mdx resource="the Ansible playbook"!)
+<DocsPagesIncludesMachineIdReloadTbot resource="the Ansible playbook" />
 
 You should now see several files under `/opt/machine-id`:
 
@@ -182,7 +191,7 @@ $ tsh ls --format=json | jq --arg cluster $TELEPORT_CLUSTER -r '.[].spec.hostnam
 <details>
 <summary>Not seeing Nodes?</summary>
 
-(!docs/pages/includes/node-logins.mdx!)
+<DocsPagesIncludesNodeLogins />
 
 </details>
 

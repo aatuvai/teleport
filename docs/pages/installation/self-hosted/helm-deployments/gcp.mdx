@@ -8,6 +8,13 @@ tags:
  - google-cloud
 page_type: how-to
 ---
+import DocsPagesIncludesKubernetesAccessHelmHelmRepoAdd from "@version/docs/pages/includes/kubernetes-access/helm/helm-repo-add.mdx";
+import DocsPagesIncludesEnterpriseObtainlicense from "@version/docs/pages/includes/enterprise/obtainlicense.mdx";
+
+
+import DocsPagesIncludesCloudCallToAction from "@version/docs/pages/includes/cloud/call-to-action.mdx";
+import DocsPagesIncludesKubernetesAccessHelmTeleportClusterPrereqs from "@version/docs/pages/includes/kubernetes-access/helm/teleport-cluster-prereqs.mdx";
+import DocsPagesIncludesDnsAppAccess from "@version/docs/pages/includes/dns-app-access.mdx";
 
 In this guide, you will set up a High Availability Teleport cluster with multiple replicas in Kubernetes
 using Teleport Helm charts and Google Cloud Platform products (Firestore and Google Cloud Storage).
@@ -17,7 +24,7 @@ existing Teleport deployment to access your Kubernetes cluster. [Follow our
 guide](../../../enroll-resources/kubernetes-access/getting-started.mdx) to connect your Kubernetes
 cluster to Teleport.
 
-(!docs/pages/includes/cloud/call-to-action.mdx!)
+<DocsPagesIncludesCloudCallToAction />
 
 ## How it works
 
@@ -39,11 +46,11 @@ following resources, which we show you how to create in this guide:
 
 ## Prerequisites
 
-(!docs/pages/includes/kubernetes-access/helm/teleport-cluster-prereqs.mdx!)
+<DocsPagesIncludesKubernetesAccessHelmTeleportClusterPrereqs />
 
 ## Step 1/6. Add the Teleport Helm chart repository
 
-(!docs/pages/includes/kubernetes-access/helm/helm-repo-add.mdx!)
+<DocsPagesIncludesKubernetesAccessHelmHelmRepoAdd />
 
 <Admonition
   type="note"
@@ -273,7 +280,7 @@ $ kubectl --namespace teleport create -f gcp-issuer.yaml
 Before you can install Teleport Enterprise in your Kubernetes cluster, you will need to
 create a secret that contains your Teleport license information.
 
-(!docs/pages/includes/enterprise/obtainlicense.mdx!)
+<DocsPagesIncludesEnterpriseObtainlicense />
 
 Create a secret from your license file. Teleport will automatically discover
 this secret as long as your file is named `license.pem`.
@@ -389,7 +396,7 @@ You'll need to set up a DNS `A` record for `teleport.example.com`.
 <details>
 <summary>Enrolling applications with Teleport?</summary>
 
-(!docs/pages/includes/dns-app-access.mdx!)
+<DocsPagesIncludesDnsAppAccess />
 
 </details>
 

@@ -9,8 +9,17 @@ tags:
  - azure
 page_type: how-to
 ---
+import DocsPagesIncludesApplicationAccessAzureIntro from "@version/docs/pages/includes/application-access/azure-intro.mdx";
 
-(!docs/pages/includes/application-access/azure-intro.mdx!)
+
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
+import DocsPagesIncludesTctl from "@version/docs/pages/includes/tctl.mdx";
+import DocsPagesIncludesApplicationAccessAzureTeleportRole from "@version/docs/pages/includes/application-access/azure-teleport-role.mdx";
+import DocsPagesIncludesApplicationAccessAzureTsh from "@version/docs/pages/includes/application-access/azure-tsh.mdx";
+
+import DocsPagesIncludesApplicationAccessAzureHowItWorks from "@version/docs/pages/includes/application-access/azure-how-it-works.mdx";
+
+<DocsPagesIncludesApplicationAccessAzureIntro />
 
 In this guide, you will:
 
@@ -21,11 +30,11 @@ In this guide, you will:
 
 ## How it works
 
-(!docs/pages/includes/application-access/azure-how-it-works.mdx deployment="in an AKS pod" credential="Microsoft Entra Workload ID"!)
+<DocsPagesIncludesApplicationAccessAzureHowItWorks deployment="in an AKS pod" credential="Microsoft Entra Workload ID" />
 
 ## Prerequisites
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx edition="Teleport (v15.2.4 or higher)"!)
+<DocsPagesIncludesEditionPrereqsTabs edition="Teleport (v15.2.4 or higher)" />
 - An Azure Kubernetes Service (AKS) cluster and admin permissions to manage the
   cluster.
 - The ability to manage user-assigned Azure managed identities, role policies,
@@ -37,7 +46,7 @@ In this guide, you will:
   documentation](https://learn.microsoft.com/en-us/cli/azure/install-azure-cli)
   for how to install the `az` CLI on your operating system.
 - `kubectl` and `helm` for AKS deployments.
-- (!docs/pages/includes/tctl.mdx!)
+- <DocsPagesIncludesTctl />
 
 
 ## Step 1/6. Create an Azure managed identity for Teleport Application Service
@@ -163,7 +172,7 @@ $ az identity federated-credential create --name "federated-<Var name="teleport-
 
 ## Step 4/6  Enable your user to access Azure CLIs
 
-(!docs/pages/includes/application-access/azure-teleport-role.mdx!)
+<DocsPagesIncludesApplicationAccessAzureTeleportRole />
 
 ## Step 5/6. Deploy the Teleport Application Service
 
@@ -223,7 +232,7 @@ teleport-azure-access-agent-0   1/1     Running   0          99s
 
 ## Step 6/6. Use Azure CLIs with Teleport
 
-(!docs/pages/includes/application-access/azure-tsh.mdx!)
+<DocsPagesIncludesApplicationAccessAzureTsh />
 
 ## Next Steps
 

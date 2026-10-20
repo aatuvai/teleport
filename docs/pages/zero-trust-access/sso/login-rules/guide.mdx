@@ -8,6 +8,11 @@ tags:
  - privileged-access
 page_type: how-to
 ---
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
+import DocsPagesIncludesTctl from "@version/docs/pages/includes/tctl.mdx";
+import DocsPagesIncludesCreateRoleUsingWeb from "@version/docs/pages/includes/create-role-using-web.mdx";
+import DocsPagesIncludesAddRoleToUser from "@version/docs/pages/includes/add-role-to-user.mdx";
+
 
 Login Rules define logic that transforms the external traits of a user who signs
 into Teleport, providing consistent access control policies for users in your
@@ -34,9 +39,9 @@ Reference](../../../reference/access-controls/login-rules.mdx).
 
 ## Prerequisites
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx edition="Teleport Enterprise"!)
+<DocsPagesIncludesEditionPrereqsTabs edition="Teleport Enterprise" />
 
-- (!docs/pages/includes/tctl.mdx!)
+- <DocsPagesIncludesTctl />
 
 Before you get started you’ll need a running Teleport Enterprise or Cloud
 cluster on version `11.3.1` or greater.
@@ -71,9 +76,9 @@ $ tctl create loginrule-manager.yaml
 role 'loginrule-manager' has been created
 ```
 
-(!docs/pages/includes/create-role-using-web.mdx!)
+<DocsPagesIncludesCreateRoleUsingWeb />
 
-(!docs/pages/includes/add-role-to-user.mdx role="loginrule-manager" !)
+<DocsPagesIncludesAddRoleToUser role="loginrule-manager" />
 
 ## Step 2/5. Draft your Login Rule resource
 

@@ -1,39 +1,45 @@
-{{ dbUser="alice" dbService="example-db" pgSchema="postgres" mySchema="mysql" }}
+import DocsPagesIncludesDatabaseAccessProxyDbTunnel from "@version/docs/pages/includes/database-access/proxy-db-tunnel.mdx";
+import DocsPagesIncludesDatabaseAccessDbAccessWebuiAd from "@version/docs/pages/includes/database-access/db-access-webui-ad.mdx";
+
 {/* this comment is here to make the includes below render */}
 
 <Tabs>
 <TabItem label="MySQL/MariaDB">
 
-Retrieve credentials for the database and connect to it as the `{{ dbUser }}` user:
+Retrieve credentials for the database and connect to it as the `{props.dbUser ?? "alice"}` user:
 
-```code
-$ tsh db connect --db-user={{ dbUser }} --db-name={{ mySchema }} {{ dbService }}
-```
+<CodeBlock>
+{
+ `$ tsh db connect --db-user=${ props.dbUser ?? "alice" } --db-name=${ props.mySchema ?? "mysql" } ${ props.dbService ?? "example-db" }`
+}
+</CodeBlock>
 
 <Admonition type="note" title="Note">
   Either the `mysql` or the `mariadb` client must be available on `PATH` to connect.
 </Admonition>
 
-(!docs/pages/includes/database-access/proxy-db-tunnel.mdx db="{{ dbService }}" dbArgs="--db-user={{ dbUser }} --db-name={{ mySchema }}"!)
+<DocsPagesIncludesDatabaseAccessProxyDbTunnel db={props.dbService ?? "example-db"} dbArgs={"--db-user=" + (props.dbUser ?? "alice") + " --db-name=" + (props.mySchema ?? "mysql")} />
 
-(!docs/pages/includes/database-access/db-access-webui-ad.mdx dbType="MySQL or MariaDB"!)
+<DocsPagesIncludesDatabaseAccessDbAccessWebuiAd dbType="MySQL or MariaDB" />
 
 </TabItem>
 <TabItem label="PostgreSQL">
 
-Retrieve credentials for the database and connect to it as the `{{ dbUser }}` user:
+Retrieve credentials for the database and connect to it as the `{props.dbUser ?? "alice"}` user:
 
-```code
-$ tsh db connect --db-user={{ dbUser }} --db-name={{ pgSchema }} {{ dbService }}
-```
+<CodeBlock>
+{
+ `$ tsh db connect --db-user=${ props.dbUser ?? "alice" } --db-name=${ props.pgSchema ?? "postgres" } ${ props.dbService ?? "example-db" }`
+}
+</CodeBlock>
 
 <Admonition type="note" title="Note">
   The `psql` client must be available on `PATH` to connect.
 </Admonition>
 
-(!docs/pages/includes/database-access/proxy-db-tunnel.mdx db="{{ dbService }}" dbArgs="--db-user={{ dbUser }} --db-name={{ pgSchema }}"!)
+<DocsPagesIncludesDatabaseAccessProxyDbTunnel db={props.dbService ?? "example-db"} dbArgs={"--db-user=" + (props.dbUser ?? "alice") + " --db-name=" + (props.pgSchema ?? "postgres")} />
 
-(!docs/pages/includes/database-access/db-access-webui-ad.mdx dbType="PostgreSQL"!)
+<DocsPagesIncludesDatabaseAccessDbAccessWebuiAd dbType="PostgreSQL" />
 
 </TabItem>
 </Tabs>

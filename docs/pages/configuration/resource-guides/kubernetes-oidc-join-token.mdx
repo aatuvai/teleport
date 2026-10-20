@@ -6,6 +6,10 @@ tags:
  - how-to
  - zero-trust
 ---
+import DocsPagesIncludesKubernetesAccessHelmHelmRepoAdd from "@version/docs/pages/includes/kubernetes-access/helm/helm-repo-add.mdx";
+
+
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
 
 In this guide you will see how to configure Teleport to allow Kubernetes Agents
 to join without secret tokens. Teleport supports three ways to dynamically
@@ -49,7 +53,7 @@ The cluster does not have to be public, only its OIDC provider has to.
 <Tabs>
 <TabItem label="tctl">
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx!)
+<DocsPagesIncludesEditionPrereqsTabs />
 
 </TabItem>
 <TabItem label="Kubernetes Operator">
@@ -322,7 +326,7 @@ You must have the following information:
    teleportClusterName: <Var name="teleport.example.com"/>
    ```
 
-1. (!docs/pages/includes/kubernetes-access/helm/helm-repo-add.mdx!)
+1. <DocsPagesIncludesKubernetesAccessHelmHelmRepoAdd />
 
 1. Deploy the Teleport Kubernetes Agent using the values we previously set in
    the provision token:

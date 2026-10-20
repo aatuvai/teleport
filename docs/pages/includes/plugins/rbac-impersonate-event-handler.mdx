@@ -1,3 +1,6 @@
+import DocsPagesIncludesCreateRoleUsingWeb from "@version/docs/pages/includes/create-role-using-web.mdx";
+import DocsPagesIncludesAddRoleToUser from "@version/docs/pages/includes/add-role-to-user.mdx";
+
 In order for the Event Handler plugin to forward events from your Teleport
 cluster, it needs signed credentials from the cluster's certificate authority.
 The `teleport-event-handler` user cannot request this itself, and requires
@@ -32,10 +35,10 @@ Next, create the role:
 $ tctl create teleport-event-handler-impersonator.yaml
 ```
 
-(!docs/pages/includes/create-role-using-web.mdx!)
+<DocsPagesIncludesCreateRoleUsingWeb />
 
 Add this role to the user that generates signed credentials for the Event
 Handler:
 
-(!docs/pages/includes/add-role-to-user.mdx role="teleport-event-handler-impersonator"!)
+<DocsPagesIncludesAddRoleToUser role="teleport-event-handler-impersonator" />
 

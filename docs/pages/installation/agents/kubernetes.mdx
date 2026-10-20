@@ -7,6 +7,11 @@ tags:
  - zero-trust
  - infrastructure-identity
 ---
+import DocsPagesIncludesIacClients from "@version/docs/pages/includes/iac-clients.mdx";
+import DocsPagesIncludesProvisionTokenKubernetesInClusterSpec from "@version/docs/pages/includes/provision-token/kubernetes-in-cluster-spec.mdx";
+import DocsPagesIncludesProvisionTokenKubernetesInClusterSpecHcl from "@version/docs/pages/includes/provision-token/kubernetes-in-cluster-spec-hcl.mdx";
+import DocsPagesIncludesProvisionTokenKubernetesInClusterSpecKube from "@version/docs/pages/includes/provision-token/kubernetes-in-cluster-spec-kube.mdx";
+
 
 This guide will explain how to use the **Kubernetes join method** to configure
 Teleport services to join your Teleport cluster without sharing any
@@ -45,7 +50,7 @@ as the Auth Service.
   ClusterRole. Clusters deployed with the [`teleport-cluster` Helm
   chart](../../reference/helm-reference/teleport-cluster.mdx) 
   have the correct role by default.
-- (!docs/pages/includes/iac-clients.mdx!)
+- <DocsPagesIncludesIacClients />
 
 ## Step 1/4. Create a Kubernetes join token
 
@@ -61,7 +66,7 @@ Create a file called `token.yaml` with the following content, which includes
 an `allow` rule specifying the Kubernetes namespace and Kubernetes
 ServiceAccount in which your Teleport services are running.
 
-(!docs/pages/includes/provision-token/kubernetes-in-cluster-spec.mdx!)
+<DocsPagesIncludesProvisionTokenKubernetesInClusterSpec />
 
 Kubernetes join tokens can be used by any Teleport service besides the Auth Service, such as the Proxy Service and SSH Service. In this
 guide, we restrict the token to joining an Application Service instance.
@@ -105,14 +110,14 @@ version: v2
 Add the following resource to your Terraform configuration, replacing values as
 indicated:
 
-(!docs/pages/includes/provision-token/kubernetes-in-cluster-spec-hcl.mdx!)
+<DocsPagesIncludesProvisionTokenKubernetesInClusterSpecHcl />
 
 </TabItem>
 <TabItem label="Kubernetes">
 
 Add the following Kubernetes resource manifest, replacing values as indicated:
 
-(!docs/pages/includes/provision-token/kubernetes-in-cluster-spec-kube.mdx!)
+<DocsPagesIncludesProvisionTokenKubernetesInClusterSpecKube />
 
 </TabItem>
 </Tabs>

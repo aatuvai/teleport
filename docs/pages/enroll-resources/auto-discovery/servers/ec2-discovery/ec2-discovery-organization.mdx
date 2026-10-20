@@ -10,6 +10,18 @@ tags:
  - aws
 page_type: how-to
 ---
+import DocsPagesIncludesAutoDiscoveryAutoDiscoveryLabels from "@version/docs/pages/includes/auto-discovery/auto-discovery-labels.mdx";
+import DocsPagesIncludesAutoDiscoveryEc2NextSteps from "@version/docs/pages/includes/auto-discovery/ec2-next-steps.mdx";
+
+
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
+import DocsPagesIncludesTctl from "@version/docs/pages/includes/tctl.mdx";
+import DocsPagesIncludesInstallLinux from "@version/docs/pages/includes/install-linux.mdx";
+import DocsPagesIncludesDiscoveryDiscoveryGroup from "@version/docs/pages/includes/discovery/discovery-group.mdx";
+import DocsPagesIncludesAwsCredentials from "@version/docs/pages/includes/aws-credentials.mdx";
+import DocsPagesIncludesStartTeleport from "@version/docs/pages/includes/start-teleport.mdx";
+import DocsPagesIncludesAutoDiscoveryAwsEc2AdvancedConfig from "@version/docs/pages/includes/auto-discovery/aws-ec2-advanced-config.mdx";
+import DocsPagesIncludesAutoDiscoveryEc2Troubleshooting from "@version/docs/pages/includes/auto-discovery/ec2-troubleshooting.mdx";
 
 This guide shows you how to configure Teleport to automatically enroll EC2 instances from an AWS Organization in your cluster.
 
@@ -22,7 +34,7 @@ If you only have a single AWS Account, read [Manual EC2 Auto-Discovery Configura
 
 ## Prerequisites
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx!)
+<DocsPagesIncludesEditionPrereqsTabs />
 
 - AWS Organization with EC2 instances and permissions to create and attach IAM
   policies.
@@ -36,7 +48,7 @@ If you only have a single AWS Account, read [Manual EC2 Auto-Discovery Configura
   Note that one of these EC2 instances will run the Teleport Discovery Service.
 - An AWS IAM role for the Teleport Auth Service. In this guide, we'll assume the
   name of the role is `TeleportAuthServiceRole`.
-- (!docs/pages/includes/tctl.mdx!)
+- <DocsPagesIncludesTctl />
 
 All EC2 instances that are to be added to the Teleport cluster by the Discovery 
 Service must include the `AmazonSSMManagedInstanceCore` IAM policy in order to
@@ -264,7 +276,7 @@ If you plan on running the Discovery Service on the same Node already running an
 
 Install Teleport on the EC2 instance that will run the Discovery Service:
 
-(!docs/pages/includes/install-linux.mdx!)
+<DocsPagesIncludesInstallLinux />
 
 ## Step 6/7. Configure Teleport to discover EC2 instances
 
@@ -279,7 +291,7 @@ $ tctl tokens add --type=discovery
 Save the generated token in `/tmp/token` on the Node (EC2 instance) that will
 run the Discovery Service.
 
-(!docs/pages/includes/discovery/discovery-group.mdx!)
+<DocsPagesIncludesDiscoveryDiscoveryGroup />
 
 Assign <Var name="teleport.example.com:443" /> to the host and port of the Teleport Proxy Service in your cluster,
 and <Var name="aws-prod" /> to a name that identifies a group of resources that you will enroll:
@@ -409,25 +421,25 @@ Static configuration while simpler at first, has less flexibility because enroll
 
 ## Step 7/7. Start Teleport
 
-(!docs/pages/includes/aws-credentials.mdx service="the Discovery Service"!)
+<DocsPagesIncludesAwsCredentials service="the Discovery Service" />
 
-(!docs/pages/includes/start-teleport.mdx service="the Discovery Service"!)
+<DocsPagesIncludesStartTeleport service="the Discovery Service" />
 
 Once you have started the Discovery Service, EC2 instances matching the tags you
 specified earlier will begin to be added to the Teleport cluster automatically.
 
 ## Auto-discovery labels
 
-(!docs/pages/includes/auto-discovery/auto-discovery-labels.mdx!)
+<DocsPagesIncludesAutoDiscoveryAutoDiscoveryLabels />
 
 ## Advanced configuration
 
-(!docs/pages/includes/auto-discovery/aws-ec2-advanced-config.mdx!)
+<DocsPagesIncludesAutoDiscoveryAwsEc2AdvancedConfig />
 
 ## Troubleshooting
 
-(!docs/pages/includes/auto-discovery/ec2-troubleshooting.mdx!)
+<DocsPagesIncludesAutoDiscoveryEc2Troubleshooting />
 
 ## Next steps
 
-(!docs/pages/includes/auto-discovery/ec2-next-steps.mdx!)
+<DocsPagesIncludesAutoDiscoveryEc2NextSteps />

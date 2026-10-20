@@ -8,6 +8,13 @@ tags:
  - privileged-access
 page_type: how-to
 ---
+import DocsPagesIncludesKubernetesAccessHelmHelmRepoAdd from "@version/docs/pages/includes/kubernetes-access/helm/helm-repo-add.mdx";
+
+
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
+import DocsPagesIncludesTctl from "@version/docs/pages/includes/tctl.mdx";
+import DocsPagesIncludesCreateRoleUsingWeb from "@version/docs/pages/includes/create-role-using-web.mdx";
+import DocsPagesIncludesAddRoleToUser from "@version/docs/pages/includes/add-role-to-user.mdx";
 
 You can use the Teleport gRPC API to generate roles automatically based on an
 external role-based access control (RBAC) system, such as GitHub or AWS Identity
@@ -43,7 +50,7 @@ connect it to your production Teleport cluster.**  Use a demo cluster instead.
 
 ## Prerequisites
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx!)
+<DocsPagesIncludesEditionPrereqsTabs />
 
 - Go version (=teleport.golang=) or above installed on your workstation. See the
   [Go download page](https://go.dev/dl/). You will not need to be familiar with
@@ -73,7 +80,7 @@ Teleport roles based on an external RBAC system.
 
 </Admonition>
 
-- (!docs/pages/includes/tctl.mdx!)
+- <DocsPagesIncludesTctl />
 
 ## Step 1/4. Set up your Kubernetes cluster
 
@@ -156,7 +163,7 @@ role.rbac.authorization.k8s.io/pod-reader created
 rolebinding.rbac.authorization.k8s.io/read-pods created
 ```
 
-(!docs/pages/includes/create-role-using-web.mdx!)
+<DocsPagesIncludesCreateRoleUsingWeb />
 
 Next, define a cluster role and cluster role binding that allow users in the
 `ops` group to read, create, and execute commands on pods in all namespaces. Add
@@ -321,7 +328,7 @@ Create the `sync-kubernetes-rbac-impersonator` role:
 $ tctl create -f sync-kubernetes-rbac-impersonator.yaml
 ```
 
-(!docs/pages/includes/add-role-to-user.mdx role="sync-kubernetes-rbac-impersonator"!)
+<DocsPagesIncludesAddRoleToUser role="sync-kubernetes-rbac-impersonator" />
 
 You will now be able to generate signed certificates for the `sync-kubernetes-rbac`
 role and user.
@@ -334,7 +341,7 @@ authorizing them. While this step is not strictly necessary with a local
 `minikube` cluster, it demonstrates one way to use Teleport to securely access
 your external RBAC system's API.
 
-(!docs/pages/includes/kubernetes-access/helm/helm-repo-add.mdx!)
+<DocsPagesIncludesKubernetesAccessHelmHelmRepoAdd />
 
 Request a token that the Kubernetes Service will use to join your Teleport
 cluster:

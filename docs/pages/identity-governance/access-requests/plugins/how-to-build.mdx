@@ -9,6 +9,27 @@ tags:
  - privileged-access
 enterprise: Identity Governance
 ---
+import DocsPagesIncludesMachineIdPluginPrerequisites from "@version/docs/pages/includes/machine-id/plugin-prerequisites.mdx";
+
+
+import ExamplesAccessPluginMinimalConfig from "!!raw-loader!@version/examples/access-plugin-minimal/config.go";
+import ExamplesAccessPluginMinimalPlugin from "!!raw-loader!@version/examples/access-plugin-minimal/plugin.go";
+import ExamplesAccessPluginMinimalMakerowdata from "!!raw-loader!@version/examples/access-plugin-minimal/makerowdata.go";
+import ExamplesAccessPluginMinimalCreaterow from "!!raw-loader!@version/examples/access-plugin-minimal/createrow.go";
+import ExamplesAccessPluginMinimalUpdaterow from "!!raw-loader!@version/examples/access-plugin-minimal/updaterow.go";
+import ExamplesAccessPluginMinimalUpdatespreadsheet from "!!raw-loader!@version/examples/access-plugin-minimal/updatespreadsheet.go";
+import ExamplesAccessPluginMinimalWatcherjob from "!!raw-loader!@version/examples/access-plugin-minimal/watcherjob.go";
+import ExamplesAccessPluginMinimalMain from "!!raw-loader!@version/examples/access-plugin-minimal/main.go";
+
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
+import DocsPagesIncludesPluginsCreateRequest from "@version/docs/pages/includes/plugins/create-request.mdx";
+
+import DocsPagesIncludesPluginsRbacImpersonate from "@version/docs/pages/includes/plugins/rbac-impersonate.mdx";
+import DocsPagesIncludesPluginsEditorRequestRbac from "@version/docs/pages/includes/plugins/editor-request-rbac.mdx";
+
+import DocsPagesIncludesPluginsRbacImpersonateMachineId from "@version/docs/pages/includes/plugins/rbac-impersonate-machine-id.mdx";
+import DocsPagesIncludesPluginsTbotIdentity from "@version/docs/pages/includes/plugins/tbot-identity.mdx";
+import DocsPagesIncludesPluginsIdentityExport from "@version/docs/pages/includes/plugins/identity-export.mdx";
 
 With Teleport [Access Requests](../access-requests.mdx), you can
 assign Teleport users to less privileged roles by default and allow them to
@@ -46,7 +67,7 @@ connect it to your production Teleport cluster.**  Use a demo cluster instead.
 
 ## Prerequisites
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx edition="Teleport Enterprise"!)
+<DocsPagesIncludesEditionPrereqsTabs edition="Teleport Enterprise" />
 
 - Go version (=teleport.golang=)+ installed on your workstation. See the [Go
   download page](https://go.dev/dl/). You do not need to be familiar with Go to
@@ -74,7 +95,7 @@ repository on GitHub.
 
 </Admonition>
 
-(!docs/pages/includes/machine-id/plugin-prerequisites.mdx!)
+<DocsPagesIncludesMachineIdPluginPrerequisites />
 
 ## Step 1/5. Set up your Go project
 
@@ -178,10 +199,10 @@ or a regular Teleport user.
 
 <Tabs>
 <TabItem label="Machine & Workload Identity">
-(!docs/pages/includes/plugins/rbac-impersonate-machine-id.mdx!)
+<DocsPagesIncludesPluginsRbacImpersonateMachineId />
 </TabItem>
 <TabItem label="Long-lived identity files">
-(!docs/pages/includes/plugins/rbac-impersonate.mdx!)
+<DocsPagesIncludesPluginsRbacImpersonate />
 </TabItem>
 </Tabs>
 
@@ -194,10 +215,10 @@ longer-lived identity files with `tctl`:
 
 <Tabs>
 <TabItem label="Machine & Workload Identity">
-(!docs/pages/includes/plugins/tbot-identity.mdx secret="teleport-plugin-identity"!)
+<DocsPagesIncludesPluginsTbotIdentity secret="teleport-plugin-identity" />
 </TabItem>
 <TabItem label="Long-lived identity files">
-(!docs/pages/includes/plugins/identity-export.mdx plugin="demo-plugin" secret="teleport-plugin-identity"!)
+<DocsPagesIncludesPluginsIdentityExport plugin="demo-plugin" secret="teleport-plugin-identity" />
 </TabItem>
 </Tabs>
 
@@ -217,7 +238,7 @@ You will refer to this file later when configuring the plugin.
 In this guide, we will use our plugin to manage Role Access Requests. For this
 to work, we will set up Role Access Requests in your cluster.
 
-(!/docs/pages/includes/plugins/editor-request-rbac.mdx!)
+<DocsPagesIncludesPluginsEditorRequestRbac />
 
 ## Step 4/5. Write the Access Request plugin
 
@@ -252,9 +273,11 @@ The plugin imports the following third-party code:
 
 First, we declare two constants that you need to configure for your environment:
 
-```go
-(!examples/access-plugin-minimal/config.go!)
-```
+<CodeBlock language="go">
+
+  {ExamplesAccessPluginMinimalConfig}
+
+</CodeBlock>
 
 `proxyAddr` indicates the hostname and port of your Teleport Proxy Service or
 Teleport Enterprise Cloud tenant. Assign it to the address of your own Proxy
@@ -273,9 +296,11 @@ https://docs.google.com/spreadsheets/d/SPREADSHEET_ID/edit#gid=0
 The `plugin.go` file declares types that we will use to organize our Access
 Request plugin code:
 
-```go
-(!examples/access-plugin-minimal/plugin.go!)
-```
+<CodeBlock language="go">
+
+  {ExamplesAccessPluginMinimalPlugin}
+
+</CodeBlock>
 
 The `AccessRequestPlugin` type represents a generic Access Request plugin, and
 you can use this type to build your own plugin. It contains a Teleport API
@@ -291,9 +316,11 @@ Whether creating a new row of the spreadsheet or updating an existing one, we
 need a way to extract data from an Access Request in order to provide it to
 Google Sheets. We achieve this with the `makeRowData` method:
 
-```go
-(!examples/access-plugin-minimal/makerowdata.go!)
-```
+<CodeBlock language="go">
+
+  {ExamplesAccessPluginMinimalMakerowdata}
+
+</CodeBlock>
 
 The `sheets.RowData` type makes extensive use of pointers to strings, so we
 introduce a utility function called `stringPtr` that returns the pointer to the
@@ -327,9 +354,11 @@ The following function submits a request to the Google Sheets API to create a
 new row based on an incoming Access Request, using the data returned by
 `makeRowData`. It returns an error if the attempt to create a row failed:
 
-```go
-(!examples/access-plugin-minimal/createrow.go!)
-```
+<CodeBlock language="go">
+
+  {ExamplesAccessPluginMinimalCreaterow}
+
+</CodeBlock>
 
 `createRow` assembles a `sheets.BatchUpdateSpreadsheetRequest` and sends it to
 the Google Sheets API using `g.sheetsClient.BatchUpdate()`, returning errors
@@ -344,9 +373,11 @@ can retry it later.
 
 The code for updating a row is similar to the code for creating a new row: 
 
-```go
-(!examples/access-plugin-minimal/updaterow.go!)
-```
+<CodeBlock language="go">
+
+  {ExamplesAccessPluginMinimalUpdaterow}
+
+</CodeBlock>
 
 The only difference between `updateRow` and `createRow` is that we send a
 `&sheets.UpdateCellsRequest` instead of a `&sheets.AppendCellsRequest`. This
@@ -359,9 +390,11 @@ When our program receives an event that updates an Access Request, it needs a
 way to look up the row in the spreadsheet that corresponds to the Access Request
 so it can update the row:
 
-```go
-(!examples/access-plugin-minimal/updatespreadsheet.go!)
-```
+<CodeBlock language="go">
+
+  {ExamplesAccessPluginMinimalUpdatespreadsheet}
+
+</CodeBlock>
 
 `updateSpreadSheet` takes a `types.AccessRequest`, gets the latest data from
 your spreadsheet, determines which row to update, and calls `updateRow`
@@ -375,9 +408,11 @@ The plugin calls a handler function when it receives an event. To set this up,
 we use the `Run` method of our generic `AccessRequestPlugin` type, which
 contains the main loop of the plugin:
 
-```go
-(!examples/access-plugin-minimal/watcherjob.go!)
-```
+<CodeBlock language="go">
+
+  {ExamplesAccessPluginMinimalWatcherjob}
+
+</CodeBlock>
 
 As we described above, the `AccessRequestPlugin` type's `EventHandler` field is
 assigned to an interface with a `HandleEvent` method. In this case, the
@@ -406,9 +441,11 @@ clients to listen for Access Request events and use them to maintain a
 spreadsheet. The final step is to start our program by initializing the API
 clients:
 
-```go
-(!examples/access-plugin-minimal/main.go!)
-```
+<CodeBlock language="go">
+
+  {ExamplesAccessPluginMinimalMain}
+
+</CodeBlock>
 
 The `main` function, the entrypoint to our program, initializes an
 `AccessRequestPlugin` and `googleSheetsClient` and uses them run the plugin. 
@@ -450,7 +487,7 @@ $ go run teleport-sheets
 
 Now that the plugin is running, create an Access Request:
 
-(!docs/pages/includes/plugins/create-request.mdx!)
+<DocsPagesIncludesPluginsCreateRequest />
 
 You should see the new Access Request in your spreadsheet with the `PENDING`
 state.

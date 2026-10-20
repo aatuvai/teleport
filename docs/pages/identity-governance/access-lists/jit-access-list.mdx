@@ -11,6 +11,12 @@ tags:
 enterprise: Identity Governance
 page_type: how-to
 ---
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
+import DocsPagesIncludesIdentityGovernancePresetPrerequisites from "@version/docs/pages/includes/identity-governance/preset-prerequisites.mdx";
+import DocsPagesIncludesIdentityGovernancePreviewResourcesWarning from "@version/docs/pages/includes/identity-governance/preview-resources-warning.mdx";
+import DocsPagesIncludesIdentityGovernanceTerraformInstructions from "@version/docs/pages/includes/identity-governance/terraform-instructions.mdx";
+import DocsPagesIncludesIdentityGovernanceEditingRolesWarning from "@version/docs/pages/includes/identity-governance/editing-roles-warning.mdx";
+
 
 The **Just-in-Time Access Guide** creates an Access List whose members are required
 to request access to a defined set of resources, rather than being granted that
@@ -44,9 +50,9 @@ session, use the [Standing Access Guide](./standing-access-list.mdx) instead.
 
 ## Prerequisites
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx edition="Teleport Enterprise (v18.8.0 or higher)" optionalClientNote=", required only if deploying with Terraform"!)
+<DocsPagesIncludesEditionPrereqsTabs edition="Teleport Enterprise (v18.8.0 or higher)" optionalClientNote=", required only if deploying with Terraform" />
 
-(!docs/pages/includes/identity-governance/preset-prerequisites.mdx!)
+<DocsPagesIncludesIdentityGovernancePresetPrerequisites />
 
 ## Step 1/3. Start the guide
 
@@ -66,7 +72,7 @@ The guide steps you through:
    you to select the resource itself. Members can request access to anything that
    matches.
 
-   (!docs/pages/includes/identity-governance/preview-resources-warning.mdx!)
+   <DocsPagesIncludesIdentityGovernancePreviewResourcesWarning />
 
 1. **Define Resource Identities or Principals** — for resource types that need
    them (e.g. SSH logins, database users, Kubernetes users/groups, etc.), specify
@@ -99,7 +105,7 @@ API and is immediately active.
 </TabItem>
 <TabItem value="terraform" label="Manage via Terraform">
 
-(!docs/pages/includes/identity-governance/terraform-instructions.mdx!)
+<DocsPagesIncludesIdentityGovernanceTerraformInstructions />
 
 ### Example Terraform configuration
 
@@ -253,7 +259,7 @@ resource "teleport_access_list_member" "acl-member-<Var name="example-member" />
 </TabItem>
 </Tabs>
 
-(!docs/pages/includes/identity-governance/editing-roles-warning.mdx!)
+<DocsPagesIncludesIdentityGovernanceEditingRolesWarning />
 
 ## Step 3/3. Verify the request flow
 

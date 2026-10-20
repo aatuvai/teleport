@@ -7,6 +7,10 @@ tags:
  - conceptual
  - platform-wide
 ---
+import DocsPagesIncludesEnterpriseObtainlicense from "@version/docs/pages/includes/enterprise/obtainlicense.mdx";
+
+
+import DocsPagesIncludesCloudCallToAction from "@version/docs/pages/includes/cloud/call-to-action.mdx";
 
 When deploying Teleport in production, you should design your deployment to
 ensure that users can continue to access infrastructure during an incident in
@@ -17,7 +21,7 @@ Teleport.
 In this guide, we will explain the components of a high-availability Teleport
 deployment.
 
-(!docs/pages/includes/cloud/call-to-action.mdx!)
+<DocsPagesIncludesCloudCallToAction />
 
 ## Overview
 
@@ -461,7 +465,7 @@ Ensure that, on each Auth Service instance, the following ports are open:
 If you are deploying Teleport Enterprise, you need to download a license file
 and make it available to your Teleport Auth Service instances.
 
-(!docs/pages/includes//enterprise/obtainlicense.mdx!)
+<DocsPagesIncludesEnterpriseObtainlicense />
 
 The license file must be available to each Teleport Auth Service instance at
 `/var/lib/teleport/license.pem`.

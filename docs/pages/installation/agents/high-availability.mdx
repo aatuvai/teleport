@@ -8,6 +8,8 @@ tags:
  - zero-trust
  - infrastructure-identity
 ---
+import DocsPagesIncludesDatabaseAccessProxyDbTunnel from "@version/docs/pages/includes/database-access/proxy-db-tunnel.mdx";
+
 
 You can run multiple Teleport Agents that proxy the same infrastructure
 resources for high availability. If one Teleport Agent goes offline, Teleport
@@ -226,7 +228,7 @@ $ tsh db connect postgres-us-east-1a
 This approach is useful when you want to have control over which replica
 you're using to connect.
 
-(!docs/pages/includes/database-access/proxy-db-tunnel.mdx db="postgres-us-east-1a"!)
+<DocsPagesIncludesDatabaseAccessProxyDbTunnel db="postgres-us-east-1a" />
 
 </details>
 

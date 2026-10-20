@@ -6,6 +6,8 @@ tags:
  - conceptual
  - platform-wide
 ---
+import ExamplesSystemdTeleport from "!!raw-loader!@version/examples/systemd/teleport.service";
+
 
 A Teleport cluster is a distributed system that may comprise a number of
 networks. On Teleport Enterprise (Cloud), for example, the Auth Service and
@@ -212,9 +214,11 @@ By default, Teleport installations based on package managers (such as `apt` and
 `yum`) configure the `teleport` systemd unit to read environment variables from
 the file `/etc/default/teleport` by using the `EnvironmentFile` field:
 
-```ini
-(!/examples/systemd/teleport.service!)
-```
+<CodeBlock language="ini">
+
+  {ExamplesSystemdTeleport}
+
+</CodeBlock>
 
 To configure HTTP CONNECT tunneling, you can assign these environment variables
 within `/etc/default/teleport` on machines that run Teleport binaries. Use the

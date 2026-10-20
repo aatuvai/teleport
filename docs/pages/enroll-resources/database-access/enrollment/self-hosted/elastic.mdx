@@ -8,16 +8,33 @@ tags:
  - infrastructure-identity
 page_type: how-to
 ---
+import DocsPagesIncludesDatabaseAccessSingleNodeNote from "@version/docs/pages/includes/database-access/single-node-note.mdx";
+import DocsPagesIncludesKubernetesAccessHelmHelmRepoAdd from "@version/docs/pages/includes/kubernetes-access/helm/helm-repo-add.mdx";
+import DocsPagesIncludesDatabaseAccessMultipleInstancesTip from "@version/docs/pages/includes/database-access/multiple-instances-tip.mdx";
+import DocsPagesIncludesDatabaseAccessGuidesNextSteps from "@version/docs/pages/includes/database-access/guides-next-steps.mdx";
 
-(!docs/pages/includes/database-access/self-hosted-introduction.mdx dbType="Elasticsearch"!)
+
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
+import DocsPagesIncludesTctl from "@version/docs/pages/includes/tctl.mdx";
+import DocsPagesIncludesInstallLinux from "@version/docs/pages/includes/install-linux.mdx";
+import DocsPagesIncludesDatabaseAccessSelfHostedConfigStart from "@version/docs/pages/includes/database-access/self-hosted-config-start.mdx";
+import DocsPagesIncludesDatabaseAccessSelfHostedDbHelmInstall from "@version/docs/pages/includes/database-access/self-hosted-db-helm-install.mdx";
+import DocsPagesIncludesDatabaseAccessCreateUser from "@version/docs/pages/includes/database-access/create-user.mdx";
+import DocsPagesIncludesDatabaseAccessTctlAuthSign3Files from "@version/docs/pages/includes/database-access/tctl-auth-sign-3-files.mdx";
+
+import DocsPagesIncludesDatabaseAccessSelfHostedIntroduction from "@version/docs/pages/includes/database-access/self-hosted-introduction.mdx";
+import DocsPagesIncludesDatabaseAccessHowItWorksMtls from "@version/docs/pages/includes/database-access/how-it-works/mtls.mdx";
+import DocsPagesIncludesTctlToken from "@version/docs/pages/includes/tctl-token.mdx";
+
+<DocsPagesIncludesDatabaseAccessSelfHostedIntroduction dbType="Elasticsearch" />
 
 ## How it works
 
-(!docs/pages/includes/database-access/how-it-works/mtls.mdx db="Elasticsearch"!)
+<DocsPagesIncludesDatabaseAccessHowItWorksMtls db="Elasticsearch" />
 
 ## Prerequisites
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx!)
+<DocsPagesIncludesEditionPrereqsTabs />
 
 - A self-hosted Elasticsearch database. Elastic Cloud [does not support client certificates](https://www.elastic.co/guide/en/cloud/current/ec-restrictions.html#ec-restrictions-security), which are required for setting up the Database Service.
 
@@ -28,34 +45,34 @@ page_type: how-to
 - Optional: a certificate authority that issues certificates for
   your self-hosted database.
 
-- (!docs/pages/includes/tctl.mdx!)
+- <DocsPagesIncludesTctl />
 
-(!docs/pages/includes/database-access/single-node-note.mdx!)
+<DocsPagesIncludesDatabaseAccessSingleNodeNote />
 
 ## Step 1/5. Set up the Teleport Database Service
 
-(!docs/pages/includes/tctl-token.mdx serviceName="Database" tokenType="db" tokenFile="/tmp/token"!)
+<DocsPagesIncludesTctlToken serviceName="Database" tokenType="db" tokenFile="/tmp/token" />
 
 Install and configure Teleport where you will run the Teleport Database Service:
 
 <Tabs>
 <TabItem label="Linux Server">
 
-(!docs/pages/includes/install-linux.mdx!)
+<DocsPagesIncludesInstallLinux />
 
-(!docs/pages/includes/database-access/self-hosted-config-start.mdx dbName="myelastic" dbProtocol="elasticsearch" databaseAddress="elasticsearch.example.com:9200" !)
+<DocsPagesIncludesDatabaseAccessSelfHostedConfigStart dbName="myelastic" dbProtocol="elasticsearch" databaseAddress="elasticsearch.example.com:9200" />
 
 </TabItem>
 <TabItem label="Kubernetes Cluster">
   Teleport provides Helm charts for installing the Teleport Database Service in Kubernetes Clusters.
 
-  (!docs/pages/includes/kubernetes-access/helm/helm-repo-add.mdx!)
+  <DocsPagesIncludesKubernetesAccessHelmHelmRepoAdd />
 
-  (!docs/pages/includes/database-access/self-hosted-db-helm-install.mdx dbName="myelastic" dbProtocol="elasticsearch" databaseAddress="elasticsearch.example.com:9200" !)
+  <DocsPagesIncludesDatabaseAccessSelfHostedDbHelmInstall dbName="myelastic" dbProtocol="elasticsearch" databaseAddress="elasticsearch.example.com:9200" />
 </TabItem>
 </Tabs>
 
-(!docs/pages/includes/database-access/multiple-instances-tip.mdx !)
+<DocsPagesIncludesDatabaseAccessMultipleInstancesTip />
 
 <Admonition type="note" title="Protocol name">
 The protocol name for Elasticsearch is `elasticsearch`. While `teleport db
@@ -66,7 +83,7 @@ Always use `elasticsearch` as the protocol value.
 
 ## Step 2/5. Create a Teleport user
 
-(!docs/pages/includes/database-access/create-user.mdx!)
+<DocsPagesIncludesDatabaseAccessCreateUser />
 
 ## Step 3/5. Create a role mapping
 
@@ -112,7 +129,7 @@ $ curl -u elastic:your_elasticsearch_password -X POST "https://elasticsearch.exa
 
 ## Step 4/5. Set up mutual TLS
 
-(!docs/pages/includes/database-access/tctl-auth-sign-3-files.mdx format="elasticsearch" dbname="Elasticsearch" !)
+<DocsPagesIncludesDatabaseAccessTctlAuthSign3Files format="elasticsearch" dbname="Elasticsearch" />
 
 Use the generated secrets to enable mutual TLS in your `elasticsearch.yml` configuration
 file:
@@ -210,6 +227,6 @@ Note the assigned port, and provide it to your GUI client:
 
 ## Next steps
 
-(!docs/pages/includes/database-access/guides-next-steps.mdx!)
+<DocsPagesIncludesDatabaseAccessGuidesNextSteps />
 - For more information on configuring security settings in Elasticsearch, see:
 [Security settings in Elasticsearch](https://www.elastic.co/guide/en/elasticsearch/reference/current/security-settings.html)

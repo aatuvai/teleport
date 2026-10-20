@@ -7,6 +7,8 @@ tags:
  - platform-wide
 page_type: conceptual
 ---
+import DocsPagesIncludesCompatibility from "@version/docs/pages/includes/compatibility.mdx";
+
 
 Since Teleport is a distributed system with a number of services that run on
 potentially many hosts, you should take care when upgrading the cluster to
@@ -17,7 +19,7 @@ different scenarios while preserving compatibility between them.
 
 ## Component compatibility
 
-(!docs/pages/includes/compatibility.mdx!)
+<DocsPagesIncludesCompatibility />
 
 You can think of Teleport cluster components in three tiers:
 1. The Auth Service is expected to be the newest component in the cluster.

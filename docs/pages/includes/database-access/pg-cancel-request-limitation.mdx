@@ -1,4 +1,3 @@
-{{ PIDQuery="SELECT pid,usename,backend_start,query FROM pg_stat_activity WHERE state = 'active';" }}
 ### Unable to cancel a query
 
 If you use a PostgreSQL cli client like `psql`, and you try to cancel a query
@@ -23,9 +22,11 @@ cannot cancel with `Ctrl+C`, you can start a new client session to cancel that
 query manually:
 
 First, find the query's process identifier (PID):
-```sql
-{{ PIDQuery }}
-```
+<CodeBlock>
+{
+ `${ props.PIDQuery ?? "SELECT pid,usename,backend_start,query FROM pg_stat_activity WHERE state = 'active';" }`
+}
+</CodeBlock>
 
 Next, gracefully cancel the query using its PID.
 This will send a SIGINT signal to the postgres backend process for that query:

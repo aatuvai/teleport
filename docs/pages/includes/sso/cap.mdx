@@ -14,19 +14,21 @@ case, use `tctl` to edit the `cluster_auth_preference` value:
 $ tctl edit cluster_auth_preference
 ```
 
-Set the value of `spec.type` to `{{ type }}`:
+Set the value of `spec.type` to `{props.type}`:
 
-```yaml
-kind: cluster_auth_preference
-metadata:
-  ...
-  name: cluster-auth-preference
-spec:
-  ...
-  type: {{ type }}
-  ...
-version: v2
-```
+<CodeBlock>
+{
+ `kind: cluster_auth_preference
+  metadata:
+    ...
+    name: cluster-auth-preference
+  spec:
+    ...
+    type: ${ props.type }
+    ...
+  version: v2`
+}
+</CodeBlock>
 
 After you save and exit the editor, `tctl` will update the resource:
 
@@ -45,12 +47,14 @@ Reference](../../reference/infrastructure-as-code/teleport-resources/cluster-aut
 If you self-host Teleport, you can edit your Teleport Auth Service configuration
 file to include the following:
 
-```yaml
-# Snippet from /etc/teleport.yaml
-auth_service:
-  authentication:
-    type: {{ type }}
-```
+<CodeBlock>
+{
+ `# Snippet from /etc/teleport.yaml
+  auth_service:
+    authentication:
+      type: ${ props.type }`
+}
+</CodeBlock>
 
 </details>
 

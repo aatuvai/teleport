@@ -10,6 +10,14 @@ tags:
 enterprise: Identity Governance
 page_type: how-to
 ---
+import DocsPagesIncludesPluginsAccessPluginTroubleshooting from "@version/docs/pages/includes/plugins/access-plugin-troubleshooting.mdx";
+
+
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
+import DocsPagesIncludesTctl from "@version/docs/pages/includes/tctl.mdx";
+import DocsPagesIncludesCreateRoleUsingWeb from "@version/docs/pages/includes/create-role-using-web.mdx";
+import DocsPagesIncludesPluginsCreateRequest from "@version/docs/pages/includes/plugins/create-request.mdx";
+import DocsPagesIncludesPluginsResolveRequest from "@version/docs/pages/includes/plugins/resolve-request.mdx";
 
 With Teleport's ServiceNow integration, engineers can access the infrastructure
 they need to resolve incidents quickly, without granting longstanding admin permissions
@@ -26,10 +34,10 @@ In this guide, you will set up Teleport's Access Request plugin for ServiceNow.
 {/* lint ignore page-structure remark-lint */}
 ## Prerequisites
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx edition="Teleport Enterprise"!)
+<DocsPagesIncludesEditionPrereqsTabs edition="Teleport Enterprise" />
 
 - A ServiceNow account with access to read and write to and from the 'incident' table.
-- (!docs/pages/includes/tctl.mdx!)
+- <DocsPagesIncludesTctl />
 
 ## Step 1/4. Create services
 
@@ -66,7 +74,7 @@ spec:
         - YOUR_SERVICENOW_ROTA_ID_HERE
 ```
 
-(!docs/pages/includes/create-role-using-web.mdx!)
+<DocsPagesIncludesCreateRoleUsingWeb />
 
 To retrieve the ServiceNow rotation ID, navigate to the group record
 of the ServiceNow group the rotation belongs to and right click on
@@ -96,7 +104,7 @@ incidents. The "Caller" will be the username of the requesting Teleport user.
 
 As the Teleport user `myuser`, create an Access Request for the `editor` role:
 
-(!docs/pages/includes/plugins/create-request.mdx!)
+<DocsPagesIncludesPluginsCreateRequest />
 
 In ServiceNow, you will see a new incident containing information about the
 Access Request.
@@ -107,8 +115,8 @@ ServiceNow user currently on-call in that rotation and approve the Access Reques
 
 ### Resolve the request
 
-(!docs/pages/includes/plugins/resolve-request.mdx!)
+<DocsPagesIncludesPluginsResolveRequest />
 
 ## Troubleshooting
 
-(!docs/pages/includes/plugins/access-plugin-troubleshooting.mdx!)
+<DocsPagesIncludesPluginsAccessPluginTroubleshooting />

@@ -6,6 +6,10 @@ tags:
  - reference
  - platform-wide
 ---
+import DocsPagesIncludesPermissionWarning from "@version/docs/pages/includes/permission-warning.mdx";
+
+
+import DocsPagesIncludesBackupWarning from "@version/docs/pages/includes/backup-warning.mdx";
 
 Teleport is made up of six CLI tools.
 
@@ -16,7 +20,7 @@ Teleport is made up of six CLI tools.
 - [tbot](tbot.mdx): Supports Machine & Workload Identity, which provides short lived credentials to service accounts (e.g, a CI/CD server).
 - [fdpass-teleport](fdpass-teleport.mdx): Supports integrating Machine & Workload Identity with OpenSSH for higher performance SSH connections.
 
-(!docs/pages/includes/permission-warning.mdx!)
+<DocsPagesIncludesPermissionWarning />
 
 <details>
 <summary>Improve the CLI experience: enable shell completion</summary>
@@ -49,7 +53,7 @@ Teleport is made up of six CLI tools.
 
 </details>
 
-(!docs/pages/includes/backup-warning.mdx!)
+<DocsPagesIncludesBackupWarning />
 
 ## Resource filtering
 

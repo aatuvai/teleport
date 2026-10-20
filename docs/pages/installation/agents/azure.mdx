@@ -8,6 +8,16 @@ tags:
  - infrastructure-identity
  - azure
 ---
+import DocsPagesIncludesIacClients from "@version/docs/pages/includes/iac-clients.mdx";
+import DocsPagesIncludesProvisionTokenAzureSpec from "@version/docs/pages/includes/provision-token/azure-spec.mdx";
+import DocsPagesIncludesProvisionTokenAzureSpecHcl from "@version/docs/pages/includes/provision-token/azure-spec-hcl.mdx";
+import DocsPagesIncludesProvisionTokenAzureSpecKube from "@version/docs/pages/includes/provision-token/azure-spec-kube.mdx";
+
+
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
+import DocsPagesIncludesProvisionTokenAzureJoinEnableIdentity from "@version/docs/pages/includes/provision-token/azure-join-enable-identity.mdx";
+import DocsPagesIncludesInstallLinux from "@version/docs/pages/includes/install-linux.mdx";
+import DocsPagesIncludesStartTeleport from "@version/docs/pages/includes/start-teleport.mdx";
 
 This guide will explain how to use the **Azure join method** to configure
 Teleport instances to join your Teleport cluster without sharing any secrets
@@ -28,7 +38,7 @@ your Azure joining token.
 
 ## Prerequisites
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx!)
+<DocsPagesIncludesEditionPrereqsTabs />
 
 - An Azure Virtual Machine running Linux with the Teleport binary installed. The
   Virtual Machine must have a [Managed
@@ -53,14 +63,14 @@ your Azure joining token.
   |`https://login.microsoftonline.com/common/discovery/keys`|Public keys used to verify the signature of a JSON web token sent by the Teleport Agent|
   |`https://management.azure.com/`|Data about the VM's subscription ID and resource group. Retrieved if the Auth Service cannot extract a VM resource ID from the JWT sent by the Teleport Agent.|
 
-- (!docs/pages/includes/iac-clients.mdx!)
+- <DocsPagesIncludesIacClients />
 
 ## Step 1/3. Set up a Managed Identity
 
 Every virtual machine hosting a Teleport process using the Azure method to join
 your Teleport cluster needs a Managed Identity assigned to it.
 
-(!docs/pages/includes/provision-token/azure-join-enable-identity.mdx!)
+<DocsPagesIncludesProvisionTokenAzureJoinEnableIdentity />
 
 ## Step 2/3. Create the Azure joining token
 
@@ -75,7 +85,7 @@ use, as long as you use the same value for `join_params.token_name` in Step 3.
 <Tabs>
 <TabItem label="tctl">
 
-(!docs/pages/includes/provision-token/azure-spec.mdx!)
+<DocsPagesIncludesProvisionTokenAzureSpec />
 
 Run the following command to create the token:
 
@@ -89,14 +99,14 @@ $ tctl create -f token.yaml
 Add the following resource to your Terraform configuration, replacing values as
 indicated:
 
-(!docs/pages/includes/provision-token/azure-spec-hcl.mdx!)
+<DocsPagesIncludesProvisionTokenAzureSpecHcl />
 
 </TabItem>
 <TabItem label="Kubernetes">
 
 Add the following Kubernetes resource manifest, replacing values as indicated:
 
-(!docs/pages/includes/provision-token/azure-spec-kube.mdx!)
+<DocsPagesIncludesProvisionTokenAzureSpecKube />
 
 </TabItem>
 </Tabs>
@@ -108,7 +118,7 @@ Kubernetes, Application, Database, or Desktop Service.
 
 1. Install Teleport on your Azure Linux VM.
 
-   (!docs/pages/includes/install-linux.mdx!)
+   <DocsPagesIncludesInstallLinux />
 
 1. Configure your Teleport process with a custom `teleport.yaml` file. Use the
    `join_params` section with `token_name` matching your token created in Step 2
@@ -136,7 +146,7 @@ Kubernetes, Application, Database, or Desktop Service.
 
 1. Start Teleport on the Azure VM:
 
-   (!docs/pages/includes/start-teleport.mdx!)
+   <DocsPagesIncludesStartTeleport />
 
 1. Confirm that your Teleport process is able to connect to and join your
    cluster. You're all set!

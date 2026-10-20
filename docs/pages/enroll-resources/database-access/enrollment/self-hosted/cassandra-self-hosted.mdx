@@ -8,12 +8,31 @@ tags:
  - infrastructure-identity
 page_type: how-to
 ---
+import DocsPagesIncludesKubernetesAccessHelmHelmRepoAdd from "@version/docs/pages/includes/kubernetes-access/helm/helm-repo-add.mdx";
+import DocsPagesIncludesDatabaseAccessMultipleInstancesTip from "@version/docs/pages/includes/database-access/multiple-instances-tip.mdx";
+import DocsPagesIncludesDatabaseAccessTctlAuthSign from "@version/docs/pages/includes/database-access/tctl-auth-sign.mdx";
+import DocsPagesIncludesDatabaseAccessGuidesNextSteps from "@version/docs/pages/includes/database-access/guides-next-steps.mdx";
 
-(!docs/pages/includes/database-access/self-hosted-introduction.mdx dbType="Cassandra or ScyllaDB"!)
+
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
+import DocsPagesIncludesTctl from "@version/docs/pages/includes/tctl.mdx";
+import DocsPagesIncludesInstallLinux from "@version/docs/pages/includes/install-linux.mdx";
+import DocsPagesIncludesDatabaseAccessSelfHostedConfigStart from "@version/docs/pages/includes/database-access/self-hosted-config-start.mdx";
+import DocsPagesIncludesDatabaseAccessSelfHostedDbHelmInstall from "@version/docs/pages/includes/database-access/self-hosted-db-helm-install.mdx";
+import DocsPagesIncludesDatabaseAccessCreateUser from "@version/docs/pages/includes/database-access/create-user.mdx";
+import DocsPagesIncludesDatabaseAccessTtlNote from "@version/docs/pages/includes/database-access/ttl-note.mdx";
+import DocsPagesIncludesDatabaseAccessTctlAuthSign3Files from "@version/docs/pages/includes/database-access/tctl-auth-sign-3-files.mdx";
+import DocsPagesIncludesDatabaseAccessProxyDbTunnel from "@version/docs/pages/includes/database-access/proxy-db-tunnel.mdx";
+
+import DocsPagesIncludesDatabaseAccessSelfHostedIntroduction from "@version/docs/pages/includes/database-access/self-hosted-introduction.mdx";
+import DocsPagesIncludesDatabaseAccessHowItWorksMtls from "@version/docs/pages/includes/database-access/how-it-works/mtls.mdx";
+import DocsPagesIncludesTctlToken from "@version/docs/pages/includes/tctl-token.mdx";
+
+<DocsPagesIncludesDatabaseAccessSelfHostedIntroduction dbType="Cassandra or ScyllaDB" />
 
 ## How it works
 
-(!docs/pages/includes/database-access/how-it-works/mtls.mdx db="Cassandra or ScyllaDB"!)
+<DocsPagesIncludesDatabaseAccessHowItWorksMtls db="Cassandra or ScyllaDB" />
 
 <Tabs>
 <TabItem scope={["oss", "enterprise"]} label="Self-Hosted">
@@ -27,46 +46,46 @@ page_type: how-to
 
 ## Prerequisites
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx!)
+<DocsPagesIncludesEditionPrereqsTabs />
 
 - Self-hosted Cassandra or ScyllaDB instance.
 - The `cqlsh` Cassandra client installed and added to your system's `PATH` environment variable.
 - Optional: a certificate authority that issues certificates for
   your self-hosted database.
-- (!docs/pages/includes/tctl.mdx!)
+- <DocsPagesIncludesTctl />
 
 ## Step 1/5. Set up the Teleport Database Service
 
-(!docs/pages/includes/tctl-token.mdx serviceName="Database" tokenType="db" tokenFile="/tmp/token"!)
+<DocsPagesIncludesTctlToken serviceName="Database" tokenType="db" tokenFile="/tmp/token" />
 
 Install and configure Teleport where you will run the Teleport Database Service:
 
 <Tabs>
 <TabItem label="Linux Server">
 
-(!docs/pages/includes/install-linux.mdx!)
+<DocsPagesIncludesInstallLinux />
 
-(!docs/pages/includes/database-access/self-hosted-config-start.mdx dbName="cassandra" dbProtocol="cassandra" databaseAddress="cassandra.example.com:9042" !)
+<DocsPagesIncludesDatabaseAccessSelfHostedConfigStart dbName="cassandra" dbProtocol="cassandra" databaseAddress="cassandra.example.com:9042" />
 
 </TabItem>
 <TabItem label="Kubernetes Cluster">
   Teleport provides Helm charts for installing the Teleport Database Service in Kubernetes Clusters.
 
-  (!docs/pages/includes/kubernetes-access/helm/helm-repo-add.mdx!)
+  <DocsPagesIncludesKubernetesAccessHelmHelmRepoAdd />
 
-  (!docs/pages/includes/database-access/self-hosted-db-helm-install.mdx dbName="cassandra" dbProtocol="cassandra" databaseAddress="cassandra.example.com:9042" !)
+  <DocsPagesIncludesDatabaseAccessSelfHostedDbHelmInstall dbName="cassandra" dbProtocol="cassandra" databaseAddress="cassandra.example.com:9042" />
 </TabItem>
 </Tabs>
 
-(!docs/pages/includes/database-access/multiple-instances-tip.mdx !)
+<DocsPagesIncludesDatabaseAccessMultipleInstancesTip />
 
 ## Step 2/5. Create a Teleport user
 
-(!docs/pages/includes/database-access/create-user.mdx!)
+<DocsPagesIncludesDatabaseAccessCreateUser />
 
 ## Step 3/5. Set up mutual TLS
 
-(!docs/pages/includes/database-access/tctl-auth-sign.mdx!)
+<DocsPagesIncludesDatabaseAccessTctlAuthSign />
 
 Follow the instructions below to generate TLS credentials for your database.
 
@@ -79,7 +98,7 @@ Teleport will be connecting to it:
 $ tctl auth sign --format=cassandra --host=cassandra.example.com --out=server --ttl=2190h
 ```
 
-(!docs/pages/includes/database-access/ttl-note.mdx!)
+<DocsPagesIncludesDatabaseAccessTtlNote />
 
 The command will create two files:
 - `server.keystore` with  generated private key and user certificate in JKS format.
@@ -91,7 +110,7 @@ for Cassandra, rather than the Teleport database client CA, discard
 
 ### Scylla
 
-(!docs/pages/includes/database-access/tctl-auth-sign-3-files.mdx dbname="Scylla" format="scylla" !)
+<DocsPagesIncludesDatabaseAccessTctlAuthSign3Files dbname="Scylla" format="scylla" />
 
 ## Step 4/5. Configure Cassandra/Scylla
 
@@ -174,7 +193,7 @@ $ tsh db connect --db-user=cassandra cassandra
 # cassandra@cqlsh>
 ```
 
-(!docs/pages/includes/database-access/proxy-db-tunnel.mdx db="cassandra" dbArgs="--db-user=cassandra"!)
+<DocsPagesIncludesDatabaseAccessProxyDbTunnel db="cassandra" dbArgs="--db-user=cassandra" />
 
 To log out of the database and remove credentials:
 
@@ -187,5 +206,5 @@ $ tsh db logout
 
 ## Next steps
 
-(!docs/pages/includes/database-access/guides-next-steps.mdx!)
+<DocsPagesIncludesDatabaseAccessGuidesNextSteps />
 

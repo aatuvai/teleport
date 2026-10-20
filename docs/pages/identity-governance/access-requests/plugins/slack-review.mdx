@@ -10,6 +10,23 @@ tags:
 enterprise: Identity Governance
 page_type: how-to
 ---
+import DocsPagesIncludesMachineIdPluginPrerequisites from "@version/docs/pages/includes/machine-id/plugin-prerequisites.mdx";
+
+
+import ExamplesSystemdPluginsTeleportSlack from "!!raw-loader!@version/examples/systemd/plugins/teleport-slack.service";
+
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
+import DocsPagesIncludesTctl from "@version/docs/pages/includes/tctl.mdx";
+import DocsPagesIncludesCreateRoleUsingWeb from "@version/docs/pages/includes/create-role-using-web.mdx";
+import DocsPagesIncludesPluginsInstallAccessRequest from "@version/docs/pages/includes/plugins/install-access-request.mdx";
+import DocsPagesIncludesPluginsSlackReviewConfig from "@version/docs/pages/includes/plugins/slack-review-config.mdx";
+import DocsPagesIncludesPluginsCreateRequest from "@version/docs/pages/includes/plugins/create-request.mdx";
+
+import DocsPagesIncludesPluginsRbacImpersonate from "@version/docs/pages/includes/plugins/rbac-impersonate.mdx";
+
+import DocsPagesIncludesPluginsRbacImpersonateMachineId from "@version/docs/pages/includes/plugins/rbac-impersonate-machine-id.mdx";
+import DocsPagesIncludesPluginsTbotIdentity from "@version/docs/pages/includes/plugins/tbot-identity.mdx";
+import DocsPagesIncludesPluginsIdentityExport from "@version/docs/pages/includes/plugins/identity-export.mdx";
 
 In this guide, you will configure the Teleport Slack plugin to be able to review
 Access Requests directly within Slack.
@@ -36,9 +53,9 @@ approve or deny Access Requests directly within Slack without being redirected t
 
 ## Prerequisites
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx edition="Teleport Enterprise"!)
+<DocsPagesIncludesEditionPrereqsTabs edition="Teleport Enterprise" />
 
-(!docs/pages/includes/machine-id/plugin-prerequisites.mdx!)
+<DocsPagesIncludesMachineIdPluginPrerequisites />
 
 - Slack admin privileges to create an app and install it to your workspace. Your
   Slack profile must have the "Workspace Owner" or "Workspace Admin" banner
@@ -116,7 +133,7 @@ approve or deny Access Requests directly within Slack without being redirected t
 
   </details>
 
-(!docs/pages/includes/tctl.mdx!)
+<DocsPagesIncludesTctl />
 
 ## Step 1/7. Configure your Slack app
 
@@ -191,7 +208,7 @@ role 'access-reviewer' has been created
 role 'access-requester' has been created
 ```
 
-(!docs/pages/includes/create-role-using-web.mdx!)
+<DocsPagesIncludesCreateRoleUsingWeb />
 
 ### Set up the requester user
 
@@ -306,7 +323,7 @@ once we set up the Teleport Slack plugin.
 
 ## Step 3/7. Install the Teleport Slack plugin
 
-(!docs/pages/includes/plugins/install-access-request.mdx name="slack"!)
+<DocsPagesIncludesPluginsInstallAccessRequest name="slack" />
 
 ## Step 4/7. Set up the Teleport Slack plugin
 
@@ -321,10 +338,10 @@ or a regular Teleport user.
 
 <Tabs>
 <TabItem label="Machine & Workload Identity">
-(!docs/pages/includes/plugins/rbac-impersonate-machine-id.mdx role="access-plugin-with-review"!)
+<DocsPagesIncludesPluginsRbacImpersonateMachineId role="access-plugin-with-review" />
 </TabItem>
 <TabItem label="Long-lived identity files">
-(!docs/pages/includes/plugins/rbac-impersonate.mdx role="access-plugin-with-review"!)
+<DocsPagesIncludesPluginsRbacImpersonate role="access-plugin-with-review" />
 </TabItem>
 </Tabs>
 
@@ -337,10 +354,10 @@ longer-lived identity files with `tctl`:
 
 <Tabs>
 <TabItem label="Machine & Workload Identity">
-(!docs/pages/includes/plugins/tbot-identity.mdx secret="teleport-plugin-slack-identity"!)
+<DocsPagesIncludesPluginsTbotIdentity secret="teleport-plugin-slack-identity" />
 </TabItem>
 <TabItem label="Long-lived identity files">
-(!docs/pages/includes/plugins/identity-export.mdx user="access-plugin-with-review" plugin="slack" secret="teleport-plugin-slack-identity"!)
+<DocsPagesIncludesPluginsIdentityExport user="access-plugin-with-review" plugin="slack" secret="teleport-plugin-slack-identity" />
 </TabItem>
 </Tabs>
 
@@ -357,7 +374,7 @@ directly within Slack.
 
 ### Configure the plugin
 
-(!docs/pages/includes/plugins/slack-review-config.mdx!)
+<DocsPagesIncludesPluginsSlackReviewConfig />
 
 ### Invite the plugin to your Slack app
 
@@ -434,7 +451,7 @@ running, you can now test the workflow.
 
 ### Create an Access Request
 
-(!docs/pages/includes/plugins/create-request.mdx role="access"!)
+<DocsPagesIncludesPluginsCreateRequest role="access" />
 
 The user you configured earlier to review the request should receive a direct
 message from "Teleport" in Slack with Access Request details.
@@ -511,9 +528,11 @@ In production, we recommend starting the Teleport plugin daemon via an init
 system like systemd. Here's the recommended Teleport plugin service unit file
 for systemd:
 
-```ini
-(!examples/systemd/plugins/teleport-slack.service!)
-```
+<CodeBlock language="ini">
+
+  {ExamplesSystemdPluginsTeleportSlack}
+
+</CodeBlock>
 
 Save this as `teleport-slack.service` in either `/usr/lib/systemd/system/` or
 another [unit file load

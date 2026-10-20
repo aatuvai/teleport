@@ -7,6 +7,9 @@ tags:
  - infrastructure-identity
 page_type: how-to
 ---
+import DocsPagesIncludesDatabaseAccessGuiClientsSpannerLocalProxy from "@version/docs/pages/includes/database-access/gui-clients/spanner-local-proxy.mdx";
+import DocsPagesIncludesDatabaseAccessGuiClientsSpannerReusePortNote from "@version/docs/pages/includes/database-access/gui-clients/spanner-reuse-port-note.mdx";
+
 
 This guide shows you how to configure popular graphical database clients to work
 with Teleport.
@@ -517,7 +520,7 @@ Click OK to connect.
 
 ## Cloud Spanner DataGrip
 
-(!docs/pages/includes/database-access/gui-clients/spanner-local-proxy.mdx!)
+<DocsPagesIncludesDatabaseAccessGuiClientsSpannerLocalProxy />
 
 From the DataGrip menu, click "File > New > Data Source from URL", then copy and
 paste the JDBC URL that was output by `tsh proxy db`:
@@ -536,11 +539,11 @@ dropdown setting and choose "No auth":
 Click "Test connection" to ensure the connection is configured correctly, then
 click "Ok" to create the data source.
 
-(!docs/pages/includes/database-access/gui-clients/spanner-reuse-port-note.mdx!)
+<DocsPagesIncludesDatabaseAccessGuiClientsSpannerReusePortNote />
 
 ## Cloud Spanner DBeaver
 
-(!docs/pages/includes/database-access/gui-clients/spanner-local-proxy.mdx!)
+<DocsPagesIncludesDatabaseAccessGuiClientsSpannerLocalProxy />
 
 From the menu, click "Database > Driver Manager":
 
@@ -570,7 +573,7 @@ Now copy the JDBC URL that was output by `tsh proxy db` and paste it:
 
 Click "Proceed", then click "Finish".
 
-(!docs/pages/includes/database-access/gui-clients/spanner-reuse-port-note.mdx!)
+<DocsPagesIncludesDatabaseAccessGuiClientsSpannerReusePortNote />
 
 ## Oracle graphical clients
 

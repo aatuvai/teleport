@@ -8,8 +8,23 @@ tags:
  - infrastructure-identity
 page_type: how-to
 ---
+import DocsPagesIncludesKubernetesAccessHelmHelmRepoAdd from "@version/docs/pages/includes/kubernetes-access/helm/helm-repo-add.mdx";
+import DocsPagesIncludesDatabaseAccessMultipleInstancesTip from "@version/docs/pages/includes/database-access/multiple-instances-tip.mdx";
+import DocsPagesIncludesDatabaseAccessGuidesNextSteps from "@version/docs/pages/includes/database-access/guides-next-steps.mdx";
 
-(!docs/pages/includes/database-access/db-introduction.mdx dbType="Snowflake" dbConfigure="with key pair authentication"!)
+
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
+import DocsPagesIncludesTctl from "@version/docs/pages/includes/tctl.mdx";
+import DocsPagesIncludesInstallLinux from "@version/docs/pages/includes/install-linux.mdx";
+import DocsPagesIncludesDatabaseAccessDbConfigureStart from "@version/docs/pages/includes/database-access/db-configure-start.mdx";
+import DocsPagesIncludesDatabaseAccessDbHelmInstall from "@version/docs/pages/includes/database-access/db-helm-install.mdx";
+import DocsPagesIncludesDatabaseAccessCreateUser from "@version/docs/pages/includes/database-access/create-user.mdx";
+import DocsPagesIncludesDatabaseAccessProxyDbTunnel from "@version/docs/pages/includes/database-access/proxy-db-tunnel.mdx";
+
+import DocsPagesIncludesDatabaseAccessDbIntroduction from "@version/docs/pages/includes/database-access/db-introduction.mdx";
+import DocsPagesIncludesTctlToken from "@version/docs/pages/includes/tctl-token.mdx";
+
+<DocsPagesIncludesDatabaseAccessDbIntroduction dbType="Snowflake" dbConfigure="with key pair authentication" />
 
 ## How it works
 
@@ -31,7 +46,7 @@ forwards the user's requests to Snowflake as Teleport-authenticated messages.
 
 ## Prerequisites
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx!)
+<DocsPagesIncludesEditionPrereqsTabs />
 
 - Snowflake account with `SECURITYADMIN` role or higher.
 
@@ -41,36 +56,36 @@ forwards the user's requests to Snowflake as Teleport-authenticated messages.
 
   See [Installation](../../../../installation/single-machine/single-machine.mdx) for details.
 
-- (!docs/pages/includes/tctl.mdx!)
+- <DocsPagesIncludesTctl />
 
 ## Step 1/5. Set up the Teleport Database Service
 
-(!docs/pages/includes/tctl-token.mdx serviceName="Database" tokenType="db" tokenFile="/tmp/token"!)
+<DocsPagesIncludesTctlToken serviceName="Database" tokenType="db" tokenFile="/tmp/token" />
 
 Install and configure Teleport where you will run the Teleport Database Service:
 
 <Tabs>
 <TabItem label="Linux Server">
 
-(!docs/pages/includes/install-linux.mdx!)
+<DocsPagesIncludesInstallLinux />
 
-(!docs/pages/includes/database-access/db-configure-start.mdx dbName="example-snowflake" dbProtocol="snowflake" databaseAddress="abc12345.snowflakecomputing.com" !)
+<DocsPagesIncludesDatabaseAccessDbConfigureStart dbName="example-snowflake" dbProtocol="snowflake" databaseAddress="abc12345.snowflakecomputing.com" />
 
 </TabItem>
 <TabItem label="Kubernetes Cluster">
   Teleport provides Helm charts for installing the Teleport Database Service in Kubernetes Clusters.
 
-  (!docs/pages/includes/kubernetes-access/helm/helm-repo-add.mdx!)
+  <DocsPagesIncludesKubernetesAccessHelmHelmRepoAdd />
 
-  (!docs/pages/includes/database-access/db-helm-install.mdx dbName="example-snowflake" dbProtocol="snowflake" databaseAddress="abc12345.snowflakecomputing.com" !)
+  <DocsPagesIncludesDatabaseAccessDbHelmInstall dbName="example-snowflake" dbProtocol="snowflake" databaseAddress="abc12345.snowflakecomputing.com" />
 </TabItem>
 </Tabs>
 
-(!docs/pages/includes/database-access/multiple-instances-tip.mdx !)
+<DocsPagesIncludesDatabaseAccessMultipleInstancesTip />
 
 ## Step 2/5. Create a Teleport user
 
-(!docs/pages/includes/database-access/create-user.mdx!)
+<DocsPagesIncludesDatabaseAccessCreateUser />
 
 ## Step 3/5. Export a public key
 
@@ -138,7 +153,7 @@ To retrieve credentials for a database and connect to it:
 $ tsh db connect --db-user=alice --db-name=SNOWFLAKE_SAMPLE_DATA example-snowflake
 ```
 
-(!docs/pages/includes/database-access/proxy-db-tunnel.mdx db="example-snowflake" dbArgs="--db-user=alice --db-name=SNOWFLAKE_SAMPLE_DATA"!)
+<DocsPagesIncludesDatabaseAccessProxyDbTunnel db="example-snowflake" dbArgs="--db-user=alice --db-name=SNOWFLAKE_SAMPLE_DATA" />
 
 The `snowsql` command-line client should be available in the system `PATH` in order to be
 able to connect.
@@ -194,4 +209,4 @@ Mapping](../../../../identity-governance/idps/saml-attribute-mapping.mdx).
 
 ## Next steps
 
-(!docs/pages/includes/database-access/guides-next-steps.mdx!)
+<DocsPagesIncludesDatabaseAccessGuidesNextSteps />

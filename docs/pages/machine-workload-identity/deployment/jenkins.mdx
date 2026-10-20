@@ -9,6 +9,12 @@ tags:
  - infrastructure-identity
 page_type: how-to
 ---
+import DocsPagesIncludesMachineIdMachineIdInitBotData from "@version/docs/pages/includes/machine-id/machine-id-init-bot-data.mdx";
+import DocsPagesIncludesMachineIdDaemon from "@version/docs/pages/includes/machine-id/daemon.mdx";
+
+
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
+import DocsPagesIncludesTctl from "@version/docs/pages/includes/tctl.mdx";
 
 Jenkins is an open source automation server that is frequently used to build
 Continuous Integration and Continuous Delivery (CI/CD) pipelines.
@@ -23,11 +29,11 @@ to Teleport-protected infrastructure.
 
 You will need the following tools to use Teleport with Jenkins.
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx!)
+<DocsPagesIncludesEditionPrereqsTabs />
 
 - `ssh` OpenSSH tool
 - Jenkins
-- (!docs/pages/includes/tctl.mdx!)
+- <DocsPagesIncludesTctl />
 
 ## Architecture
 
@@ -137,7 +143,7 @@ $ sudo tbot init \
     --reader-user=jenkins
 ```
 
-(!docs/pages/includes/machine-id/machine-id-init-bot-data.mdx!)
+<DocsPagesIncludesMachineIdMachineIdInitBotData />
 
 Next, you need to start `tbot` in the background of each Jenkins worker.
 
@@ -165,7 +171,7 @@ services:
 
 ### Create a `tbot` systemd unit file
 
-(!docs/pages/includes/machine-id/daemon.mdx!)
+<DocsPagesIncludesMachineIdDaemon />
 
 ## Step 2/2. Update and run Jenkins pipelines
 

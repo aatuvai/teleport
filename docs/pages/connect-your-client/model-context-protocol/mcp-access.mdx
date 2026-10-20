@@ -10,6 +10,10 @@ tags:
  - infrastructure-identity
 page_type: how-to
 ---
+import DocsPagesIncludesMcpAccessTroubleshootTshBinaryEnoent from "@version/docs/pages/includes/mcp-access/troubleshoot-tsh-binary-enoent.mdx";
+
+
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
 
 <Callout
   variant="tip"
@@ -29,7 +33,7 @@ by Teleport.
 
 ## Prerequisites
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx edition="Teleport (v18.1.0 or higher)" clients="\`tsh\` client"!)
+<DocsPagesIncludesEditionPrereqsTabs edition="Teleport (v18.1.0 or higher)" clients="\\`tsh\\` client" />
 
 - Teleport MCP Access configured.
 
@@ -214,4 +218,4 @@ correct permissions to reach them. [See our guides for enrollment instructions.]
 
 ### `tsh` path errors in your MCP clients
 
-(!docs/pages/includes/mcp-access/troubleshoot-tsh-binary-enoent.mdx!)
+<DocsPagesIncludesMcpAccessTroubleshootTshBinaryEnoent />

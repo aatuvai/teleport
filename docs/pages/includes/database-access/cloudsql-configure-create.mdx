@@ -12,18 +12,20 @@ the Cloud SQL instance's dashboard.
 organization view at the top of the GCP dashboard.
 - <Var name="instance-id"/> The name of your Cloud SQL instance.
 
-```code
-$ sudo teleport db configure create \
-   -o file \
-   --name=cloudsql \
-   --protocol={{ dbProtocol }} \
-   --labels=env=dev \
-   --token={{ token }} \
-   --proxy=<Var name="example.teleport.sh:443" />  \
-   --uri=<Var name="public-ip" />:{{ dbPort }} \
-   --gcp-project-id=<Var name="project-id" /> \
-   --gcp-instance-id=<Var name="instance-id" /> 
-```
+<CodeBlock>
+{
+ `$ sudo teleport db configure create \\
+     -o file \\
+     --name=cloudsql \\
+     --protocol=${ props.dbProtocol } \\
+     --labels=env=dev \\
+     --token=${ props.token } \\
+     --proxy=<Var name="example.teleport.sh:443" />  \\
+     --uri=<Var name="public-ip" />:${ props.dbPort } \\
+     --gcp-project-id=<Var name="project-id" /> \\
+     --gcp-instance-id=<Var name="instance-id" /> `
+}
+</CodeBlock>
 </TabItem>
 
 <TabItem label="Configure Teleport With Manual CA Download">
@@ -40,19 +42,21 @@ organization view at the top of the GCP dashboard.
 - <Var name="/path/to/cloudsql/instance/server-ca.pem" /> The path to the Cloud
 SQL instance root CA certificate
 
-```code
-$ sudo teleport db configure create \
-   -o file \
-   --name=cloudsql \
-   --protocol={{ dbProtocol }} \
-   --labels=env=dev \
-   --token={{ token }} \
-   --proxy=<Var name="example.teleport.sh:443" />  \
-   --uri=<Var name="public-ip" />:{{ dbPort }} \
-   --gcp-project-id=<Var name="project-id" /> \
-   --gcp-instance-id=<Var name="instance-id" /> \
-   --ca-cert-file=<Var name="/path/to/cloudsql/instance/server-ca.pem" /> 
-```
+<CodeBlock>
+{
+ `$ sudo teleport db configure create \\
+     -o file \\
+     --name=cloudsql \\
+     --protocol=${ props.dbProtocol } \\
+     --labels=env=dev \\
+     --token=${ props.token } \\
+     --proxy=<Var name="example.teleport.sh:443" />  \\
+     --uri=<Var name="public-ip" />:${ props.dbPort } \\
+     --gcp-project-id=<Var name="project-id" /> \\
+     --gcp-instance-id=<Var name="instance-id" /> \\
+     --ca-cert-file=<Var name="/path/to/cloudsql/instance/server-ca.pem" /> `
+}
+</CodeBlock>
 </TabItem>
 
 </Tabs>

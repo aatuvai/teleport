@@ -4,6 +4,11 @@ sidebar_label: SSO For MFA Checks
 description: Explains how to set up an authentication connector to delegate multi-factor authentication to your identity provider.
 page_type: how-to
 ---
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
+
+
+import ExamplesResourcesOidcConnectorMfa from "!!raw-loader!@version/examples/resources/oidc-connector-mfa.yaml";
+import ExamplesResourcesSamlConnectorMfa from "!!raw-loader!@version/examples/resources/saml-connector-mfa.yaml";
 
 Teleport administrators can configure Teleport to delegate multi-factor
 authentication checks to a single sign-on provider as an alternative to
@@ -32,7 +37,7 @@ Administrators may want to consider enabling this feature in order to:
 
 ## Prerequisites
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx!)
+<DocsPagesIncludesEditionPrereqsTabs />
 
 - This guide assumes that you are familiar with how to integrate your identity
   provider with Teleport. Make sure that you understand the guide in [Integrate
@@ -78,16 +83,20 @@ examples:
 <Tabs>
 <TabItem label="OIDC">
 
-```yaml
-(!examples/resources/oidc-connector-mfa.yaml!)
-```
+<CodeBlock language="yaml">
+
+  {ExamplesResourcesOidcConnectorMfa}
+
+</CodeBlock>
 
 </TabItem>
 <TabItem label="SAML">
 
-```yaml
-(!examples/resources/saml-connector-mfa.yaml!)
-```
+<CodeBlock language="yaml">
+
+  {ExamplesResourcesSamlConnectorMfa}
+
+</CodeBlock>
 
 You may use `entity_descriptor_url` in lieu of `entity_descriptor` to fetch
 the entity descriptor from your IDP.

@@ -10,6 +10,12 @@ tags:
  - privileged-access
 page_type: how-to
 ---
+import DocsPagesIncludesSsoNextStepTraits from "@version/docs/pages/includes/sso/next-step-traits.mdx";
+
+
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
+import DocsPagesIncludesTctl from "@version/docs/pages/includes/tctl.mdx";
+import DocsPagesIncludesSsoLoginerrortroubleshooting from "@version/docs/pages/includes/sso/loginerrortroubleshooting.mdx";
 
 In this guide, you will set up GitHub Single Sign On (SSO) so you can
 automatically map teams in your GitHub organization to users and roles in
@@ -56,9 +62,9 @@ limitation.
 - Teleport role with access to maintaining `github` resources for using `tctl`
   from the Desktop. This is available in the default `editor` role.
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx!)
+<DocsPagesIncludesEditionPrereqsTabs />
 
-- (!docs/pages/includes/tctl.mdx!)
+- <DocsPagesIncludesTctl />
 
 ## Step 1/3. Create a GitHub OAuth app
 
@@ -504,11 +510,11 @@ After logging out of `tsh`, you can log back in without specifying
 
 ## Next steps
 
-(!docs/pages/includes/sso/next-step-traits.mdx!)
+<DocsPagesIncludesSsoNextStepTraits />
 
 ## Troubleshooting
 
-(!docs/pages/includes/sso/loginerrortroubleshooting.mdx!)
+<DocsPagesIncludesSsoLoginerrortroubleshooting />
 
 ### Teams Not Mapping to Roles
 

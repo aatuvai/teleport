@@ -9,12 +9,36 @@ tags:
  - google-cloud
 page_type: how-to
 ---
+import DocsPagesIncludesDatabaseAccessCloudsqlCreateServiceAccountForDbService from "@version/docs/pages/includes/database-access/cloudsql-create-service-account-for-db-service.mdx";
+import DocsPagesIncludesDatabaseAccessCloudsqlGrantDbServiceAccount from "@version/docs/pages/includes/database-access/cloudsql_grant_db_service_account.mdx";
+import DocsPagesIncludesDatabaseAccessCloudsqlCreateDbUserAccount from "@version/docs/pages/includes/database-access/cloudsql_create_db_user_account.mdx";
+import DocsPagesIncludesDatabaseAccessCloudsqlGrantDbUser from "@version/docs/pages/includes/database-access/cloudsql_grant_db_user.mdx";
+import DocsPagesIncludesDatabaseAccessCloudsqlDownloadRootCa from "@version/docs/pages/includes/database-access/cloudsql_download_root_ca.mdx";
+import DocsPagesIncludesDatabaseAccessGcpTroubleshooting from "@version/docs/pages/includes/database-access/gcp-troubleshooting.mdx";
+import DocsPagesIncludesDatabaseAccessGuidesNextSteps from "@version/docs/pages/includes/database-access/guides-next-steps.mdx";
 
-(!docs/pages/includes/database-access/db-introduction.mdx dbType="MySQL on Google Cloud SQL" dbConfigure="with a service account"!)
+
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
+import DocsPagesIncludesTctl from "@version/docs/pages/includes/tctl.mdx";
+import DocsPagesIncludesDatabaseAccessCloudsqlGrantImpersonation from "@version/docs/pages/includes/database-access/cloudsql-grant-impersonation.mdx";
+import DocsPagesIncludesInstallLinux from "@version/docs/pages/includes/install-linux.mdx";
+import DocsPagesIncludesDatabaseAccessCloudsqlConfigureCreate from "@version/docs/pages/includes/database-access/cloudsql-configure-create.mdx";
+import DocsPagesIncludesDatabaseAccessCloudsqlServiceCredentials from "@version/docs/pages/includes/database-access/cloudsql_service_credentials.mdx";
+import DocsPagesIncludesStartTeleport from "@version/docs/pages/includes/start-teleport.mdx";
+import DocsPagesIncludesDatabaseAccessCreateUser from "@version/docs/pages/includes/database-access/create-user.mdx";
+import DocsPagesIncludesDatabaseAccessProxyDbTunnel from "@version/docs/pages/includes/database-access/proxy-db-tunnel.mdx";
+import DocsPagesIncludesDatabaseAccessDbAccessWebuiAd from "@version/docs/pages/includes/database-access/db-access-webui-ad.mdx";
+
+import DocsPagesIncludesDatabaseAccessDbIntroduction from "@version/docs/pages/includes/database-access/db-introduction.mdx";
+import DocsPagesIncludesDatabaseAccessHowItWorksIam from "@version/docs/pages/includes/database-access/how-it-works/iam.mdx";
+import DocsPagesIncludesDatabaseAccessCloudsqlEnableIamAuth from "@version/docs/pages/includes/database-access/cloudsql_enable_iam_auth.mdx";
+import DocsPagesIncludesTctlToken from "@version/docs/pages/includes/tctl-token.mdx";
+
+<DocsPagesIncludesDatabaseAccessDbIntroduction dbType="MySQL on Google Cloud SQL" dbConfigure="with a service account" />
 
 ## How it works
 
-(!docs/pages/includes/database-access/how-it-works/iam.mdx db="MySQL" cloud="Google Cloud"!)
+<DocsPagesIncludesDatabaseAccessHowItWorksIam db="MySQL" cloud="Google Cloud" />
 
 <Tabs>
 <TabItem label="Self-Hosted">
@@ -27,20 +51,20 @@ page_type: how-to
 
 ## Prerequisites
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx!)
+<DocsPagesIncludesEditionPrereqsTabs />
 
 - Google Cloud account
 - A host, e.g., a Compute Engine instance, where you will run the Teleport Database
   Service
-- (!docs/pages/includes/tctl.mdx!)
+- <DocsPagesIncludesTctl />
 
 ## Step 1/9. Create a service account for the Teleport Database Service
 
-(!docs/pages/includes/database-access/cloudsql-create-service-account-for-db-service.mdx !)
+<DocsPagesIncludesDatabaseAccessCloudsqlCreateServiceAccountForDbService />
 
 ### (Optional) Grant permissions
 
-(!docs/pages/includes/database-access/cloudsql_grant_db_service_account.mdx!)
+<DocsPagesIncludesDatabaseAccessCloudsqlGrantDbServiceAccount />
 
 ### (Optional) Grant permission to check user type
 
@@ -77,11 +101,11 @@ configure your database users to use IAM auth as described in this guide.
 
 Teleport uses service accounts to connect to Cloud SQL databases.
 
-(!docs/pages/includes/database-access/cloudsql_create_db_user_account.mdx!)
+<DocsPagesIncludesDatabaseAccessCloudsqlCreateDbUserAccount />
 
-(!docs/pages/includes/database-access/cloudsql_grant_db_user.mdx!)
+<DocsPagesIncludesDatabaseAccessCloudsqlGrantDbUser />
 
-(!docs/pages/includes/database-access/cloudsql-grant-impersonation.mdx!)
+<DocsPagesIncludesDatabaseAccessCloudsqlGrantImpersonation />
 
 ## Step 3/9. Configure your Cloud SQL database
 
@@ -91,7 +115,7 @@ Teleport uses [IAM
 authentication](https://cloud.google.com/sql/docs/mysql/iam-authentication)
 with Cloud SQL MySQL instances.
 
-(!docs/pages/includes/database-access/cloudsql_enable_iam_auth.mdx type="MySQL" flag="cloudsql_iam_authentication" !)
+<DocsPagesIncludesDatabaseAccessCloudsqlEnableIamAuth type="MySQL" flag="cloudsql_iam_authentication" />
 
 ### (Optional) SSL mode "require trusted client certificates"
 
@@ -123,33 +147,33 @@ Cloud documentation for more info.
 
 ## Step 4/9. Install Teleport
 
-(!docs/pages/includes/install-linux.mdx!)
+<DocsPagesIncludesInstallLinux />
 
 ## Step 5/9. Configure the Teleport Database Service
 
 ### Create a join token
 
-(!docs/pages/includes/tctl-token.mdx serviceName="Database" tokenType="db" tokenFile="/tmp/token" !)
+<DocsPagesIncludesTctlToken serviceName="Database" tokenType="db" tokenFile="/tmp/token" />
 
 ### (Optional) Download the Cloud SQL CA certificate
 
-(!docs/pages/includes/database-access/cloudsql_download_root_ca.mdx!)
+<DocsPagesIncludesDatabaseAccessCloudsqlDownloadRootCa />
 
 ### Generate Teleport config
 
-(!docs/pages/includes/database-access/cloudsql-configure-create.mdx dbPort="3306" dbProtocol="mysql" token="/tmp/token" !)
+<DocsPagesIncludesDatabaseAccessCloudsqlConfigureCreate dbPort="3306" dbProtocol="mysql" token="/tmp/token" />
 
 ## Step 6/9. Configure GCP credentials
 
-(!docs/pages/includes/database-access/cloudsql_service_credentials.mdx serviceAccount="teleport-db-service"!)
+<DocsPagesIncludesDatabaseAccessCloudsqlServiceCredentials serviceAccount="teleport-db-service" />
 
 ## Step 7/9. Start the Teleport Database Service
 
-(!docs/pages/includes/start-teleport.mdx service="the Teleport Database Service"!)
+<DocsPagesIncludesStartTeleport service="the Teleport Database Service" />
 
 ## Step 8/9. Create a Teleport user
 
-(!docs/pages/includes/database-access/create-user.mdx!)
+<DocsPagesIncludesDatabaseAccessCreateUser />
 
 ## Step 9/9. Connect
 
@@ -202,9 +226,9 @@ $ tsh db connect --db-user=cloudsql-user --db-name=mysql cloudsql
 $ tsh db connect --db-user=cloudsql-user@<Var name="project-id"/>.iam.gserviceaccount.com --db-name=mysql cloudsql
 ```
 
-(!docs/pages/includes/database-access/proxy-db-tunnel.mdx db="cloudsql" dbArgs="--db-user=cloudsql-user --db-name=mysql"!)
+<DocsPagesIncludesDatabaseAccessProxyDbTunnel db="cloudsql" dbArgs="--db-user=cloudsql-user --db-name=mysql" />
 
-(!docs/pages/includes/database-access/db-access-webui-ad.mdx dbType="MySQL"!)
+<DocsPagesIncludesDatabaseAccessDbAccessWebuiAd dbType="MySQL" />
 
 To log out of the database and remove credentials:
 
@@ -234,11 +258,11 @@ Connecting as built-in database users with passwords are not supported for
 Cloud SQL replica instances. Please follow this guide to use IAM authentication
 instead.
 
-(!docs/pages/includes/database-access/gcp-troubleshooting.mdx!)
+<DocsPagesIncludesDatabaseAccessGcpTroubleshooting />
 
 ## Next steps
 
-(!docs/pages/includes/database-access/guides-next-steps.mdx!)
+<DocsPagesIncludesDatabaseAccessGuidesNextSteps />
 
 - Learn more about [authenticating as a service
   account](https://cloud.google.com/docs/authentication#service-accounts) in

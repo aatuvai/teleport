@@ -10,6 +10,29 @@ tags:
 enterprise: Identity Governance
 page_type: how-to
 ---
+import DocsPagesIncludesMachineIdPluginPrerequisites from "@version/docs/pages/includes/machine-id/plugin-prerequisites.mdx";
+import DocsPagesIncludesPluginsRefreshPluginIdentity from "@version/docs/pages/includes/plugins/refresh-plugin-identity.mdx";
+import DocsPagesIncludesPluginsAccessPluginTroubleshooting from "@version/docs/pages/includes/plugins/access-plugin-troubleshooting.mdx";
+
+
+import ExamplesResourcesPluginsTeleportMsteams from "!!raw-loader!@version/examples/resources/plugins/teleport-msteams.toml";
+import ExamplesResourcesPluginsTeleportMsteamsHelm from "!!raw-loader!@version/examples/resources/plugins/teleport-msteams-helm.yaml";
+import ExamplesSystemdPluginsTeleportMsteams from "!!raw-loader!@version/examples/systemd/plugins/teleport-msteams.service";
+
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
+import DocsPagesIncludesTctl from "@version/docs/pages/includes/tctl.mdx";
+import DocsPagesIncludesPluginsInstallAccessRequest from "@version/docs/pages/includes/plugins/install-access-request.mdx";
+import DocsPagesIncludesPluginsConfigTomlTeleport from "@version/docs/pages/includes/plugins/config-toml-teleport.mdx";
+import DocsPagesIncludesPluginsCreateRequest from "@version/docs/pages/includes/plugins/create-request.mdx";
+import DocsPagesIncludesPluginsResolveRequest from "@version/docs/pages/includes/plugins/resolve-request.mdx";
+
+import DocsPagesIncludesPluginsEditorRequestRbac from "@version/docs/pages/includes/plugins/editor-request-rbac.mdx";
+import DocsPagesIncludesPluginsRbacImpersonate from "@version/docs/pages/includes/plugins/rbac-impersonate.mdx";
+
+import DocsPagesIncludesPluginsEnroll from "@version/docs/pages/includes/plugins/enroll.mdx";
+import DocsPagesIncludesPluginsRbacImpersonateMachineId from "@version/docs/pages/includes/plugins/rbac-impersonate-machine-id.mdx";
+import DocsPagesIncludesPluginsTbotIdentity from "@version/docs/pages/includes/plugins/tbot-identity.mdx";
+import DocsPagesIncludesPluginsIdentityExport from "@version/docs/pages/includes/plugins/identity-export.mdx";
 
 In this guide, you will set up Microsoft Teams to receive Access Request
 messages from Teleport.
@@ -17,7 +40,7 @@ messages from Teleport.
 <details>
 <summary>This integration is hosted on Teleport Enterprise (Cloud)</summary>
 
-(!docs/pages/includes/plugins/enroll.mdx name="the Microsoft Teams integration"!)
+<DocsPagesIncludesPluginsEnroll name="the Microsoft Teams integration" />
 
 ![Create Microsoft Teams Bot](../../../../img/enterprise/plugins/msteams/enroll-bot.png)
 
@@ -38,9 +61,9 @@ productivity.
 
 ## Prerequisites
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx edition="Teleport Enterprise"!)
+<DocsPagesIncludesEditionPrereqsTabs edition="Teleport Enterprise" />
 
-(!docs/pages/includes/machine-id/plugin-prerequisites.mdx!)
+<DocsPagesIncludesMachineIdPluginPrerequisites />
 
 - A Microsoft Teams License (Microsoft 365 Business).
 - Azure console access in the organization/directory holding the Microsoft Teams
@@ -55,14 +78,14 @@ productivity.
 - Either an Azure virtual machine or Kubernetes cluster where you will run the
   Teleport Microsoft Teams plugin.
 
-(!docs/pages/includes/tctl.mdx!)
+<DocsPagesIncludesTctl />
 
 ## Step 1/9. Define RBAC resources
 
 Before you set up the Microsoft Teams plugin, you will need to enable Role Access Requests
 in your Teleport cluster.
 
-(!/docs/pages/includes/plugins/editor-request-rbac.mdx!)
+<DocsPagesIncludesPluginsEditorRequestRbac />
 
 ## Step 2/9. Define a Teleport Microsoft Teams plugin user
 
@@ -72,10 +95,10 @@ or a regular Teleport user.
 
 <Tabs>
 <TabItem label="Machine & Workload Identity">
-(!docs/pages/includes/plugins/rbac-impersonate-machine-id.mdx!)
+<DocsPagesIncludesPluginsRbacImpersonateMachineId />
 </TabItem>
 <TabItem label="Long-lived identity files">
-(!docs/pages/includes/plugins/rbac-impersonate.mdx!)
+<DocsPagesIncludesPluginsRbacImpersonate />
 </TabItem>
 </Tabs>
 
@@ -88,10 +111,10 @@ longer-lived identity files with `tctl`:
 
 <Tabs>
 <TabItem label="Machine & Workload Identity">
-(!docs/pages/includes/plugins/tbot-identity.mdx secret="teleport-plugin-msteams-identity"!)
+<DocsPagesIncludesPluginsTbotIdentity secret="teleport-plugin-msteams-identity" />
 </TabItem>
 <TabItem label="Long-lived identity files">
-(!docs/pages/includes/plugins/identity-export.mdx plugin="msteams" secret="teleport-plugin-msteams-identity"!)
+<DocsPagesIncludesPluginsIdentityExport plugin="msteams" secret="teleport-plugin-msteams-identity" />
 </TabItem>
 </Tabs>
 
@@ -101,7 +124,7 @@ Install the Microsoft Teams plugin on your workstation. If you are deploying the
 plugin on Kubernetes, you will still need to install the plugin locally in order
 to generate an application archive to upload later in this guide.
 
-(!docs/pages/includes/plugins/install-access-request.mdx name="msteams"!)
+<DocsPagesIncludesPluginsInstallAccessRequest name="msteams" />
 
 ## Step 5/9. Register an Azure Bot
 
@@ -213,9 +236,11 @@ $ teleport-msteams configure /var/lib/teleport/plugins/msteams/assets --appID "$
 
 This should result in a config file like the one below:
 
-```toml
-(!examples/resources/plugins/teleport-msteams.toml!)
-```
+<CodeBlock language="toml">
+
+  {ExamplesResourcesPluginsTeleportMsteams}
+
+</CodeBlock>
 
 Copy the `/var/lib/teleport/plugins/msteams/assets/app.zip` file to your local
 computer. You will have to upload it to Microsoft Teams later.
@@ -243,9 +268,11 @@ Microsoft Teams later in this guide.
 Create a file on your workstation called `teleport-msteams-helm.yaml` with the
 following content:
 
-```yaml
-(!examples/resources/plugins/teleport-msteams-helm.yaml!)
-```
+<CodeBlock language="yaml">
+
+  {ExamplesResourcesPluginsTeleportMsteamsHelm}
+
+</CodeBlock>
 
 You will edit this file in the next section.
 
@@ -267,9 +294,9 @@ Edit the configuration file according to the instructions below.
 The Microsoft Teams plugin uses this section to connect to your Teleport
 cluster.
 
-(!docs/pages/includes/plugins/config-toml-teleport.mdx!)
+<DocsPagesIncludesPluginsConfigTomlTeleport />
 
-(!docs/pages/includes/plugins/refresh-plugin-identity.mdx!)
+<DocsPagesIncludesPluginsRefreshPluginIdentity />
 
 #### `[msapi]`/`msTeams`
 
@@ -381,14 +408,18 @@ The final configuration file should resemble the following:
 
 <Tabs>
 <TabItem label="Executable or Docker">
-```toml
-(!examples/resources/plugins/teleport-msteams.toml!)
-```
+<CodeBlock language="toml">
+
+  {ExamplesResourcesPluginsTeleportMsteams}
+
+</CodeBlock>
 </TabItem>
 <TabItem label="Helm Chart">
-```yaml
-(!examples/resources/plugins/teleport-msteams-helm.yaml!)
-```
+<CodeBlock language="yaml">
+
+  {ExamplesResourcesPluginsTeleportMsteamsHelm}
+
+</CodeBlock>
 </TabItem>
 </Tabs>
 
@@ -526,7 +557,7 @@ $ kubectl rollout restart deployment teleport-plugin-msteams
 Create an Access Request and check if the plugin works as expected with the
 following steps.
 
-(!docs/pages/includes/plugins/create-request.mdx!)
+<DocsPagesIncludesPluginsCreateRequest />
 
 The user you configured earlier to review the request should receive a direct
 message from "TeleBot" in Microsoft Teams allowing them to visit a link in the Teleport
@@ -534,7 +565,7 @@ Web UI and either approve or deny the request.
 
 ### Resolve the request
 
-(!docs/pages/includes/plugins/resolve-request.mdx!)
+<DocsPagesIncludesPluginsResolveRequest />
 
 Once the request is resolved, the Microsoft Teams bot will update the Access Request message
 to reflect its new status.
@@ -561,9 +592,11 @@ In production, we recommend starting the Teleport plugin daemon via an init
 system like systemd.  Here's the recommended Teleport plugin service unit file
 for systemd:
 
-```ini
-(!examples/systemd/plugins/teleport-msteams.service!)
-```
+<CodeBlock language="ini">
+
+  {ExamplesSystemdPluginsTeleportMsteams}
+
+</CodeBlock>
 
 Save this as `teleport-msteams.service` in either `/usr/lib/systemd/system/` or
 another [unit file load
@@ -579,7 +612,7 @@ $ sudo systemctl start teleport-msteams
 
 ## Troubleshooting
 
-(!docs/pages/includes/plugins/access-plugin-troubleshooting.mdx!)
+<DocsPagesIncludesPluginsAccessPluginTroubleshooting />
 
 ## Next steps
 

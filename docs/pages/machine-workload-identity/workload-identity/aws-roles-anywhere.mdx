@@ -9,6 +9,10 @@ tags:
  - aws
 page_type: how-to
 ---
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
+import DocsPagesIncludesTctl from "@version/docs/pages/includes/tctl.mdx";
+import DocsPagesIncludesCreateRoleUsingWeb from "@version/docs/pages/includes/create-role-using-web.mdx";
+
 
 Teleport Workload Identity issues flexible short-lived identities in X.509
 certificates. AWS Roles Anywhere allows you to use these certificates to
@@ -63,9 +67,9 @@ This guide covers configuring Roles Anywhere, for OIDC federation, see
 
 ## Prerequisites
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx!)
+<DocsPagesIncludesEditionPrereqsTabs />
 
-- (!docs/pages/includes/tctl.mdx!)
+- <DocsPagesIncludesTctl />
 - `tbot` must already be installed and configured on the host where the
 workloads which need to access Teleport Workload Identity will run. For more
 information, see the [deployment guides](../deployment/deployment.mdx).
@@ -250,7 +254,7 @@ Apply this role to your Teleport cluster using `tctl`:
 $ tctl create -f role.yaml
 ```
 
-(!docs/pages/includes/create-role-using-web.mdx!)
+<DocsPagesIncludesCreateRoleUsingWeb />
 
 If you intend this SPIFFE ID to be issued by a human, you now need to assign
 this role to their user:

@@ -9,8 +9,22 @@ tags:
  - infrastructure-identity
 page_type: how-to
 ---
+import DocsPagesIncludesDatabaseAccessMongodbRequiredDatabaseAccess from "@version/docs/pages/includes/database-access/mongodb-required-database-access.mdx";
+import DocsPagesIncludesDatabaseAccessGuidesNextSteps from "@version/docs/pages/includes/database-access/guides-next-steps.mdx";
 
-(!docs/pages/includes/database-access/db-introduction.mdx dbType="MongoDB Atlas" dbConfigure="with either mutual TLS or AWS IAM authentication"!)
+
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
+import DocsPagesIncludesTctl from "@version/docs/pages/includes/tctl.mdx";
+import DocsPagesIncludesInstallLinux from "@version/docs/pages/includes/install-linux.mdx";
+import DocsPagesIncludesStartTeleport from "@version/docs/pages/includes/start-teleport.mdx";
+import DocsPagesIncludesDatabaseAccessCreateUser from "@version/docs/pages/includes/database-access/create-user.mdx";
+import DocsPagesIncludesAwsCredentials from "@version/docs/pages/includes/aws-credentials.mdx";
+import DocsPagesIncludesDatabaseAccessProxyDbTunnel from "@version/docs/pages/includes/database-access/proxy-db-tunnel.mdx";
+
+import DocsPagesIncludesDatabaseAccessDbIntroduction from "@version/docs/pages/includes/database-access/db-introduction.mdx";
+import DocsPagesIncludesTctlToken from "@version/docs/pages/includes/tctl-token.mdx";
+
+<DocsPagesIncludesDatabaseAccessDbIntroduction dbType="MongoDB Atlas" dbConfigure="with either mutual TLS or AWS IAM authentication" />
 
 ## How it works
 
@@ -39,20 +53,20 @@ or AWS IAM:
 
 ## Prerequisites
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx!)
+<DocsPagesIncludesEditionPrereqsTabs />
 
 - [MongoDB Atlas](https://www.mongodb.com/cloud/atlas) cluster.
 - A host, e.g., an Amazon EC2 instance, where you will run the Teleport Database
   Service.
-- (!docs/pages/includes/tctl.mdx!)
+- <DocsPagesIncludesTctl />
 
 ## Step 1/4. Set up the Teleport Database Service
 
-(!docs/pages/includes/tctl-token.mdx serviceName="Database" tokenType="db" tokenFile="/tmp/token"!)
+<DocsPagesIncludesTctlToken serviceName="Database" tokenType="db" tokenFile="/tmp/token" />
 
 Install Teleport on the host where you will run the Teleport Database Service:
 
-(!docs/pages/includes/install-linux.mdx!)
+<DocsPagesIncludesInstallLinux />
 
 Next, start the Database Service.
 
@@ -105,7 +119,7 @@ db_service:
       env: "dev"
 ```
 
-(!docs/pages/includes/start-teleport.mdx service="the Teleport Database Service"!)
+<DocsPagesIncludesStartTeleport service="the Teleport Database Service" />
 
 See the full [config reference](../../../../reference/deployment/config.mdx) for details.
 
@@ -133,9 +147,9 @@ $ --uri=mongodb+srv://cluster0.abcde.mongodb.net
 
 ## Step 2/4. Create a Teleport user
 
-(!docs/pages/includes/database-access/create-user.mdx!)
+<DocsPagesIncludesDatabaseAccessCreateUser />
 
-(!docs/pages/includes/database-access/mongodb-required-database-access.mdx!)
+<DocsPagesIncludesDatabaseAccessMongodbRequiredDatabaseAccess />
 
 ## Step 3/4. Configure Atlas
 
@@ -189,7 +203,7 @@ certificate with `CN=alice` subject.
 
 You must provide the Teleport Database Service access to AWS credentials.
 
-(!docs/pages/includes/aws-credentials.mdx service="the Database Service"!)
+<DocsPagesIncludesAwsCredentials service="the Database Service" />
 
 ### Create a MongoDB IAM role
 
@@ -280,7 +294,7 @@ To retrieve credentials for a database and connect to it:
 $ tsh db connect --db-user=alice --db-name dev mongodb-atlas
 ```
 
-(!docs/pages/includes/database-access/proxy-db-tunnel.mdx db="mongodb-atlas" dbArgs="--db-user=alice --db-name=dev"!)
+<DocsPagesIncludesDatabaseAccessProxyDbTunnel db="mongodb-atlas" dbArgs="--db-user=alice --db-name=dev" />
 </TabItem>
 <TabItem label="AWS IAM authentication">
 To retrieve credentials for a database and connect to it, you must provide the
@@ -313,7 +327,7 @@ $ tsh db logout
 
 ## Next steps
 
-(!docs/pages/includes/database-access/guides-next-steps.mdx!)
+<DocsPagesIncludesDatabaseAccessGuidesNextSteps />
 
 ## Further reading
 - [Which certificate authority signs MongoDB Atlas cluster TLS certificates?](https://docs.atlas.mongodb.com/reference/faq/security/#which-certificate-authority-signs-mongodb-atlas-cluster-tls-certificates-)

@@ -1,4 +1,3 @@
-{{ matcher="bar" }}
 
 This section covers configuration options for discovering and enrolling servers.
 
@@ -9,30 +8,34 @@ When using blue-green deployments or other multiple clusters setups, you might w
 Teleport supports installing and running multiple agents on the same instance, using a suffixed installation which allows you to isolate each installation.
 <Tabs>
 <TabItem label="Dynamic configuration (recommended)">
-To configure the Discovery Service to use a suffixed installation, edit the Discovery Config and set the `spec.{{ matcher }}.install.suffix` key:
+To configure the Discovery Service to use a suffixed installation, edit the Discovery Config and set the `spec.{props.matcher ?? "bar"}.install.suffix` key:
 
-```yaml
-kind: discovery_config
-# ...
-spec:
-  {{ matcher }}:
-   - install:
-       suffix: "blue-cluster"
-``` 
+<CodeBlock>
+{
+ `kind: discovery_config
+  # ...
+  spec:
+    ${ props.matcher ?? "bar" }:
+     - install:
+         suffix: "blue-cluster"`
+}
+</CodeBlock>
 </TabItem>
 <TabItem label="Static configuration">
 To configure the Discovery Service to use a suffixed installation, specify the `install.suffix` key in your Discovery Service configuration:
 
-```yaml
-# teleport.yaml
-version: v3
-# ...
-discovery_service:
-  enabled: true
-  {{ matcher }}:
-   - install:
-       suffix: "blue-cluster"
-``` 
+<CodeBlock>
+{
+ `# teleport.yaml
+  version: v3
+  # ...
+  discovery_service:
+    enabled: true
+    ${ props.matcher ?? "bar" }:
+     - install:
+         suffix: "blue-cluster"`
+}
+</CodeBlock>
 </TabItem>
 </Tabs>
 
@@ -44,31 +47,35 @@ If you are using Teleport [Agent managed updates](../../upgrading/agent-managed-
 
 <Tabs>
 <TabItem label="Dynamic configuration (recommended)">
-To set the update group, edit the Discovery Config and set the `spec.{{ matcher }}.install.update_group` key:
+To set the update group, edit the Discovery Config and set the `spec.{props.matcher ?? "bar"}.install.update_group` key:
 
-```yaml
-kind: discovery_config
-# ...
-spec:
-  {{ matcher }}:
-   - install:
-       update_group: "update-group-1"
-```
+<CodeBlock>
+{
+ `kind: discovery_config
+  # ...
+  spec:
+    ${ props.matcher ?? "bar" }:
+     - install:
+         update_group: "update-group-1"`
+}
+</CodeBlock>
 
 </TabItem>
 <TabItem label="Static configuration">
 To set the update group, specify the `install.update_group` key in your Discovery Service configuration:
 
-```yaml
-# teleport.yaml
-version: v3
-# ...
-discovery_service:
-  enabled: true
-  {{ matcher }}:
-   - install:
-       update_group: "update-group-1"
-```
+<CodeBlock>
+{
+ `# teleport.yaml
+  version: v3
+  # ...
+  discovery_service:
+    enabled: true
+    ${ props.matcher ?? "bar" }:
+     - install:
+         update_group: "update-group-1"`
+}
+</CodeBlock>
 
 </TabItem>
 </Tabs>
@@ -79,36 +86,40 @@ For instances which require a proxy to access the installation files, you can co
 
 <Tabs>
 <TabItem label="Dynamic configuration (recommended)">
-To set the HTTP proxy settings, edit the Discovery Config and set the `spec.{{ matcher }}.install.http_proxy_settings` key:
+To set the HTTP proxy settings, edit the Discovery Config and set the `spec.{props.matcher ?? "bar"}.install.http_proxy_settings` key:
 
-```yaml
-kind: discovery_config
-# ...
-spec:
-  {{ matcher }}:
-   - install:
-       http_proxy_settings:
-         https_proxy: http://172.31.5.130:3128
-         http_proxy: http://172.31.5.130:3128
-         no_proxy: my-local-domain
-```
+<CodeBlock>
+{
+ `kind: discovery_config
+  # ...
+  spec:
+    ${ props.matcher ?? "bar" }:
+     - install:
+         http_proxy_settings:
+           https_proxy: http://172.31.5.130:3128
+           http_proxy: http://172.31.5.130:3128
+           no_proxy: my-local-domain`
+}
+</CodeBlock>
 
 </TabItem>
 <TabItem label="Static configuration">
 You must set the `install.http_proxy_settings` key in your configuration:
 
-```yaml
-# teleport.yaml
-version: v3
-# ...
-discovery_service:
-  enabled: true
-  {{ matcher }}:
-   - install:
-       http_proxy_settings:
-         https_proxy: http://172.31.5.130:3128
-         http_proxy: http://172.31.5.130:3128
-         no_proxy: my-local-domain
-```
+<CodeBlock>
+{
+ `# teleport.yaml
+  version: v3
+  # ...
+  discovery_service:
+    enabled: true
+    ${ props.matcher ?? "bar" }:
+     - install:
+         http_proxy_settings:
+           https_proxy: http://172.31.5.130:3128
+           http_proxy: http://172.31.5.130:3128
+           no_proxy: my-local-domain`
+}
+</CodeBlock>
 </TabItem>
 </Tabs>

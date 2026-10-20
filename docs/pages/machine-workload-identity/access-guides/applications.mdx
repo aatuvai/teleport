@@ -8,6 +8,12 @@ tags:
  - infrastructure-identity
 page_type: how-to
 ---
+import DocsPagesIncludesMachineIdReloadTbot from "@version/docs/pages/includes/machine-id/reload-tbot.mdx";
+
+
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
+import DocsPagesIncludesTctl from "@version/docs/pages/includes/tctl.mdx";
+import DocsPagesIncludesCreateRoleUsingWeb from "@version/docs/pages/includes/create-role-using-web.mdx";
 
 {/* lint disable page-structure remark-lint */}
 
@@ -21,11 +27,11 @@ your Teleport cluster.
 
 ## Prerequisites
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx!)
+<DocsPagesIncludesEditionPrereqsTabs />
 
 - If you have not already connected your application to Teleport, follow
   the [Protect a Web Application with Teleport](../../enroll-resources/application-access/getting-started.mdx).
-- (!docs/pages/includes/tctl.mdx!)
+- <DocsPagesIncludesTctl />
 - `tbot` must already be installed and configured on the machine that will
   access applications. For more information, see the
   [deployment guides](../deployment/deployment.mdx).
@@ -58,7 +64,7 @@ will need access to.
 
 Use `tctl create -f ./role.yaml` to create the role.
 
-(!docs/pages/includes/create-role-using-web.mdx!)
+<DocsPagesIncludesCreateRoleUsingWeb />
 
 Now, use `tctl bots update` to add the role to the Bot. Replace `example`
 with the name of the Bot you created in the deployment guide and `example-role`
@@ -143,7 +149,7 @@ services:
 Ensure you replace `dumper` with the name of the application you registered in
 Teleport.
 
-(!docs/pages/includes/machine-id/reload-tbot.mdx resource="your credentials"!)
+<DocsPagesIncludesMachineIdReloadTbot resource="your credentials" />
 
 </TabItem>
 </Tabs>

@@ -9,6 +9,13 @@ tags:
  - infrastructure-identity
 page_type: how-to
 ---
+import DocsPagesIncludesProvisionTokenGenericOidcSecurityNotes from "@version/docs/pages/includes/provision-token/generic-oidc-security-notes.mdx";
+import DocsPagesIncludesMachineIdCreateABot from "@version/docs/pages/includes/machine-id/create-a-bot.mdx";
+
+
+import DocsPagesIncludesProvisionTokenGenericOidcHowItWorks from "@version/docs/pages/includes/provision-token/generic-oidc-how-it-works.mdx";
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
+import DocsPagesIncludesTctl from "@version/docs/pages/includes/tctl.mdx";
 
 While Teleport natively supports many cloud platforms and identity providers, it
 is still often necessary to join bots using identity providers that do not have
@@ -23,24 +30,24 @@ Teleport join method, and without using any long-lived credentials.
 
 ## How it works
 
-(!docs/pages/includes/provision-token/generic-oidc-how-it-works.mdx!)
+<DocsPagesIncludesProvisionTokenGenericOidcHowItWorks />
 
 ## Prerequisites
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx edition="Teleport (v18.11.0 or higher)"!)
+<DocsPagesIncludesEditionPrereqsTabs edition="Teleport (v18.11.0 or higher)" />
 
-- (!docs/pages/includes/tctl.mdx!)
+- <DocsPagesIncludesTctl />
 - Your user should have the privileges to create token resources.
 - You must already have an OIDC-compliant identity provider that can issue JWTs
   to your bot environment
 
 ## Security considerations and limitations
 
-(!docs/pages/includes/provision-token/generic-oidc-security-notes.mdx!)
+<DocsPagesIncludesProvisionTokenGenericOidcSecurityNotes />
 
 ## Step 1/3. Create a Bot
 
-(!docs/pages/includes/machine-id/create-a-bot.mdx!)
+<DocsPagesIncludesMachineIdCreateABot />
 
 ## Step 2/3. Create a join token for Generic OIDC
 

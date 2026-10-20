@@ -9,6 +9,17 @@ tags:
 - zero-trust
 page_type: how-to
 ---
+import DocsPagesIncludesDatabaseAccessAlternativeMethodsJoin from "@version/docs/pages/includes/database-access/alternative-methods-join.mdx";
+
+
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
+import DocsPagesIncludesTctl from "@version/docs/pages/includes/tctl.mdx";
+import DocsPagesIncludesInstallLinux from "@version/docs/pages/includes/install-linux.mdx";
+import DocsPagesIncludesStartTeleport from "@version/docs/pages/includes/start-teleport.mdx";
+import DocsPagesIncludesMcpAccessConfigureUserRbac from "@version/docs/pages/includes/mcp-access/configure-user-rbac.mdx";
+
+import DocsPagesIncludesTctlToken from "@version/docs/pages/includes/tctl-token.mdx";
+import DocsPagesIncludesMcpAccessTshMcpConfig from "@version/docs/pages/includes/mcp-access/tsh-mcp-config.mdx";
 
 Teleport can provide secure connections to your MCP (Model Context Protocol)
 servers while improving both access control and visibility.
@@ -38,10 +49,10 @@ activity.
 
 ## Prerequisites
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx edition="Teleport (v18.1.0 or higher)"!)
+<DocsPagesIncludesEditionPrereqsTabs edition="Teleport (v18.1.0 or higher)" />
 - A host, e.g., an EC2 instance, where you will run the Teleport Applications
   Service.
-- (!docs/pages/includes/tctl.mdx!)
+- <DocsPagesIncludesTctl />
 
 ## Step 1/3. Configure the Teleport Application Service
 
@@ -68,14 +79,14 @@ If you have not deployed the Teleport Application Service, you will need to run
 it on the host you prepared before following this guide.
 
 #### Get a join token
-(!docs/pages/includes/tctl-token.mdx serviceName="Application" tokenType="app" tokenFile="/tmp/token"!)
+<DocsPagesIncludesTctlToken serviceName="Application" tokenType="app" tokenFile="/tmp/token" />
 
-(!docs/pages/includes/database-access/alternative-methods-join.mdx!)
+<DocsPagesIncludesDatabaseAccessAlternativeMethodsJoin />
 
 #### Install the Teleport Application Service
 Install Teleport on the host where you will run the Teleport Application Service:
 
-(!docs/pages/includes/install-linux.mdx!)
+<DocsPagesIncludesInstallLinux />
 
 #### Configure the Teleport Application service
 
@@ -95,11 +106,11 @@ MCP server and save the configuration to `/etc/teleport.yaml`.
 
 #### Start the Teleport Application Service
 
-(!docs/pages/includes/start-teleport.mdx service="the Application Service"!)
+<DocsPagesIncludesStartTeleport service="the Application Service" />
 
 ## Step 2/3. Configure your Teleport user
 
-(!docs/pages/includes/mcp-access/configure-user-rbac.mdx!)
+<DocsPagesIncludesMcpAccessConfigureUserRbac />
 
 ## Step 3/3. Connect
 
@@ -118,7 +129,7 @@ Name              Description                                                   
 teleport-mcp-demo A demo MCP server that shows current user and session information stdio
 ```
 
-(!docs/pages/includes/mcp-access/tsh-mcp-config.mdx appName="teleport-mcp-demo" !)
+<DocsPagesIncludesMcpAccessTshMcpConfig appName="teleport-mcp-demo" />
 
 The demo MCP server consists of several tools:
 - `teleport_user_info`: Shows basic information about your Teleport user.

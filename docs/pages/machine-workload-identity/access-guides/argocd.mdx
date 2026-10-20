@@ -10,6 +10,10 @@ tags:
  - infrastructure-identity
 page_type: how-to
 ---
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
+import DocsPagesIncludesTctl from "@version/docs/pages/includes/tctl.mdx";
+import DocsPagesIncludesCreateRoleUsingWeb from "@version/docs/pages/includes/create-role-using-web.mdx";
+
 
 Argo CD is a declarative, GitOps continuous delivery tool for Kubernetes. It
 runs in Kubernetes and can deploy applications to the same cluster or to other
@@ -31,7 +35,7 @@ can then use to access Teleport-protected Kubernetes clusters.
 
 ## Prerequisites
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx!)
+<DocsPagesIncludesEditionPrereqsTabs />
 
 - Argo CD [installed](https://argo-cd.readthedocs.io/en/latest/#quick-start)
   in a Kubernetes cluster. This cluster will be referred to as the **source
@@ -41,7 +45,7 @@ can then use to access Teleport-protected Kubernetes clusters.
   guide, it must be enrolled into Teleport, if you have not already done this,
   follow the [Enroll a Kubernetes Cluster](../../enroll-resources/kubernetes-access/getting-started.mdx)
   guide.
-- (!docs/pages/includes/tctl.mdx!)
+- <DocsPagesIncludesTctl />
 - To configure Kubernetes and deploy `tbot` you will need
   [`kubectl`](https://kubernetes.io/docs/tasks/tools/) and
   [`helm`](https://helm.sh/docs/intro/install/) installed.
@@ -122,7 +126,7 @@ Adjust the `allow` field for your environment:
 
 Use `tctl create -f ./role.yaml` to create the role.
 
-(!docs/pages/includes/create-role-using-web.mdx!)
+<DocsPagesIncludesCreateRoleUsingWeb />
 
 ## Step 2/4. Create a bot
 

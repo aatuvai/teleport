@@ -8,6 +8,11 @@ tags:
  - zero-trust
 page_type: how-to
 ---
+import DocsPagesIncludesKubernetesAccessHelmHelmRepoAdd from "@version/docs/pages/includes/kubernetes-access/helm/helm-repo-add.mdx";
+import DocsPagesIncludesEnterpriseObtainlicense from "@version/docs/pages/includes/enterprise/obtainlicense.mdx";
+
+
+import DocsPagesIncludesDiagnosticsKubernetesOperatorTroubleshooting from "@version/docs/pages/includes/diagnostics/kubernetes-operator-troubleshooting.mdx";
 
 In this guide, you will run the Teleport Kubernetes Operator alongside a
 Teleport cluster deployed via the `teleport-cluster` Helm chart.
@@ -54,7 +59,7 @@ $ kubectl cluster-info
 
 ## Step 1/2. Install teleport-cluster Helm chart with the operator
 
-(!docs/pages/includes/kubernetes-access/helm/helm-repo-add.mdx!)
+<DocsPagesIncludesKubernetesAccessHelmHelmRepoAdd />
 
 Install the Helm chart for the Teleport Cluster with `operator.enabled=true`
 in the <Var name="teleport-cluster"/> namespace:
@@ -78,7 +83,7 @@ Create a namespace for your Teleport cluster resources:
 $ kubectl create namespace <Var name="teleport-cluster"/>
 ```
 
-(!docs/pages/includes//enterprise/obtainlicense.mdx!)
+<DocsPagesIncludesEnterpriseObtainlicense />
 
 Create a secret called "license" in the namespace you created:
 
@@ -125,4 +130,4 @@ See the [Helm Deployment guides](../../installation/self-hosted/helm-deployments
 
 ## Troubleshooting
 
-(!docs/pages/includes/diagnostics/kubernetes-operator-troubleshooting.mdx!)
+<DocsPagesIncludesDiagnosticsKubernetesOperatorTroubleshooting />

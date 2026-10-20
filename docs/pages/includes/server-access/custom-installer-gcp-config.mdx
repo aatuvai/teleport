@@ -1,6 +1,12 @@
+import DocsPagesIncludesServerAccessCustomInstallerGcpDynamic from "!!raw-loader!@version/docs/pages/includes/server-access/custom-installer-gcp-dynamic.yaml";
+import DocsPagesIncludesServerAccessCustomInstallerGcp from "!!raw-loader!@version/docs/pages/includes/server-access/custom-installer-gcp.yaml";
+import DocsPagesIncludesServerAccessCustomInstallerReference from "@version/docs/pages/includes/server-access/custom-installer-reference.mdx";
+
+import DocsPagesIncludesServerAccessCustomInstallerEditing from "@version/docs/pages/includes/server-access/custom-installer-editing.mdx";
+
 {/* this comment is here to make the includes below render */}
 
-(!docs/pages/includes/server-access/custom-installer-editing.mdx!)
+<DocsPagesIncludesServerAccessCustomInstallerEditing />
 
 Multiple `installer` resources can exist and be specified in the
 `gcp.install.script_name` section:
@@ -8,16 +14,20 @@ Multiple `installer` resources can exist and be specified in the
 <Tabs>
 <TabItem label="Dynamic configuration (recommended)">
 Edit the Discovery Config to specify a custom installer script:
-```yaml
-(!docs/pages/includes/server-access/custom-installer-gcp-dynamic.yaml!)
-```
+<CodeBlock language="yaml">
+
+  {DocsPagesIncludesServerAccessCustomInstallerGcpDynamic}
+
+</CodeBlock>
 </TabItem>
 <TabItem label="Static configuration">
 Edit the `teleport.yaml` configuration to specify a custom installer script:
-```yaml
-(!docs/pages/includes/server-access/custom-installer-gcp.yaml!)
-```
+<CodeBlock language="yaml">
+
+  {DocsPagesIncludesServerAccessCustomInstallerGcp}
+
+</CodeBlock>
 </TabItem>
 </Tabs>
 
-(!docs/pages/includes/server-access/custom-installer-reference.mdx!)
+<DocsPagesIncludesServerAccessCustomInstallerReference />

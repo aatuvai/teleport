@@ -9,6 +9,13 @@ tags:
  - privileged-access
 enterprise: Identity Governance
 ---
+import DocsPagesIncludesPluginsAccessPluginTroubleshooting from "@version/docs/pages/includes/plugins/access-plugin-troubleshooting.mdx";
+
+
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
+import DocsPagesIncludesTctl from "@version/docs/pages/includes/tctl.mdx";
+import DocsPagesIncludesPluginsCreateRequest from "@version/docs/pages/includes/plugins/create-request.mdx";
+import DocsPagesIncludesPluginsResolveRequest from "@version/docs/pages/includes/plugins/resolve-request.mdx";
 
 {/* lint disable page-structure remark-lint */}
 
@@ -27,11 +34,11 @@ Opsgenie.
 
 ## Prerequisites
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx edition="Teleport Enterprise Cloud"!)
+<DocsPagesIncludesEditionPrereqsTabs edition="Teleport Enterprise Cloud" />
 
 - An Opsgenie account with the ability to create API keys with the 'read' and
   'create and update' access rights.
-- (!docs/pages/includes/tctl.mdx!)
+- <DocsPagesIncludesTctl />
 
 ## Step 1/5. Create services
 
@@ -106,7 +113,7 @@ Click the Opsgenie tile.
 
 As the Teleport user `myuser`, create an Access Request for the `editor` role:
 
-(!docs/pages/includes/plugins/create-request.mdx!)
+<DocsPagesIncludesPluginsCreateRequest />
 
 In Opsgenie, you will see a new alert containing information about the
 Access Request in either the default schedule specified when enrolling the plugin,
@@ -114,7 +121,7 @@ or in the schedules specified by `teleport.dev/notify-services` annotation in th
 
 ### Resolve the request
 
-(!docs/pages/includes/plugins/resolve-request.mdx!)
+<DocsPagesIncludesPluginsResolveRequest />
 
 <Admonition type="info" title="Auditing Access Requests">
 
@@ -131,4 +138,4 @@ Request Reviewed` in the Teleport Web UI.
 
 ## Troubleshooting
 
-(!docs/pages/includes/plugins/access-plugin-troubleshooting.mdx!)
+<DocsPagesIncludesPluginsAccessPluginTroubleshooting />

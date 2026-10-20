@@ -9,6 +9,9 @@ tags:
  - privileged-access
 page_type: how-to
 ---
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
+import DocsPagesIncludesTctl from "@version/docs/pages/includes/tctl.mdx";
+
 
 In this guide, you will run Infrastructure-As-Code (IaC) tools in scoped mode and use
 them to reconcile scoped resources.
@@ -53,9 +56,9 @@ It can still grant roles in nested scopes by specifying nested scopes as `scoped
 
 ## Prerequisites
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx!)
+<DocsPagesIncludesEditionPrereqsTabs />
 
-- (!docs/pages/includes/tctl.mdx!)
+- <DocsPagesIncludesTctl />
 - All Teleport instances (Auth Service, Proxy Service, and Agents) must be
   running the same Teleport version, and must have the
   `TELEPORT_UNSTABLE_SCOPES=yes` environment variable set.

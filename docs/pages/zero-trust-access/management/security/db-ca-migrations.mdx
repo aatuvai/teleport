@@ -6,6 +6,9 @@ tags:
  - zero-trust
  - resiliency
 ---
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
+import DocsPagesIncludesTctl from "@version/docs/pages/includes/tctl.mdx";
+
 
 In Teleport, self-hosted databases must be configured with certificates to
 enable mTLS authentication via the Teleport Database Service.
@@ -31,9 +34,9 @@ and how to complete any pending migrations for your Teleport cluster.
 
 ## Prerequisites
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx!)
+<DocsPagesIncludesEditionPrereqsTabs />
 
-- (!docs/pages/includes/tctl.mdx!)
+- <DocsPagesIncludesTctl />
 - A Teleport cluster that was upgraded from a version that predates either the
   `db` or `db_client` CA.
   If your Teleport cluster was created in Teleport

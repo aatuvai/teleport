@@ -26,9 +26,11 @@ attached to the IAM identity, for example `redshift-data:GetStatementResult`.
 Teleport users can connect as that role by specifying "role/\{RoleName\}" as a
 database user, e.g.
 
-```code
-$ tsh db connect my-redshift --db-user=role/{{ dbUserRole }}
-```
+<CodeBlock>
+{
+ `$ tsh db connect my-redshift --db-user=role/${ props.dbUserRole }`
+}
+</CodeBlock>
 
 See
 [Using identity-based policies for Amazon Redshift](https://docs.aws.amazon.com/redshift/latest/mgmt/redshift-iam-access-control-identity-based.html)

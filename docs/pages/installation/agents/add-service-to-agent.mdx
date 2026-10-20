@@ -8,6 +8,9 @@ tags:
  - zero-trust
  - infrastructure-identity
 ---
+import DocsPagesIncludesIacClients from "@version/docs/pages/includes/iac-clients.mdx";
+import DocsPagesIncludesTokenTypes from "@version/docs/pages/includes/token-types.mdx";
+
 
 A single Teleport Agent can run multiple services. This guide shows you how to
 adjust the services that a Teleport Agent runs so you can proxy different
@@ -34,7 +37,7 @@ certificate for them.
 - A Teleport cluster
 - At least one Teleport Agent running in your cluster, either on a Linux server
   or a Kubernetes pod
-- (!docs/pages/includes/iac-clients.mdx!)
+- <DocsPagesIncludesIacClients />
 - Familiarity with at least one Teleport join method. Read the [Using Teleport
   Agents overview](agents.mdx) for a complete list of guides to joining Teleport
   Agents. This guide assumes that you have followed at least one how-to guide
@@ -47,7 +50,7 @@ new services you want to run.
 
 You can specify the following token types:
 
-(!docs/pages/includes/token-types.mdx!)
+<DocsPagesIncludesTokenTypes />
 
 For example, if an agent runs the Teleport Kubernetes Service, and you want it
 to run the Teleport Application Service as well, create a join token for the

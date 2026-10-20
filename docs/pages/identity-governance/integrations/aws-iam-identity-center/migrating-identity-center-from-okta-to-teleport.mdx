@@ -10,6 +10,9 @@ tags:
 enterprise: Identity Governance
 page_type: how-to
 ---
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
+import DocsPagesIncludesTctl from "@version/docs/pages/includes/tctl.mdx";
+
 
 This guide shows you how to introduce Teleport into an existing Okta-managed AWS
 IAM Identity Center configuration. It specifically describes two scenarios: one
@@ -35,7 +38,7 @@ Center groups and manage Group membership.
 
 ## Prerequisites
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx!)
+<DocsPagesIncludesEditionPrereqsTabs />
 
 - An AWS role configured as per the [AWS IAM Identity Center guide](./guide.mdx#step-17-configure-aws-integration)
   for the integration to use.
@@ -46,7 +49,7 @@ Center groups and manage Group membership.
   - View groups and their details.
   - View applications and their details.
 - The AWS IAM Identity Center ARN, AWS region, SCIM base address and SCIM bearer token.
-- (!docs/pages/includes/tctl.mdx!)
+- <DocsPagesIncludesTctl />
 
 ## Partial hand-off (Hybrid setup)
 

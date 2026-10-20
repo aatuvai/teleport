@@ -11,6 +11,10 @@ tags:
 enterprise: Identity Governance
 page_type: how-to
 ---
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
+import DocsPagesIncludesTctl from "@version/docs/pages/includes/tctl.mdx";
+import DocsPagesIncludesAddRoleToUser from "@version/docs/pages/includes/add-role-to-user.mdx";
+
 
 In this guide, you will use Teleport as a SAML identity provider (IdP). You can
 set up the Teleport SAML IdP to enable Teleport users to authenticate to
@@ -26,9 +30,9 @@ includes information about the application.
 
 ## Prerequisites
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx edition="Teleport Enterprise"!)
+<DocsPagesIncludesEditionPrereqsTabs edition="Teleport Enterprise" />
 
-- (!docs/pages/includes/tctl.mdx!)
+- <DocsPagesIncludesTctl />
 - If you're new to SAML, consider reviewing our [SAML Identity Provider
   Reference](../../reference/access-controls/saml-idp.mdx) before proceeding.
 - SAML application (also known as a SAML service provider or SP) for testing. 
@@ -97,7 +101,7 @@ version: v8
 ```
 </details>
 
-(!docs/pages/includes/add-role-to-user.mdx role="saml-admin"!) 
+<DocsPagesIncludesAddRoleToUser role="saml-admin" /> 
 
 ## Step 2/4. Configure the service provider
 

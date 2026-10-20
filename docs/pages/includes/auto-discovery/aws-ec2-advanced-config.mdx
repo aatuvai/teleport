@@ -1,6 +1,9 @@
+import DocsPagesIncludesAutoDiscoveryServerAdvancedConfig from "@version/docs/pages/includes/auto-discovery/server-advanced-config.mdx";
+import DocsPagesIncludesServerAccessCustomInstallerAwsConfig from "@version/docs/pages/includes/server-access/custom-installer-aws-config.mdx";
+
 {/* this comment is here to make the includes below render */}
 
-(!docs/pages/includes/auto-discovery/server-advanced-config.mdx matcher="aws"!)
+<DocsPagesIncludesAutoDiscoveryServerAdvancedConfig matcher="aws" />
 
 ### Configure the SSM installation timeout
 
@@ -32,7 +35,7 @@ necessarily cancel a command that AWS has already accepted.
 
 ### Use a custom installation script
 
-(!docs/pages/includes/server-access/custom-installer-aws-config.mdx!)
+<DocsPagesIncludesServerAccessCustomInstallerAwsConfig />
 
 ### Use a custom SSM Document
 
@@ -46,35 +49,37 @@ The custom document's parameters must include `env`, `scriptName` and `token`.
 
 The recommended approach is to use the following document and customize it as needed:
 
-```yaml
-schemaVersion: '2.2'
-description: aws:runShellScript
-parameters:
-  token:
-    type: String
-    description: "(Required) The Teleport invite token to use when joining the cluster."
-  scriptName:
-    type: String
-    description: "(Required) The Teleport installer script to use when joining the cluster."
-  env:
-    type: String
-    description: "Environment variables exported to the script. Format 'ENV=var FOO=bar'"
-    default: "X=$X"
-mainSteps:
-- action: aws:downloadContent
-  name: downloadContent
-  inputs:
-    sourceType: "HTTP"
-    destinationPath: "/tmp/installTeleport.sh"
-    sourceInfo:
-      url: "https://<Var name="teleport.example.com:443" />/webapi/scripts/installer/{{ scriptName }}"
-- action: aws:runShellScript
-  name: runShellScript
-  inputs:
-    timeoutSeconds: '300'
-    runCommand:
-      - export {{ env }}; /bin/sh /tmp/installTeleport.sh "{{ token }}"
-```
+<CodeBlock>
+{
+ `schemaVersion: '2.2'
+  description: aws:runShellScript
+  parameters:
+    token:
+      type: String
+      description: "(Required) The Teleport invite token to use when joining the cluster."
+    scriptName:
+      type: String
+      description: "(Required) The Teleport installer script to use when joining the cluster."
+    env:
+      type: String
+      description: "Environment variables exported to the script. Format 'ENV=var FOO=bar'"
+      default: "X=$X"
+  mainSteps:
+  - action: aws:downloadContent
+    name: downloadContent
+    inputs:
+      sourceType: "HTTP"
+      destinationPath: "/tmp/installTeleport.sh"
+      sourceInfo:
+        url: "https://<Var name="teleport.example.com:443" />/webapi/scripts/installer/${ props.scriptName }"
+  - action: aws:runShellScript
+    name: runShellScript
+    inputs:
+      timeoutSeconds: '300'
+      runCommand:
+        - export ${ props.env }; /bin/sh /tmp/installTeleport.sh "${ props.token }"`
+}
+</CodeBlock>
 
 Create this document using AWS Systems Manager in each region where you plan to discover instances.
 

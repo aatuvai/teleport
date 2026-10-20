@@ -9,12 +9,34 @@ tags:
  - aws
 page_type: how-to
 ---
+import DocsPagesIncludesDatabaseAccessAlternativeMethodsJoin from "@version/docs/pages/includes/database-access/alternative-methods-join.mdx";
+import DocsPagesIncludesKubernetesAccessHelmHelmRepoAdd from "@version/docs/pages/includes/kubernetes-access/helm/helm-repo-add.mdx";
+import DocsPagesIncludesDatabaseAccessPsqlSslSyscallError from "@version/docs/pages/includes/database-access/psql-ssl-syscall-error.mdx";
+import DocsPagesIncludesDatabaseAccessGuidesNextSteps from "@version/docs/pages/includes/database-access/guides-next-steps.mdx";
 
-(!docs/pages/includes/database-access/db-introduction.mdx dbType="Amazon RDS or Aurora" dbConfigure="with IAM authentication"!)
+
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
+import DocsPagesIncludesTctl from "@version/docs/pages/includes/tctl.mdx";
+import DocsPagesIncludesDatabaseAccessCreateUser from "@version/docs/pages/includes/database-access/create-user.mdx";
+import DocsPagesIncludesInstallLinux from "@version/docs/pages/includes/install-linux.mdx";
+import DocsPagesIncludesAwsCredentials from "@version/docs/pages/includes/aws-credentials.mdx";
+import DocsPagesIncludesDatabaseAccessReferenceAwsIamRdsAccessPolicy from "@version/docs/pages/includes/database-access/reference/aws-iam/rds/access-policy.mdx";
+import DocsPagesIncludesStartTeleport from "@version/docs/pages/includes/start-teleport.mdx";
+import DocsPagesIncludesDatabaseAccessPgMysqlConnect from "@version/docs/pages/includes/database-access/pg-mysql-connect.mdx";
+import DocsPagesIncludesDatabaseAccessAwsTroubleshooting from "@version/docs/pages/includes/database-access/aws-troubleshooting.mdx";
+import DocsPagesIncludesDatabaseAccessAwsTroubleshootingMaxPolicySize from "@version/docs/pages/includes/database-access/aws-troubleshooting-max-policy-size.mdx";
+import DocsPagesIncludesDatabaseAccessPgCancelRequestLimitation from "@version/docs/pages/includes/database-access/pg-cancel-request-limitation.mdx";
+
+import DocsPagesIncludesDatabaseAccessDbIntroduction from "@version/docs/pages/includes/database-access/db-introduction.mdx";
+import DocsPagesIncludesDatabaseAccessHowItWorksIam from "@version/docs/pages/includes/database-access/how-it-works/iam.mdx";
+import DocsPagesIncludesDatabaseAccessAutoDiscoveryTip from "@version/docs/pages/includes/database-access/auto-discovery-tip.mdx";
+import DocsPagesIncludesDatabaseAccessCreateIamRoleStepDescription from "@version/docs/pages/includes/database-access/create-iam-role-step-description.mdx";
+
+<DocsPagesIncludesDatabaseAccessDbIntroduction dbType="Amazon RDS or Aurora" dbConfigure="with IAM authentication" />
 
 ## How it works
 
-(!docs/pages/includes/database-access/how-it-works/iam.mdx db="RDS" cloud="AWS"!)
+<DocsPagesIncludesDatabaseAccessHowItWorksIam db="RDS" cloud="AWS" />
 
 <Tabs>
 <TabItem label="Self-Hosted">
@@ -26,11 +48,11 @@ page_type: how-to
 
 </Tabs>
 
-(!docs/pages/includes/database-access/auto-discovery-tip.mdx dbType="RDS" providerType="AWS" !)
+<DocsPagesIncludesDatabaseAccessAutoDiscoveryTip dbType="RDS" providerType="AWS" />
 
 ## Prerequisites
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx!)
+<DocsPagesIncludesEditionPrereqsTabs />
 
 <Admonition type="warning" title="Supported versions">
 
@@ -63,7 +85,7 @@ which supports IAM authentication.
   the Teleport Database Service, which proxies connections to your RDS
   databases. 
 
-- (!docs/pages/includes/tctl.mdx!)
+- <DocsPagesIncludesTctl />
 
 - At least one user that allows IAM authentication on your databases. See
   [Creating a database account using IAM
@@ -129,7 +151,7 @@ the following:
 
 ## Step 1/5. Create a Teleport user
 
-(!docs/pages/includes/database-access/create-user.mdx!)
+<DocsPagesIncludesDatabaseAccessCreateUser />
 
 ## Step 2/5. Create a Database Service configuration
 
@@ -169,7 +191,7 @@ Database Service.
 </TabItem>
 </Tabs>
 
-(!docs/pages/includes/database-access/alternative-methods-join.mdx!)
+<DocsPagesIncludesDatabaseAccessAlternativeMethodsJoin />
 
 ### Prepare your environment
 
@@ -178,7 +200,7 @@ Next, get your environment ready to run the Teleport Database Service:
 <Tabs>
 <TabItem label="Linux Host">
 
-(!docs/pages/includes/install-linux.mdx!)
+<DocsPagesIncludesInstallLinux />
 
 Provide the following information and then generate a configuration file for the
 Teleport Database Service:
@@ -207,24 +229,24 @@ place it at the `/etc/teleport.yaml` location.
 </TabItem>
 <TabItem label="Kubernetes Cluster">
 
-(!docs/pages/includes/kubernetes-access/helm/helm-repo-add.mdx!)
+<DocsPagesIncludesKubernetesAccessHelmHelmRepoAdd />
 
 </TabItem>
 </Tabs>
 
 ## Step 3/5. Create IAM policies for Teleport
 
-(!docs/pages/includes/database-access/create-iam-role-step-description.mdx accessFor="RDS instances and Aurora clusters" !)
+<DocsPagesIncludesDatabaseAccessCreateIamRoleStepDescription accessFor="RDS instances and Aurora clusters" />
 
 ### Create an IAM role for Teleport
 
-(!docs/pages/includes/aws-credentials.mdx service="the Database Service"!)
+<DocsPagesIncludesAwsCredentials service="the Database Service" />
 
 ### Grant permissions
 
 Attach the following AWS IAM permissions to the Database Service IAM role:
 
-(!docs/pages/includes/database-access/reference/aws-iam/rds/access-policy.mdx!)
+<DocsPagesIncludesDatabaseAccessReferenceAwsIamRdsAccessPolicy />
 
 ## Step 4/5. Start the Database Service
 
@@ -233,7 +255,7 @@ Start the Teleport Database Service in your environment:
 <Tabs>
 <TabItem label="Linux Host">
 
-(!docs/pages/includes/start-teleport.mdx service="the Database Service"!)
+<DocsPagesIncludesStartTeleport service="the Database Service" />
 
 </TabItem>
 <TabItem label="Kubernetes Cluster">
@@ -317,7 +339,7 @@ $ tsh db ls
 # rds-example             env=dev
 ```
 
-(!docs/pages/includes/database-access/pg-mysql-connect.mdx dbUser="alice" dbService="rds-example"!)
+<DocsPagesIncludesDatabaseAccessPgMysqlConnect dbUser="alice" dbService="rds-example" />
 
 Log out of the database and remove credentials:
 
@@ -350,16 +372,16 @@ Access to the RDS API (`rds.<region>.amazonaws.com`) is used on a best-effort
 basis to fetch additional metadata (tags, engine versions), but it is not
 required for database registration.
 
-(!docs/pages/includes/database-access/aws-troubleshooting.mdx!)
+<DocsPagesIncludesDatabaseAccessAwsTroubleshooting />
 
-(!docs/pages/includes/database-access/aws-troubleshooting-max-policy-size.mdx!)
+<DocsPagesIncludesDatabaseAccessAwsTroubleshootingMaxPolicySize />
 
-(!docs/pages/includes/database-access/pg-cancel-request-limitation.mdx!)
+<DocsPagesIncludesDatabaseAccessPgCancelRequestLimitation />
 
-(!docs/pages/includes/database-access/psql-ssl-syscall-error.mdx!)
+<DocsPagesIncludesDatabaseAccessPsqlSslSyscallError />
 
 ## Next steps
 
-(!docs/pages/includes/database-access/guides-next-steps.mdx!)
+<DocsPagesIncludesDatabaseAccessGuidesNextSteps />
 - Set up [automatic database user provisioning](../../../auto-user-provisioning/auto-user-provisioning.mdx).
 

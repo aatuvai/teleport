@@ -8,6 +8,8 @@ tags:
  - infrastructure-identity
 page_type: troubleshooting
 ---
+import DocsPagesIncludesCreateRoleUsingWeb from "@version/docs/pages/includes/create-role-using-web.mdx";
+
 
 This page describes common issues that you may come across when setting up
 Machine & Workload Identity (MWI) and how to work around or resolve them.
@@ -292,7 +294,7 @@ $ tctl edit role/machine-id-db
 
 Edit the role, then save and close the file to apply your changes.
 
-(!docs/pages/includes/create-role-using-web.mdx!)
+<DocsPagesIncludesCreateRoleUsingWeb />
 
 Once fixed, restart or reload the `tbot` clients for the updated role to take
 effect.

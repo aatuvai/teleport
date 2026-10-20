@@ -1,31 +1,34 @@
-{{ provider="AWS" cloud="aws" resource="AWS EC2" }}
 
-### Inspect {{ provider }} discovery status
+### Inspect {props.provider ?? "AWS"} discovery status
 
 Run `tctl discovery status` to check the state of dynamic Discovery Service
 configurations, when each Discovery Service instance last reported, and the latest
-{{ provider }} enrollment totals:
+{props.provider ?? "AWS"} enrollment totals:
 
-```code
-$ tctl discovery status --cloud={{ cloud }}
-```
+<CodeBlock>
+{
+ `$ tctl discovery status --cloud=${ props.cloud ?? "aws" }`
+}
+</CodeBlock>
 
 The following example shows a healthy configuration that discovered and enrolled two resources:
 
-```text
-Discovery config example-discovery:
-  Discovery group: production
-  Status: healthy
-  Last run: 1 minute ago
-
-  Service (00000000-0000-0000-0000-000000000000):
-    Poll interval: 5 minutes
-    Last update: 1 minute ago
-    example-integration:
-      {{ resource }}:
-        Previous sync: 1 minute ago (took 12s)
-        Result: 2 found, 2 enrolled, 0 failed
-```
+<CodeBlock>
+{
+ `Discovery config example-discovery:
+    Discovery group: production
+    Status: healthy
+    Last run: 1 minute ago
+  
+    Service (00000000-0000-0000-0000-000000000000):
+      Poll interval: 5 minutes
+      Last update: 1 minute ago
+      example-integration:
+        ${ props.resource ?? "AWS EC2" }:
+          Previous sync: 1 minute ago (took 12s)
+          Result: 2 found, 2 enrolled, 0 failed`
+}
+</CodeBlock>
 
 A persistent `error` or `not reporting yet` status, a message that no Discovery
 Service instances are running, or a nonzero `failed` count indicates a discovery

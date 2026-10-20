@@ -9,8 +9,23 @@ tags:
  - azure
 page_type: how-to
 ---
+import DocsPagesIncludesDatabaseAccessAzureTroubleshooting from "@version/docs/pages/includes/database-access/azure-troubleshooting.mdx";
+import DocsPagesIncludesDatabaseAccessGuidesNextSteps from "@version/docs/pages/includes/database-access/guides-next-steps.mdx";
 
-(!docs/pages/includes/database-access/db-introduction.mdx dbType="Azure Cache for Redis" dbConfigure="with Microsoft Entra ID-based authentication"!)
+
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
+import DocsPagesIncludesTctl from "@version/docs/pages/includes/tctl.mdx";
+import DocsPagesIncludesDatabaseAccessCreateUser from "@version/docs/pages/includes/database-access/create-user.mdx";
+import DocsPagesIncludesInstallLinux from "@version/docs/pages/includes/install-linux.mdx";
+import DocsPagesIncludesDatabaseAccessAzureConfigureServicePrincipal from "@version/docs/pages/includes/database-access/azure-configure-service-principal.mdx";
+import DocsPagesIncludesDatabaseAccessAzureAssignServicePrincipal from "@version/docs/pages/includes/database-access/azure-assign-service-principal.mdx";
+import DocsPagesIncludesStartTeleport from "@version/docs/pages/includes/start-teleport.mdx";
+import DocsPagesIncludesDatabaseAccessProxyDbTunnel from "@version/docs/pages/includes/database-access/proxy-db-tunnel.mdx";
+
+import DocsPagesIncludesDatabaseAccessDbIntroduction from "@version/docs/pages/includes/database-access/db-introduction.mdx";
+import DocsPagesIncludesTctlToken from "@version/docs/pages/includes/tctl-token.mdx";
+
+<DocsPagesIncludesDatabaseAccessDbIntroduction dbType="Azure Cache for Redis" dbConfigure="with Microsoft Entra ID-based authentication" />
 
 ## How it works
 
@@ -32,7 +47,7 @@ Azure as a principal with permissions to manage the database.
 
 ## Prerequisites
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx!)
+<DocsPagesIncludesEditionPrereqsTabs />
 
 - Deployed Azure Redis server or Azure Redis Enterprise cluster.
 - Azure administrative privileges to manage service principals and access
@@ -41,19 +56,19 @@ Azure as a principal with permissions to manage the database.
   Service.
 - `redis-cli` version `6.2` or newer installed and added to your system's
   `PATH` environment variable.
-- (!docs/pages/includes/tctl.mdx!)
+- <DocsPagesIncludesTctl />
 
 ## Step 1/5. Create a Teleport token and user
 
-(!docs/pages/includes/tctl-token.mdx serviceName="Database" tokenType="db" tokenFile="/tmp/token"!)
+<DocsPagesIncludesTctlToken serviceName="Database" tokenType="db" tokenFile="/tmp/token" />
 
-(!docs/pages/includes/database-access/create-user.mdx!)
+<DocsPagesIncludesDatabaseAccessCreateUser />
 
 ## Step 2/5. Create a Database Service configuration
 
 Install Teleport on the host where you will run the Teleport Database Service:
 
-(!docs/pages/includes/install-linux.mdx!)
+<DocsPagesIncludesInstallLinux />
 
 Create the Database Service configuration, specifying a region like this:
 
@@ -102,7 +117,7 @@ The Teleport Database Service needs Azure IAM permissions to:
 
 ### Configure an Azure service principal
 
-(!docs/pages/includes/database-access/azure-configure-service-principal.mdx!)
+<DocsPagesIncludesDatabaseAccessAzureConfigureServicePrincipal />
 
 ### Create a custom role
 
@@ -156,11 +171,11 @@ and replace the subscription in `assignableScopes` with your own subscription id
 
 ### Create a role assignment for the Teleport Database Service principal
 
-(!docs/pages/includes/database-access/azure-assign-service-principal.mdx!)
+<DocsPagesIncludesDatabaseAccessAzureAssignServicePrincipal />
 
 ## Step 4/5. Start the Database Service
 
-(!docs/pages/includes/start-teleport.mdx service="the Teleport Database Service"!)
+<DocsPagesIncludesStartTeleport service="the Teleport Database Service" />
 
 ## Step 5/5. Connect
 
@@ -213,7 +228,7 @@ Note that the Teleport Database Service will retrieve the access key and
 authenticate with the Redis server on the backend automatically. Therefore,
 the `AUTH <access-key>` command is **not required** here once connected.
 
-(!docs/pages/includes/database-access/proxy-db-tunnel.mdx db="my-azure-redis"!)
+<DocsPagesIncludesDatabaseAccessProxyDbTunnel db="my-azure-redis" />
 
 
 To log out of the database and remove credentials:
@@ -224,11 +239,11 @@ $ tsh db logout my-azure-redis
 
 ## Troubleshooting
 
-(!docs/pages/includes/database-access/azure-troubleshooting.mdx!)
+<DocsPagesIncludesDatabaseAccessAzureTroubleshooting />
 
 ## Next steps
 
-(!docs/pages/includes/database-access/guides-next-steps.mdx!)
+<DocsPagesIncludesDatabaseAccessGuidesNextSteps />
 
 ## Further reading
 - [Understand Azure Role Definitions - AssignableScopes](https://learn.microsoft.com/en-us/azure/role-based-access-control/role-definitions#assignablescopes)

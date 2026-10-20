@@ -8,6 +8,9 @@ tags:
  - zero-trust
 page_type: how-to
 ---
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
+import DocsPagesIncludesTctl from "@version/docs/pages/includes/tctl.mdx";
+
 
 Teleport Role-Based Access Control (RBAC) is a system for managing who can
 access what within your infrastructure. Instead of assigning permissions
@@ -28,9 +31,9 @@ for any Teleport-protected resource.
 
 ## Prerequisites
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx!)
+<DocsPagesIncludesEditionPrereqsTabs />
 
-- (!docs/pages/includes/tctl.mdx!)
+- <DocsPagesIncludesTctl />
 - A Teleport user with permissions to create join tokens and other roles. We
   recommend using a demo cluster with the preset `editor` role. 
 - Docker installed on your workstation. Docker is only required for the local

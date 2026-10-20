@@ -10,6 +10,11 @@ tags:
 enterprise: Identity Security
 page_type: how-to
 ---
+import DocsPagesIncludesPolicyAccessGraph from "@version/docs/pages/includes/policy/access-graph.mdx";
+
+
+import DocsPagesIncludesInstallLinux from "@version/docs/pages/includes/install-linux.mdx";
+import DocsPagesIncludesServerAccessAzureJoinManagedIdentity from "@version/docs/pages/includes/server-access/azure-join-managed-identity.mdx";
 
 Identity Security streamlines and centralizes access management across your entire infrastructure. You can view access
 relationships in seconds, viewing unified, up-to-date relationships and policies between all users, groups, and
@@ -28,7 +33,7 @@ Graph service, a Discovery Service, and integration with your Azure subscription
 
 In this guide, you will set up Azure sync with Teleport Access Graph.
 
-(!docs/pages/includes/policy/access-graph.mdx!)
+<DocsPagesIncludesPolicyAccessGraph />
 
 ## How it works
 
@@ -88,7 +93,7 @@ can be installed in other environments as long it is attached to a Auth service 
 integration. Two options are given below for either 1) using an Azure virtual machine or 2) using Azure OIDC credentials
 via Entra ID integration.
 
-(!docs/pages/includes/install-linux.mdx!)
+<DocsPagesIncludesInstallLinux />
 
 ## Step 2/4. Configure the Discovery Service
 
@@ -142,7 +147,7 @@ Discovery service. Two options for authorization are available.
     Managed Identity's ID is then assigned a role to the identity using the
     `./teleport integration configure access-graph azure` command.
 
-    (!docs/pages/includes/server-access/azure-join-managed-identity.mdx!)
+    <DocsPagesIncludesServerAccessAzureJoinManagedIdentity />
 
     Use the Managed Identity ID from this option as the principal ID in step 2 of integration command.
   </TabItem>

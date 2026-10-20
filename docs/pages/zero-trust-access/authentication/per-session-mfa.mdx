@@ -7,6 +7,9 @@ tags:
  - zero-trust
  - resiliency
 ---
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
+import DocsPagesIncludesTctl from "@version/docs/pages/includes/tctl.mdx";
+
 
 Teleport supports requiring additional multi-factor authentication checks
 when starting new:
@@ -32,9 +35,9 @@ Per-session MFA checks can be satisfied by a webauthn device or by [delegating M
 
 ## Prerequisites
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx!)
+<DocsPagesIncludesEditionPrereqsTabs />
 
-- (!docs/pages/includes/tctl.mdx!)
+- <DocsPagesIncludesTctl />
 - [WebAuthn configured](../management/security/idp-compromise.mdx) on this cluster
 - Hardware device for multi-factor authentication, such as YubiKey or SoloKey
 - A Web browser with [WebAuthn support](

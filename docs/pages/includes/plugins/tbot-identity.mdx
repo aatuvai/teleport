@@ -1,13 +1,12 @@
-{{ workload="the plugin" secret="identity-output" }}
 
 Configure `tbot` with an output that will produce the credentials needed by 
-{{ workload }}. As {{ workload }} will be accessing the Teleport API, the correct
+{props.workload ?? "the plugin"}. As {props.workload ?? "the plugin"} will be accessing the Teleport API, the correct
 output type to use is `identity`.
 
 For this guide, the `directory` destination will be used. This will write these
 credentials to a specified directory on disk. Ensure that this directory can
 be written to by the Linux user that `tbot` runs as, and that it can be read by
-the Linux user that {{ workload }} will run as.
+the Linux user that {props.workload ?? "the plugin"} will run as.
 
 Modify your `tbot` configuration to add an `identity` output.
 
@@ -28,18 +27,20 @@ services:
 If running `tbot` on Kubernetes, write the identity file to Kubernetes secret
 instead:
 
-```yaml
-services:
-  - type: identity
-    destination:
-      type: kubernetes_secret
-      name: {{ secret }}
-```
+<CodeBlock>
+{
+ `services:
+    - type: identity
+      destination:
+        type: kubernetes_secret
+        name: ${ props.secret ?? "identity-output" }`
+}
+</CodeBlock>
 
 If operating `tbot` as a background service, restart it. If running `tbot` in
 one-shot mode, execute it now.
 
 You should now see an `identity` file under `/opt/machine-id` or a Kubernetes
-secret named `{{ secret }}`. This contains the private key and signed
-certificates needed by {{ workload }} to authenticate with the Teleport Auth
+secret named `{props.secret ?? "identity-output"}`. This contains the private key and signed
+certificates needed by {props.workload ?? "the plugin"} to authenticate with the Teleport Auth
 Service.

@@ -8,8 +8,22 @@ tags:
  - infrastructure-identity
 page_type: how-to
 ---
+import DocsPagesIncludesKubernetesAccessHelmHelmRepoAdd from "@version/docs/pages/includes/kubernetes-access/helm/helm-repo-add.mdx";
+import DocsPagesIncludesDatabaseAccessOracleMultihost from "@version/docs/pages/includes/database-access/oracle-multihost.mdx";
+import DocsPagesIncludesDatabaseAccessOracleTroubleshooting from "@version/docs/pages/includes/database-access/oracle-troubleshooting.mdx";
+import DocsPagesIncludesDatabaseAccessGuidesNextSteps from "@version/docs/pages/includes/database-access/guides-next-steps.mdx";
 
-(!docs/pages/includes/database-access/db-introduction.mdx dbType="Oracle Exadata" dbConfigure="with mTLS authentication"!)
+
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
+import DocsPagesIncludesTctl from "@version/docs/pages/includes/tctl.mdx";
+import DocsPagesIncludesInstallLinux from "@version/docs/pages/includes/install-linux.mdx";
+import DocsPagesIncludesStartTeleport from "@version/docs/pages/includes/start-teleport.mdx";
+import DocsPagesIncludesDatabaseAccessCreateUser from "@version/docs/pages/includes/database-access/create-user.mdx";
+
+import DocsPagesIncludesDatabaseAccessDbIntroduction from "@version/docs/pages/includes/database-access/db-introduction.mdx";
+import DocsPagesIncludesTctlToken from "@version/docs/pages/includes/tctl-token.mdx";
+
+<DocsPagesIncludesDatabaseAccessDbIntroduction dbType="Oracle Exadata" dbConfigure="with mTLS authentication" />
 
 ## How it works
 
@@ -31,11 +45,11 @@ authenticated connection then proxies client traffic from the user.
 
 ## Prerequisites
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx edition="Teleport Enterprise"!)
+<DocsPagesIncludesEditionPrereqsTabs edition="Teleport Enterprise" />
 - Oracle Exadata server instance 19c or later.
 - The `sqlcl` [Oracle client](https://www.oracle.com/pl/database/sqldeveloper/technologies/sqlcl/) installed and added to your system's `PATH` environment variable or any GUI client that supports JDBC
   Oracle thin client.
-- (!docs/pages/includes/tctl.mdx!)
+- <DocsPagesIncludesTctl />
 
 
 ## Step 1/6. Configure Oracle Exadata
@@ -173,7 +187,7 @@ $ sqlplus / as sysdba
 
 ### Create Teleport join token
 
-(!docs/pages/includes/tctl-token.mdx serviceName="Database" tokenType="db" tokenFile="/tmp/token"!)
+<DocsPagesIncludesTctlToken serviceName="Database" tokenType="db" tokenFile="/tmp/token" />
 
 ### Teleport Database Service
 
@@ -182,7 +196,7 @@ Install and configure Teleport where you will run the Teleport Database Service:
 <Tabs>
 <TabItem label="Linux Server">
 
-(!docs/pages/includes/install-linux.mdx!)
+<DocsPagesIncludesInstallLinux />
 
 On the host where you will run the Teleport Database Service, start Teleport
 with the appropriate configuration.
@@ -229,7 +243,7 @@ db_service:
       ca_cert_file: /var/lib/teleport/oracle-server-certificate.crt
 ```
 
-(!docs/pages/includes/start-teleport.mdx service="the Teleport Database Service"!)
+<DocsPagesIncludesStartTeleport service="the Teleport Database Service" />
 
 </TabItem>
 <TabItem label="Kubernetes Cluster">
@@ -270,7 +284,7 @@ extraVolumeMounts:
 
 Teleport provides Helm charts for installing the Teleport Database Service in Kubernetes Clusters.
 
-(!docs/pages/includes/kubernetes-access/helm/helm-repo-add.mdx!)
+<DocsPagesIncludesKubernetesAccessHelmHelmRepoAdd />
 
 Install the chart:
 
@@ -348,7 +362,7 @@ Make sure to configure an Oracle Audit Trail cleanup policy to avoid running out
 
 ## Step 5/6. Create a Teleport user
 
-(!docs/pages/includes/database-access/create-user.mdx!)
+<DocsPagesIncludesDatabaseAccessCreateUser />
 
 ## Step 6/6. Connect
 
@@ -414,15 +428,15 @@ $ tsh db logout
 
 ## (Optional) Configure additional hostnames
 
-(!docs/pages/includes/database-access/oracle-multihost.mdx!)
+<DocsPagesIncludesDatabaseAccessOracleMultihost />
 
 ## Troubleshooting
 
-(!docs/pages/includes/database-access/oracle-troubleshooting.mdx!)
+<DocsPagesIncludesDatabaseAccessOracleTroubleshooting />
 
 ## Next steps
 
-(!docs/pages/includes/database-access/guides-next-steps.mdx!)
+<DocsPagesIncludesDatabaseAccessGuidesNextSteps />
 
 Read the documentation about:
 - [Oracle Audit Trail](https://docs.oracle.com/en/database/oracle/oracle-database/19/sqlrf/AUDIT-Traditional-Auditing.html#GUID-ADF45B07-547A-4096-8144-50241FA2D8DD)

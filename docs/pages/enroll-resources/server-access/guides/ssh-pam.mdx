@@ -7,6 +7,10 @@ tags:
  - zero-trust
 page_type: conceptual
 ---
+import DocsPagesIncludesPermissionWarning from "@version/docs/pages/includes/permission-warning.mdx";
+
+
+import DocsPagesIncludesBackupWarning from "@version/docs/pages/includes/backup-warning.mdx";
 
 Teleport's SSH Service can be configured to integrate with Pluggable
 Authentication Modules (PAM). This page describes the available features for
@@ -58,9 +62,9 @@ Teleport currently supports account management and session management.
 
 ## Set up PAM on a Linux Machine running Teleport
 
-(!docs/pages/includes/permission-warning.mdx!)
+<DocsPagesIncludesPermissionWarning />
 
-(!docs/pages/includes/backup-warning.mdx!)
+<DocsPagesIncludesBackupWarning />
 
 To enable PAM on a Linux machine, update `/etc/teleport.yaml` with:
 

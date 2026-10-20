@@ -8,6 +8,10 @@ tags:
  - infrastructure-identity
 page_type: how-to
 ---
+import DocsPagesIncludesMachineIdCreateABot from "@version/docs/pages/includes/machine-id/create-a-bot.mdx";
+
+
+import DocsPagesIncludesTctl from "@version/docs/pages/includes/tctl.mdx";
 
 This guide shows you how to deploy the Machine & Workload Identity agent,
 `tbot`, on a Kubernetes cluster that supports OIDC. The Kubernetes OIDC join
@@ -70,7 +74,7 @@ possible.
 
 - A running Teleport cluster, version 18.1.5 or above.
 - The `tsh` and `tctl` clients, version 18.1.5 or above.
-- (!docs/pages/includes/tctl.mdx!)
+- <DocsPagesIncludesTctl />
 - A Kubernetes cluster with support for Token Request Projection (which
   graduated to a generally available feature in Kubernetes 1.20).
 - `kubectl` authenticated with the ability to create resources in the cluster
@@ -163,7 +167,7 @@ method](../../reference/deployment/join-methods.mdx) better suited to your cloud
 
 ## Step 2/4. Create a Bot
 
-(!docs/pages/includes/machine-id/create-a-bot.mdx!)
+<DocsPagesIncludesMachineIdCreateABot />
 
 ## Step 3/4. Create a join token
 

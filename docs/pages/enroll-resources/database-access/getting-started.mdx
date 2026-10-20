@@ -8,8 +8,23 @@ tags:
  - infrastructure-identity
 page_type: how-to
 ---
+import DocsPagesIncludesDatabaseAccessAlternativeMethodsJoin from "@version/docs/pages/includes/database-access/alternative-methods-join.mdx";
+import DocsPagesIncludesDatabaseAccessDbAuditEvents from "@version/docs/pages/includes/database-access/db-audit-events.mdx";
 
-(!docs/pages/includes/database-access/db-introduction.mdx dbType="PostgreSQL Amazon Aurora" dbConfigure="with IAM authentication"!)
+
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
+import DocsPagesIncludesTctl from "@version/docs/pages/includes/tctl.mdx";
+import DocsPagesIncludesInstallLinux from "@version/docs/pages/includes/install-linux.mdx";
+import DocsPagesIncludesStartTeleport from "@version/docs/pages/includes/start-teleport.mdx";
+import DocsPagesIncludesCreateRoleUsingWeb from "@version/docs/pages/includes/create-role-using-web.mdx";
+import DocsPagesIncludesDatabaseAccessProxyDbTunnel from "@version/docs/pages/includes/database-access/proxy-db-tunnel.mdx";
+import DocsPagesIncludesDatabaseAccessAwsTroubleshooting from "@version/docs/pages/includes/database-access/aws-troubleshooting.mdx";
+
+import DocsPagesIncludesDatabaseAccessDbIntroduction from "@version/docs/pages/includes/database-access/db-introduction.mdx";
+import DocsPagesIncludesDatabaseAccessHowItWorksIam from "@version/docs/pages/includes/database-access/how-it-works/iam.mdx";
+import DocsPagesIncludesTctlToken from "@version/docs/pages/includes/tctl-token.mdx";
+
+<DocsPagesIncludesDatabaseAccessDbIntroduction dbType="PostgreSQL Amazon Aurora" dbConfigure="with IAM authentication" />
 
 ## How it works
 
@@ -23,11 +38,11 @@ page_type: how-to
 
 </Tabs>
 
-(!docs/pages/includes/database-access/how-it-works/iam.mdx db="Amazon Aurora" cloud="AWS"!)
+<DocsPagesIncludesDatabaseAccessHowItWorksIam db="Amazon Aurora" cloud="AWS" />
 
 ## Prerequisites
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx!)
+<DocsPagesIncludesEditionPrereqsTabs />
 
 - An AWS account with a PostgreSQL Amazon Aurora database and permissions to create
   and attach IAM policies.
@@ -46,7 +61,7 @@ page_type: how-to
   [Specifying Credentials](https://docs.aws.amazon.com/sdk-for-go/v2/developer-guide/configure-gosdk.html#specifying-credentials)
   for details.
 
-- (!docs/pages/includes/tctl.mdx!)
+- <DocsPagesIncludesTctl />
 
 ## Step 1/5. Set up Aurora
 
@@ -144,13 +159,13 @@ See the [Automatic User Provisioning](./auto-user-provisioning/postgres.mdx) gui
 
 ## Step 2/5. Configure the Teleport Database Service
 
-(!docs/pages/includes/tctl-token.mdx serviceName="Database" tokenType="db" tokenFile="/tmp/token"!)
+<DocsPagesIncludesTctlToken serviceName="Database" tokenType="db" tokenFile="/tmp/token" />
 
-(!docs/pages/includes/database-access/alternative-methods-join.mdx!)
+<DocsPagesIncludesDatabaseAccessAlternativeMethodsJoin />
 
 Install Teleport on the host where you will run the Teleport Database Service:
 
-(!docs/pages/includes/install-linux.mdx!)
+<DocsPagesIncludesInstallLinux />
 
 <Tabs>
 <TabItem scope={["oss", "enterprise"]} label="Self-Hosted">
@@ -206,7 +221,7 @@ $ sudo teleport db configure create \
 
 Start the Teleport Database Service in your environment:
 
-(!docs/pages/includes/start-teleport.mdx service="the Database Service"!)
+<DocsPagesIncludesStartTeleport service="the Database Service" />
 
 ## Step 4/5. Create a user and role
 
@@ -230,7 +245,7 @@ spec:
 EOF
 ```
 
-(!docs/pages/includes/create-role-using-web.mdx!)
+<DocsPagesIncludesCreateRoleUsingWeb />
 
 Create the Teleport user assigned the `db` role we've just created:
 
@@ -285,15 +300,15 @@ Finally, connect to the database:
 $ tsh db connect --db-user=alice --db-name postgres aurora
 ```
 
-(!docs/pages/includes/database-access/proxy-db-tunnel.mdx db="aurora" dbArgs="--db-user=alice --db-name=postgres"!)
+<DocsPagesIncludesDatabaseAccessProxyDbTunnel db="aurora" dbArgs="--db-user=alice --db-name=postgres" />
 
 ### Auditing
 
-(!docs/pages/includes/database-access/db-audit-events.mdx!)
+<DocsPagesIncludesDatabaseAccessDbAuditEvents />
 
 ## Troubleshooting
 
-(!docs/pages/includes/database-access/aws-troubleshooting.mdx!)
+<DocsPagesIncludesDatabaseAccessAwsTroubleshooting />
 
 ## Next Steps
 

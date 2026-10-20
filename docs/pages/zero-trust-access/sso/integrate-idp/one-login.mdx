@@ -10,6 +10,18 @@ tags:
 enterprise: Enterprise SSO
 page_type: how-to
 ---
+import DocsPagesIncludesSsoNextStepTraits from "@version/docs/pages/includes/sso/next-step-traits.mdx";
+
+
+import ExamplesResourcesOneloginConnector from "!!raw-loader!@version/examples/resources/onelogin-connector.yaml";
+
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
+import DocsPagesIncludesTctl from "@version/docs/pages/includes/tctl.mdx";
+import DocsPagesIncludesSsoRoleMapping from "@version/docs/pages/includes/sso/role-mapping.mdx";
+import DocsPagesIncludesSsoLoginerrortroubleshooting from "@version/docs/pages/includes/sso/loginerrortroubleshooting.mdx";
+
+import DocsPagesIncludesSsoHowItWorks from "@version/docs/pages/includes/sso/how-it-works.mdx";
+import DocsPagesIncludesSsoCap from "@version/docs/pages/includes/sso/cap.mdx";
 
 import SquareIcon from "@version/docs/img/sso/onelogin/teleport.png"
 import RectangleIcon from "@version/docs/img/sso/onelogin/teleportlogo@2x.png"
@@ -25,7 +37,7 @@ like:
 
 ## How it works
 
-(!docs/pages/includes/sso/how-it-works.mdx idp="OneLogin"!)
+<DocsPagesIncludesSsoHowItWorks idp="OneLogin" />
 
 ## Prerequisites
 
@@ -33,9 +45,9 @@ like:
 - Teleport role with access to maintaining `saml` resources.  This is available
   in the default `editor` role.
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx edition="Teleport Enterprise"!)
+<DocsPagesIncludesEditionPrereqsTabs edition="Teleport Enterprise" />
 
-- (!docs/pages/includes/tctl.mdx!)
+- <DocsPagesIncludesTctl />
 
 ## Step 1/3. Create Teleport application in OneLogin
 
@@ -111,7 +123,7 @@ and issue certificates to users.
 
 ### Assign a role mapping
 
-(!docs/pages/includes/sso/role-mapping.mdx fieldType="attribute"!)
+<DocsPagesIncludesSsoRoleMapping fieldType="attribute" />
 
 ### Configure a SAML connector
 
@@ -128,9 +140,11 @@ $ tctl sso configure saml --preset onelogin \
 
 This will create `onelogin.yaml`, describing the connector resource:
 
-```yaml
-(!examples/resources/onelogin-connector.yaml!)
-```
+<CodeBlock language="yaml">
+
+  {ExamplesResourcesOneloginConnector}
+
+</CodeBlock>
 
 ### Test the connector
 
@@ -155,13 +169,13 @@ $ tctl create -f onelogin.yaml
 
 ## Step 3/3. Configure authentication preferences
 
-(!docs/pages/includes/sso/cap.mdx type="saml"!)
+<DocsPagesIncludesSsoCap type="saml" />
 
 ## Next steps
 
-(!docs/pages/includes/sso/next-step-traits.mdx!)
+<DocsPagesIncludesSsoNextStepTraits />
 
 ## Troubleshooting
 
-(!docs/pages/includes/sso/loginerrortroubleshooting.mdx!)
+<DocsPagesIncludesSsoLoginerrortroubleshooting />
 

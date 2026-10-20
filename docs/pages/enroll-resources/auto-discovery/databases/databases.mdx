@@ -8,6 +8,9 @@ tags:
  - infrastructure-identity
 page_type: conceptual
 ---
+import DocsPagesIncludesDiscoveryDiscoveryGroup from "@version/docs/pages/includes/discovery/discovery-group.mdx";
+import DocsPagesIncludesDiscoveryDbLabelWarning from "@version/docs/pages/includes/discovery/db-label-warning.mdx";
+
 
 Teleport can be configured to discover databases automatically and register
 them with your Teleport cluster.
@@ -78,7 +81,7 @@ In addition to registering new databases, the Discovery Service also removes
 — from Teleport's registry — the databases that have been deleted or that no
 longer match the Discovery Service's configured selectors.
 
-(!docs/pages/includes/discovery/discovery-group.mdx!)
+<DocsPagesIncludesDiscoveryDiscoveryGroup />
 
 ## Discovery Service configuration
 
@@ -230,7 +233,7 @@ Here's how it works in detail:
   first label selector in `db_service.resources[].labels` that matches a `db`
   will be used. If no selector matches, then the `db` resource is ignored.
 
-  (!docs/pages/includes/discovery/db-label-warning.mdx!)
+  <DocsPagesIncludesDiscoveryDbLabelWarning />
 
 2. **Permissions:** The Database Service will assume the identity configured in
   the label selector that matched. If the selector does not specify an identity,

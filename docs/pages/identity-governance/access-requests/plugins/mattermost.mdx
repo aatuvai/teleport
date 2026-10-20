@@ -10,6 +10,28 @@ tags:
 enterprise: Identity Governance
 page_type: how-to
 ---
+import DocsPagesIncludesMachineIdPluginPrerequisites from "@version/docs/pages/includes/machine-id/plugin-prerequisites.mdx";
+import DocsPagesIncludesPluginsRefreshPluginIdentity from "@version/docs/pages/includes/plugins/refresh-plugin-identity.mdx";
+import DocsPagesIncludesPluginsAccessPluginTroubleshooting from "@version/docs/pages/includes/plugins/access-plugin-troubleshooting.mdx";
+
+
+import ExamplesResourcesPluginsTeleportMattermostHelmCloud from "!!raw-loader!@version/examples/resources/plugins/teleport-mattermost-helm-cloud.yaml";
+import ExamplesSystemdPluginsTeleportMattermost from "!!raw-loader!@version/examples/systemd/plugins/teleport-mattermost.service";
+
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
+import DocsPagesIncludesTctl from "@version/docs/pages/includes/tctl.mdx";
+import DocsPagesIncludesPluginsInstallAccessRequest from "@version/docs/pages/includes/plugins/install-access-request.mdx";
+import DocsPagesIncludesPluginsConfigTomlTeleport from "@version/docs/pages/includes/plugins/config-toml-teleport.mdx";
+import DocsPagesIncludesPluginsCreateRequest from "@version/docs/pages/includes/plugins/create-request.mdx";
+import DocsPagesIncludesPluginsResolveRequest from "@version/docs/pages/includes/plugins/resolve-request.mdx";
+
+import DocsPagesIncludesPluginsEditorRequestRbac from "@version/docs/pages/includes/plugins/editor-request-rbac.mdx";
+import DocsPagesIncludesPluginsRbacImpersonate from "@version/docs/pages/includes/plugins/rbac-impersonate.mdx";
+
+import DocsPagesIncludesPluginsEnroll from "@version/docs/pages/includes/plugins/enroll.mdx";
+import DocsPagesIncludesPluginsRbacImpersonateMachineId from "@version/docs/pages/includes/plugins/rbac-impersonate-machine-id.mdx";
+import DocsPagesIncludesPluginsTbotIdentity from "@version/docs/pages/includes/plugins/tbot-identity.mdx";
+import DocsPagesIncludesPluginsIdentityExport from "@version/docs/pages/includes/plugins/identity-export.mdx";
 
 import BotLogo from "/static/avatar_logo.png";
 
@@ -19,7 +41,7 @@ source messaging platform.
 <details>
 <summary>This integration is hosted on Teleport Cloud</summary>
 
-(!docs/pages/includes/plugins/enroll.mdx name="the Mattermost integration"!)
+<DocsPagesIncludesPluginsEnroll name="the Mattermost integration" />
 
 </details>
 
@@ -34,9 +56,9 @@ productivity.
 
 ## Prerequisites
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx edition="Teleport Enterprise"!)
+<DocsPagesIncludesEditionPrereqsTabs edition="Teleport Enterprise" />
 
-(!docs/pages/includes/machine-id/plugin-prerequisites.mdx!)
+<DocsPagesIncludesMachineIdPluginPrerequisites />
 
 - A Mattermost account with admin privileges. This plugin has been tested with
   Mattermost v7.0.1.
@@ -55,14 +77,14 @@ productivity.
 
   Save the resulting OAuth 2.0 token for use later in this guide.
 
-- (!docs/pages/includes/tctl.mdx!)
+- <DocsPagesIncludesTctl />
 
 ## Step 1/7. Define RBAC resources
 
 Before you set up the Mattermost plugin, you will need to enable Role Access Requests
 in your Teleport cluster.
 
-(!/docs/pages/includes/plugins/editor-request-rbac.mdx!)
+<DocsPagesIncludesPluginsEditorRequestRbac />
 
 ## Step 2/7. Define a Teleport Mattermost plugin user
 
@@ -72,10 +94,10 @@ or a regular Teleport user.
 
 <Tabs>
 <TabItem label="Machine & Workload Identity">
-(!docs/pages/includes/plugins/rbac-impersonate-machine-id.mdx!)
+<DocsPagesIncludesPluginsRbacImpersonateMachineId />
 </TabItem>
 <TabItem label="Long-lived identity files">
-(!docs/pages/includes/plugins/rbac-impersonate.mdx!)
+<DocsPagesIncludesPluginsRbacImpersonate />
 </TabItem>
 </Tabs>
 
@@ -88,10 +110,10 @@ longer-lived identity files with `tctl`:
 
 <Tabs>
 <TabItem label="Machine & Workload Identity">
-(!docs/pages/includes/plugins/tbot-identity.mdx secret="teleport-plugin-mattermost-identity"!)
+<DocsPagesIncludesPluginsTbotIdentity secret="teleport-plugin-mattermost-identity" />
 </TabItem>
 <TabItem label="Long-lived identity files">
-(!docs/pages/includes/plugins/identity-export.mdx plugin="mattermost" secret="teleport-plugin-mattermost-identity"!)
+<DocsPagesIncludesPluginsIdentityExport plugin="mattermost" secret="teleport-plugin-mattermost-identity" />
 </TabItem>
 </Tabs>
 
@@ -115,7 +137,7 @@ Teleport Proxy Service and your Mattermost deployment.
 
 </Tabs>
 
-(!docs/pages/includes/plugins/install-access-request.mdx name="mattermost"!)
+<DocsPagesIncludesPluginsInstallAccessRequest name="mattermost" />
 
 ## Step 5/7. Configure the Mattermost plugin
 
@@ -140,9 +162,11 @@ The Mattermost Helm Chart uses a YAML values file to configure the plugin. On
 the host where you have Helm installed, create a file called
 `teleport-mattermost-helm.yaml` based on the following example:
 
-```yaml
-(!examples/resources/plugins/teleport-mattermost-helm-cloud.yaml!)
-```
+<CodeBlock language="yaml">
+
+  {ExamplesResourcesPluginsTeleportMattermostHelmCloud}
+
+</CodeBlock>
 </TabItem>
 </Tabs>
 
@@ -150,9 +174,9 @@ Edit the configuration as explained below:
 
 ### `[teleport]`
 
-(!docs/pages/includes/plugins/config-toml-teleport.mdx!)
+<DocsPagesIncludesPluginsConfigTomlTeleport />
 
-(!docs/pages/includes/plugins/refresh-plugin-identity.mdx!)
+<DocsPagesIncludesPluginsRefreshPluginIdentity />
 
 ### `[mattermost]`
 
@@ -252,9 +276,11 @@ severity = "INFO" # Logger severity. Could be "INFO", "ERROR", "DEBUG" or "WARN"
 ```
 </TabItem>
 <TabItem label="Helm Chart">
-```yaml
-(!examples/resources/plugins/teleport-mattermost-helm-cloud.yaml!)
-```
+<CodeBlock language="yaml">
+
+  {ExamplesResourcesPluginsTeleportMattermostHelmCloud}
+
+</CodeBlock>
 </TabItem>
 </Tabs>
 
@@ -314,7 +340,7 @@ $ kubectl rollout restart deployment teleport-plugin-mattermost
 
 ### Create an Access Request
 
-(!docs/pages/includes/plugins/create-request.mdx!)
+<DocsPagesIncludesPluginsCreateRequest />
 
 The users and channels you configured earlier to review the request should
 receive a message from "Teleport" in Mattermost allowing them to visit a link in
@@ -322,7 +348,7 @@ the Teleport Web UI and either approve or deny the request.
 
 ### Resolve the request
 
-(!docs/pages/includes/plugins/resolve-request.mdx!)
+<DocsPagesIncludesPluginsResolveRequest />
 
 <Admonition type="info" title="Auditing Access Requests">
 
@@ -346,9 +372,11 @@ In production, we recommend starting the Teleport plugin daemon via an init
 system like systemd. Here's the recommended Teleport plugin service unit file
 for systemd:
 
-```ini
-(!examples/systemd/plugins/teleport-mattermost.service!)
-```
+<CodeBlock language="ini">
+
+  {ExamplesSystemdPluginsTeleportMattermost}
+
+</CodeBlock>
 
 Save this as `teleport-mattermost.service` in either `/usr/lib/systemd/system/` or
 another [unit file load
@@ -364,7 +392,7 @@ $ sudo systemctl start teleport-mattermost
 
 ## Troubleshooting
 
-(!docs/pages/includes/plugins/access-plugin-troubleshooting.mdx!)
+<DocsPagesIncludesPluginsAccessPluginTroubleshooting />
 
 ## Next steps
 

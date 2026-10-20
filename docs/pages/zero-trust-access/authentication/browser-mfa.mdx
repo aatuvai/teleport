@@ -7,6 +7,8 @@ tags:
  - privileged-access
 page_type: how-to
 ---
+import DocsPagesIncludesInstallTsh from "@version/docs/pages/includes/install-tsh.mdx";
+
 
 Browser MFA enables users of `tsh`, `tctl`, and Teleport Connect to complete
 MFA checks in the browser using a WebAuthn device. This is particularly useful
@@ -77,7 +79,7 @@ $ tctl create -f cap.yaml
 - A machine with the `tsh` binary installed and a Web browser with [WebAuthn support](
   https://developers.yubico.com/WebAuthn/WebAuthn_Browser_Support/).
 
-  (!docs/pages/includes/install-tsh.mdx!)
+  <DocsPagesIncludesInstallTsh />
 
 ## Step 1/2. Configuration
 

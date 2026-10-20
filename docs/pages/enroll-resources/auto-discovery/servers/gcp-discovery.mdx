@@ -9,6 +9,15 @@ tags:
  - infrastructure-identity
  - google-cloud
 ---
+import DocsPagesIncludesAutoDiscoveryAutoDiscoveryLabels from "@version/docs/pages/includes/auto-discovery/auto-discovery-labels.mdx";
+
+
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
+import DocsPagesIncludesTctl from "@version/docs/pages/includes/tctl.mdx";
+import DocsPagesIncludesInstallLinux from "@version/docs/pages/includes/install-linux.mdx";
+import DocsPagesIncludesDiscoveryDiscoveryGroup from "@version/docs/pages/includes/discovery/discovery-group.mdx";
+
+import DocsPagesIncludesAutoDiscoveryGcpVmAdvancedConfig from "@version/docs/pages/includes/auto-discovery/gcp-vm-advanced-config.mdx";
 
 This guide shows you how to set up automatic server discovery for Google Compute
 Engine virtual machines.
@@ -22,13 +31,13 @@ start it and join the cluster.
 
 ## Prerequisites
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx!)
+<DocsPagesIncludesEditionPrereqsTabs />
 
 - A GCP compute instance to run the Discovery Service on.
 - GCP compute instances to join the Teleport cluster, running
 Ubuntu/Debian/RHEL if making use of the default Teleport install script. (For
 other Linux distributions, you can install Teleport manually.)
-- (!docs/pages/includes/tctl.mdx!)
+- <DocsPagesIncludesTctl />
 
 ## Step 1/5. Create a GCP invite token
 
@@ -227,7 +236,7 @@ another Teleport service (Auth or Proxy, for example), you can skip this step.
 
 Install Teleport on the virtual machine that will run the Discovery Service.
 
-(!docs/pages/includes/install-linux.mdx!)
+<DocsPagesIncludesInstallLinux />
 
 ## Step 5/5. Configure Teleport to discover GCP compute instances
 
@@ -242,7 +251,7 @@ $ tctl tokens add --type=discovery
 Save the generated token in `/tmp/token` on the virtual machine that will run
 the Discovery Service.
 
-(!docs/pages/includes/discovery/discovery-group.mdx!)
+<DocsPagesIncludesDiscoveryDiscoveryGroup />
 
 Assign <Var name="teleport.example.com:443" /> to the host and port of the Teleport Proxy Service in your cluster,
 and <Var name="gcp-prod" /> to a name that identifies a group of resources that you will enroll:
@@ -358,11 +367,11 @@ for details on alternate methods.
 
 ## Auto-discovery labels
 
-(!docs/pages/includes/auto-discovery/auto-discovery-labels.mdx!)
+<DocsPagesIncludesAutoDiscoveryAutoDiscoveryLabels />
 
 ## Advanced configuration
 
-(!docs/pages/includes/auto-discovery/gcp-vm-advanced-config.mdx!)
+<DocsPagesIncludesAutoDiscoveryGcpVmAdvancedConfig />
 
 ## Next steps
 

@@ -8,6 +8,12 @@ tags:
  - how-to
  - zero-trust
 ---
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
+import DocsPagesIncludesTctl from "@version/docs/pages/includes/tctl.mdx";
+import DocsPagesIncludesAddRoleToUser from "@version/docs/pages/includes/add-role-to-user.mdx";
+
+
+import ExamplesResourcesTerraformTerraformLoginRules from "!!raw-loader!@version/examples/resources/terraform/terraform-login-rules.tf";
 
 This guide will explain how to:
 
@@ -24,9 +30,9 @@ authenticating to the Teleport Auth Service and interacting with its gRPC API.
 
 ## Prerequisites
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx edition="Teleport Enterprise"!)
+<DocsPagesIncludesEditionPrereqsTabs edition="Teleport Enterprise" />
 
-- (!docs/pages/includes/tctl.mdx!)
+- <DocsPagesIncludesTctl />
 
 - [Terraform >= (=terraform.version=)+](https://learn.hashicorp.com/tutorials/terraform/install-cli)
 
@@ -79,7 +85,7 @@ $ tctl create loginrule-manager.yaml
 role 'loginrule-manager' has been created
 ```
 
-(!docs/pages/includes/add-role-to-user.mdx role="loginrule-manager" !)
+<DocsPagesIncludesAddRoleToUser role="loginrule-manager" />
 
 ## Step 2/4. Create a Terraform configuration
 
@@ -88,9 +94,11 @@ provider and create two example Login Rules.
 Make sure to update the `addr = "teleport.example.com:443"` field with the
 public address of your Teleport Proxy.
 
-```hcl
-(!examples/resources/terraform/terraform-login-rules.tf!)
-```
+<CodeBlock language="hcl">
+
+  {ExamplesResourcesTerraformTerraformLoginRules}
+
+</CodeBlock>
 
 ## Step 3/4. Apply the configuration
 

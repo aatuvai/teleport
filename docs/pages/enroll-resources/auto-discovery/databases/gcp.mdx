@@ -9,6 +9,18 @@ tags:
  - google-cloud
 page_type: how-to
 ---
+import DocsPagesIncludesDiscoveryStepDescription from "@version/docs/pages/includes/discovery/step-description.mdx";
+import DocsPagesIncludesTctlToken from "@version/docs/pages/includes/tctl-token.mdx";
+import DocsPagesIncludesDiscoveryDiscoveryServiceTroubleshooting from "@version/docs/pages/includes/discovery/discovery-service-troubleshooting.mdx";
+
+
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
+import DocsPagesIncludesTctl from "@version/docs/pages/includes/tctl.mdx";
+import DocsPagesIncludesInstallLinux from "@version/docs/pages/includes/install-linux.mdx";
+import DocsPagesIncludesDiscoveryDiscoveryGroup from "@version/docs/pages/includes/discovery/discovery-group.mdx";
+import DocsPagesIncludesStartTeleport from "@version/docs/pages/includes/start-teleport.mdx";
+import DocsPagesIncludesDiscoveryDbLabelWarning from "@version/docs/pages/includes/discovery/db-label-warning.mdx";
+import DocsPagesIncludesDiscoveryDatabaseServiceTroubleshooting from "@version/docs/pages/includes/discovery/database-service-troubleshooting.mdx";
 
 After you complete this guide, Teleport will automatically discover and register
 Cloud SQL for PostgreSQL and MySQL instances and proxy connections to them.
@@ -19,11 +31,11 @@ For manual enrollment guides, including Cloud Spanner and AlloyDB, see
 
 ## How it works
 
-(!docs/pages/includes/discovery/step-description.mdx serviceName="Database" resourceDesc="database" resourceKind="db"!)
+<DocsPagesIncludesDiscoveryStepDescription serviceName="Database" resourceDesc="database" resourceKind="db" />
 
 ## Prerequisites
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx!)
+<DocsPagesIncludesEditionPrereqsTabs />
 
 - A Google Cloud project with one or more Cloud SQL instances.
 - Permission to create service accounts and grant IAM roles in that project.
@@ -50,14 +62,14 @@ For manual enrollment guides, including Cloud Spanner and AlloyDB, see
 - Each host must be able to authenticate to Google Cloud as its service account
   using
   [Application Default Credentials](https://cloud.google.com/docs/authentication/application-default-credentials).
-- (!docs/pages/includes/tctl.mdx!)
+- <DocsPagesIncludesTctl />
 
 ## Step 1/6. Install Teleport
 
 Install Teleport on the host or hosts that will run the Teleport Discovery
 Service and Teleport Database Service.
 
-(!docs/pages/includes/install-linux.mdx!)
+<DocsPagesIncludesInstallLinux />
 
 ## Step 2/6. Deploy the Discovery Service
 
@@ -91,15 +103,15 @@ discovery_service:
 
 This enables the `discovery_service` and joins it to your Teleport cluster.
 
-(!docs/pages/includes/discovery/discovery-group.mdx!)
+<DocsPagesIncludesDiscoveryDiscoveryGroup />
 
 ### Generate a join token
 
-(!docs/pages/includes/tctl-token.mdx serviceName="Discovery" tokenType="discovery" tokenFile="/tmp/token" !)
+<DocsPagesIncludesTctlToken serviceName="Discovery" tokenType="discovery" tokenFile="/tmp/token" />
 
 ### Start the Discovery Service
 
-(!docs/pages/includes/start-teleport.mdx service="the Discovery Service"!)
+<DocsPagesIncludesStartTeleport service="the Discovery Service" />
 
 ## Step 3/6. Configure Cloud SQL discovery
 
@@ -244,15 +256,15 @@ resource, the Database Service creates a short-lived `db_server` resource that
 announces to the Teleport cluster that it is ready to proxy connections for
 that `db`.
 
-(!docs/pages/includes/discovery/db-label-warning.mdx!)
+<DocsPagesIncludesDiscoveryDbLabelWarning />
 
 ### Generate a join token
 
-(!docs/pages/includes/tctl-token.mdx serviceName="Database" tokenType="db" tokenFile="/tmp/token" !)
+<DocsPagesIncludesTctlToken serviceName="Database" tokenType="db" tokenFile="/tmp/token" />
 
 ### Start the Database Service
 
-(!docs/pages/includes/start-teleport.mdx service="the Database Service"!)
+<DocsPagesIncludesStartTeleport service="the Database Service" />
 
 ## Step 6/6. List database servers
 
@@ -268,9 +280,9 @@ If the expected databases are missing, refer to
 
 ## Troubleshooting
 
-(!docs/pages/includes/discovery/discovery-service-troubleshooting.mdx resourceKind="database" tctlResource="db" cloud="GCP"!)
+<DocsPagesIncludesDiscoveryDiscoveryServiceTroubleshooting resourceKind="database" tctlResource="db" cloud="GCP" />
 
-(!docs/pages/includes/discovery/database-service-troubleshooting.mdx!)
+<DocsPagesIncludesDiscoveryDatabaseServiceTroubleshooting />
 
 ## Next steps
 

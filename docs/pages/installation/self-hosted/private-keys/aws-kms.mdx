@@ -8,6 +8,11 @@ tags:
  - aws
 page_type: how-to
 ---
+import DocsPagesIncludesTctl from "@version/docs/pages/includes/tctl.mdx";
+import DocsPagesIncludesEnterpriseHsmWarning from "@version/docs/pages/includes/enterprise/hsm-warning.mdx";
+import DocsPagesIncludesAwsCredentials from "@version/docs/pages/includes/aws-credentials.mdx";
+import DocsPagesIncludesStartTeleport from "@version/docs/pages/includes/start-teleport.mdx";
+
 
 In this guide, you will set up your Teleport cluster to use the AWS Key
 Management Service (KMS) to store and handle the CA private key material used to
@@ -38,10 +43,10 @@ The features documented on this page are available in Teleport `15.0.0` and
 higher.
 
 - Teleport Enterprise (self-hosted).
-- (!docs/pages/includes/tctl.mdx!)
+- <DocsPagesIncludesTctl />
 - An AWS account.
 
-(!docs/pages/includes/enterprise/hsm-warning.mdx!)
+<DocsPagesIncludesEnterpriseHsmWarning />
 
 ## Step 1/3. Configure AWS IAM permissions
 
@@ -158,7 +163,7 @@ You can attach the policy from the AWS console, or via the AWS CLI.
 $ aws iam attach-role-policy --role-name <IAM role> --policy-arn <policy ARN>
 ```
 
-(!docs/pages/includes/aws-credentials.mdx service="the Teleport Auth Service"!)
+<DocsPagesIncludesAwsCredentials service="the Teleport Auth Service" />
 
 <Admonition type="warning">
 Be aware that anyone with access to this IAM role will be able to create signatures
@@ -213,7 +218,7 @@ $ sudo systemctl reload teleport
 
 Otherwise, start Teleport on each Auth Service host:
 
-(!docs/pages/includes/start-teleport.mdx!)
+<DocsPagesIncludesStartTeleport />
 
 ## Step 3/3. Make sure everything is working
 

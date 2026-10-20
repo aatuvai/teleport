@@ -6,6 +6,9 @@ tags:
  - zero-trust
  - privileged-access
 ---
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
+import DocsPagesIncludesTctl from "@version/docs/pages/includes/tctl.mdx";
+
 
 Teleport can be configured to require additional multi-factor authentication
 checks to perform administrative actions through `tctl`, `tsh`, the Web UI,
@@ -41,9 +44,9 @@ their on-disk Teleport certificates.
 
 ## Prerequisites
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx!)
+<DocsPagesIncludesEditionPrereqsTabs />
 
-- (!docs/pages/includes/tctl.mdx!)
+- <DocsPagesIncludesTctl />
 - The following MFA methods can satisfy admin actions configured on the cluster:
   - [WebAuthn](../management/security/idp-compromise.mdx) with a hardware
     authenticator (such as YubiKey or SoloKey) and a browser with

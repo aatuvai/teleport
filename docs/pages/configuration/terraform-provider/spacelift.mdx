@@ -8,6 +8,9 @@ tags:
  - how-to
  - zero-trust
 ---
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
+import DocsPagesIncludesTctl from "@version/docs/pages/includes/tctl.mdx";
+
 
 You can use Spacelift with the Teleport Terraform provider to manage dynamic
 configuration resources via GitOps and infrastructure as code. This gives you an
@@ -31,9 +34,9 @@ resources.
 
 ## Prerequisites
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx edition="Teleport Enterprise"!)
+<DocsPagesIncludesEditionPrereqsTabs edition="Teleport Enterprise" />
 
-- (!docs/pages/includes/tctl.mdx!)
+- <DocsPagesIncludesTctl />
 - A GitHub repository where you will store your Terraform configuration and a
   Spacelift stack linked to this repository.
 - A paid Spacelift account. This is required to use the `spacelift` join method.

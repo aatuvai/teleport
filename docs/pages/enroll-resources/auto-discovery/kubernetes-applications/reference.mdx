@@ -8,6 +8,8 @@ tags:
  - infrastructure-identity
 page_type: reference
 ---
+import DocsPagesIncludesDiscoveryDiscoveryGroup from "@version/docs/pages/includes/discovery/discovery-group.mdx";
+
 
 Kubernetes Application Discovery involves the Teleport Discovery Service,
 Teleport Application Service, and annotations on Kubernetes services. 
@@ -45,7 +47,7 @@ Discovery Service, then restart the agents running these services.
 Configuration for the Discovery Service is controlled by the `kubernetes` field,
 example:
 
-(!docs/pages/includes/discovery/discovery-group.mdx!)
+<DocsPagesIncludesDiscoveryDiscoveryGroup />
 
 ```yaml
 # This section configures the Discovery Service

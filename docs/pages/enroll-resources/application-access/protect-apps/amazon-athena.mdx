@@ -9,6 +9,15 @@ tags:
  - aws
 page_type: how-to
 ---
+import DocsPagesIncludesApplicationAccessAwsDatabaseAccessConsole from "@version/docs/pages/includes/application-access/aws-database-access-console.mdx";
+import DocsPagesIncludesApplicationAccessAwsDatabaseAccessCli from "@version/docs/pages/includes/application-access/aws-database-access-cli.mdx";
+
+
+import DocsPagesIncludesApplicationAccessAwsDatabasePrerequisites from "@version/docs/pages/includes/application-access/aws-database-prerequisites.mdx";
+import DocsPagesIncludesApplicationAccessAwsDatabaseCreateIamRole from "@version/docs/pages/includes/application-access/aws-database-create-iam-role.mdx";
+import DocsPagesIncludesApplicationAccessAwsDatabaseRoleMapping from "@version/docs/pages/includes/application-access/aws-database-role-mapping.mdx";
+import DocsPagesIncludesApplicationAccessAwsDatabaseStartAppService from "@version/docs/pages/includes/application-access/aws-database-start-app-service.mdx";
+import DocsPagesIncludesApplicationAccessAwsDatabaseAgentPermission from "@version/docs/pages/includes/application-access/aws-database-agent-permission.mdx";
 
 {/* lint disable page-structure remark-lint */}
 
@@ -23,11 +32,11 @@ This guide will help you to:
 
 ## Prerequisites
 
-(!docs/pages/includes/application-access/aws-database-prerequisites.mdx database="Athena" !)
+<DocsPagesIncludesApplicationAccessAwsDatabasePrerequisites database="Athena" />
 
 ## Step 1/5. Create an IAM role for Athena access
 
-(!docs/pages/includes/application-access/aws-database-create-iam-role.mdx database="Athena" iam-role="ExampleTeleportAthenaRole" managed-policy="AmazonAthenaFullAccess" !)
+<DocsPagesIncludesApplicationAccessAwsDatabaseCreateIamRole database="Athena" iamRole="ExampleTeleportAthenaRole" managedPolicy="AmazonAthenaFullAccess" />
 
 <Admonition type="note" title="Apply least-privilege permissions">
 `AmazonAthenaFullAccess` may provide too much access for your intentions. To
@@ -39,15 +48,15 @@ for more details.
 
 ## Step 2/5. Configure the Teleport IAM role mapping
 
-(!docs/pages/includes/application-access/aws-database-role-mapping.mdx role="aws-athena-access" iam-role="ExampleTeleportAthenaRole"!)
+<DocsPagesIncludesApplicationAccessAwsDatabaseRoleMapping role="aws-athena-access" iamRole="ExampleTeleportAthenaRole" />
 
 ## Step 3/5. Install the Teleport Application Service
 
-(!docs/pages/includes/application-access/aws-database-start-app-service.mdx!)
+<DocsPagesIncludesApplicationAccessAwsDatabaseStartAppService />
 
 ## Step 4/5. Give Teleport permissions to assume roles
 
-(!docs/pages/includes/application-access/aws-database-agent-permission.mdx!)
+<DocsPagesIncludesApplicationAccessAwsDatabaseAgentPermission />
 
 ## Step 5/5. Connect
 
@@ -56,12 +65,12 @@ connecting to your Athena database.
 
 ### Using AWS Management Console
 
-(!docs/pages/includes/application-access/aws-database-access-console.mdx iam-role="ExampleTeleportAthenaRole" !)
+<DocsPagesIncludesApplicationAccessAwsDatabaseAccessConsole iamRole="ExampleTeleportAthenaRole" />
 
 ### Using AWS CLI
 
 {/* vale 3rd-party-products.aws-vs-amazon = NO */}
-(!docs/pages/includes/application-access/aws-database-access-cli.mdx iam-role="ExampleTeleportAthenaRole" tsh-example="tsh aws athena list-work-groups"!)
+<DocsPagesIncludesApplicationAccessAwsDatabaseAccessCli iamRole="ExampleTeleportAthenaRole" tshExample="tsh aws athena list-work-groups" />
 {/* vale 3rd-party-products.aws-vs-amazon = YES */}
 
 ### Using other Athena applications

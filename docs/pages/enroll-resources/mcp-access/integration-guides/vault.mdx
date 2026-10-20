@@ -8,8 +8,16 @@ tags:
 - zero-trust
 page_type: how-to
 ---
+import DocsPagesIncludesMcpAccessIntegrationLimitTools from "@version/docs/pages/includes/mcp-access/integration-limit-tools.mdx";
 
-(!docs/pages/includes/mcp-access/integration-intro.mdx serviceName="HashiCorp Vault" !)
+
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
+import DocsPagesIncludesMcpAccessIntegrationTeleportApp from "@version/docs/pages/includes/mcp-access/integration-teleport-app.mdx";
+
+import DocsPagesIncludesMcpAccessIntegrationIntro from "@version/docs/pages/includes/mcp-access/integration-intro.mdx";
+import DocsPagesIncludesMcpAccessIntegrationTsh from "@version/docs/pages/includes/mcp-access/integration-tsh.mdx";
+
+<DocsPagesIncludesMcpAccessIntegrationIntro serviceName="HashiCorp Vault" />
 
 ## How it works
 
@@ -21,7 +29,7 @@ permissions granted by the policy bound to the token.
 
 ## Prerequisites
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx edition="Teleport (v18.3.0 or higher)" clients="\`tsh\` client"!)
+<DocsPagesIncludesEditionPrereqsTabs edition="Teleport (v18.3.0 or higher)" clients="\\`tsh\\` client" />
 - Access to your Vault instance and sufficient privileges to manage policies.
 - A host to run the MCP server that is reachable by the Teleport Application Service.
 - A running Teleport Application Service. If you have not yet done this, follow
@@ -97,9 +105,9 @@ After starting, the Vault MCP Server exposes a streamable-HTTP endpoint at
 
 ## Step 3/3. Connect via Teleport
 
-(!docs/pages/includes/mcp-access/integration-teleport-app.mdx service="vault"  serviceName="Vault" port="8080" !)
+<DocsPagesIncludesMcpAccessIntegrationTeleportApp service="vault" serviceName="Vault" port="8080" />
 
-(!docs/pages/includes/mcp-access/integration-limit-tools.mdx!)
+<DocsPagesIncludesMcpAccessIntegrationLimitTools />
 ```yaml
 kind: role
 version: v8
@@ -114,7 +122,7 @@ spec:
       - ^(get|list)_.*$
 ```
 
-(!docs/pages/includes/mcp-access/integration-tsh.mdx service="vault" serviceName="Vault" !)
+<DocsPagesIncludesMcpAccessIntegrationTsh service="vault" serviceName="Vault" />
 
 ![Vault Claude](../../../../img/mcp-access/vault-claude.png)
 

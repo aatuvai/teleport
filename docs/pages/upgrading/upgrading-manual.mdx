@@ -5,6 +5,10 @@ tags:
  - conceptual
  - platform-wide
 ---
+import DocsPagesIncludesKubernetesAccessHelmHelmRepoAdd from "@version/docs/pages/includes/kubernetes-access/helm/helm-repo-add.mdx";
+
+
+import DocsPagesIncludesStartTeleport from "@version/docs/pages/includes/start-teleport.mdx";
 
 To ensure that your Teleport cluster remains up to date with the lowest amount
 of manual overhead, we recommend [signing up](https://goteleport.com/signup) for
@@ -124,7 +128,7 @@ Service, then on each of your agents:
    Service and Proxy Service instances, restart Teleport on these servers to run
    the new version.
 
-   (!docs/pages/includes/start-teleport.mdx!)
+   <DocsPagesIncludesStartTeleport />
 
 ## Self-hosted Teleport clusters on Kubernetes
 
@@ -137,7 +141,7 @@ the number of replicas.
 1. Update the Teleport Helm chart repository so you can install the latest
    version of the `teleport-cluster` chart:
 
-   (!docs/pages/includes/kubernetes-access/helm/helm-repo-add.mdx!)
+   <DocsPagesIncludesKubernetesAccessHelmHelmRepoAdd />
 
 1. Upgrade the `teleport-cluster` Helm release:
 
@@ -160,7 +164,7 @@ that your `teleport-kube-agent` release is called `teleport-agent`.
 1. Update the Teleport Helm chart repository so you can install the latest
    version of the `teleport-kube-agent` chart:
 
-   (!docs/pages/includes/kubernetes-access/helm/helm-repo-add.mdx!)
+   <DocsPagesIncludesKubernetesAccessHelmHelmRepoAdd />
 
 1. Upgrade the Helm release:
 

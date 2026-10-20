@@ -1,7 +1,26 @@
+import DocsPagesIncludesDatabaseAccessAlternativeMethodsJoin from "@version/docs/pages/includes/database-access/alternative-methods-join.mdx";
+import DocsPagesIncludesDatabaseAccessGuidesNextSteps from "@version/docs/pages/includes/database-access/guides-next-steps.mdx";
+
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
+import DocsPagesIncludesTctl from "@version/docs/pages/includes/tctl.mdx";
+import DocsPagesIncludesInstallLinux from "@version/docs/pages/includes/install-linux.mdx";
+import DocsPagesIncludesAwsCredentials from "@version/docs/pages/includes/aws-credentials.mdx";
+import DocsPagesIncludesDatabaseAccessReferenceAwsIamRdsProxyAccessPolicy from "@version/docs/pages/includes/database-access/reference/aws-iam/rds-proxy/access-policy.mdx";
+import DocsPagesIncludesStartTeleport from "@version/docs/pages/includes/start-teleport.mdx";
+import DocsPagesIncludesDatabaseAccessProxyDbTunnel from "@version/docs/pages/includes/database-access/proxy-db-tunnel.mdx";
+import DocsPagesIncludesDatabaseAccessDbAccessWebuiAd from "@version/docs/pages/includes/database-access/db-access-webui-ad.mdx";
+import DocsPagesIncludesDatabaseAccessAwsTroubleshooting from "@version/docs/pages/includes/database-access/aws-troubleshooting.mdx";
+import DocsPagesIncludesDatabaseAccessAwsTroubleshootingMaxPolicySize from "@version/docs/pages/includes/database-access/aws-troubleshooting-max-policy-size.mdx";
+
+import DocsPagesIncludesDatabaseAccessHowItWorksIam from "@version/docs/pages/includes/database-access/how-it-works/iam.mdx";
+import DocsPagesIncludesDatabaseAccessAutoDiscoveryTip from "@version/docs/pages/includes/database-access/auto-discovery-tip.mdx";
+import DocsPagesIncludesTctlToken from "@version/docs/pages/includes/tctl-token.mdx";
+import DocsPagesIncludesDatabaseAccessCreateIamRoleStepDescription from "@version/docs/pages/includes/database-access/create-iam-role-step-description.mdx";
+
 {/* this comment is here to make the includes below render */}
 ## How it works
 
-(!docs/pages/includes/database-access/how-it-works/iam.mdx db="RDS Proxy" cloud="AWS"!)
+<DocsPagesIncludesDatabaseAccessHowItWorksIam db="RDS Proxy" cloud="AWS" />
 
 <Tabs>
 <TabItem label="Self-Hosted">
@@ -20,63 +39,65 @@ Teleport currently supports RDS Proxy instances with engine family
 [Microsoft SQL Server](../../enroll-resources/database-access/enrollment/aws/rds-proxy/rds-proxy-sqlserver.mdx).
 </Admonition>
 
-(!docs/pages/includes/database-access/auto-discovery-tip.mdx dbType="RDS Proxy" providerType="AWS"!)
+<DocsPagesIncludesDatabaseAccessAutoDiscoveryTip dbType="RDS Proxy" providerType="AWS" />
 
 ## Prerequisites
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx!)
+<DocsPagesIncludesEditionPrereqsTabs />
 
 - AWS account with RDS Proxy instances and permissions to create and attach IAM policies.
 - Any RDS Proxy instances intended for connection through Teleport must have TLS enabled.
 - A host, e.g., an EC2 instance, where you will run the Teleport Database
   Service.
-- (!docs/pages/includes/tctl.mdx!)
+- <DocsPagesIncludesTctl />
 
 ## Step 1/6. Install Teleport
 
-(!docs/pages/includes/install-linux.mdx!)
+<DocsPagesIncludesInstallLinux />
 
 ## Step 2/6. Create a Teleport Database Service configuration
 
-(!docs/pages/includes/tctl-token.mdx serviceName="Database" tokenType="db" tokenFile="/tmp/token"!)
+<DocsPagesIncludesTctlToken serviceName="Database" tokenType="db" tokenFile="/tmp/token" />
 
-(!docs/pages/includes/database-access/alternative-methods-join.mdx!)
+<DocsPagesIncludesDatabaseAccessAlternativeMethodsJoin />
 
 Create the Database Service configuration. Replace <Var
 name="teleport.example.com:443" /> with the domain name **and port** of your
 Teleport Proxy Service or cloud-hosted Teleport Enterprise account and
 <Var name="endpoint:port" /> with the host **and port** of the database endpoint:
 
-```code
-$ sudo teleport db configure create \
-   -o file \
-   --proxy=<Var name="teleport.example.com:443"/> \
-   --uri=<Var name="endpoint:port" /> \
-   --protocol={{ protocol }} \
-   --token=/tmp/token \
-   --labels=env=dev
-```
+<CodeBlock>
+{
+ `$ sudo teleport db configure create \\
+     -o file \\
+     --proxy=<Var name="teleport.example.com:443"/> \\
+     --uri=<Var name="endpoint:port" /> \\
+     --protocol=${ props.protocol } \\
+     --token=/tmp/token \\
+     --labels=env=dev`
+}
+</CodeBlock>
 
 The command will generate a Teleport Database Service configuration file and
 place it at the `/etc/teleport.yaml` location.
 
 ## Step 3/6. Configure Database Service IAM permissions
 
-(!docs/pages/includes/database-access/create-iam-role-step-description.mdx accessFor="RDS Proxy instances" !)
+<DocsPagesIncludesDatabaseAccessCreateIamRoleStepDescription accessFor="RDS Proxy instances" />
 
 ### Create an IAM role for Teleport
 
-(!docs/pages/includes/aws-credentials.mdx service="the Database Service"!)
+<DocsPagesIncludesAwsCredentials service="the Database Service" />
 
 ### Grant permissions
 
 Attach the following AWS IAM permissions to the Database Service IAM role:
 
-(!docs/pages/includes/database-access/reference/aws-iam/rds-proxy/access-policy.mdx!)
+<DocsPagesIncludesDatabaseAccessReferenceAwsIamRdsProxyAccessPolicy />
 
 ## Step 4/6. Start the Database Service
 
-(!docs/pages/includes/start-teleport.mdx service="the Teleport Database Service"!)
+<DocsPagesIncludesStartTeleport service="the Teleport Database Service" />
 
 ## Step 5/6. Configure database user credentials
 
@@ -189,9 +210,9 @@ Retrieve credentials for the database and connect to it as the `alice` user:
 $ tsh db connect --db-user=alice --db-name=dev rds-proxy
 ```
 
-(!docs/pages/includes/database-access/proxy-db-tunnel.mdx db="rds-proxy" dbArgs="--db-user=alice --db-name=dev"!)
+<DocsPagesIncludesDatabaseAccessProxyDbTunnel db="rds-proxy" dbArgs="--db-user=alice --db-name=dev" />
 
-(!docs/pages/includes/database-access/db-access-webui-ad.mdx dbType="PostgreSQL and MySQL"!)
+<DocsPagesIncludesDatabaseAccessDbAccessWebuiAd dbType="PostgreSQL and MySQL" />
 
 To log out of the database and remove credentials:
 
@@ -201,13 +222,13 @@ $ tsh db logout rds-proxy
 
 ## Troubleshooting
 
-(!docs/pages/includes/database-access/aws-troubleshooting.mdx!)
+<DocsPagesIncludesDatabaseAccessAwsTroubleshooting />
 
-(!docs/pages/includes/database-access/aws-troubleshooting-max-policy-size.mdx!)
+<DocsPagesIncludesDatabaseAccessAwsTroubleshootingMaxPolicySize />
 
 ## Next steps
 
-(!docs/pages/includes/database-access/guides-next-steps.mdx!)
+<DocsPagesIncludesDatabaseAccessGuidesNextSteps />
 - Learn more on [Setting up database credentials in AWS Secrets
   Manager](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/rds-proxy-setup.html)
   and [Setting up AWS Identity and Access Management (IAM)

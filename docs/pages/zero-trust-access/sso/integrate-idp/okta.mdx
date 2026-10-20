@@ -9,6 +9,17 @@ tags:
  - privileged-access
 page_type: how-to
 ---
+import DocsPagesIncludesSsoIdpInitiated from "@version/docs/pages/includes/sso/idp-initiated.mdx";
+import DocsPagesIncludesSsoSamlSlo from "@version/docs/pages/includes/sso/saml-slo.mdx";
+import DocsPagesIncludesSsoNextStepTraits from "@version/docs/pages/includes/sso/next-step-traits.mdx";
+
+
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
+import DocsPagesIncludesSsoRoleMapping from "@version/docs/pages/includes/sso/role-mapping.mdx";
+import DocsPagesIncludesSsoLoginerrortroubleshooting from "@version/docs/pages/includes/sso/loginerrortroubleshooting.mdx";
+
+import DocsPagesIncludesSsoHowItWorks from "@version/docs/pages/includes/sso/how-it-works.mdx";
+import DocsPagesIncludesSsoCap from "@version/docs/pages/includes/sso/cap.mdx";
 
 In this guide, you will configure [Okta](https://www.okta.com/) to provide
 single sign on (SSO) identities to Teleport Enterprise and Teleport Enterprise
@@ -37,7 +48,7 @@ Then follow the instructions for the [guided Okta single sign-on integration](..
 
 ## How it works
 
-(!docs/pages/includes/sso/how-it-works.mdx idp="Okta"!)
+<DocsPagesIncludesSsoHowItWorks idp="Okta" />
 
 ## Prerequisites
 
@@ -45,7 +56,7 @@ Then follow the instructions for the [guided Okta single sign-on integration](..
   least two groups. If you don't already have Okta groups you want to assign to
   Teleport roles don't worry, we'll create example groups below.
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx edition="Teleport Enterprise"!)
+<DocsPagesIncludesEditionPrereqsTabs edition="Teleport Enterprise" />
 
 - A Teleport role with access to edit and maintain `saml` resources. This is
   available in the default `auditor` and `editor` roles.
@@ -174,7 +185,7 @@ issue certificates to users.
 
 ### Assign a role mapping
 
-(!docs/pages/includes/sso/role-mapping.mdx fieldType="attribute"!)
+<DocsPagesIncludesSsoRoleMapping fieldType="attribute" />
 
 ### Configure a SAML connector
 
@@ -220,9 +231,9 @@ spec:
 version: v2
 ```
 
-(!docs/pages/includes/sso/idp-initiated.mdx!)
+<DocsPagesIncludesSsoIdpInitiated />
 
-(!docs/pages/includes/sso/saml-slo.mdx!)
+<DocsPagesIncludesSsoSamlSlo />
 
 ### Test the connector
 
@@ -281,7 +292,7 @@ $ tctl create okta-connector.yaml
 
 ## Step 3/3. Configure authentication preferences
 
-(!docs/pages/includes/sso/cap.mdx type="saml"!)
+<DocsPagesIncludesSsoCap type="saml" />
 
 ## Testing
 
@@ -308,8 +319,8 @@ $ tsh login --proxy=proxy.example.com --auth=okta
 
 ## Next steps
 
-(!docs/pages/includes/sso/next-step-traits.mdx!)
+<DocsPagesIncludesSsoNextStepTraits />
 
 ## Troubleshooting
 
-(!docs/pages/includes/sso/loginerrortroubleshooting.mdx!)
+<DocsPagesIncludesSsoLoginerrortroubleshooting />

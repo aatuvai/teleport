@@ -10,6 +10,10 @@ tags:
  - privileged-access
 enterprise: Identity Governance
 ---
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
+import DocsPagesIncludesTctl from "@version/docs/pages/includes/tctl.mdx";
+import DocsPagesIncludesPluginsCreateRequest from "@version/docs/pages/includes/plugins/create-request.mdx";
+
 
 With Teleport's Access Monitoring Rules, Access Request notifications can be
 routed to plugins based on several conditions. For example, you may
@@ -31,10 +35,10 @@ Teleport [changelog](../../changelog.mdx) to learn about new plugins.
 
 ## Prerequisites
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx edition="Teleport Enterprise Cloud"!)
+<DocsPagesIncludesEditionPrereqsTabs edition="Teleport Enterprise Cloud" />
 
 - At least one of the Teleport Access Plugins that support Access Monitoring Rules is enrolled.
-- (!docs/pages/includes/tctl.mdx!)
+- <DocsPagesIncludesTctl />
 
 ## Step 1/2. Create an Access Monitoring Rule
 
@@ -116,4 +120,4 @@ Afterwards create an Access Request for the role you specified in the rule.
 Then check the Slack channel you have set in your Access Monitoring Rule earlier to
 verify that the notification has been sent.
 
-(!docs/pages/includes/plugins/create-request.mdx!)
+<DocsPagesIncludesPluginsCreateRequest />

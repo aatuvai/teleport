@@ -8,29 +8,40 @@ tags:
  - infrastructure-identity
 page_type: reference
 ---
+import DocsPagesIncludesConfigReferenceLinuxDesktopConfig from "!!raw-loader!@version/docs/pages/includes/config-reference/linux-desktop-config.yaml";
+import DocsPagesIncludesConfigReferenceDesktopConfig from "!!raw-loader!@version/docs/pages/includes/config-reference/desktop-config.yaml";
+
 
 This page lists the Teleport configuration fields that you can use to configure
 the Teleport Desktop Service.
 
 `teleport.yaml` fields for the Linux Desktop Service:
 
-```yaml
-# Service responsible for Linux desktop access.
-# The Linux Desktop Service runs directly on the Linux host being accessed
-# and requires Xvfb to be installed on that host.
-(!docs/pages/includes/config-reference/linux-desktop-config.yaml!)
-```
+<CodeBlock language="yaml">
+{`
+  # Service responsible for Linux desktop access.
+  # The Linux Desktop Service runs directly on the Linux host being accessed
+  # and requires Xvfb to be installed on that host.`
+}
+
+  {DocsPagesIncludesConfigReferenceLinuxDesktopConfig}
+
+</CodeBlock>
 
 `teleport.yaml` fields for the Windows Desktop Service:
 
-```yaml
-# Main service responsible for Windows desktop access.
-#
-# You can have multiple Desktop Service instances in your cluster (but not in the
-# same teleport.yaml), connected to the same or different Active Directory
-# domains.
-(!docs/pages/includes/config-reference/desktop-config.yaml!)
-```
+<CodeBlock language="yaml">
+{`
+  # Main service responsible for Windows desktop access.
+  #
+  # You can have multiple Desktop Service instances in your cluster (but not in the
+  # same teleport.yaml), connected to the same or different Active Directory
+  # domains.`
+}
+
+  {DocsPagesIncludesConfigReferenceDesktopConfig}
+
+</CodeBlock>
 
 ## Deployment
 

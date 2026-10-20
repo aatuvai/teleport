@@ -8,6 +8,11 @@ tags:
  - zero-trust
 page_type: how-to
 ---
+import DocsPagesIncludesNodeLogins from "@version/docs/pages/includes/node-logins.mdx";
+import DocsPagesIncludesConnectYourClientTshGit from "@version/docs/pages/includes/connect-your-client/tsh-git.mdx";
+
+
+import DocsPagesIncludesInstallTsh from "@version/docs/pages/includes/install-tsh.mdx";
 
 <EnterpriseFeatureWidget title="Did you know?">
    You can try out Teleport Enterprise capabilities like SSO, session recording summaries, and just-in-time Access Requests for free. No payment information required.
@@ -52,7 +57,7 @@ Follow the instructions below to install the `tsh` binary.
 
 1. Install a package that includes `tsh`:
 
-   (!docs/pages/includes/install-tsh.mdx!)
+   <DocsPagesIncludesInstallTsh />
 
 ## Basic usage
 
@@ -119,7 +124,7 @@ $ tsh ls os=osx
 <details>
 <summary>Not seeing resources?</summary>
 
-(!docs/pages/includes/node-logins.mdx!)
+<DocsPagesIncludesNodeLogins />
 
 </details>
 
@@ -893,7 +898,7 @@ You can also list active sessions with the `tsh sessions ls` command.
 
 ## Proxying Git commands
 
-(!docs/pages/includes/connect-your-client/tsh-git.mdx!)
+<DocsPagesIncludesConnectYourClientTshGit />
 
 ## Debug logs
 

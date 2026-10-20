@@ -9,13 +9,26 @@ tags:
  - infrastructure-identity
  - aws
 ---
+import DocsPagesIncludesDiscoveryReferenceAwsIamEks from "@version/docs/pages/includes/discovery/reference/aws-iam/eks.mdx";
+import DocsPagesIncludesDiscoveryKubernetesServiceTroubleshooting from "@version/docs/pages/includes/discovery/kubernetes-service-troubleshooting.mdx";
+
+
+import DocsPagesIncludesDiscoverySameHostTip from "@version/docs/pages/includes/discovery/same-host-tip.mdx";
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
+import DocsPagesIncludesInstallLinux from "@version/docs/pages/includes/install-linux.mdx";
+import DocsPagesIncludesDiscoveryDiscoveryGroup from "@version/docs/pages/includes/discovery/discovery-group.mdx";
+import DocsPagesIncludesAwsCredentials from "@version/docs/pages/includes/aws-credentials.mdx";
+import DocsPagesIncludesStartTeleport from "@version/docs/pages/includes/start-teleport.mdx";
+
+import DocsPagesIncludesDiscoveryStepDescription from "@version/docs/pages/includes/discovery/step-description.mdx";
+import DocsPagesIncludesDiscoveryDiscoveryServiceTroubleshooting from "@version/docs/pages/includes/discovery/discovery-service-troubleshooting.mdx";
 
 This guide shows you how to manually configure Teleport and AWS to
 automatically enroll EKS clusters in your Teleport cluster.
 
-(!docs/pages/includes/discovery/step-description.mdx serviceName="Kubernetes" resourceDesc="cluster" resourceKind="kube_cluster" !)
+<DocsPagesIncludesDiscoveryStepDescription serviceName="Kubernetes" resourceDesc="cluster" resourceKind="kube_cluster" />
 
-(!docs/pages/includes/discovery/same-host-tip.mdx serviceName="Kubernetes" resourceDesc="cluster" !)
+<DocsPagesIncludesDiscoverySameHostTip serviceName="Kubernetes" resourceDesc="cluster" />
 
 ## How it works
 
@@ -31,7 +44,7 @@ and the necessary permissions to forward requests.
 
 ## Prerequisites
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx!)
+<DocsPagesIncludesEditionPrereqsTabs />
 
 - An AWS account with permissions to create and attach IAM policies.
 - A host to run the Teleport Discovery and Kubernetes services.
@@ -52,7 +65,7 @@ pre-existing access configured.
 Create and attach the following AWS IAM policy to the identity of the instance
 running the Teleport Discovery Service:
 
-(!docs/pages/includes/discovery/reference/aws-iam/eks.mdx!)
+<DocsPagesIncludesDiscoveryReferenceAwsIamEks />
 
 ## Step 2/3. Configure EKS cluster authorization
 
@@ -292,7 +305,7 @@ and create the `ClusterRole` and `ClusterRoleBinding` resources during cluster p
 Install Teleport on the host you are using to run the Kubernetes Service and
 Discovery Service:
 
-(!docs/pages/includes/install-linux.mdx!)
+<DocsPagesIncludesInstallLinux />
 
 ### Get a join token
 
@@ -311,7 +324,7 @@ $ tctl tokens add --type=discovery,kube --format=text
 On the host running the Kubernetes Service and Discovery Service, create a
 Teleport configuration file with the following content at `/etc/teleport.yaml`:
 
-(!docs/pages/includes/discovery/discovery-group.mdx!)
+<DocsPagesIncludesDiscoveryDiscoveryGroup />
 
 Enabling EKS Auto-Discovery requires that the `discovery_service.aws` section
 include at least one entry and that `discovery_service.aws.types` include `eks`.
@@ -350,9 +363,9 @@ kubernetes_service:
 
 ### Start the Kubernetes and Discovery Services
 
-(!docs/pages/includes/aws-credentials.mdx service="the Kubernetes and Discovery Services"!)
+<DocsPagesIncludesAwsCredentials service="the Kubernetes and Discovery Services" />
 
-(!docs/pages/includes/start-teleport.mdx service="the Kubernetes and Discovery Services"!)
+<DocsPagesIncludesStartTeleport service="the Kubernetes and Discovery Services" />
 
 Once the Kubernetes and Discovery Services start, EKS clusters matching the tags
 and regions specified in the AWS section will be added to the Teleport cluster
@@ -360,6 +373,6 @@ automatically.
 
 ## Troubleshooting
 
-(!docs/pages/includes/discovery/discovery-service-troubleshooting.mdx resourceKind="Kubernetes cluster" tctlResource="kube_cluster" cloud="AWS"!)
+<DocsPagesIncludesDiscoveryDiscoveryServiceTroubleshooting resourceKind="Kubernetes cluster" tctlResource="kube_cluster" cloud="AWS" />
 
-(!docs/pages/includes/discovery/kubernetes-service-troubleshooting.mdx!)
+<DocsPagesIncludesDiscoveryKubernetesServiceTroubleshooting />

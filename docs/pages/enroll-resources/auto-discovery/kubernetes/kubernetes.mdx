@@ -8,6 +8,8 @@ tags:
  - infrastructure-identity
 page_type: conceptual
 ---
+import DocsPagesIncludesDiscoveryDiscoveryGroup from "@version/docs/pages/includes/discovery/discovery-group.mdx";
+
 
 Kubernetes Clusters Discovery allows Kubernetes clusters
 hosted on cloud providers to be discovered and enrolled automatically.
@@ -61,7 +63,7 @@ In addition to detecting new Kubernetes clusters, the Discovery Service also rem
 — from Teleport's registry — the Kubernetes clusters that have been deleted or whose tags
 no longer meet the filtering labels.
 
-(!docs/pages/includes/discovery/discovery-group.mdx!)
+<DocsPagesIncludesDiscoveryDiscoveryGroup />
 
 The following snippet describes the different configuration options for the Discovery Service
 and their default values.

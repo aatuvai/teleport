@@ -8,16 +8,36 @@ tags:
  - infrastructure-identity
 page_type: how-to
 ---
+import DocsPagesIncludesDatabaseAccessSingleNodeNote from "@version/docs/pages/includes/database-access/single-node-note.mdx";
+import DocsPagesIncludesKubernetesAccessHelmHelmRepoAdd from "@version/docs/pages/includes/kubernetes-access/helm/helm-repo-add.mdx";
+import DocsPagesIncludesDatabaseAccessMultipleInstancesTip from "@version/docs/pages/includes/database-access/multiple-instances-tip.mdx";
+import DocsPagesIncludesDatabaseAccessGuidesNextSteps from "@version/docs/pages/includes/database-access/guides-next-steps.mdx";
+
+
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
+import DocsPagesIncludesTctl from "@version/docs/pages/includes/tctl.mdx";
+import DocsPagesIncludesInstallLinux from "@version/docs/pages/includes/install-linux.mdx";
+import DocsPagesIncludesDatabaseAccessDbConfigureStart from "@version/docs/pages/includes/database-access/db-configure-start.mdx";
+import DocsPagesIncludesDatabaseAccessDbHelmInstall from "@version/docs/pages/includes/database-access/db-helm-install.mdx";
+import DocsPagesIncludesDatabaseAccessCreateUser from "@version/docs/pages/includes/database-access/create-user.mdx";
+import DocsPagesIncludesDatabaseAccessRedisCreateUsers from "@version/docs/pages/includes/database-access/redis-create-users.mdx";
+import DocsPagesIncludesDatabaseAccessCustomDbCa from "@version/docs/pages/includes/database-access/custom-db-ca.mdx";
+import DocsPagesIncludesDatabaseAccessRedisConnect from "@version/docs/pages/includes/database-access/redis-connect.mdx";
+
+import DocsPagesIncludesDatabaseAccessSelfHostedIntroduction from "@version/docs/pages/includes/database-access/self-hosted-introduction.mdx";
+import DocsPagesIncludesDatabaseAccessHowItWorksMtls from "@version/docs/pages/includes/database-access/how-it-works/mtls.mdx";
+import DocsPagesIncludesDatabaseAccessSplitDbCaDetails from "@version/docs/pages/includes/database-access/split-db-ca-details.mdx";
+import DocsPagesIncludesTctlToken from "@version/docs/pages/includes/tctl-token.mdx";
 
 {/* vale messaging.protocol-products = NO */}
 If you want to configure Redis Standalone, please read [Database Access with Redis](redis.mdx).
 {/* vale messaging.protocol-products = YES */}
 
-(!docs/pages/includes/database-access/self-hosted-introduction.mdx dbType="Redis cluster"!)
+<DocsPagesIncludesDatabaseAccessSelfHostedIntroduction dbType="Redis cluster" />
 
 ## How it works
 
-(!docs/pages/includes/database-access/how-it-works/mtls.mdx db="Redis cluster"!)
+<DocsPagesIncludesDatabaseAccessHowItWorksMtls db="Redis cluster" />
 
 <Tabs>
 <TabItem scope={["oss", "enterprise"]} label="Self-Hosted">
@@ -31,7 +51,7 @@ If you want to configure Redis Standalone, please read [Database Access with Red
 
 ## Prerequisites
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx!)
+<DocsPagesIncludesEditionPrereqsTabs />
 
 - Redis version `6.0` or newer.
 
@@ -46,44 +66,44 @@ If you want to configure Redis Standalone, please read [Database Access with Red
 - A certificate authority to issue server certificates for nodes in your Redis
   Cluster.
 
-  (!docs/pages/includes/database-access/split-db-ca-details.mdx db="Redis Cluster"!)
+  <DocsPagesIncludesDatabaseAccessSplitDbCaDetails db="Redis Cluster" />
 
-- (!docs/pages/includes/tctl.mdx!)
+- <DocsPagesIncludesTctl />
 
-(!docs/pages/includes/database-access/single-node-note.mdx!)
+<DocsPagesIncludesDatabaseAccessSingleNodeNote />
 
 ## Step 1/6. Set up the Teleport Database Service
 
-(!docs/pages/includes/tctl-token.mdx serviceName="Database" tokenType="db" tokenFile="/tmp/token"!)
+<DocsPagesIncludesTctlToken serviceName="Database" tokenType="db" tokenFile="/tmp/token" />
 
 Install and configure Teleport where you will run the Teleport Database Service:
 
 <Tabs>
 <TabItem label="Linux Server">
 
-(!docs/pages/includes/install-linux.mdx!)
+<DocsPagesIncludesInstallLinux />
 
-(!docs/pages/includes/database-access/db-configure-start.mdx dbName="example-redis" dbProtocol="redis" databaseAddress="rediss://redis.example.com:6379?mode=cluster" !)
+<DocsPagesIncludesDatabaseAccessDbConfigureStart dbName="example-redis" dbProtocol="redis" databaseAddress="rediss://redis.example.com:6379?mode=cluster" />
 
 </TabItem>
 <TabItem label="Kubernetes Cluster">
   Teleport provides Helm charts for installing the Teleport Database Service in Kubernetes Clusters.
 
-  (!docs/pages/includes/kubernetes-access/helm/helm-repo-add.mdx!)
+  <DocsPagesIncludesKubernetesAccessHelmHelmRepoAdd />
 
-  (!docs/pages/includes/database-access/db-helm-install.mdx dbName="example-redis" dbProtocol="redis" databaseAddress="rediss://redis.example.com:6379?mode=cluster" !)
+  <DocsPagesIncludesDatabaseAccessDbHelmInstall dbName="example-redis" dbProtocol="redis" databaseAddress="rediss://redis.example.com:6379?mode=cluster" />
 </TabItem>
 </Tabs>
 
-(!docs/pages/includes/database-access/multiple-instances-tip.mdx !)
+<DocsPagesIncludesDatabaseAccessMultipleInstancesTip />
 
 ## Step 2/6. Create a Teleport user
 
-(!docs/pages/includes/database-access/create-user.mdx!)
+<DocsPagesIncludesDatabaseAccessCreateUser />
 
 ## Step 3/6. Create Redis users
 
-(!docs/pages/includes/database-access/redis-create-users.mdx!)
+<DocsPagesIncludesDatabaseAccessRedisCreateUsers />
 
 ## Step 4/6. Set up mutual TLS
 
@@ -123,7 +143,7 @@ from clients that do not present a certificate.
 See [TLS Support](https://redis.io/docs/latest/operate/oss_and_stack/management/security/encryption/)
 in the Redis documentation for more details.
 
-(!docs/pages/includes/database-access/custom-db-ca.mdx db="Redis Cluster" protocol="redis" scheme="rediss://" port="6379" query="?mode=cluster"!)
+<DocsPagesIncludesDatabaseAccessCustomDbCa db="Redis Cluster" protocol="redis" scheme="rediss://" port="6379" query="?mode=cluster" />
 ## Step 5/6. Create a cluster
 
 To create the cluster after mutual TLS is enabled, you will need to use a 
@@ -157,7 +177,7 @@ databases:
     uri: "rediss://redis.example.com:6379?mode=cluster"
 ```
 
-(!docs/pages/includes/database-access/redis-connect.mdx!)
+<DocsPagesIncludesDatabaseAccessRedisConnect />
 
 ### Supported Redis Cluster commands
 
@@ -221,5 +241,5 @@ communicating with Redis Cluster:
 
 ## Next steps
 
-(!docs/pages/includes/database-access/guides-next-steps.mdx!)
+<DocsPagesIncludesDatabaseAccessGuidesNextSteps />
 

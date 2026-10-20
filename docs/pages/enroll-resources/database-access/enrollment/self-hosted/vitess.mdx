@@ -8,12 +8,28 @@ tags:
  - infrastructure-identity
 page_type: how-to
 ---
+import DocsPagesIncludesKubernetesAccessHelmHelmRepoAdd from "@version/docs/pages/includes/kubernetes-access/helm/helm-repo-add.mdx";
+import DocsPagesIncludesDatabaseAccessMultipleInstancesTip from "@version/docs/pages/includes/database-access/multiple-instances-tip.mdx";
 
-(!docs/pages/includes/database-access/self-hosted-introduction.mdx dbType="Vitess (MySQL)"!)
+
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
+import DocsPagesIncludesTctl from "@version/docs/pages/includes/tctl.mdx";
+import DocsPagesIncludesDatabaseAccessTctlAuthSign3Files from "@version/docs/pages/includes/database-access/tctl-auth-sign-3-files.mdx";
+import DocsPagesIncludesDatabaseAccessCreateUser from "@version/docs/pages/includes/database-access/create-user.mdx";
+import DocsPagesIncludesInstallLinux from "@version/docs/pages/includes/install-linux.mdx";
+import DocsPagesIncludesDatabaseAccessSelfHostedConfigStart from "@version/docs/pages/includes/database-access/self-hosted-config-start.mdx";
+import DocsPagesIncludesDatabaseAccessSelfHostedDbHelmInstall from "@version/docs/pages/includes/database-access/self-hosted-db-helm-install.mdx";
+import DocsPagesIncludesDatabaseAccessProxyDbTunnel from "@version/docs/pages/includes/database-access/proxy-db-tunnel.mdx";
+
+import DocsPagesIncludesDatabaseAccessSelfHostedIntroduction from "@version/docs/pages/includes/database-access/self-hosted-introduction.mdx";
+import DocsPagesIncludesDatabaseAccessHowItWorksMtls from "@version/docs/pages/includes/database-access/how-it-works/mtls.mdx";
+import DocsPagesIncludesTctlToken from "@version/docs/pages/includes/tctl-token.mdx";
+
+<DocsPagesIncludesDatabaseAccessSelfHostedIntroduction dbType="Vitess (MySQL)" />
 
 ## How it works
 
-(!docs/pages/includes/database-access/how-it-works/mtls.mdx db="Vitess"!)
+<DocsPagesIncludesDatabaseAccessHowItWorksMtls db="Vitess" />
 
 <Tabs>
 <TabItem scope={["oss", "enterprise"]} label="Self-Hosted">
@@ -32,22 +48,22 @@ page_type: how-to
 
 ## Prerequisites
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx!)
+<DocsPagesIncludesEditionPrereqsTabs />
 
 - A self-hosted Vitess instance.
 - A host, e.g., an Amazon EC2 instance, where you will run the Teleport Database
   Service.
 - Optional: a certificate authority that issues certificates for
   your self-hosted database.
-- (!docs/pages/includes/tctl.mdx!)
+- <DocsPagesIncludesTctl />
 
 ## Step 1/4. Create the Teleport Database Token
 
-(!docs/pages/includes/tctl-token.mdx serviceName="Database" tokenType="db" tokenFile="/tmp/token"!)
+<DocsPagesIncludesTctlToken serviceName="Database" tokenType="db" tokenFile="/tmp/token" />
 
 ## Step 2/4. Create a certificate/key pair
 
-(!docs/pages/includes/database-access/tctl-auth-sign-3-files.mdx dbname="Vitess" !)
+<DocsPagesIncludesDatabaseAccessTctlAuthSign3Files dbname="Vitess" />
 
 ## Step 3/4. Configure Vitess
 
@@ -132,7 +148,7 @@ For more details about `vtgate` and Vitess configuration, please see the
 
 ### Create a Teleport user
 
-(!docs/pages/includes/database-access/create-user.mdx!)
+<DocsPagesIncludesDatabaseAccessCreateUser />
 
 ### Configure and Start the Database Service
 
@@ -141,22 +157,22 @@ Install and configure Teleport where you will run the Teleport Database Service:
 <Tabs>
 <TabItem label="Linux Server">
 
-(!docs/pages/includes/install-linux.mdx!)
+<DocsPagesIncludesInstallLinux />
 
-(!docs/pages/includes/database-access/self-hosted-config-start.mdx dbName="example-vitess" dbProtocol="mysql" databaseAddress="db.example.com:3306" !)
+<DocsPagesIncludesDatabaseAccessSelfHostedConfigStart dbName="example-vitess" dbProtocol="mysql" databaseAddress="db.example.com:3306" />
 
 </TabItem>
 <TabItem label="Kubernetes Cluster">
   Teleport provides Helm charts for installing the Teleport Database Service in Kubernetes Clusters.
 
-(!docs/pages/includes/kubernetes-access/helm/helm-repo-add.mdx!)
+<DocsPagesIncludesKubernetesAccessHelmHelmRepoAdd />
 
-(!docs/pages/includes/database-access/self-hosted-db-helm-install.mdx dbName="example-vitess" dbProtocol="mysql" databaseAddress="db.example.com:3306" !)
+<DocsPagesIncludesDatabaseAccessSelfHostedDbHelmInstall dbName="example-vitess" dbProtocol="mysql" databaseAddress="db.example.com:3306" />
 
 </TabItem>
 </Tabs>
 
-(!docs/pages/includes/database-access/multiple-instances-tip.mdx !)
+<DocsPagesIncludesDatabaseAccessMultipleInstancesTip />
 
 ## Step 4/4. Connect
 
@@ -211,7 +227,7 @@ $ tsh db connect --db-user=root --db-name=mysql example-vitess
   MySQL and MariaDB.
 </Admonition>
 
-(!docs/pages/includes/database-access/proxy-db-tunnel.mdx db="example-vitess" dbArgs="--db-user=root --db-name=mysql"!)
+<DocsPagesIncludesDatabaseAccessProxyDbTunnel db="example-vitess" dbArgs="--db-user=root --db-name=mysql" />
 
 To log out of the database and remove credentials:
 

@@ -9,6 +9,14 @@ tags:
  - google-cloud
 page_type: how-to
 ---
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
+import DocsPagesIncludesTctl from "@version/docs/pages/includes/tctl.mdx";
+import DocsPagesIncludesApplicationAccessAppServiceJoinToken from "@version/docs/pages/includes/application-access/app-service-join-token.mdx";
+import DocsPagesIncludesInstallLinux from "@version/docs/pages/includes/install-linux.mdx";
+import DocsPagesIncludesStartTeleport from "@version/docs/pages/includes/start-teleport.mdx";
+import DocsPagesIncludesCreateRoleUsingWeb from "@version/docs/pages/includes/create-role-using-web.mdx";
+import DocsPagesIncludesAddRoleToUser from "@version/docs/pages/includes/add-role-to-user.mdx";
+
 
 You can use Teleport to manage access to CLI tools that interact with Google
 Cloud's APIs. This lets you control access to your infrastructure's management
@@ -32,7 +40,7 @@ accounts.
 
 ## Prerequisites
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx!)
+<DocsPagesIncludesEditionPrereqsTabs />
 
 - A Google Cloud account with permissions to create IAM roles and service
   accounts, as well as create IAM role bindings for service accounts and
@@ -65,7 +73,7 @@ guide.
 
 </Admonition>
 
-- (!docs/pages/includes/tctl.mdx!)
+- <DocsPagesIncludesTctl />
 
 ## Step 1/4. Configure Google Cloud
 
@@ -238,14 +246,14 @@ $ gcloud compute instances start <Var name="vm-name" /> --zone <Var name="google
 </TabItem>
 </Tabs>
 
-(!docs/pages/includes/application-access/app-service-join-token.mdx!)
+<DocsPagesIncludesApplicationAccessAppServiceJoinToken />
 
 ### Install the Teleport Application Service
 
 Follow the instructions below on the host where you will install the Teleport
 Application Service.
 
-(!docs/pages/includes/install-linux.mdx!)
+<DocsPagesIncludesInstallLinux />
 
 ### Configure the Teleport Application Service
 
@@ -290,7 +298,7 @@ On the host where you will run the Teleport Application Service, execute the
 following command, depending on whether you installed Teleport using a package
 manager or via a TAR archive:
 
-(!docs/pages/includes/start-teleport.mdx service="the Teleport Application Service"!)
+<DocsPagesIncludesStartTeleport service="the Teleport Application Service" />
 
 ## Step 3/4. Enable your user to access Google Cloud CLIs
 
@@ -365,7 +373,7 @@ Create the role:
 $ tctl create -f google-cloud-cli-access.yaml
 ```
 
-(!docs/pages/includes/create-role-using-web.mdx!)
+<DocsPagesIncludesCreateRoleUsingWeb />
 
 </TabItem>
 <TabItem label="SAML/OIDC Connectors">
@@ -412,7 +420,7 @@ Create the role:
 $ tctl create -f google-cloud-cli-access.yaml
 ```
 
-(!docs/pages/includes/create-role-using-web.mdx!)
+<DocsPagesIncludesCreateRoleUsingWeb />
 
 </TabItem>
 </Tabs>
@@ -489,7 +497,7 @@ evaluating a user's roles.
 
 </details>
 
-(!docs/pages/includes/add-role-to-user.mdx role="google-cloud-cli-access"!)
+<DocsPagesIncludesAddRoleToUser role="google-cloud-cli-access" />
 
 ## Step 4/4. Use Google Cloud CLIs with Teleport
 

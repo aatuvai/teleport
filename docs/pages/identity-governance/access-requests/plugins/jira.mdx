@@ -9,6 +9,28 @@ tags:
  - privileged-access
 enterprise: Identity Governance
 ---
+import DocsPagesIncludesMachineIdPluginPrerequisites from "@version/docs/pages/includes/machine-id/plugin-prerequisites.mdx";
+import DocsPagesIncludesPluginsRefreshPluginIdentity from "@version/docs/pages/includes/plugins/refresh-plugin-identity.mdx";
+import DocsPagesIncludesPluginsAccessPluginTroubleshooting from "@version/docs/pages/includes/plugins/access-plugin-troubleshooting.mdx";
+
+
+import ExamplesResourcesPluginsTeleportJiraCloud from "!!raw-loader!@version/examples/resources/plugins/teleport-jira-cloud.toml";
+import ExamplesResourcesPluginsTeleportJiraHelmCloud from "!!raw-loader!@version/examples/resources/plugins/teleport-jira-helm-cloud.yaml";
+import ExamplesSystemdPluginsTeleportJira from "!!raw-loader!@version/examples/systemd/plugins/teleport-jira.service";
+
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
+import DocsPagesIncludesTctl from "@version/docs/pages/includes/tctl.mdx";
+import DocsPagesIncludesCreateRoleUsingWeb from "@version/docs/pages/includes/create-role-using-web.mdx";
+import DocsPagesIncludesPluginsInstallAccessRequest from "@version/docs/pages/includes/plugins/install-access-request.mdx";
+import DocsPagesIncludesPluginsConfigTomlTeleport from "@version/docs/pages/includes/plugins/config-toml-teleport.mdx";
+import DocsPagesIncludesPluginsCreateRequest from "@version/docs/pages/includes/plugins/create-request.mdx";
+
+import DocsPagesIncludesPluginsEditorRequestRbac from "@version/docs/pages/includes/plugins/editor-request-rbac.mdx";
+import DocsPagesIncludesPluginsRbacUpdate from "@version/docs/pages/includes/plugins/rbac-update.mdx";
+
+import DocsPagesIncludesPluginsEnroll from "@version/docs/pages/includes/plugins/enroll.mdx";
+import DocsPagesIncludesPluginsTbotIdentity from "@version/docs/pages/includes/plugins/tbot-identity.mdx";
+import DocsPagesIncludesPluginsIdentityExport from "@version/docs/pages/includes/plugins/identity-export.mdx";
 
 This guide explains how to set up the Teleport Access Request plugin for Jira.
 Teleport's Jira integration allows you to manage Access Requests as
@@ -17,7 +39,7 @@ Jira issues.
 <details>
 <summary>This integration is hosted on Teleport Cloud</summary>
 
-(!docs/pages/includes/plugins/enroll.mdx name="the Jira integration"!)
+<DocsPagesIncludesPluginsEnroll name="the Jira integration" />
 
 </details>
 
@@ -31,9 +53,9 @@ webhook run by the plugin, which modifies the Access Request in Teleport.
 
 ## Prerequisites
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx edition="Teleport Enterprise"!)
+<DocsPagesIncludesEditionPrereqsTabs edition="Teleport Enterprise" />
 
-(!docs/pages/includes/machine-id/plugin-prerequisites.mdx!)
+<DocsPagesIncludesMachineIdPluginPrerequisites />
 
 - A Jira account with permissions to create applications and webhooks.
 
@@ -89,14 +111,14 @@ webhook run by the plugin, which modifies the Access Request in Teleport.
     secret that the plugin can read. This guide assumes that the name of the
     secret is `teleport-plugin-jira-tls`.
 
-- (!docs/pages/includes/tctl.mdx!)
+- <DocsPagesIncludesTctl />
 
 ## Step 1/7. Define RBAC resources
 
 Before you set up the Jira plugin, you need to enable Role Access Requests in
 your Teleport cluster.
 
-(!docs/pages/includes/plugins/editor-request-rbac.mdx!)
+<DocsPagesIncludesPluginsEditorRequestRbac />
 
 ## Step 2/7. Define a Teleport Jira plugin user
 
@@ -134,7 +156,7 @@ Create the role:
 $ tctl create -f access-plugin-update.yaml
 ```
 
-(!docs/pages/includes/create-role-using-web.mdx!)
+<DocsPagesIncludesCreateRoleUsingWeb />
 
 If you haven't set up a Machine ID bot yet, refer to the [deployment
 guide](../../../machine-workload-identity/deployment/deployment.mdx) to run the
@@ -150,7 +172,7 @@ $ tctl bots update my-bot --add-roles access-plugin-update
 
 </TabItem>
 <TabItem label="Long-lived identity files">
-(!docs/pages/includes/plugins/rbac-update.mdx!)
+<DocsPagesIncludesPluginsRbacUpdate />
 </TabItem>
 </Tabs>
 
@@ -163,10 +185,10 @@ longer-lived identity files with `tctl`:
 
 <Tabs>
 <TabItem label="Machine & Workload Identity">
-(!docs/pages/includes/plugins/tbot-identity.mdx secret="teleport-plugin-jira-identity"!)
+<DocsPagesIncludesPluginsTbotIdentity secret="teleport-plugin-jira-identity" />
 </TabItem>
 <TabItem label="Long-lived identity files">
-(!docs/pages/includes/plugins/identity-export.mdx plugin="jira" user="access-plugin-update" secret="teleport-plugin-jira-identity"!)
+<DocsPagesIncludesPluginsIdentityExport plugin="jira" user="access-plugin-update" secret="teleport-plugin-jira-identity" />
 </TabItem>
 </Tabs>
 
@@ -180,7 +202,7 @@ The Teleport Jira plugin must run on a host or Kubernetes cluster that can
 access both Jira and your Teleport Proxy Service (or Teleport Enterprise Cloud
 tenant).
 
-(!docs/pages/includes/plugins/install-access-request.mdx name="jira"!)
+<DocsPagesIncludesPluginsInstallAccessRequest name="jira" />
 
 ## Step 5/7. Configure the Jira Access Request plugin
 
@@ -202,18 +224,22 @@ $ teleport-jira configure | sudo tee /etc/teleport-jira.toml > /dev/null
 
 This should result in a configuration file like the one below:
 
-```toml
-(!examples/resources/plugins/teleport-jira-cloud.toml!)
-```
+<CodeBlock language="toml">
+
+  {ExamplesResourcesPluginsTeleportJiraCloud}
+
+</CodeBlock>
 </TabItem>
 <TabItem label="Helm chart">
 The Helm chart for the Jira plugin uses a YAML values file to configure the
 plugin. On your local workstation, create a file called
 `teleport-jira-helm.yaml` based on the following example:
 
-```yaml
-(!examples/resources/plugins/teleport-jira-helm-cloud.yaml!)
-```
+<CodeBlock language="yaml">
+
+  {ExamplesResourcesPluginsTeleportJiraHelmCloud}
+
+</CodeBlock>
 
 </TabItem>
 </Tabs>
@@ -227,9 +253,9 @@ following fields:
 
 The Jira plugin uses this section to connect to your Teleport cluster:
 
-(!docs/pages/includes/plugins/config-toml-teleport.mdx!)
+<DocsPagesIncludesPluginsConfigTomlTeleport />
 
-(!docs/pages/includes/plugins/refresh-plugin-identity.mdx!)
+<DocsPagesIncludesPluginsRefreshPluginIdentity />
 
 <Tabs>
 <TabItem label="Executable">
@@ -388,7 +414,7 @@ $ curl -v https://<Var name="example.com" />:443/status 2>&1 | grep "^< HTTP/2"
 Sign in to your cluster as the `myuser` user you created earlier and create an
 Access Request:
 
-(!docs/pages/includes/plugins/create-request.mdx!)
+<DocsPagesIncludesPluginsCreateRequest />
 
 When you create the request, you will see a new task in the "Pending" column of the Access Requests board:
 
@@ -424,9 +450,11 @@ In production, we recommend starting the Teleport plugin daemon via an init
 system like systemd. Here's the recommended Teleport plugin service unit file
 for systemd:
 
-```txt
-(!examples/systemd/plugins/teleport-jira.service!)
-```
+<CodeBlock language="txt">
+
+  {ExamplesSystemdPluginsTeleportJira}
+
+</CodeBlock>
 
 Save this as `teleport-jira.service` or another [unit file load
 path](https://www.freedesktop.org/software/systemd/man/systemd.unit.html#Unit%20File%20Load%20Path)
@@ -439,7 +467,7 @@ $ sudo systemctl start teleport-jira
 
 ## Troubleshooting
 
-(!docs/pages/includes/plugins/access-plugin-troubleshooting.mdx!)
+<DocsPagesIncludesPluginsAccessPluginTroubleshooting />
 
 ## Next steps
 

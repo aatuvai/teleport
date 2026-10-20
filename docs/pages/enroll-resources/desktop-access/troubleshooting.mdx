@@ -8,6 +8,8 @@ tags:
  - infrastructure-identity
 page_type: troubleshooting
 ---
+import DocsPagesIncludesDesktopAccessWindowsCaNote from "@version/docs/pages/includes/desktop-access/windows-ca-note.mdx";
+
 
 This page describes common issues you may run into when enrolling remote
 desktops with Teleport and how to work around or resolve them.
@@ -217,7 +219,7 @@ If that doesn't help, log into the target host directly, open PowerShell and
 run `gpupdate.exe /force`. This forces a Group Policy update and should pick up
 the new CA.
 
-(!docs/pages/includes/desktop-access/windows-ca-note.mdx!)
+<DocsPagesIncludesDesktopAccessWindowsCaNote />
 
 ## New session "hangs"
 

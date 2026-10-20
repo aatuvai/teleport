@@ -9,12 +9,28 @@ tags:
  - aws
 page_type: how-to
 ---
+import DocsPagesIncludesDatabaseAccessAlternativeMethodsJoin from "@version/docs/pages/includes/database-access/alternative-methods-join.mdx";
+import DocsPagesIncludesDatabaseAccessGuidesNextSteps from "@version/docs/pages/includes/database-access/guides-next-steps.mdx";
 
-(!docs/pages/includes/database-access/db-introduction.mdx dbType="Amazon DocumentDB" dbConfigure="with IAM authentication"!)
+
+import DocsPagesIncludesEditionPrereqsTabs from "@version/docs/pages/includes/edition-prereqs-tabs.mdx";
+import DocsPagesIncludesTctl from "@version/docs/pages/includes/tctl.mdx";
+import DocsPagesIncludesDatabaseAccessCreateUser from "@version/docs/pages/includes/database-access/create-user.mdx";
+import DocsPagesIncludesInstallLinux from "@version/docs/pages/includes/install-linux.mdx";
+import DocsPagesIncludesStartTeleport from "@version/docs/pages/includes/start-teleport.mdx";
+import DocsPagesIncludesDatabaseAccessProxyDbTunnel from "@version/docs/pages/includes/database-access/proxy-db-tunnel.mdx";
+import DocsPagesIncludesDatabaseAccessAwsTroubleshooting from "@version/docs/pages/includes/database-access/aws-troubleshooting.mdx";
+
+import DocsPagesIncludesDatabaseAccessDbIntroduction from "@version/docs/pages/includes/database-access/db-introduction.mdx";
+import DocsPagesIncludesDatabaseAccessHowItWorksIam from "@version/docs/pages/includes/database-access/how-it-works/iam.mdx";
+import DocsPagesIncludesDatabaseAccessAutoDiscoveryTip from "@version/docs/pages/includes/database-access/auto-discovery-tip.mdx";
+import DocsPagesIncludesTctlToken from "@version/docs/pages/includes/tctl-token.mdx";
+
+<DocsPagesIncludesDatabaseAccessDbIntroduction dbType="Amazon DocumentDB" dbConfigure="with IAM authentication" />
 
 ## How it works
 
-(!docs/pages/includes/database-access/how-it-works/iam.mdx db="Amazon DocumentDB" cloud="AWS"!)
+<DocsPagesIncludesDatabaseAccessHowItWorksIam db="Amazon DocumentDB" cloud="AWS" />
 
 <Tabs>
 <TabItem label="Self-Hosted">
@@ -26,11 +42,11 @@ page_type: how-to
 
 </Tabs>
 
-(!docs/pages/includes/database-access/auto-discovery-tip.mdx dbType="Amazon DocumentDB cluster" providerType="AWS"!)
+<DocsPagesIncludesDatabaseAccessAutoDiscoveryTip dbType="Amazon DocumentDB cluster" providerType="AWS" />
 
 ## Prerequisites
 
-(!docs/pages/includes/edition-prereqs-tabs.mdx!)
+<DocsPagesIncludesEditionPrereqsTabs />
 
 - AWS account with a DocumentDB cluster.
 
@@ -48,19 +64,19 @@ page_type: how-to
 - A host, e.g., an EC2 instance, where you will run the Teleport Database
   Service.
 
-- (!docs/pages/includes/tctl.mdx!)
+- <DocsPagesIncludesTctl />
 
 ## Step 1/6. Create a Teleport user
 
-(!docs/pages/includes/database-access/create-user.mdx!)
+<DocsPagesIncludesDatabaseAccessCreateUser />
 
 ## Step 2/6. Create a Database Service configuration
 
-(!docs/pages/includes/tctl-token.mdx serviceName="Database" tokenType="db" tokenFile="/tmp/token"!)
+<DocsPagesIncludesTctlToken serviceName="Database" tokenType="db" tokenFile="/tmp/token" />
 
-(!docs/pages/includes/database-access/alternative-methods-join.mdx!)
+<DocsPagesIncludesDatabaseAccessAlternativeMethodsJoin />
 
-(!docs/pages/includes/install-linux.mdx!)
+<DocsPagesIncludesInstallLinux />
 
 On the node that is running the Database Service, create a configuration file.
 Use your DocumentDB cluster endpoint and port as the URI, replacing 
@@ -137,7 +153,7 @@ click **Create Role** to complete the process.
 
 ## Step 4/6. Start the Database Service
 
-(!docs/pages/includes/start-teleport.mdx service="the Database Service"!)
+<DocsPagesIncludesStartTeleport service="the Database Service" />
 
 The Database Service will proxy the Amazon DocumentDB cluster with the URI you
 specified earlier. Keep in mind that AWS IAM changes may not propagate
@@ -213,7 +229,7 @@ Retrieve credentials for the database and connect to it as the `teleport-docdb-u
 $ tsh db connect --db-user=teleport-docdb-user --db-name=test my-docdb
 ```
 
-(!docs/pages/includes/database-access/proxy-db-tunnel.mdx db="my-docdb" dbArgs="--db-user=teleport-docdb-user --db-name=test"!)
+<DocsPagesIncludesDatabaseAccessProxyDbTunnel db="my-docdb" dbArgs="--db-user=teleport-docdb-user --db-name=test" />
 
 Log out of the database and remove credentials:
 
@@ -223,7 +239,7 @@ $ tsh db logout my-docdb
 
 ## Troubleshooting
 
-(!docs/pages/includes/database-access/aws-troubleshooting.mdx!)
+<DocsPagesIncludesDatabaseAccessAwsTroubleshooting />
 
 ### Unable to authenticate using mechanism "MONGODB-AWS" error
 
@@ -247,7 +263,7 @@ for more details.
 
 ## Next steps
 
-(!docs/pages/includes/database-access/guides-next-steps.mdx!)
+<DocsPagesIncludesDatabaseAccessGuidesNextSteps />
 
 - Learn more about [Authentication using IAM identity for
   DocumentDB](https://docs.aws.amazon.com/documentdb/latest/developerguide/iam-identity-auth.html)
