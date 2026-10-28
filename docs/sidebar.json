@@ -55,6 +55,11 @@
               "id": "get-started/agent-skills",
               "label": "Agent Skills",
               "customProps": { "tag": "new" }
+            },
+            {
+              "type": "doc",
+              "id": "get-started/production-checklist",
+              "label": "Production Checklist"
             }
           ]
         },
