@@ -1,7 +1,6 @@
 ---
 title: "Production Checklist"
 description: "description goes here"
-template: checklist
 tags:
   - get-started
   - platform-wide
@@ -14,60 +13,70 @@ A step-by-step checklist to guide you through Teleport production setup, with vi
 
 <Checklist id="production-checklist">
   <ChecklistStep
-    title="Setup"
+    title="Secure your new tenant"
     description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore."
     videoId="fjP5c3Y77BY"
   >
     <ChecklistItem timestamp={0}>Secure your tenant's initial admin user by enrolling strong MFA (WebAuthn recommended), storing its [recovery codes](../cloud-faq.mdx#how-do-i-set-up-recovery-codes-for-my-account-so-i-dont-lose-access) securely offline, and treating it as an emergency-only account once SSO is configured</ChecklistItem>
-    <ChecklistItem timestamp={45}>Update required [security contacts](../cloud-faq.mdx#how-do-i-update-my-security-and-business-contacts)</ChecklistItem>
-    <ChecklistItem timestamp={90}>Subscribe to Teleport Cloud [status alerts](../cloud-faq.mdx#is-there-a-status-page-available)</ChecklistItem>
+    <ChecklistItem timestamp={45}>Update required [security contacts](https://support.goteleport.com/hc/en-us/articles/41967052186131-Update-Your-Security-Contacts)</ChecklistItem>
+    <ChecklistItem timestamp={90}>Subscribe to Teleport Cloud [status alerts](https://status.teleport.sh/)</ChecklistItem>
     <ChecklistItem timestamp={135}>Establish a [break-glass access plan](../zero-trust-access/management/breakglass-access.mdx)</ChecklistItem>
     <ChecklistItem timestamp={180}>Review and configure [Teleport-managed agent updates](../upgrading/agent-managed-updates/agent-managed-updates.mdx)</ChecklistItem>
   </ChecklistStep>
 
   <ChecklistStep
-    title="Single Sign-On"
+    title="Integrate with your SSO provider"
     description="Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
     videoId="fjP5c3Y77BY"
   >
-    <ChecklistItem timestamp={0}>Lorem ipsum dolor sit amet, consectetur adipiscing elit</ChecklistItem>
-    <ChecklistItem timestamp={60}>Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</ChecklistItem>
+    <ChecklistItem timestamp={0}>Configure [SSO integration](../zero-trust-access/sso/sso.mdx) with your identity provider</ChecklistItem>
+    <ChecklistItem timestamp={60}>Set SSO as the default login method and enforce phishing-resistant MFA, both configurable in [cluster auth preference](../reference/access-controls/authentication.mdx)</ChecklistItem>
+    <ChecklistItem>Review SSO [role mapping](../zero-trust-access/rbac-get-started/role-templates.mdx) versus [Access Lists](../identity-governance/access-lists/access-lists.mdx) for managing permissions</ChecklistItem>
+    <ChecklistItem>Confirm your initial local admin user still functions as a non-SSO fallback, then verify SSO-based administrative access works and discontinue routine use of local administrator accounts for everyday tasks</ChecklistItem>
   </ChecklistStep>
 
   <ChecklistStep
-    title="Infrastructure as Code"
+    title="Manage Teleport configuration as code"
     description="Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur."
     videoId="fjP5c3Y77BY"
   >
-    <ChecklistItem timestamp={0}>Lorem ipsum dolor sit amet, consectetur adipiscing elit</ChecklistItem>
-    <ChecklistItem timestamp={60}>Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</ChecklistItem>
+    <ChecklistItem timestamp={0}>Review [Teleport IaC options](../configuration/configuration.mdx) (Terraform, Kubernetes Operator, `tctl`)</ChecklistItem>
+    <ChecklistItem timestamp={60}>Manage Teleport configuration changes through review and CI: for Terraform, use plan/apply in CI (e.g., [Spacelift](../configuration/terraform-provider/spacelift.mdx), [Terraform Cloud](../configuration/terraform-provider/terraform-cloud.mdx)), which Teleport documents explicitly as a GitOps-style workflow with PR review and an audit trail; for the [Kubernetes Operator](../configuration/teleport-operator/teleport-operator.mdx), apply CRs through a reviewed, version-controlled pipeline rather than ad hoc `kubectl apply`.</ChecklistItem>
+    <ChecklistItem>Secure IaC credentials and sensitive configuration data: prefer [delegated join methods](../configuration/terraform-provider/ci-or-cloud.mdx) over [long-lived credentials](../configuration/terraform-provider/long-lived-credentials.mdx) for Terraform; confirm [Kubernetes-native joining and RBAC scope](../configuration/teleport-operator/teleport-operator-standalone.mdx) for the Operator; and use a non-local, encrypted Terraform backend so state persists across CI/CD runs and doesn't expose sensitive values; prefer [ephemeral resources](../reference/machine-workload-identity/terraform-provider-mwi/terraform-provider-mwi.mdx) for MWI where supported</ChecklistItem>
   </ChecklistStep>
 
   <ChecklistStep
-    title="Enrolling Resources at Scale"
+    title="Enroll Resources at Scale"
     description="Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
     videoId="fjP5c3Y77BY"
   >
-    <ChecklistItem timestamp={0}>Lorem ipsum dolor sit amet, consectetur adipiscing elit</ChecklistItem>
-    <ChecklistItem timestamp={60}>Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</ChecklistItem>
+    <ChecklistItem timestamp={0}>Review [manual resource enrollment](../enroll-resources/enroll-resources.mdx) options and guided enrollment options in the UI at `web/discover`</ChecklistItem>
+    <ChecklistItem timestamp={60}>Define a [resource labeling scheme](../zero-trust-access/rbac-get-started/labels.mdx)</ChecklistItem>
+    <ChecklistItem>Evaluate and configure [automatic Discovery](../enroll-resources/auto-discovery/auto-discovery.mdx) where supported. If you run more than one Discovery Service instance (e.g., one per AWS account or region), give each a unique `discovery_group` name to avoid instances colliding and deleting each other's discovered resources</ChecklistItem>
+    <ChecklistItem>Use [delegated join methods](../reference/deployment/join-methods.mdx) instead of static tokens where supported</ChecklistItem>
+    <ChecklistItem>Review [high availability](../installation/agents/high-availability.mdx) options for Teleport agents</ChecklistItem>
   </ChecklistStep>
 
   <ChecklistStep
-    title="Access"
+    title="Grant users access with Access Lists"
     description="Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium."
     videoId="fjP5c3Y77BY"
   >
-    <ChecklistItem timestamp={0}>Lorem ipsum dolor sit amet, consectetur adipiscing elit</ChecklistItem>
-    <ChecklistItem timestamp={60}>Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</ChecklistItem>
+    <ChecklistItem timestamp={0}>Determine standing versus [just-in-time](../identity-governance/access-lists/jit-access-list.mdx) access requirements and create [Standing](../identity-governance/access-lists/standing-access-list.mdx) or JIT Access Lists accordingly (Enterprise/Identity Governance feature)</ChecklistItem>
+    <ChecklistItem timestamp={60}>Configure [Access Lists](../identity-governance/access-lists/access-lists.mdx) with least-privilege resource access</ChecklistItem>
+    <ChecklistItem>Define an Access List management strategy covering ownership, reviews, and IdP synchronization ([Okta](../identity-governance/integrations/okta/app-and-group-sync.mdx), [Entra ID](../identity-governance/integrations/entra-id/advanced-options.mdx#group-filters))</ChecklistItem>
+    <ChecklistItem>Review additional access security controls, including per-session MFA</ChecklistItem>
   </ChecklistStep>
 
   <ChecklistStep
-    title="Auditing and Identity Security"
-    description="Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores."
+    title="Audit activity and monitor risk with Identity Security"
+    description="Record, export, and analyze all access activity"
     videoId="fjP5c3Y77BY"
   >
-    <ChecklistItem timestamp={0}>Lorem ipsum dolor sit amet, consectetur adipiscing elit</ChecklistItem>
-    <ChecklistItem timestamp={60}>Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</ChecklistItem>
+    <ChecklistItem timestamp={0}>Review [session recording and storage options](../reference/deployment/monitoring/audit.mdx#recorded-sessions) and enable [Enhanced Session Recording](../enroll-resources/server-access/guides/bpf-session-recording.mdx) where applicable</ChecklistItem>
+    <ChecklistItem timestamp={60}>Configure [audit event export](../zero-trust-access/export-audit-events/export-audit-events.mdx) to your SIEM, and configure [External Audit Storage](../zero-trust-access/management/external-audit-storage.mdx) if you need extended retention or to store audit logs/session recordings in your own AWS account</ChecklistItem>
+    <ChecklistItem>Review [Teleport Identity Security](../identity-security/identity-security.mdx) capabilities (Enterprise add-on, replacing [Access Monitoring](../identity-governance/access-monitoring.mdx)) and configure integrations with your IdP and cloud providers where applicable ([Okta](../identity-governance/integrations/okta/okta.mdx), [Entra ID](../identity-security/integrations/entra-id.mdx), [AWS](../identity-security/integrations/aws-sync.mdx), [GitHub](../identity-security/integrations/github.mdx))</ChecklistItem>
+    <ChecklistItem>Review [standing privileges](../identity-security/usage/dashboard.mdx), [security detections](../identity-security/usage/alerts.mdx), and [Crown Jewels](../identity-security/usage/crown-jewels.mdx)</ChecklistItem>
   </ChecklistStep>
 
   <ChecklistStep
@@ -75,26 +84,32 @@ A step-by-step checklist to guide you through Teleport production setup, with vi
     description="Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit."
     videoId="fjP5c3Y77BY"
   >
-    <ChecklistItem timestamp={0}>Lorem ipsum dolor sit amet, consectetur adipiscing elit</ChecklistItem>
-    <ChecklistItem timestamp={60}>Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</ChecklistItem>
+    <ChecklistItem timestamp={0}>Review where Machine & Workload Identity [applies across your environment](../machine-workload-identity/use-cases/use-cases.mdx), CI/CD, IaC, service-to-service communication, and other machine-to-machine access, in order to scope your rollout beyond this checklist's CI/CD focus</ChecklistItem>
+    <ChecklistItem timestamp={60}>Identify CI/CD pipelines using long-lived credentials</ChecklistItem>
+    <ChecklistItem>Configure [Machine & Workload Identity](../machine-workload-identity/machine-workload-identity.mdx) for applicable CI/CD pipelines (see the [access guides](../machine-workload-identity/access-guides/access-guides.mdx) for platform-specific setup, e.g., GitHub Actions, GitLab, Argo CD)</ChecklistItem>
+    <ChecklistItem>Decommission the long-lived credentials you replaced; migrating without removing the old path leaves a standing backdoor</ChecklistItem>
   </ChecklistStep>
 
   <ChecklistStep
-    title="Identity Governance"
+    title="Harden access with Identity Governance"
     description="Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur."
     videoId="fjP5c3Y77BY"
   >
-    <ChecklistItem timestamp={0}>Lorem ipsum dolor sit amet, consectetur adipiscing elit</ChecklistItem>
-    <ChecklistItem timestamp={60}>Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</ChecklistItem>
+    <ChecklistItem timestamp={0}>Review [Just-in-Time Access Requests](../identity-governance/access-requests/access-requests.mdx) and approval policies</ChecklistItem>
+    <ChecklistItem timestamp={60}>Configure [Access Request integrations](../identity-governance/access-requests/plugins/plugins.mdx) (Slack, Microsoft Teams, PagerDuty, ServiceNow, Jira, etc.) where applicable</ChecklistItem>
+    <ChecklistItem>Review and implement [Device Trust](../zero-trust-access/device-trust/device-trust.mdx) policies, including device management integrations (Intune, Jamf) where applicable</ChecklistItem>
+    <ChecklistItem>Establish procedures for [Session and Identity Locks](../identity-governance/locking.mdx)</ChecklistItem>
+    <ChecklistItem>Configure automated deprovisioning so access is revoked when users are deactivated in your IdP (e.g., [Okta SCIM](../identity-governance/integrations/okta/scim-integration.mdx)) where supported</ChecklistItem>
+    <ChecklistItem>Evaluate using [Teleport as a SAML identity provider](../identity-governance/idps/saml-guide.mdx) to centralize and govern access to other SaaS and internal applications</ChecklistItem>
   </ChecklistStep>
 
   <ChecklistStep
-    title="Secure and Automate AI Agent Workflows"
+    title="Secure AI Agent Workflows"
     description="At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti."
     videoId="fjP5c3Y77BY"
   >
-    <ChecklistItem timestamp={0}>Lorem ipsum dolor sit amet, consectetur adipiscing elit</ChecklistItem>
-    <ChecklistItem timestamp={60}>Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</ChecklistItem>
+    <ChecklistItem timestamp={0}>Review [Teleport Agent Skills](./agent-skills.mdx) for AI-assisted administration (session review, access reviews, discovery, detection triage, and more)</ChecklistItem>
+    <ChecklistItem timestamp={60}>If your organization runs AI agents against production infrastructure, evaluate [Teleport Beams](https://www.beams.run/) for isolated, secrets-free execution in ephemeral micro-VMs with a full audit trail</ChecklistItem>
   </ChecklistStep>
 
   <ChecklistStep
@@ -102,7 +117,10 @@ A step-by-step checklist to guide you through Teleport production setup, with vi
     description="Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime."
     videoId="fjP5c3Y77BY"
   >
-    <ChecklistItem timestamp={0}>Lorem ipsum dolor sit amet, consectetur adipiscing elit</ChecklistItem>
-    <ChecklistItem timestamp={60}>Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</ChecklistItem>
+    <ChecklistItem timestamp={0}>Validate connectivity, SSO, Access Lists, and applicable Machine & Workload Identity workflows</ChecklistItem>
+    <ChecklistItem timestamp={60}>Test break-glass and emergency recovery procedures</ChecklistItem>
+    <ChecklistItem>Conduct a pilot rollout with a small group of users, address identified issues, then expand to remaining teams</ChecklistItem>
+    <ChecklistItem>Phase out legacy access methods</ChecklistItem>
+    <ChecklistItem>Review [privileged account restrictions](../zero-trust-access/management/security/restrict-privileges.mdx), [blast-radius reduction](../zero-trust-access/management/security/reduce-blast-radius.mdx), and [access revocation procedures](../zero-trust-access/management/security/revoking-access.mdx), and apply additional hardening where appropriate</ChecklistItem>
   </ChecklistStep>
 </Checklist>
