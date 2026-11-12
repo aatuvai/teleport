@@ -7,6 +7,8 @@ tags:
 page_type: how-to
 ---
 
+import autoDiscoveryImg from "@version/docs/img/auto-discovery/auto-discovery-hero.jpg";
+
 ## Step-by-Step Production Setup Guide
 
 A step-by-step checklist to guide you through Teleport production setup, with video walkthroughs and timestamp links to help you quickly find the relevant steps.
@@ -14,7 +16,7 @@ A step-by-step checklist to guide you through Teleport production setup, with vi
 <Checklist id="production-checklist">
   <ChecklistStep
     title="Secure your new tenant"
-    videoId="fjP5c3Y77BY"
+    image={autoDiscoveryImg}
   >
     <ChecklistItem timestamp={0}>Secure your tenant's initial admin user by enrolling strong MFA (WebAuthn recommended), storing its [recovery codes](../cloud-faq.mdx#how-do-i-set-up-recovery-codes-for-my-account-so-i-dont-lose-access) securely offline, and treating it as an emergency-only account once SSO is configured</ChecklistItem>
     <ChecklistItem timestamp={45}>Update required [security contacts](https://support.goteleport.com/hc/en-us/articles/41967052186131-Update-Your-Security-Contacts)</ChecklistItem>
