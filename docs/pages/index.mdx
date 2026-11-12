@@ -309,20 +309,53 @@ import listBulletsSvg from "@site/src/components/Icon/teleport-svg/list-bullets.
 />
 
 <VersionHighlights
-  title="What's new in version 18"
+  title="What's New in Teleport 18.11"
+  layout="highlightFirst"
   highlights={[
     {
-      title: "MCP server access",
-      description: "Teleport now provides the ability to connect to stdio-based MCP servers with connection proxying and audit logging support.",
-      tag: "Zero Trust Access",
-      href: "./connect-your-client/model-context-protocol/mcp-access/",
+      title: "Beams",
+      description: "Run AI agent securely against production infrastructure with Teleport Beams. Provide every agent a delegated identity, controlled access to infrastructure and AI models, isolated execution environments. audit visibility without exposing secrets or static credentials.",
+      tag: ["Delegated identity", "Isolated execution environments", "Agent activity monitoring", "Controlled workflows"],
+      href: "./beams/",
+      videoId: "NNczZTIFido",
+      linkTitle: "Explore Teleport Beams"
     },
     {
-      title: "MCP for database access",
-      description: "Teleport now allows MCP clients such as Claude Desktop to execute queries in Teleport-protected databases.",
-      tag: "Zero Trust Access",
-      href: "./connect-your-client/model-context-protocol/database-access/",
+      title: "Linux desktop access",
+      description: "Securely connect to Linux desktops running X11 environments with passwordless access, session recording, and detailed audit logs.",
+      tag: "Desktop Access",
+      href: "./enroll-resources/server-access/getting-started/",
     },
+    {
+      title: "Export desktop session recordings",
+      description: "Export record desktop sessions as video files using the tsh recordings export command for playback, sharing and auditing.",
+      tag: "Desktop Access",
+      href: "./enroll-resources/desktop-access/reference/sessions/",
+    },
+    {
+      title: "Access configuration skill",
+      description: "AI agents to create and manage access lists with Teleport's new skill for configuring access to protected resources.",
+      tag: "AI & Agent Skills",
+      href: "./get-started/agent-skills/",
+    },
+    {
+      title: "Identity Security CLI and skills",
+      description: "Investigate identities, resources, and access relationships from the command line with new tctl commands and AI agent skills.",
+      tag: "Identity Security",
+      href: "./identity-security/cli/access-review/#show-access-activity",
+    },
+    {
+      title: "Review access requests in Slack",
+      description: "Review and approve or deny Teleport access requests directly in Slack without switching between applications.",
+      tag: "Access Requests",
+      href: "./identity-governance/access-requests/plugins/slack-review/",
+    },
+    {
+      title: "Generic OIDC join method",
+      description: "Enroll bots and AI agents using any standards-compliant OIDC provider, including providers without a dedicated Teleport join method.",
+      tag: "Machine Identity",
+      href: "./installation/agents/generic-oidc/",
+    }
   ]}
 />
 
