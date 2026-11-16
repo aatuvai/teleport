@@ -1,15 +1,36 @@
 ---
-title: Teleport Core Concepts
+title: Core Concepts
 description: Learn the key components that make up Teleport.
 tags:
  - conceptual
  - platform-wide
 page_type: conceptual
 ---
+import UseCasesList from '@site/src/components/Pages/Landing/UseCasesList';
+import CheckedSvg from "@site/src/components/Icon/svg/check-round.svg";
+import TeleportEditionsGrid from '@site/src/components/Pages/GetStarted/TeleportEditionsGrid';
+import TeleportEditionCard from '@site/src/components/Pages/GetStarted/TeleportEditionCard';
 
 This page describes the core concepts behind Teleport. You will see these terms
 often when setting up and managing Teleport, so you should get familiar with
 them before following other pages in the documentation.
+
+## Quick reference
+
+|Key Terms|Description|
+|---------|-----------|
+|[Cluster](./#teleport-cluster)|The Auth + Proxy Service, plus every service managing traffic to your infrastructure.|
+|[Auth Service](./#teleport-auth-service)|Manages users, roles, and certificate authorities; the only stateful component.|
+|[Proxy Service](./#teleport-proxy-service)|Secure internet-facing entry point; needs only port 443 open.|
+|[Services](./#teleport-services)|A Teleport service manages access to resources in your infrastructure.|
+|[Agent](./#agent)|A Teleport instance running one or more services next to your resources.|
+|[Machine & Workload Identity](./#machine--workload-identity)|Short-lived credentials for bots, services, and CI/CD — no static secrets.|
+|[`tbot`](./#tbot)|The lightweight agent binary that powers Machine & Workload Identity.|
+|[Role](./#role)|A config resource granting users specific privileges. Deny-by-default.|
+|[Teleport user](./#teleport-users)|A human, machine, or AI agent identity registered with a cluster.|
+|[Authentication connector](./#authentication-connector)|Config resource that wires up SSO (Okta, GitHub, etc.).|
+|[Trusted cluster](./#trusted-clusters)|A trust relationship letting a root cluster's users reach a leaf cluster.|
+|[`tsh`](../connect-your-client/teleport-clients/tsh/) [`tctl`](../configuration/using-tctl/)|End-user CLI vs. cluster-admin CLI.|
 
 ## Teleport cluster
 
@@ -25,106 +46,87 @@ host](./get-started/deploy-community.mdx).
 
 ### Teleport Auth Service
 
-The **Teleport Auth Service** manages **local users** and **configuration
-resources** within a **Teleport cluster**. It maintains certificate authorities
-that enable users and services to authenticate to your cluster. The Auth Service
-issues certificates to clients and maintains an audit log.
+Manages local users and configuration resources, and maintains the certificate authorities that let users and 
+services authenticate to your cluster. It's the only component that must be connected to a backend, and you 
+can run multiple instances for high availability. Fully managed for Teleport Cloud customers.
 
-The Auth Service is the only component of a cluster that has to be connected to
-a backend, which it uses to store cluster state and the certificate authorities'
-private keys. **Teleport services** are stateless and interact with the Auth
-Service via a gRPC API. You can run multiple Auth Service instances in a cluster for high availability.
-
-As part of the Teleport control plane, the Auth Service is a core system that manages identity, access, and trust within your cluster. 
-If you are a Teleport Cloud customer, this service is fully managed for you.
-
-Read our guides to how [authorization](reference/architecture/authorization.mdx) and
-[authentication](reference/architecture/authentication.mdx) work in Teleport.
+<ReadMore title="Guide">
+  [Authorization](reference/architecture/authorization.mdx)
+  [Authentication](reference/architecture/authentication.mdx)
+</ReadMore>
 
 ### Teleport Proxy Service
 
-The **Teleport Proxy Service** allows for secure access to resources in your
-infrastructure from the public internet without the need for a VPN.
+The Teleport Proxy Service allows for secure access to resources in your infrastructure from the public internet 
+without the need for a VPN.
 
-It establishes reverse tunnels to **Teleport Services**, enabling them to reach the
-**Teleport Auth Service** and allowing users to access those services — all without
-requiring open inbound ports. This means that, in the Proxy
-Service's minimal configuration, you can expose only port `443` to the internet
-and run the rest of your infrastructure in private networks.
+It establishes reverse tunnels to Teleport Services, enabling them to reach the Teleport Auth Service and allowing 
+users to access those services — all without requiring open inbound ports. This means that, in the Proxy Service's 
+minimal configuration, you can expose only port 443 to the internet and run the rest of your infrastructure in 
+private networks.
 
 As a key component of the Teleport control plane, the Proxy Service handles secure routing and session recording 
 for all incoming connections. For Teleport Cloud users, the Proxy Service is fully managed and hosted by Teleport.
 
 Read our guide to [how the Teleport Proxy Service works](reference/architecture/proxy.mdx).
 
+<ReadMore title="Guide">
+  [How the Proxy Service works](reference/architecture/proxy.mdx)
+</ReadMore>
+
 ## Teleport services
 
-A **Teleport service** manages access to resources in your infrastructure, such
-as Kubernetes clusters, Windows desktops, internal web applications, etc.
+A Teleport service manages access to resources in your infrastructure, such as Kubernetes clusters, Windows desktops, 
+internal web applications, etc. Each Teleport process can run one or more services. Different services enable different 
+Teleport functions. For example, the SSH Service provides SSH access to a resource, and the Database Service proxies 
+connections to databases. Read about all subcommands of teleport in our CLI Reference.
 
-Each Teleport process can run one or more services. Different services enable different Teleport functions. For example, the SSH Service provides SSH access
-to a resource, and the Database Service proxies connections to databases. Read about all subcommands of `teleport` in our [CLI Reference](./reference/cli/teleport.mdx). 
-
-### Teleport SSH Service
-
-An SSH server implementation that allows users to execute commands on remote
-machines while taking advantage of Teleport's built-in access controls,
-auditing, and session recording. The SSH service is enabled by default.
-
-Read more about the [Teleport SSH Service](./enroll-resources/server-access/server-access.mdx).
-
-### Teleport Kubernetes Service
-
-Proxies HTTP traffic to the Kubernetes API server. Use for Access control and session tracking for Kubernetes.
-
-Read more about the [Teleport Kubernetes
-Service](./enroll-resources/kubernetes-access/introduction.mdx)
-
-### Teleport Application Service
-
-Proxies HTTP and TCP traffic to user-configured endpoints, e.g., internal web
-applications or the AWS Console. Protect your internal tools and dashboards.
-
-Read more about the [Teleport Application
-Service](./enroll-resources/application-access/application-access.mdx).
-
-### Teleport Database Service
-
-Proxies TCP traffic in the native protocols of popular databases, including
-PostgreSQL and MySQL. Use to enforce role-based access to databases with full audit logging.
-
-Read more about the [Teleport Database
-Service](./enroll-resources/database-access/database-access.mdx).
-
-### Teleport Discovery Service
-
-The Teleport Discovery Service automates the process of finding and enrolling cloud resources such as AWS EC2 instances and Azure VMs into a 
-Teleport cluster. It continuously scans supported cloud environments and adds matching resources based on configured rules, 
-reducing the need for manual node registration. 
-
-Read more about the [Teleport Discovery Service](./enroll-resources/auto-discovery/auto-discovery.mdx).
-
-### Teleport Desktop Service
-
-Proxies Remote Desktop Protocol (RDP) traffic to Windows desktops. Enables access control and session recording for Windows systems
-
-Read more about the [Teleport Desktop
-Service](./enroll-resources/desktop-access/introduction.mdx).
-
-### Teleport Jamf Service
-
-The Jamf Service integrates with Jamf to enroll trusted devices for macOS endpoints. 
-Before a user is granted access, Teleport checks the device's compliance status with Jamf. 
-This service is ideal for organizations that need to verify macOS device posture as part of 
-their access control strategy, ensuring only trusted devices are allowed to connect. 
-[Read more about the Jamf Service](./zero-trust-access/device-trust/jamf-integration.mdx).
-
-### Teleport Debug Service
-
-Provides internal diagnostics, exposing metrics, performance profiling tools, and debugging endpoints. 
-It is designed for measuring performance, troubleshooting scenarios, and enabling operators to change the logging level without restarting teleport. 
-This can be helpful for analyzing bottlenecks, or diagnosing unexpected behavior in a controlled environment. The debug service is exposed locally by default.
-[Read more about the Debug Service](zero-trust-access/management/diagnostics/troubleshooting.mdx#step-13-enable-verbose-logging).
+<UseCasesList
+  desktopColumnsCount={2}
+  narrowBottomPadding
+  useCases={[
+    {
+      title: "SSH Service",
+      description: "Execute commands on remote machines with built-in access controls, auditing, and session recording.",
+      href: "../enroll-resources/server-access/",
+    },
+    {
+      title: "Kubernetes Service",
+      description: "Proxies HTTP traffic to the Kubernetes API server, with access control and session tracking.",
+      href: "../enroll-resources/kubernetes-access/introduction/",
+    },
+    {
+      title: "Application Service",
+      description: "Proxies HTTP and TCP traffic to internal web apps, e.g. dashboards or the AWS Console.",
+      href: "../enroll-resources/application-access/",
+    },
+    {
+      title: "Database Service",
+      description: "Proxies native database protocols (PostgreSQL, MySQL) with role-based access and full audit logging.",
+      href: "../enroll-resources/database-access/",
+    },
+    {
+      title: "Discovery Service",
+      description: "Automatically finds and enrolls cloud resources (AWS EC2, Azure VMs) — no manual node registration.",
+      href: "../enroll-resources/auto-discovery/",
+    },
+    {
+      title: "Desktop Service",
+      description: "Proxies RDP traffic to Windows desktops, with access control and session recording.",
+      href: "../enroll-resources/desktop-access/introduction/",
+    },
+    {
+      title: "Jamf Service",
+      description: "Checks a macOS device's Jamf compliance status before granting it access.",
+      href: "../zero-trust-access/device-trust/jamf-integration/",
+    },
+    {
+      title: "Debug Service",
+      description: "Exposes metrics, profiling, and log-level changes for troubleshooting, without a restart.",
+      href: "../zero-trust-access/management/diagnostics/troubleshooting/#step-13-enable-verbose-logging",
+    },
+  ]}
+/>
 
 ## Agent
 
@@ -149,54 +151,16 @@ Unlike other **Teleport services**, Machine & Workload Identity runs via the
 `tbot` is a lightweight agent designed to provision short-lived credentials to workloads and automation systems like CI/CD pipelines. 
 It enables secure machine and workload authentication without relying on long-lived secrets. This makes it ideal for infrastructure automation and Zero Trust deployments.
 
-Read more in our [Machine & Workload Identity documentation](./machine-workload-identity/machine-workload-identity.mdx).
-
-## Teleport editions
-
-Teleport is available in several **editions**. All editions include the same open
-source core, which is available at the
-[`gravitational/teleport`](https://github.com/gravitational/teleport) repository
-on GitHub.
-
-You can find a detailed comparison of the features available in each Teleport
-edition on the [Feature Matrix
-](./feature-matrix.mdx).
-
-### Teleport Enterprise Cloud
-
-**Teleport Enterprise Cloud** is a managed deployment of the **Teleport Auth
-Service** and **Teleport Proxy Service**.
-
-Our team at Teleport handles all tasks related to running the **Auth Service**
-and **Proxy Service**, including upgrades and certificate management. Each
-customer account, known as a **Teleport Enterprise Cloud tenant**, has its own
-subdomain of `.teleport.sh`, e.g., `mytenant.teleport.sh`.
-
-Read more in our [Teleport Enterprise (Cloud) getting started guide](./get-started/deploy-cloud.mdx).
-
-### Teleport Enterprise
-
-**Teleport Enterprise** is a paid plan that includes all of the features of
-**Teleport Community Edition**, plus advanced features for organizations with
-advanced security needs, such as support for Federal Information Processing
-Standards (FIPS) and a hardware security module (HSM). Teleport Enterprise
-includes a support agreement with Teleport.
-
-[Read the documentation](installation/self-hosted/self-hosted.mdx) on
-self-hosting Teleport.
-
-### Teleport Community Edition
-
-**Teleport Community Edition** is a free, open source distribution of Teleport
-that anyone can download, install, and host on their own infrastructure.
+<ReadMore title="References">
+  [Machine & Workload Identity](./machine-workload-identity/machine-workload-identity.mdx)
+</ReadMore>
 
 ## Configuration resources
 
 A **configuration resource** is a document stored on the **Teleport Auth
 Service** backend that specifies settings for your **Teleport cluster**.
-Examples include **roles**, **local users**, and **authentication connectors**
-
-Read more in our [resource reference](reference/infrastructure-as-code/teleport-resources/teleport-resources.mdx).
+Examples include **roles**, **local users**, and **authentication connectors**. 
+See the [resource reference](reference/infrastructure-as-code/teleport-resources/teleport-resources.mdx) for the full list.
 
 ### Role
 
@@ -205,7 +169,9 @@ privileges within a cluster. Teleport's role-based access control (RBAC) is
 restrictive by default, and a user needs explicit permissions before they can
 access a resource or perform management tasks on a cluster.
 
-Read our [guide to Teleport roles](zero-trust-access/rbac-get-started/role-templates.mdx).
+<ReadMore title="Guide">
+  [Teleport Roles](zero-trust-access/rbac-get-started/role-templates.mdx)
+</ReadMore>
 
 ### Teleport users
 
@@ -215,32 +181,57 @@ that a client or service attempting to connect has a valid Teleport-issued
 certificate. It then uses the subject of the certificate—including its username
 and Teleport roles—to authorize the user.
 
-Teleport allows for two kinds of users:
-
-- **Local users** correspond to a `user` **configuration resource** stored on
-  the **Auth Service** backend.
-- **Single Sign-On (SSO) users** are stored on the backend of your SSO solution,
-  e.g., Okta or GitHub. When a user authenticates to Teleport via your SSO
-  solution, Teleport issues a certificate for the user and creates a temporary
-  **local user** that is valid for the lifetime of the certificate.
-
 Only humans can authenticate as SSO users. Humans, machines and AI agents can
 authenticate as local users. Machines and AI agents join a cluster using a
 Machine and Workload Identity join token. See the [Machine & Workload Identity
 introduction](machine-workload-identity/introduction.mdx) for how Machine &
 Workload Identity works.
 
-Read more:
-- [Local users](reference/access-controls/authentication.mdx)
-- [How SSO authentication works in Teleport](zero-trust-access/sso/sso.mdx)
-- [Teleport user types](reference/access-controls/user-types.mdx)
+{/*The Feature Matrix table has unique requirements, so include styling in an
+HTML tag until we can support these requirements some other way.*/} 
+<style dangerouslySetInnerHTML={{__html: `
+  td span:only-child {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    column-gap: 0.5rem;
+    color: #007D6B;
+  }
+  td span:not(:only-child):last-child {
+    display: block;
+    font-size: 15px;
+    color: rgba(0, 0, 0, 0.72);
+  }
+  td span:only-child svg {
+    width: 20px;
+    height: 20px;
+  }
+  td span:only-child svg path {
+    fill: #007D6B;
+  }
+  `
+  }}
+/>
+
+|User Type|Human|Machine|Agent|
+|---------|-----|-------|-----|
+|**Local user**<span>stored on Auth Service</span>|<span><CheckedSvg /></span>|<span><CheckedSvg /> **via join token**</span>|<span><CheckedSvg /> **via join token**</span>|
+|**SSO user***<span>(stored on your SSO backend)</span>|<span><CheckedSvg /></span>|<span>-</span>|<span>-</span>|
+
+<ReadMore title="Read more">
+ [Local users](reference/access-controls/authentication.mdx)
+ [How SSO authentication works in Teleport](zero-trust-access/sso/sso.mdx)
+ [Teleport user types](reference/access-controls/user-types.mdx)
+</ReadMore>
 
 ### Authentication connector
 
 An authentication connector is a **configuration resource** that allows users to
 authenticate to Teleport via a Single Sign-On (SSO) solution.
 
-See our guide to [Authentication Options](reference/access-controls/authentication.mdx).
+<ReadMore title="Read more">
+  [Authentication Options](reference/access-controls/authentication.mdx).
+</ReadMore>
 
 ### Trusted clusters
 
@@ -255,34 +246,79 @@ in the root cluster to be mapped to roles and permissions defined in the leaf cl
 For more information about how to configure a trust relationship between clusters,
 see [Configure Trusted Clusters](zero-trust-access/management/trustedclusters.mdx). For an overview of the architecture used in a trusted cluster relationship, see [Trusted Cluster Architecture](reference/architecture/trustedclusters.mdx).
 
+<ReadMore title="Read more">
+  [Configure Trusted Clusters](zero-trust-access/management/trustedclusters.mdx)
+  [Trusted Cluster Architecture](reference/architecture/trustedclusters.mdx)
+</ReadMore>
+
 ## Teleport clients
 
 A **Teleport client** connects to a Teleport cluster to authenticate, request access, or interact with resources such as servers, databases, Kubernetes clusters, desktops, or internal web apps. Clients use short-lived certificates and Teleport’s Role-Based Access Control (RBAC) to ensure secure, auditable access. All clients rely on the Teleport Auth Service to verify identity and issue credentials, and they may connect through the Proxy Service when accessing resources behind firewalls or in private networks.
 
-### `tsh`
+<UseCasesList
+  desktopColumnsCount={2}
+  narrowBottomPadding
+  useCases={[
+    {
+      title: "tsh",
+      description: "CLI tool for engineers to authenticate, connect to resources, and manage active sessions SSH, Kubernetes, dbs, apps.",
+      href: "../connect-your-client/teleport-clients/tsh/",
+    },
+    {
+      title: "tctl",
+      description: "Administrative CLI for configuring roles, managing users, and working with tokens, trusted clusters, and audit logs.",
+      href: "../configuration/using-tctl/",
+    },
+    {
+      title: "Teleport Connect",
+      description: "Graphical desktop app for accessing servers, databases, apps, and desktops the same certificate-based access, GUI-first.",
+      href: "../connect-your-client/teleport-clients/teleport-connect/",
+    },
+    {
+      title: "Teleport Kubernetes Operator",
+      description: "A controller that automates configuring Teleport resources — users, roles, Access Requests via Kubernetes resources.",
+      href: "../configuration/teleport-operator/",
+    },
+    {
+      title: "Teleport Terraform Provider",
+      description: "Manage users, roles, and connectors as code infrastructure-as-code workflows for configuring and automating access.",
+      href: "../configuration/terraform-provider/",
+    },
+  ]}
+/>
 
-`tsh` is the command-line tool used by Teleport users to authenticate, connect to infrastructure resources, and manage active sessions. 
-It supports SSH, Kubernetes, databases, and applications. This tool is commonly used by engineers and operators who prefer terminal-based workflows.
+## Teleport editions
 
-### `tctl`
+There are several editions of Teleport that differ in their feature sets, deployment options, and support.
 
-`tctl` is the administrative command-line interface for managing a Teleport cluster. It allows administrators to configure roles, manage users, and work with resources such as tokens, trusted clusters, and audit logs. 
-It's typically used during initial cluster setup and for ongoing administrative tasks.
+<TeleportEditionsGrid>
+  <TeleportEditionCard
+    title="Enterprise Cloud"
+    iconName="teleportEnterpriseCloud"
+    href="./deploy-cloud/"
+    subtitle="Managed and hosted by Teleport"
+    id="enterprise-cloud"
+  >
+    <p>We handle infrastructure, upgrades, and certificates. Each customer receives a dedicated .teleport.sh subdomain (e.g., example.teleport.sh).</p>
+  </TeleportEditionCard>
 
-### Teleport Connect
+  <TeleportEditionCard
+    title="Enterprise Self-Hosted"
+    iconName="teleportEnterpriseSelfHosted"
+    href="https://goteleport.com/contact-us/"
+    subtitle="Hosted and managed by you"
+    id="enterprise-self-hosted"
+  >
+    <p>A paid plan for organizations requiring strict compliance, with features like FIPS support. A valid license is required, so use this option to contact our team.</p>
+  </TeleportEditionCard>
 
-**Teleport Connect** is a graphical desktop application that provides an intuitive interface for accessing infrastructure resources such as 
-servers, databases, applications, and desktops. It's ideal for engineers who prefer GUI-based access for their day-to-day tasks, offering the same secure, certificate-based access as other Teleport clients.
-
-### Teleport Kubernetes Operator
-
-The Teleport Kubernetes Operator is a controller that runs in your Kubernetes cluster to automate the configuration of Teleport resources, 
-such as users, roles, and Access Requests, using Kubernetes custom resources.
-
-### Teleport Terraform Provider
-
-The Teleport Terraform Provider allows you to manage Teleport resources such as users, roles, and connectors using Terraform. 
-It enables infrastructure-as-code workflows for configuring access and automating resource provisioning in Teleport.
-
-Further reading:
-- [Introduction to Teleport clients](./connect-your-client/connect-your-client.mdx) Authenticate to Teleport and access protected resources. Designed for end users with links to additional documentation.
+  <TeleportEditionCard
+    title="Community Edition"
+    iconName="teleportCommunity"
+    href="./deploy-community/"
+    subtitle="Free and open source"
+    id="community-edition"
+  >
+    <p>Includes core features like secure SSH, Kubernetes, databases, and app access. Best for hobbyists, homelabs, or small teams securing small-scale infrastructure.</p>
+  </TeleportEditionCard>
+</TeleportEditionsGrid>
