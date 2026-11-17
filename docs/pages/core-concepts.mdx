@@ -17,6 +17,42 @@ them before following other pages in the documentation.
 
 ## Quick reference
 
+{/*The tables on the Core Concepts page have unique requirements, so include 
+styling in an HTML tag until we can support these requirements some other way.*/} 
+<style dangerouslySetInnerHTML={{__html: `
+  table {
+    display: table;
+    width: 100%;
+  }
+
+  table tr:nth-child(2n) {
+    background-color: unset;
+  }
+
+  td span:only-child {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    column-gap: 0.5rem;
+    color: #007D6B;
+  }
+  td span:not(:only-child):last-child {
+    display: block;
+    font-size: 15px;
+    color: rgba(0, 0, 0, 0.72);
+  }
+  td span:only-child svg {
+    width: 20px;
+    height: 20px;
+  }
+  td span:only-child svg path {
+    fill: #007D6B;
+  }
+  `
+  }}
+/>
+
 |Key Terms|Description|
 |---------|-----------|
 |[Cluster](./#teleport-cluster)|The Auth + Proxy Service, plus every service managing traffic to your infrastructure.|
@@ -186,32 +222,6 @@ authenticate as local users. Machines and AI agents join a cluster using a
 Machine and Workload Identity join token. See the [Machine & Workload Identity
 introduction](machine-workload-identity/introduction.mdx) for how Machine &
 Workload Identity works.
-
-{/*The Feature Matrix table has unique requirements, so include styling in an
-HTML tag until we can support these requirements some other way.*/} 
-<style dangerouslySetInnerHTML={{__html: `
-  td span:only-child {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    column-gap: 0.5rem;
-    color: #007D6B;
-  }
-  td span:not(:only-child):last-child {
-    display: block;
-    font-size: 15px;
-    color: rgba(0, 0, 0, 0.72);
-  }
-  td span:only-child svg {
-    width: 20px;
-    height: 20px;
-  }
-  td span:only-child svg path {
-    fill: #007D6B;
-  }
-  `
-  }}
-/>
 
 |User Type|Human|Machine|Agent|
 |---------|-----|-------|-----|
