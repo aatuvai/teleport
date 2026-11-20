@@ -1,6 +1,7 @@
 ---
 title: Integrations
 description: Teleport integrates with the identity providers, cloud platforms, CI/CD systems, databases, and other third-party products listed below. Select an integration to view its setup guide.
+template: doc-page
 tags:
  - reference
  - platform-wide
@@ -8,11 +9,8 @@ tags:
 import Integrations from "@site/src/components/Pages/Homepage/Integrations";
 import snowflakeSvg from "@site/src/components/Icon/teleport-svg/snowflake.svg";
 
-Teleport integrates with the identity providers, cloud platforms, CI/CD systems, databases, and other third-party products listed below. Select an integration to view its setup guide.
-tags:
-
 <Integrations
-  title="All integrations"
+  title={null}
   filters={[
     {name: "Users & Login", id: "users-login"},
     {name: "CI/CD Automation", id: "ci-cd"},
