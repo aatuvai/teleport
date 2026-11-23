@@ -137,6 +137,11 @@
         },
         {
           "type": "doc",
+          "label": "Integrations",
+          "id": "integrations"
+        },
+        {
+          "type": "doc",
           "label": "Teleport Cloud FAQ",
           "id": "cloud-faq"
         },
